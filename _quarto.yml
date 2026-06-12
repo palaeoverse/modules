@@ -1,0 +1,53 @@
+project:
+  type: website
+
+website:
+  title: "Palaeoverse Module Library"
+  site-url: https://palaeoverse.github.io/modules/
+  repo-url: https://github.com/palaeoverse/modules
+  repo-actions: [source, issue]
+  image: "/images/favicon.png"
+  favicon: "/images/favicon.png"
+  page-navigation: false
+  open-graph: true
+  twitter-card: true
+  search:
+    location: navbar
+    type: overlay
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+    right:
+      - icon: github
+        href: https://github.com/palaeoverse
+        aria-label: "Palaeoverse on GitHub"
+        target: _blank
+      - icon: youtube
+        href: https://www.youtube.com/@ThePalaeoverse
+        aria-label: "Palaeoverse on YouTube"
+        target: _blank
+      - text: "{{< iconify fa6-brands:bluesky >}}"
+        href: https://bsky.app/profile/palaeoverse.bsky.social
+        aria-label: "Palaeoverse on Bluesky"
+        target: _blank
+      - text: "<img src='/images/favicon.png' height=23.5 style='padding-bottom:3px'>"
+        href: https://palaeoverse.org
+        aria-label: "Palaeoverse homepage"
+        target: _blank
+  page-footer:
+    background: $brand-light-blue
+    border: true
+    center: "&copy; Copyright 2026, <a href='https://palaeoverse.org/'>Palaeoverse</a>"
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+execute:
+  freeze: auto
