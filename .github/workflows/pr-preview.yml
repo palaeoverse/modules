@@ -1,0 +1,180 @@
+# Builds a preview of the palaeoverse website with this PR's module(s) swapped
+# in, and publishes it to the gh-pages branch of this repo under
+# pr-preview/pr-<N>/, served at:
+#
+#   https://palaeoverse.github.io/modules/pr-preview/pr-<N>/
+#
+# Rendering a module executes the R code it contains, so we only do this for PRs
+# whose author is a member of the palaeoverse org (see the `if` on the `preview`
+# job).
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, closed]
+
+name: PR preview
+
+permissions:
+  contents: write       # push the rendered preview to gh-pages
+  pull-requests: write  # comment the preview URL on the PR
+
+jobs:
+  preview:
+    # Only members of the palaeoverse org (which owns this repo) get a preview.
+    # The job — including the checkout of PR code — is skipped entirely for
+    # outside contributors, so their code never runs here.
+    if: >
+      github.event.action != 'closed' &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+               github.event.pull_request.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: "Check out PR head (trusted: author is an org member)"
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: modules
+
+      - name: Check out the palaeoverse website
+        uses: actions/checkout@v7
+        with:
+          repository: palaeoverse/palaeoverse.github.io
+          path: site
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Copy PR module(s) into the website
+        shell: Rscript {0}
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # Mirrors the copy logic of sync-modules.yml in palaeoverse.github.io:
+          # upstream modules are the top-level directories of this repo (loose
+          # files such as README.md / LICENSE.md and .git/.github are ignored).
+          src_root <- "modules"
+          dest <- "site/training/modules"
+
+          upstream <- setdiff(
+            list.dirs(src_root, full.names = FALSE, recursive = FALSE),
+            c(".git", ".github")
+          )
+          message("Modules in this PR: ", paste(upstream, collapse = ", "))
+
+          # Replace each module in the website checkout with the PR version.
+          # `freeze: auto` means only modules whose source changed are
+          # re-executed at render time; the rest reuse the website's committed
+          # freeze.
+          for (name in upstream) {
+            target <- file.path(dest, name)
+            unlink(target, recursive = TRUE)
+            dir.create(target, recursive = TRUE, showWarnings = FALSE)
+            src <- list.files(file.path(src_root, name), full.names = TRUE,
+                              all.files = TRUE, no.. = TRUE)
+            file.copy(src, target, recursive = TRUE)
+          }
+
+          # The website's _quarto.yml sets `site-url: https://palaeoverse.github.io`,
+          # which makes Quarto bake root-absolute paths (/training/..., /site_libs/...)
+          # into every page. Served from the preview sub-path those would point back
+          # at the production site, so internal links and assets break (404). Rewrite
+          # site-url to the preview's own URL so all paths resolve under it.
+          preview_url <- sprintf(
+            "https://palaeoverse.github.io/modules/pr-preview/pr-%s",
+            Sys.getenv("PR_NUMBER")
+          )
+          cfg_path <- "site/_quarto.yml"
+          cfg <- readLines(cfg_path)
+          cfg <- sub("^(\\s*site-url:\\s*).*$", paste0("\\1", preview_url), cfg)
+          writeLines(cfg, cfg_path)
+
+      - name: Install pak
+        run: install.packages("pak")
+        shell: Rscript {0}
+
+      - name: Install R dependencies
+        working-directory: site
+        run: |
+          deps <- pak::scan_deps(".")
+          pkgs <- setdiff(unique(deps$package), "R")
+          pak::pak(pkgs)
+        shell: Rscript {0}
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render the website
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          path: site
+
+      - name: Publish preview to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: site/_site
+          destination_dir: pr-preview/pr-${{ github.event.pull_request.number }}
+          keep_files: true  # don't wipe other PRs' previews
+
+      - name: Comment the preview link on the PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request.number;
+            const url = `https://palaeoverse.github.io/modules/pr-preview/pr-${pr}/`;
+            const marker = '<!-- pr-preview -->';
+            const body = `${marker}\nSee preview at ${url}`;
+
+            // Reuse the existing preview comment (if any) instead of adding a new
+            // one on every push.
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr,
+            });
+            const existing = comments.find(c => c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr,
+                body,
+              });
+            }
+
+  cleanup:
+    # Remove a PR's preview when it is closed or merged. This only deletes a
+    # directory from gh-pages and never runs PR code, so it is safe to run for
+    # any author.
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out gh-pages
+        uses: actions/checkout@v7
+        with:
+          ref: gh-pages
+
+      - name: Remove this PR's preview
+        run: |
+          dir="pr-preview/pr-${{ github.event.pull_request.number }}"
+          if [ ! -d "$dir" ]; then
+            echo "No preview to remove at $dir"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git rm -r "$dir"
+          git commit -m "cleanup: remove preview for PR #${{ github.event.pull_request.number }}"
+          git push
