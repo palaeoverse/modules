@@ -1,19 +1,24 @@
 # This workflow exists so that the website is always in sync with modules
 # stored in this repo.
 #
-# Any time there is a push to "main", it sends a "dispatch" notification to
-# the workflow "sync-modules" in palaeoverse/palaeoverse.github.io, which triggers 
-# a run to update the modules there and re-render the website.
+# It runs after the "Check YAML" workflow completes on "main". Only if those
+# checks succeeded does it send a "dispatch" notification to the workflow
+# "sync-modules" in palaeoverse/palaeoverse.github.io, which triggers a run to
+# update the modules there and re-render the website.
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Check YAML"]
     branches: main
+    types:
+      - completed
 
 name: Notify palaeoverse website
 
 jobs:
   dispatch:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Trigger sync-modules in palaeoverse.github.io
         run: |
