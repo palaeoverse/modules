@@ -1,0 +1,102 @@
+# This workflow performs basic checks on the YAML frontmatter of every
+# index.qmd in the repo:
+#
+#   - "freeze: auto" must be used, not "freeze: true"
+#   - a "difficulty" field must exist with one of: Beginner, Intermediate, Advanced
+#   - the difficulty values must not be used as post tags (categories)
+
+on:
+  push:
+    branches: main
+  pull_request:
+
+name: Check YAML
+
+permissions:
+  contents: read
+
+jobs:
+  check-yaml:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install frontmatter
+        run: Rscript -e 'install.packages("frontmatter")'
+
+      - name: Check YAML
+        shell: Rscript {0}
+        run: |
+          library(frontmatter)
+
+          difficulties <- c("Beginner", "Intermediate", "Advanced")
+
+          files <- list.files(pattern = "index\\.qmd$", recursive = TRUE)
+          errors <- character(0)
+
+          for (path in files) {
+            meta <- read_front_matter(path)[["data"]]
+            if (is.null(meta)) {
+              next
+            }
+
+            # freeze: auto, not freeze: true
+            freeze <- meta$execute$freeze
+            if (!is.null(freeze) && !identical(freeze, "auto")) {
+              errors <- c(
+                errors,
+                sprintf(
+                  "%s: freeze must be \"auto\", got %s",
+                  path,
+                  deparse(freeze)
+                )
+              )
+            }
+
+            # difficulty field must exist with an allowed value
+            difficulty <- meta$difficulty
+            if (is.null(difficulty)) {
+              errors <- c(
+                errors,
+                sprintf("%s: missing required field 'difficulty'", path)
+              )
+            } else if (!difficulty %in% difficulties) {
+              errors <- c(
+                errors,
+                sprintf(
+                  "%s: difficulty must be one of %s, got %s",
+                  path,
+                  paste(difficulties, collapse = ", "),
+                  deparse(difficulty)
+                )
+              )
+            }
+
+            # difficulty values must not appear in the post tags (categories)
+            categories <- meta$categories
+            bad_tags <- intersect(categories, c(difficulties, tolower(difficulties)))
+            if (length(bad_tags) > 0) {
+              errors <- c(
+                errors,
+                sprintf(
+                  "%s: difficulty values must not be used as tags, found %s in categories. Use the dedicated field 'difficulty' instead.",
+                  path,
+                  paste(bad_tags, collapse = ", ")
+                )
+              )
+            }
+
+            if (length(errors) > 0) {
+              cat("YAML checks failed:\n\n")
+              cat(paste0("  - ", errors), sep = "\n")
+              cat("\n")
+              quit(status = 1)
+            }
+          }
+
+          cat("All index.qmd YAML checks passed.\n")
+
