@@ -50,6 +50,8 @@ jobs:
 
       - name: Copy PR module(s) into the website
         shell: Rscript {0}
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           # Mirrors the copy logic of sync-modules.yml in palaeoverse.github.io:
           # upstream modules are the top-level directories of this repo (loose
@@ -75,6 +77,20 @@ jobs:
                               all.files = TRUE, no.. = TRUE)
             file.copy(src, target, recursive = TRUE)
           }
+
+          # The website's _quarto.yml sets `site-url: https://palaeoverse.github.io`,
+          # which makes Quarto bake root-absolute paths (/training/..., /site_libs/...)
+          # into every page. Served from the preview sub-path those would point back
+          # at the production site, so internal links and assets break (404). Rewrite
+          # site-url to the preview's own URL so all paths resolve under it.
+          preview_url <- sprintf(
+            "https://palaeoverse.github.io/modules/pr-preview/pr-%s",
+            Sys.getenv("PR_NUMBER")
+          )
+          cfg_path <- "site/_quarto.yml"
+          cfg <- readLines(cfg_path)
+          cfg <- sub("^(\\s*site-url:\\s*).*$", paste0("\\1", preview_url), cfg)
+          writeLines(cfg, cfg_path)
 
       - name: Install pak
         run: install.packages("pak")
