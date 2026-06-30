@@ -126,13 +126,33 @@ jobs:
           script: |
             const pr = context.payload.pull_request.number;
             const url = `https://palaeoverse.github.io/modules/pr-preview/pr-${pr}/`;
+            const marker = '<!-- pr-preview -->';
+            const body = `${marker}\nSee preview at ${url}`;
 
-            await github.rest.issues.createComment({
+            // Reuse the existing preview comment (if any) instead of adding a new
+            // one on every push.
+            const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: pr,
-              body: `See preview at ${url}`,
             });
+            const existing = comments.find(c => c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr,
+                body,
+              });
+            }
 
   cleanup:
     # Remove a PR's preview when it is closed or merged. This only deletes a
