@@ -43,11 +43,43 @@ One way to do this is to restart the R session, but this can easily be forgotten
 
 This is extremely useful to solve the problem yourself, but it is even more useful when reporting a bug to colleagues and package developers: if your example runs in `reprex()`, then it is almost guaranteed that it can be easily reproduced by other people with different environments.  
 
+```{r}
+#| eval: false
+reprex({
+  # our code here
+})
+```
+
 
 # Debugging a function
 
+Debugging a function that you wrote (either in a package or as part of a project), can be annoying because finding the source of the problem can be hard. While in the previous example we could debug line by line, it is less intuitive how to do so in a function.
+
+One reflex might be to put various `print()` statement in the function body to see which ones get evaluated (meaning that the code ran fine so far) and which ones didn't because the function errored before.
+
+However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: `browser()`.
+
 
 ## `browser()`
+
+Let's say we have this function:
+
+```{r}
+f <- function() {
+
+}
+```
+
+Instead of putting `print()` statements in multiple places, I can add a `browser()` call at the start:
+
+```diff
+f <- function() {
++  browser()  
+}
+
+```
+
+
 
 
 ## Breakpoints in the IDE
