@@ -70,14 +70,16 @@ f <- function() {
 }
 ```
 
-Instead of putting `print()` statements in multiple places, I can add a `browser()` call at the start:
+Instead of putting `print()` statements in multiple places, we can add a `browser()` call at the start:
 
-```diff
+``` diff
 f <- function() {
-+  browser()  
++browser()  
 }
-
 ```
+
+Now, the next time we call `f()`, the execution will stop at `browser()` and we will be able to explore the current environment in the console. We can see exactly the environment the code has access to when it reaches this step, which makes it easier to for us to find the source of the bug. 
+
 
 
 
