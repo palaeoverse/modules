@@ -73,12 +73,12 @@ jobs:
         id: build
         if: steps.results.outputs.pr_number != ''
         env:
-          AIR_RESULT: ${{ steps.results.outputs.panache_result }}
+          PANACHE_RESULT: ${{ steps.results.outputs.panache_result }}
           JARL_RESULT: ${{ steps.results.outputs.jarl_result }}
           COMMENT_ID: ${{ steps.find-comment.outputs.comment-id }}
         # The "echo" between the two "cat" ensures a new line between the two templates.
         run: |
-          if [[ "$AIR_RESULT" == "failure" && "$JARL_RESULT" == "failure" ]]; then
+          if [[ "$PANACHE_RESULT" == "failure" && "$JARL_RESULT" == "failure" ]]; then
             {
               cat .github/workflows/templates/panache-only.md
               echo
@@ -86,7 +86,7 @@ jobs:
               echo
               cat .github/workflows/templates/jarl-only.md
             } > /tmp/comment.md
-          elif [[ "$AIR_RESULT" == "failure" ]]; then
+          elif [[ "$PANACHE_RESULT" == "failure" ]]; then
             cp .github/workflows/templates/panache-only.md /tmp/comment.md
           elif [[ "$JARL_RESULT" == "failure" ]]; then
             cp .github/workflows/templates/jarl-only.md /tmp/comment.md
