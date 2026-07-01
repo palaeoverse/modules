@@ -1,0 +1,87 @@
+---
+title: "Debugging with browser() and reprex()"
+description: "How to efficiently solve bugs."
+author: "Etienne Bacher"
+date: "2026-06-25"
+categories: [r]
+difficulty: Intermediate
+image: R_logo.png
+format:
+  html: default
+  revealjs:
+    output-file: index-slides.html
+execute:
+  warning: false
+  message: false
+  freeze: auto
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+[intro]
+
+
+# Reducing the problem
+
+The longer the code you try to debug, the more potential causes you have to explore. The first thing to do when you can't find the bug in your code right away is to build a minimal **repr**oducible **ex**ample, aka a *reprex* (this is also known as a MRE, for "Minimal Reproducible Example").
+
+
+## Reduce the size of the code
+
+
+## Reduce the size of the data
+
+
+## How to ensure that your reprex actually is a reprex
+
+We have reduced the size of the problem, both in data size and in code size. It seems like we have done everything we could to make the problem easier to reproduce, even for other people (e.g. package developers). However, there is one thing that still needs to be cleaned: our **environment**.
+
+Our environment may have tons of variables, datasets, and options that were defined before but are not relevant to our problem. Some of those objects may interact in some way with our problematic code, meaning that we need to clean our environment to ensure that we can correctly reproduce the issue.
+
+One way to do this is to restart the R session, but this can easily be forgotten. A more robust solution is to use the package [`reprex`](https://reprex.tidyverse.org/). This package provides a function called `reprex()` in which we can put all the code related to our problem. `reprex()` will start a separate R session in the background to run this code and then report its results. Since this is a completely separate R session, it will error if our code isn't completely self-contained, and this would indicate that our reproducible example isn't actually... reproducible.
+
+This is extremely useful to solve the problem yourself, but it is even more useful when reporting a bug to colleagues and package developers: if your example runs in `reprex()`, then it is almost guaranteed that it can be easily reproduced by other people with different environments.  
+
+```{r}
+#| eval: false
+reprex({
+  # our code here
+})
+```
+
+
+# Debugging a function
+
+Debugging a function that you wrote (either in a package or as part of a project), can be annoying because finding the source of the problem can be hard. While in the previous example we could debug line by line, it is less intuitive how to do so in a function.
+
+One reflex might be to put various `print()` statement in the function body to see which ones get evaluated (meaning that the code ran fine so far) and which ones didn't because the function errored before.
+
+However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: `browser()`.
+
+
+## `browser()`
+
+Let's say we have this function:
+
+```{r}
+f <- function() {
+
+}
+```
+
+Instead of putting `print()` statements in multiple places, we can add a `browser()` call at the start:
+
+``` diff
+f <- function() {
++browser()  
+}
+```
+
+Now, the next time we call `f()`, the execution will stop at `browser()` and we will be able to explore the current environment in the console. We can see exactly the environment the code has access to when it reaches this step, which makes it easier to for us to find the source of the bug. 
+
+
+
+
+
+## Breakpoints in the IDE
