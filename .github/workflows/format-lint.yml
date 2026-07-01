@@ -1,0 +1,67 @@
+# This workflow runs Panache for formatting and Jarl for linting. It stores artifacts about the
+# outcome of each tool and the PR number. Those artifacts are then used in the workflow 
+# "format-lint-pr-comment.yaml" to post a comment so that it's clearer for external
+# contributors.
+#
+# This could have been done in a single workflow with a "pull_request_target" trigger but
+# this might have some security issues (this is unlikely in practice but still better to
+# be ahead of it):
+# https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/
+
+name: Format and lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  format-panache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - name: Install Panache
+        uses: jolars/panache-action@a1e4e68c74a41e6b9dade9c93095a262a23aa48c # v1
+        with:
+          lint: "false"
+        continue-on-error: true
+      - name: Save results
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "${{ steps.check.outcome }}" > /tmp/panache-result.txt
+          echo "${{ github.event.pull_request.number }}" > /tmp/pr-number.txt
+      - name: Upload artifacts
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: panache-results
+          path: |
+            /tmp/panache-result.txt
+            /tmp/pr-number.txt
+      - if: steps.check.outcome == 'failure'
+        run: exit 1
+
+  lint-jarl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - name: Check
+        id: check
+        uses: etiennebacher/setup-jarl@eabf7e572f2991d165059007531b9bbe2987e39c # v0.1.1
+        continue-on-error: true
+      - name: Save result
+        if: github.event_name == 'pull_request'
+        run: echo "${{ steps.check.outcome }}" > /tmp/jarl-result.txt
+      - name: Upload artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: jarl-results
+          path: /tmp/jarl-result.txt
+      - if: steps.check.outcome == 'failure'
+        run: exit 1
