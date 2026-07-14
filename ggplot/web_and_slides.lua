@@ -6,13 +6,13 @@
 --              plots share a slide and a plot's following prose stays with the
 --              next plot -- unless only prose remains before the next heading, in
 --              which case it stays put rather than making a blank slide), and each
---              callout is unwrapped onto its own slide (rendered as standard slide
---              content, no box, so any figure inside hoists and stretches). Split
---              slides repeat the current heading so they keep a title. Finally,
---              any slide with 2+ cells is expanded into an auto-animate build-up
---              (one step per cell, cells accumulating, notes advancing) so each
---              step is a real slide whose figure still hoists and auto-stretches.
---              Other formats untouched.
+--              callout is unwrapped onto its own slide titled by its own heading
+--              (no box, so any figure inside hoists and stretches; an untitled
+--              callout keeps the section title). Split slides repeat the current
+--              heading so they keep a title. Finally, any slide with 2+ cells is
+--              expanded into an auto-animate build-up (one step per cell, cells
+--              accumulating, notes advancing) so each step is a real slide whose
+--              figure still hoists and auto-stretches. Other formats untouched.
 -- Register at the `pre-ast` stage so callouts are still plain divs here (Quarto
 -- normalizes them into custom AST nodes after that point).
 
@@ -55,9 +55,9 @@ function Pandoc(doc)
 
   -- unwrap callouts to plain blocks (recursively, for nested callouts) so their
   -- content sits directly on the slide -- a de-boxed callout behaves like normal
-  -- slide content, and any figure inside hoists and auto-stretches. A callout's
-  -- own title heading is demoted below the slide level so it stays an in-slide
-  -- subheading rather than splitting off a new (empty) slide.
+  -- slide content, and any figure inside hoists and auto-stretches. Headings at
+  -- or above the slide level are demoted so a nested title can't split the slide;
+  -- the leading heading is re-promoted to the slide title by the caller.
   local function unwrap_callouts(blocks)
     local flat = pandoc.List()
     for _, b in ipairs(blocks) do
@@ -72,13 +72,16 @@ function Pandoc(doc)
     return flat
   end
 
-  -- is there any visible content (a cell or callout) before the next slide
-  -- boundary (a heading or rule), starting at block index `from`?
+  -- is there any visible code cell before the next slide boundary, starting at
+  -- block index `from`? A heading, rule, or callout is a boundary (a callout
+  -- self-titles onto its own slide), so a trailing note only breaks if a plain
+  -- cell -- not a callout -- lands on the new slide first.
   local function content_before_boundary(from)
     for j = from, #doc.blocks do
       local b = doc.blocks[j]
       if b.t == "Header" or b.t == "HorizontalRule" then return false end
-      if b.t == "Div" and (is_callout(b) or b.classes:includes("cell")) then return true end
+      if b.t == "Div" and is_callout(b) then return false end
+      if b.t == "Div" and b.classes:includes("cell") then return true end
     end
     return false
   end
@@ -110,10 +113,20 @@ function Pandoc(doc)
       pending = false; filled = false
       out:insert(blk)
     elseif blk.t == "Div" and is_callout(blk) then
-      -- give the callout its own slide, but unwrapped: its content renders as a
-      -- standard slide (no box), so a figure inside hoists and stretches
-      if pending or filled then out:insert(slide_break()); pending = false; filled = false end
-      out:extend(unwrap_callouts(blk.content))
+      -- give the callout its own slide titled by its own heading (promoted to the
+      -- slide level, so the heading is itself the slide boundary); content is
+      -- unwrapped so any figure inside hoists and stretches
+      local content = unwrap_callouts(blk.content)
+      if #content > 0 and content[1].t == "Header" then
+        local title = content[1]:clone()
+        title.level = slide_level                                                -- callout heading -> slide title
+        title.identifier = ""
+        content[1] = title
+        out:extend(content)
+      else
+        if pending or filled then out:insert(slide_break()) end                  -- untitled callout keeps the section title
+        out:extend(content)
+      end
       filled = true; pending = true                                              -- alone; close the slide after
     elseif blk.t == "Div" and blk.classes:includes("cell") then
       if pending then out:insert(slide_break()); pending = false; filled = false end
