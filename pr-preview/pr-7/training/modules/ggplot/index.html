@@ -258,13 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#theming" id="toc-theming" class="nav-link" data-scroll-target="#theming">Theming</a></li>
   <li><a href="#more-complex-features" id="toc-more-complex-features" class="nav-link" data-scroll-target="#more-complex-features">More complex features</a>
   <ul class="collapse">
-  <li><a href="#other-layers" id="toc-other-layers" class="nav-link" data-scroll-target="#other-layers">Other layers</a>
-  <ul class="collapse">
-  <li><a href="#histograms" id="toc-histograms" class="nav-link" data-scroll-target="#histograms">Histograms</a></li>
-  <li><a href="#boxplots-and-violin-plotss" id="toc-boxplots-and-violin-plotss" class="nav-link" data-scroll-target="#boxplots-and-violin-plotss">Boxplots and Violin Plotss</a></li>
-  <li><a href="#d-contours" id="toc-d-contours" class="nav-link" data-scroll-target="#d-contours">2D Contours</a></li>
-  <li><a href="#time-series" id="toc-time-series" class="nav-link" data-scroll-target="#time-series">Time Series</a></li>
-  </ul></li>
+  <li><a href="#other-layers" id="toc-other-layers" class="nav-link" data-scroll-target="#other-layers">Other layers</a></li>
   <li><a href="#combining-layers" id="toc-combining-layers" class="nav-link" data-scroll-target="#combining-layers">Combining layers</a></li>
   <li><a href="#facetting" id="toc-facetting" class="nav-link" data-scroll-target="#facetting">Facetting</a></li>
   </ul></li>
@@ -317,8 +311,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="introduction" class="level2">
+<h2 data-anchor-id="introduction">Introduction</h2>
 <p>While you can make plots with just the packages that come bundled with base R, many R users make their visualizations entirely using the <a href="https://ggplot2.tidyverse.org/index.html"><code>ggplot2</code></a> package and an <a href="https://exts.ggplot2.tidyverse.org/gallery/">ecosystem of packages</a> designed around it.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the ggplot2 package</span></span>
@@ -343,8 +337,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>As we discovered before, this dataset includes many different measurements for individual penguins from three different studies. The studies cover both sexes of three different species of penguins from three different islands in the Palmer Archipelago.</p>
 </section>
-<section id="the-ggplot2-basics" class="level1">
-<h1>The ggplot2 basics</h1>
+<section id="the-ggplot2-basics" class="level2">
+<h2 data-anchor-id="the-ggplot2-basics">The ggplot2 basics</h2>
 <p>The most important function in the <code>ggplot2</code> package is <code>ggplot()</code>. Note that this function doesn’t include the “2” of the package name. Let’s go ahead and try using this function on our penguins data.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -519,8 +513,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 </div>
 </section>
-<section id="theming" class="level1">
-<h1>Theming</h1>
+<section id="theming" class="level2">
+<h2 data-anchor-id="theming">Theming</h2>
 <p>The last basic thing you might want to do with <code>ggplot2</code> is modify the style of the visualization. This is extremely customizable, but the first place to start is with a <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">built-in theme</a>. I personally prefer the classic theme, which looks very similar to base R plots:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -563,13 +557,13 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <p>And there we have it! With just 10 lines we’ve created what I would say is a publication quality graph! <code>ggplot</code> does a lot of the tedious work for us, giving us time to focus on the more important aspects, such as labeling and color. Admittedly, I’ve spent a LOT of time on these aspects in the past…</p>
 <p>More information about all of the hierarchical theme components that you can customize is available <a href="https://ggplot2.tidyverse.org/reference/theme.html">here</a>. In order to change many of these components, you need to use theme elements like we did above with <code>element_text()</code>. That and other theme elements are documented <a href="https://ggplot2.tidyverse.org/reference/element.html">here</a>.</p>
 </section>
-<section id="more-complex-features" class="level1">
-<h1>More complex features</h1>
-<section id="other-layers" class="level2">
-<h2 data-anchor-id="other-layers">Other layers</h2>
+<section id="more-complex-features" class="level2">
+<h2 data-anchor-id="more-complex-features">More complex features</h2>
+<section id="other-layers" class="level3">
+<h3 data-anchor-id="other-layers">Other layers</h3>
 <p>There are many other <a href="https://ggplot2.tidyverse.org/reference/#layers">types of plots</a> that we can make with <code>ggplot2</code>.</p>
-<section id="histograms" class="level3">
-<h3 data-anchor-id="histograms">Histograms</h3>
+<section id="histograms" class="level4">
+<h4 data-anchor-id="histograms">Histograms</h4>
 <p>We can visualize the density of values for a single variable with a histogram:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -613,8 +607,8 @@ Note
 </div>
 </div>
 </section>
-<section id="boxplots-and-violin-plotss" class="level3">
-<h3 data-anchor-id="boxplots-and-violin-plotss">Boxplots and Violin Plotss</h3>
+<section id="boxplots-and-violin-plotss" class="level4">
+<h4 data-anchor-id="boxplots-and-violin-plotss">Boxplots and Violin Plotss</h4>
 <p>We can visualize the density of values for a single variable across a discrete variable with boxplots or violin plots:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -658,8 +652,8 @@ Note
 </div>
 </div>
 </section>
-<section id="d-contours" class="level3">
-<h3 data-anchor-id="d-contours">2D Contours</h3>
+<section id="d-contours" class="level4">
+<h4 data-anchor-id="d-contours">2D Contours</h4>
 <p>We can also visualize the density of values across two continuous variables using a 2D contour:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -692,8 +686,8 @@ Note
 </div>
 </div>
 </section>
-<section id="time-series" class="level3">
-<h3 data-anchor-id="time-series">Time Series</h3>
+<section id="time-series" class="level4">
+<h4 data-anchor-id="time-series">Time Series</h4>
 <p>Since there isn’t really any time series data in the penguins dataset, we’ll take a quick detour and use the built-in <code>economics</code> dataset to explore visualizing a time series. In this case, we are looking at unemployment over time:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> unemploy)) <span class="sc">+</span></span>
@@ -737,8 +731,8 @@ Note
 </div>
 </section>
 </section>
-<section id="combining-layers" class="level2">
-<h2 data-anchor-id="combining-layers">Combining layers</h2>
+<section id="combining-layers" class="level3">
+<h3 data-anchor-id="combining-layers">Combining layers</h3>
 <p>We can also combine multiple layers to show the same data in different ways in the same plot. For example, we could show the raw data for the above contour plot in addition to the contours:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -773,8 +767,8 @@ Note
 </div>
 </div>
 </section>
-<section id="facetting" class="level2">
-<h2 data-anchor-id="facetting">Facetting</h2>
+<section id="facetting" class="level3">
+<h3 data-anchor-id="facetting">Facetting</h3>
 <p>Let’s take our scatterplot example from earlier:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -840,8 +834,8 @@ Note
 <p>OK, maybe we’ve gone a little too far here, but you get the picture!</p>
 </section>
 </section>
-<section id="combining-plots" class="level1">
-<h1>Combining plots</h1>
+<section id="combining-plots" class="level2">
+<h2 data-anchor-id="combining-plots">Combining plots</h2>
 <p>When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own <a href="https://williamgearty.com/deeptime">deeptime</a> package has some functionality for it), but today we’ll check out the <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a> package which extends the “grammar of graphics” to combining plots (you may need to install it if you haven’t done so already).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -895,8 +889,8 @@ Note
 </div>
 <p>There’s a lot more you can do with <code>patchwork</code>, including adjusting the widths and heights, but we’ll stop here for now.</p>
 </section>
-<section id="saving-plots" class="level1">
-<h1>Saving plots</h1>
+<section id="saving-plots" class="level2">
+<h2 data-anchor-id="saving-plots">Saving plots</h2>
 <p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code>ggsave()</code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code>ggsave()</code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> (g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span>
