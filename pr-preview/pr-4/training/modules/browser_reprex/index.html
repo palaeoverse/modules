@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2026-06-25">
 <meta name="description" content="How to efficiently solve bugs.">
 
-<title>Debugging with browser() and reprex()</title>
+<title>Debugging with reprex() and browser()</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -81,9 +81,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-50db7f3496b96cf61c848824d92787f9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-5a7a8723d4e38836d2047ed44e7a4ffa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-e2f79c0bcf7793bfaef8b2c438f1f609.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-5a7a8723d4e38836d2047ed44e7a4ffa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-621e7d618206a720d7fc9e09ed522b12.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -255,10 +255,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#reducing-the-problem" id="toc-reducing-the-problem" class="nav-link active" data-scroll-target="#reducing-the-problem">Reducing the problem</a>
   <ul class="collapse">
-  <li><a href="#reduce-the-size-of-the-code" id="toc-reduce-the-size-of-the-code" class="nav-link" data-scroll-target="#reduce-the-size-of-the-code">Reduce the size of the code</a></li>
   <li><a href="#reduce-the-size-of-the-data" id="toc-reduce-the-size-of-the-data" class="nav-link" data-scroll-target="#reduce-the-size-of-the-data">Reduce the size of the data</a></li>
-  <li><a href="#how-to-ensure-that-your-reprex-actually-is-a-reprex" id="toc-how-to-ensure-that-your-reprex-actually-is-a-reprex" class="nav-link" data-scroll-target="#how-to-ensure-that-your-reprex-actually-is-a-reprex">How to ensure that your reprex actually is a reprex</a></li>
+  <li><a href="#reduce-the-size-of-the-code" id="toc-reduce-the-size-of-the-code" class="nav-link" data-scroll-target="#reduce-the-size-of-the-code">Reduce the size of the code</a></li>
   </ul></li>
+  <li><a href="#how-to-ensure-that-your-reprex-actually-is-a-reprex" id="toc-how-to-ensure-that-your-reprex-actually-is-a-reprex" class="nav-link" data-scroll-target="#how-to-ensure-that-your-reprex-actually-is-a-reprex">How to ensure that your reprex actually is a reprex</a></li>
   <li><a href="#debugging-a-function" id="toc-debugging-a-function" class="nav-link" data-scroll-target="#debugging-a-function">Debugging a function</a>
   <ul class="collapse">
   <li><a href="#browser" id="toc-browser" class="nav-link" data-scroll-target="#browser"><code>browser()</code></a></li>
@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Debugging with browser() and reprex()</h1>
+<h1 class="title">Debugging with reprex() and browser()</h1>
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
   </div>
@@ -309,46 +309,292 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>[intro]</p>
+<p>[ TODO: why is it useful to know how to debug in the age of AI? ]</p>
+<p>The following code is taken from the <a href="https://palaeoverse.palaeoverse.org/articles/phanerozoic-reefs.html">“Latitudinal trends in Phanerozoic reefs” vignette</a>, but let’s pretend we have written this code from scratch:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `[.data.frame`:
+! undefined columns selected</code></pre>
+</div>
+</div>
+<p>We now have an error, but its cause is not immediately clear. Therefore, we’ll have to do some debugging.</p>
 <section id="reducing-the-problem" class="level1">
 <h1>Reducing the problem</h1>
 <p>The longer the code you try to debug, the more potential causes you have to explore. The first thing to do when you can’t find the bug in your code right away is to build a minimal <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em> (this is also known as a MRE, for “Minimal Reproducible Example”).</p>
-<section id="reduce-the-size-of-the-code" class="level2">
-<h2 data-anchor-id="reduce-the-size-of-the-code">Reduce the size of the code</h2>
-</section>
+<p>In our example above, we can reduce the problem in two ways: we can reduce the data first, and then reduce the code.</p>
 <section id="reduce-the-size-of-the-data" class="level2">
 <h2 data-anchor-id="reduce-the-size-of-the-data">Reduce the size of the data</h2>
+<p>In the debugging process, we will likely run the code at least a handful of times. Therefore, we want to make sure that it runs as fast as possible so that we don’t lose our focus. The easiest way to do this is to reduce the size of our input data.</p>
+<p>In addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small as possible.</p>
+<p>In this example, the dataset we are using has thousands of rows and 14 columns:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4335   19</code></pre>
+</div>
+</div>
+<p>Let’s try to reduce the size of our data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `[.data.frame`:
+! undefined columns selected</code></pre>
+</div>
+</div>
+<p>We still see the same error but now we only have 6 rows left, much better! Let’s try to reduce that to one row and to remove some columns.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `group_apply()`:
+! Supplied `group` is not a named column in `occdf`</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `look_up()`:
+! `early_interval` needs to match a column name of `occdf`</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! object 'interval_max_ma' not found</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `[.data.frame`:
+! undefined columns selected</code></pre>
+</div>
+</div>
+<p>Hmm, we don’t have the same error anymore, so we removed too many columns. Let’s try to keep 6 instead of 5:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `[.data.frame`:
+! undefined columns selected</code></pre>
+</div>
+</div>
+<p>Bingo! We have the same error as before, but now we only have one row and six columns.</p>
+<p>Let’s now try to reduce the size of the code.</p>
 </section>
-<section id="how-to-ensure-that-your-reprex-actually-is-a-reprex" class="level2">
-<h2 data-anchor-id="how-to-ensure-that-your-reprex-actually-is-a-reprex">How to ensure that your reprex actually is a reprex</h2>
-<p>We have reduced the size of the problem, both in data size and in code size. It seems like we have done everything we could to make the problem easier to reproduce, even for other people (e.g.&nbsp;package developers). However, there is one thing that still needs to be cleaned: our <strong>environment</strong>.</p>
+<section id="reduce-the-size-of-the-code" class="level2">
+<h2 data-anchor-id="reduce-the-size-of-the-code">Reduce the size of the code</h2>
+<p>This is an important process: we want to remove as much code as possible to lower the number of potential causes leading to the error.</p>
+<p>Starting from this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `[.data.frame`:
+! undefined columns selected</code></pre>
+</div>
+</div>
+<p>We see that <code>reef_counts</code> is defined but never actually used, so this cannot be the root cause. Let’s remove it.</p>
+<p>The <code>subset()</code> call is also suspicious: now that he have only one row left in our test data, does this <code>subset()</code> actually do anything?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(reefs2, <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>It doesn’t affect <code>reefs2</code>, so let’s remove it as well.</p>
+<p>We now have this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `[.data.frame`:
+! undefined columns selected</code></pre>
+</div>
+</div>
+<p>We have removed two out of five function calls, not bad. We still don’t really understand the cause though.</p>
+<p>Let’s assume that the documentation also doesn’t give any hint about this error message. If we are completely stuck, then we may want to ask other people, such as package maintainers on Github or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for external people to help us.</p>
+<p>Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it.</p>
+</section>
+</section>
+<section id="how-to-ensure-that-your-reprex-actually-is-a-reprex" class="level1">
+<h1>How to ensure that your reprex actually is a reprex</h1>
+<p>It seems like we have done everything we could to make the problem easier to reproduce, even for other people (e.g.&nbsp;package developers). However, there is one thing that still needs to be cleaned: our <strong>environment</strong>.</p>
 <p>Our environment may have tons of variables, datasets, and options that were defined before but are not relevant to our problem. Some of those objects may interact in some way with our problematic code, meaning that we need to clean our environment to ensure that we can correctly reproduce the issue.</p>
 <p>One way to do this is to restart the R session, but this can easily be forgotten. A more robust solution is to use the package <a href="https://reprex.tidyverse.org/"><code>reprex</code></a>. This package provides a function called <code>reprex()</code> in which we can put all the code related to our problem. <code>reprex()</code> will start a separate R session in the background to run this code and then report its results. Since this is a completely separate R session, it will error if our code isn’t completely self-contained, and this would indicate that our reproducible example isn’t actually… reproducible.</p>
 <p>This is extremely useful to solve the problem yourself, but it is even more useful when reporting a bug to colleagues and package developers: if your example runs in <code>reprex()</code>, then it is almost guaranteed that it can be easily reproduced by other people with different environments.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reprex</span>({</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># our code here</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">int_key =</span> interval_key)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! object 'reefs' not found</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! object 'reefs2' not found</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">int_key =</span> interval_key)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `look_up()`:</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! could not find function "look_up"</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `time_bins()`:</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! could not find function "time_bins"</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `bin_time()`:</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! could not find function "bin_time"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Our reprex fails, but not with the error we experienced so far! We forgot to add the calls to <code>library()</code> and <code>data()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(palaeoverse)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(reefs)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">int_key =</span> interval_key)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">int_key =</span> interval_key)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `[.data.frame`:</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! undefined columns selected</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the situation we had so far, so we can now share this output with other people and they should be able to reproduce the issue.</p>
+<p>Note that it is good practice to show more information on our session, including the version of packages used. This can be done with the argument <code>si</code> in <code>reprex()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(palaeoverse)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(reefs)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">int_key =</span> interval_key)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>}, <span class="at">si =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You now know how to use <code>reprex()</code>! Note that the steps before actually using it are key: very often, other people will ask you to minimize your issue as much as possible before reporting it. In many cases, you can also find the issue on your own just by reducing it.</p>
 </section>
 <section id="debugging-a-function" class="level1">
 <h1>Debugging a function</h1>
-<p>Debugging a function that you wrote (either in a package or as part of a project), can be annoying because finding the source of the problem can be hard. While in the previous example we could debug line by line, it is less intuitive how to do so in a function.</p>
-<p>One reflex might be to put various <code>print()</code> statement in the function body to see which ones get evaluated (meaning that the code ran fine so far) and which ones didn’t because the function errored before.</p>
-<p>However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: <code>browser()</code>.</p>
+<p>Debugging a function that you wrote (either in a package or as part of a project) can be annoying because an entire (internal) block of code gets executed and you only see the final error.</p>
+<p>One reflex is to put various <code>print()</code> statement in the function body to see which ones get evaluated (meaning that the code ran fine so far) and which ones didn’t because the function errored before.</p>
+<p>However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: <code>browser()</code>. This allows us to run line by line <em>in the function body</em>, and it is therefore a key tool when you start writing your own functions.</p>
 <section id="browser" class="level2">
 <h2 data-anchor-id="browser"><code>browser()</code></h2>
 <p>Let’s say we have this function:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Instead of putting <code>print()</code> statements in multiple places, we can add a <code>browser()</code> call at the start:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f &lt;- function() {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">+browser()  </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>f &lt;- function() {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">+browser()  </span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now, the next time we call <code>f()</code>, the execution will stop at <code>browser()</code> and we will be able to explore the current environment in the console. We can see exactly the environment the code has access to when it reaches this step, which makes it easier to for us to find the source of the bug.</p>
 </section>
 <section id="breakpoints-in-the-ide" class="level2">
@@ -398,39 +644,40 @@ document.addEventListener('DOMContentLoaded', function () {
   //  2) turning each category badge into a link that opens the list filtered by
   //     that tag. Modules live at training/modules/<name>/index.html, so the
   //     listing page is always one level up.
-  (function () {
-    function ready(fn) {
-      if (document.readyState !== "loading") {
-        fn();
-      } else {
-        document.addEventListener("DOMContentLoaded", fn);
-      }
-    }
+  
+  // (function () {
+  //   function ready(fn) {
+  //     if (document.readyState !== "loading") {
+  //       fn();
+  //     } else {
+  //       document.addEventListener("DOMContentLoaded", fn);
+  //     }
+  //   }
 
-    ready(function () {
-      // The metadata also applies to the listing page itself; skip it there.
-      if (document.querySelector(".modules-grid")) return;
+  //   ready(function () {
+  //     // The metadata also applies to the listing page itself; skip it there.
+  //     if (document.querySelector(".modules-grid")) return;
 
-      var header = document.getElementById("title-block-header");
-      if (header) {
-        var back = document.createElement("a");
-        back.className = "back-to-modules";
-        back.href = "../index.html";
-        back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
-        header.parentNode.insertBefore(back, header);
-      }
+  //     var header = document.getElementById("title-block-header");
+  //     if (header) {
+  //       var back = document.createElement("a");
+  //       back.className = "back-to-modules";
+  //       back.href = "../index.html";
+  //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+  //       header.parentNode.insertBefore(back, header);
+  //     }
 
-      document.querySelectorAll(".quarto-category").forEach(function (el) {
-        var cat = el.textContent.trim();
-        var link = document.createElement("a");
-        link.className = "quarto-category module-category-link";
-        link.href =
-          "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
-        link.textContent = cat;
-        el.replaceWith(link);
-      });
-    });
-  })();
+  //     document.querySelectorAll(".quarto-category").forEach(function (el) {
+  //       var cat = el.textContent.trim();
+  //       var link = document.createElement("a");
+  //       link.className = "quarto-category module-category-link";
+  //       link.href =
+  //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+  //       link.textContent = cat;
+  //       el.replaceWith(link);
+  //     });
+  //   });
+  // })();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

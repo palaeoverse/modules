@@ -33,8 +33,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../_brand/logos/favicon.png" rel="icon" type="image/png">
-<script src="../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -45,9 +43,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-50db7f3496b96cf61c848824d92787f9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-5a7a8723d4e38836d2047ed44e7a4ffa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e2f79c0bcf7793bfaef8b2c438f1f609.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-5a7a8723d4e38836d2047ed44e7a4ffa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-621e7d618206a720d7fc9e09ed522b12.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,65 +73,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-modules .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-description','listing-image','listing-date','listing-categories','listing-difficulty','listing-path',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
-      
-      searchColumns: ["listing-project","listing-website","listing-format","listing-engines","listing-language","listing-include-after-body","listing-title","listing-description","listing-author","listing-date","listing-categories","listing-difficulty","listing-image","listing-execute","listing-editor","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-modules'] = new List('listing-modules', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
@@ -141,7 +81,7 @@ window.Quarto = {
 <meta property="og:locale" content="en_GB">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -268,9 +208,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -293,7 +231,17 @@ window.Quarto = {
 </header>
 
 
-<p>This page contains a list of modules that we use in our <a href="../workshops/">Workshops</a>, but they can also serve as standalone resources.</p>
+<p>We develop self-contained training modules on topics ranging from data visualisation with <code>ggplot2</code> to R package development. These modules are also used in our <a href="../workshops/">Workshops</a>. Existing modules from our past workshops can be found <a href="https://workshop.palaeoverse.org/" target="_blank">here</a>.</p>
+<p>Coming soon:</p>
+<ul>
+<li>Visualizing your data with the grammar of graphics</li>
+<li>Using Palaeoverse packages</li>
+<li>R package development</li>
+<li>Many more modules!</li>
+</ul>
+<p>Check again in late 2026!</p>
+<!-- # TODO: once we have modules -->
+<!-- ```{=html}
 <div class="modules-filters">
   <label class="modules-filter">Difficulty
     <select id="filter-difficulty"><option value="">All</option></select>
@@ -302,43 +250,12 @@ window.Quarto = {
     <select id="filter-category"><option value="">All</option></select>
   </label>
 </div>
-<div id="listing-modules" class="quarto-listing quarto-listing-container-custom">
-<div class="modules-grid">
-<a class="module-card" href="../../training/modules/browser_reprex/index.html" data-difficulty="intermediate" data-categories="r"><img class="module-card-img" src="../../training/modules/browser_reprex/R_logo.png" alt="Debugging with browser() and reprex()">
-<div class="module-card-body">
-<span class="module-difficulty difficulty-intermediate">Intermediate</span>
-<h3 class="module-card-title">
-Debugging with browser() and reprex()
-</h3>
-<p class="module-card-desc">
-How to efficiently solve bugs.
-</p>
-<div class="module-card-cats">
-<span class="module-cat">r</span>
-</div>
-</div>
-</a><a class="module-card" href="../../training/modules/ggplot/index.html" data-difficulty="beginner" data-categories="r|tidyverse|dataviz"><img class="module-card-img" src="../../training/modules/ggplot/images/2d_density.png" alt="Plotting in R with ggplot2">
-<div class="module-card-body">
-<span class="module-difficulty difficulty-beginner">Beginner</span>
-<h3 class="module-card-title">
-Plotting in R with ggplot2
-</h3>
-<p class="module-card-desc">
-Visualizing your data with the grammar of graphics
-</p>
-<div class="module-card-cats">
-<span class="module-cat">r</span><span class="module-cat">tidyverse</span><span class="module-cat">dataviz</span>
-</div>
-</div>
-</a>
-</div>
-<p class="modules-empty" hidden="">
-No modules match the selected filters.
-</p>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
-<script src="modules-filter.js"></script>
+```
 
+::: {#modules}
+:::
+
+<script src="modules-filter.js"></script> -->
 
 
 
@@ -382,39 +299,40 @@ document.addEventListener('DOMContentLoaded', function () {
   //  2) turning each category badge into a link that opens the list filtered by
   //     that tag. Modules live at training/modules/<name>/index.html, so the
   //     listing page is always one level up.
-  (function () {
-    function ready(fn) {
-      if (document.readyState !== "loading") {
-        fn();
-      } else {
-        document.addEventListener("DOMContentLoaded", fn);
-      }
-    }
+  
+  // (function () {
+  //   function ready(fn) {
+  //     if (document.readyState !== "loading") {
+  //       fn();
+  //     } else {
+  //       document.addEventListener("DOMContentLoaded", fn);
+  //     }
+  //   }
 
-    ready(function () {
-      // The metadata also applies to the listing page itself; skip it there.
-      if (document.querySelector(".modules-grid")) return;
+  //   ready(function () {
+  //     // The metadata also applies to the listing page itself; skip it there.
+  //     if (document.querySelector(".modules-grid")) return;
 
-      var header = document.getElementById("title-block-header");
-      if (header) {
-        var back = document.createElement("a");
-        back.className = "back-to-modules";
-        back.href = "../index.html";
-        back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
-        header.parentNode.insertBefore(back, header);
-      }
+  //     var header = document.getElementById("title-block-header");
+  //     if (header) {
+  //       var back = document.createElement("a");
+  //       back.className = "back-to-modules";
+  //       back.href = "../index.html";
+  //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+  //       header.parentNode.insertBefore(back, header);
+  //     }
 
-      document.querySelectorAll(".quarto-category").forEach(function (el) {
-        var cat = el.textContent.trim();
-        var link = document.createElement("a");
-        link.className = "quarto-category module-category-link";
-        link.href =
-          "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
-        link.textContent = cat;
-        el.replaceWith(link);
-      });
-    });
-  })();
+  //     document.querySelectorAll(".quarto-category").forEach(function (el) {
+  //       var cat = el.textContent.trim();
+  //       var link = document.createElement("a");
+  //       link.className = "quarto-category module-category-link";
+  //       link.href =
+  //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+  //       link.textContent = cat;
+  //       el.replaceWith(link);
+  //     });
+  //   });
+  // })();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
