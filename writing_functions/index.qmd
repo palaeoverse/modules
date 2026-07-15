@@ -6,6 +6,7 @@ date: "2026-06-18"
 categories: [r, package development]
 difficulty: Intermediate
 image: R_logo.png
+toc: true
 format:
   html: default
   revealjs:
@@ -271,17 +272,72 @@ head(my_std("Sepal.Length"))
 
 ## Exiting a function early
 
+Sometimes, we want to return an object early on instead of executing the rest of the function.
+
+For example, suppose we have a function where we want to return `NA` if any of the input values is `NA`. 
+In this case, we could use `return()` in an `if` condition to skip the rest of the function:
+
+```{r}
+f <- function(x) {
+
+  if (anyNA(x)) {
+    return(NA)
+  }
+
+  # if x doesn't contain NA, then we continue the function here...
+}
+```
+
+Note that the last value in the function is implicitly returned, so you don't need to wrap it in `return()` (but you can if you want, it's just a matter of preferences).
+Note that if the last statement in the function is an assignment, then the function returns the value of this assignment but doesn't print it when you call it:
+
+```{r}
+# Returns the value of `x` and prints it
+f <- function() {
+  x <- 1
+  x
+}
+f()
+result_1 <- f()
+
+# Also returns the value of `x`, but doesn't print it!
+f <- function() {
+  x <- 1
+}
+f()
+result_2 <- f()
+
+identical(result_1, result_2)
+```
+
+
 ## Documenting functions
 
+[UNSURE: this could fit better in the package development module]
 
-[ Mention the [Tidyverse design](https://design.tidyverse.org/) book ]
+If you plan to keep using custom functions in your project, or if you want to share those with colleagues, then it is important to write documentation.
+The documentation should include:
+
+- an explanation of the function's purpose
+- an explanation of each function parameter, including the expected type (e.g. "a character value of length 1")
+- details on the expected output
+
+# Going further
+
+Designing functions and ensuring their robustness is not trivial.
+There are many choices one can make, such as using positional or named arguments, harmonising parameter names, and whether to use default values.
+
+If you want to explore more, we recommend reading the [Tidyverse design](https://design.tidyverse.org/) book. 
+While the primary audience is package developers, a lot of advice there apply to any custom function.
 
 # Conclusion
+
+In this module, we have seen how to convert existing, duplicated code into a function. 
 
 Now that you have a function that does something useful, maybe you want to share it with colleagues. 
 You could put it in an `.R` file and send it via email, but what happens if you notice a small mistake and want to fix it in the future? 
 You'd have to tell all the people to which you sent the original function.
 This is fine if you shared it with a couple of colleagues, but what if they also shared it with other people?
 
-The best way to share functions with other people is to wrap them in a package. 
-This might sound scary but you're in luck, we have an [entire module dedicated to package development]()!
+The best way to share functions with other people is to wrap them in an R package. 
+This might sound intimidating but don't worry, we have an [entire module dedicated to package development]()!
