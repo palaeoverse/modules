@@ -1013,39 +1013,40 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
       //  2) turning each category badge into a link that opens the list filtered by
       //     that tag. Modules live at training/modules/<name>/index.html, so the
       //     listing page is always one level up.
-      (function () {
-        function ready(fn) {
-          if (document.readyState !== "loading") {
-            fn();
-          } else {
-            document.addEventListener("DOMContentLoaded", fn);
-          }
-        }
+      
+      // (function () {
+      //   function ready(fn) {
+      //     if (document.readyState !== "loading") {
+      //       fn();
+      //     } else {
+      //       document.addEventListener("DOMContentLoaded", fn);
+      //     }
+      //   }
 
-        ready(function () {
-          // The metadata also applies to the listing page itself; skip it there.
-          if (document.querySelector(".modules-grid")) return;
+      //   ready(function () {
+      //     // The metadata also applies to the listing page itself; skip it there.
+      //     if (document.querySelector(".modules-grid")) return;
 
-          var header = document.getElementById("title-block-header");
-          if (header) {
-            var back = document.createElement("a");
-            back.className = "back-to-modules";
-            back.href = "../index.html";
-            back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
-            header.parentNode.insertBefore(back, header);
-          }
+      //     var header = document.getElementById("title-block-header");
+      //     if (header) {
+      //       var back = document.createElement("a");
+      //       back.className = "back-to-modules";
+      //       back.href = "../index.html";
+      //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+      //       header.parentNode.insertBefore(back, header);
+      //     }
 
-          document.querySelectorAll(".quarto-category").forEach(function (el) {
-            var cat = el.textContent.trim();
-            var link = document.createElement("a");
-            link.className = "quarto-category module-category-link";
-            link.href =
-              "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
-            link.textContent = cat;
-            el.replaceWith(link);
-          });
-        });
-      })();
+      //     document.querySelectorAll(".quarto-category").forEach(function (el) {
+      //       var cat = el.textContent.trim();
+      //       var link = document.createElement("a");
+      //       link.className = "quarto-category module-category-link";
+      //       link.href =
+      //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+      //       link.textContent = cat;
+      //       el.replaceWith(link);
+      //     });
+      //   });
+      // })();
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
