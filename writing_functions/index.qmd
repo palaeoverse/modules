@@ -425,6 +425,31 @@ can use
 lapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))
 ```
 
+## Inspecting Source Code
+
+When working with R, you will interact with functions all the time. The
+primary purpose of functions is to combine a number of complex
+operations and give them a shared name (the name of the function).
+However, sometimes it is useful to unwarp a function to understand
+exactly what it is doing and how your inputs are modified. For this, you
+can simply enter the name of the function (without parentheses) into the
+console, which will display the body of the function to give you some
+insight into how it is implemented:\
+
+```{r}
+my_std
+```
+
+Note that functions themselves will call other functions, so to really
+understand what a function is doing might require you to iteratively dig
+through a number of functions.
+
+Working through the source code of functions can be very insightful, but
+can quickly expose you to a lot of low-level functionality of R that
+comes with a steep learning curve. As an (advanced) exercise, have a
+look at the implementation of `mean` or `lapply` and try to understand
+what they are doing using the documentation.
+
 ## Documenting functions
 
 \[UNSURE: this could fit better in the package development module\]
