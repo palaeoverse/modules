@@ -397,6 +397,34 @@ function without passing it any arguments and will result in an error.
 For the curious: `lapply` is what is called a ["higher-order
 function"](https://en.wikipedia.org/wiki/Higher-order_function).
 
+## Anonymous functions
+
+All functions you have encountered so far have been named either by R,
+the package developer, or yourself (e.g., the `my_std` functions above).
+Generally, it is good practice to give your variables and functions
+informative names so others and your future self can understand their
+purpose.
+
+However, sometimes you will just need a quick, short throwaway function
+that serves one purpose without wanting to bother to write a full size
+function. For this, you can use *anonymous functions.* These are
+functions that are defined on the spot and immediately evaluated without
+being assigned to a variable. Their syntax is straightforward, as you
+just skip the variable assignment:
+
+```{r eval=FALSE}
+function(x){ some code }
+```
+
+A typical usecase is when you want to make some quick, on the spot data
+manipulation of a data frame or list. As an example, to get the absolute
+difference between the 3rd and 5th value of our list defined above, we
+can use
+
+```{r}
+lapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))
+```
+
 ## Documenting functions
 
 \[UNSURE: this could fit better in the package development module\]
