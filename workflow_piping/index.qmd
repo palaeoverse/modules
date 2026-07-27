@@ -1,0 +1,42 @@
+---
+title: "Workflow design and piping"
+description: ""
+author: "Etienne Bacher"
+date: "2026-07-27"
+categories: [r]
+difficulty: Beginner
+format:
+  html: default
+  revealjs:
+    output-file: index-slides.html
+execute:
+  warning: false
+  message: false
+  freeze: auto
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Introduction
+
+## Example where we don't use the pipe
+
+- assign each function output to an object
+
+  - drawback: either create plenty of temp object names, or overwrite the same object again and again, in which case we have to be careful if we want to rename this object later.
+
+- alternative: use nested function calls 
+
+  - drawback: harder to create because we have to start from the most nested function and progressively go outwards
+
+
+## Introducing the pipe
+
+[ add a quarto callout explaining the "history" of `%>%` and `|>` so that people know why `%>%` still appears in a lot of docs and examples ]
+
+- explain `|>`: how to use, constraints (R >= 4.1, RHS must be a function call with `()`)
+
+- explain `_`: how to use, constraints (must be associated to a named argument, can't appear more than once in the RHS)
+
+- rewrite the example above with the pipe and `_`
