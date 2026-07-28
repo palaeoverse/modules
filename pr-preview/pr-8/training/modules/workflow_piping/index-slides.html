@@ -378,7 +378,7 @@ first element will be used</code></pre>
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p>The code above is equivalent to <code>grepl(head(letters), "a|e")</code>, which is not what we want and is the cause of the warning. We want to tell <code>grepl()</code> that the data we’re passing via <code>|&gt;</code> should end up in second position. To do so, we can use <code>_</code>:</p>
+<p>The code above is equivalent to <code>grepl(let, "a|e")</code>, which is not what we want and is the cause of the warning. We want to tell <code>grepl()</code> that the data we’re passing via <code>|&gt;</code> should end up in second position. To do so, we can use <code>_</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a>let <span class="sc">|&gt;</span> </span>
 <span id="cb20-2"><a aria-label="2"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>, <span class="at">x =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
