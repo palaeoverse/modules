@@ -231,10 +231,13 @@ Etienne Bacher
 <li><a href="#/validating-function-parameters" id="/toc-validating-function-parameters">Validating function parameters</a></li>
 <li><a href="#/setting-default-value-for-parameters" id="/toc-setting-default-value-for-parameters">Setting default value for parameters</a></li>
 <li><a href="#/exiting-a-function-early" id="/toc-exiting-a-function-early">Exiting a function early</a></li>
+<li><a href="#/documenting-functions" id="/toc-documenting-functions">Documenting functions</a></li>
+</ul></li>
+<li><a href="#/other-ways-to-use-and-create-functions" id="/toc-other-ways-to-use-and-create-functions">Other ways to use and create functions</a>
+<ul>
 <li><a href="#/functions-as-arguments" id="/toc-functions-as-arguments">Functions as arguments</a></li>
 <li><a href="#/anonymous-functions" id="/toc-anonymous-functions">Anonymous functions</a></li>
 <li><a href="#/inspecting-source-code" id="/toc-inspecting-source-code">Inspecting Source Code</a></li>
-<li><a href="#/documenting-functions" id="/toc-documenting-functions">Documenting functions</a></li>
 </ul></li>
 <li><a href="#/going-further" id="/toc-going-further">Going further</a></li>
 <li><a href="#/conclusion" id="/toc-conclusion">Conclusion</a></li>
@@ -540,6 +543,21 @@ or logical: returning NA</code></pre>
 </div>
 </div>
 </section>
+<section id="documenting-functions" class="slide level2">
+<h2>Documenting functions</h2>
+<p>[UNSURE: this could fit better in the package development module]</p>
+<p>If you plan to keep using custom functions in your project, or if you want to share those with colleagues, then it is important to write documentation. The documentation should include:</p>
+<ul>
+<li>an explanation of the function’s purpose</li>
+<li>an explanation of each function parameter, including the expected type (e.g.&nbsp;“a character value of length 1”)</li>
+<li>details on the expected output</li>
+</ul>
+</section></section>
+<section>
+<section id="other-ways-to-use-and-create-functions" class="title-slide slide level1 center">
+<h1>Other ways to use and create functions</h1>
+
+</section>
 <section id="functions-as-arguments" class="slide level2">
 <h2>Functions as arguments</h2>
 <p>In R, functions are treated as <em>first order citizens</em>, meaning they can be assigned to variables and passed over to other functions. Let’s look at the built-in function for the mean as an example.</p>
@@ -568,10 +586,10 @@ or logical: returning NA</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-label="1"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> median)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] -0.1932445
+[1] 0.02666402
 
 $b
-[1] 2.919127</code></pre>
+[1] 3.029178</code></pre>
 </div>
 </div>
 <p>Note again that we pass <code>median</code> (the function) as an argument without parenthesis. Using <code>median()</code> instead equates to calling the median function without passing it any arguments and will result in an error. For the curious: <code>lapply</code> is what is called a <a href="https://en.wikipedia.org/wiki/Higher-order_function">“higher-order function”</a>.</p>
@@ -588,10 +606,10 @@ $b
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">abs</span>(x[<span class="dv">3</span>] <span class="sc">-</span> x[<span class="dv">5</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] 2.835621
+[1] 0.9688157
 
 $b
-[1] 0.1264853</code></pre>
+[1] 1.291205</code></pre>
 </div>
 </div>
 </section>
@@ -611,16 +629,22 @@ $b
 </div>
 <p>Note that functions themselves will call other functions, so to really understand what a function is doing might require you to iteratively dig through a number of functions.</p>
 <p>Working through the source code of functions can be very insightful, but can quickly expose you to a lot of low-level functionality of R that comes with a steep learning curve. As an (advanced) exercise, have a look at the implementation of <code>mean</code> or <code>lapply</code> and try to understand what they are doing using the documentation.</p>
-</section>
-<section id="documenting-functions" class="slide level2">
-<h2>Documenting functions</h2>
-<p>[UNSURE: this could fit better in the package development module]</p>
-<p>If you plan to keep using custom functions in your project, or if you want to share those with colleagues, then it is important to write documentation. The documentation should include:</p>
-<ul>
-<li>an explanation of the function’s purpose</li>
-<li>an explanation of each function parameter, including the expected type (e.g.&nbsp;“a character value of length 1”)</li>
-<li>details on the expected output</li>
-</ul>
+<div title="Tip to see the source code of a function">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip to see the source code of a function</strong></p>
+</div>
+<div class="callout-content">
+<p>In RStudio and Positron, you can press <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on macOS) and click on a function name in a script to open a tab containing its source code:</p>
+<p><video data-src="demo_source_function.webm" controls=""><a href="demo_source_function.webm">Video</a></video></p>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section id="going-further" class="title-slide slide level1 center">
 <h1>Going further</h1>
