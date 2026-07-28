@@ -148,6 +148,21 @@ Note that using `_` comes with a few restrictions:
   ```
 
 
+
+### Using anonymous functions in a piped chain
+
+So far, we have only used named functions provided in base R (though we could have used functions from other packages).
+Sometimes, it is necessary to run custom code on the data without creating a dedicated new function for that.
+
+To do so, we need to wrap the call to the anonymous function in parenthesis and evaluate it with `()` at the end of its definition:
+
+```{r}
+mtcars |> 
+  subset(cyl == 4) |> 
+  (function(d) lm(mpg ~ disp, data = d))()
+```
+
+
 ### What about "`%>%`"?
 
 You may have seen code that chains operations using `%>%`.
