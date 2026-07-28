@@ -260,6 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#using" id="toc-using" class="nav-link" data-scroll-target="#using">Using “<code>|&gt;</code>”</a></li>
   <li><a href="#using-_" id="toc-using-_" class="nav-link" data-scroll-target="#using-_">Using “<code>_</code>”</a></li>
+  <li><a href="#using-anonymous-functions-in-a-piped-chain" id="toc-using-anonymous-functions-in-a-piped-chain" class="nav-link" data-scroll-target="#using-anonymous-functions-in-a-piped-chain">Using anonymous functions in a piped chain</a></li>
   <li><a href="#what-about" id="toc-what-about" class="nav-link" data-scroll-target="#what-about">What about “<code>%&gt;%</code>”?</a></li>
   </ul></li>
   </ul></li>
@@ -475,6 +476,25 @@ first element will be used</code></pre>
 </div>
 </div></li>
 </ul>
+</section>
+<section id="using-anonymous-functions-in-a-piped-chain" class="level3">
+<h3 data-anchor-id="using-anonymous-functions-in-a-piped-chain">Using anonymous functions in a piped chain</h3>
+<p>So far, we have only used named functions provided in base R (though we could have used functions from other packages). Sometimes, it is necessary to run custom code on the data without creating a dedicated new function for that.</p>
+<p>To do so, we need to wrap the call to the anonymous function in parenthesis and evaluate it with <code>()</code> at the end of its definition:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(cyl <span class="sc">==</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  (<span class="cf">function</span>(d) <span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> d))()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ disp, data = d)
+
+Coefficients:
+(Intercept)         disp  
+    40.8720      -0.1351  </code></pre>
+</div>
+</div>
 </section>
 <section id="what-about" class="level3">
 <h3 data-anchor-id="what-about">What about “<code>%&gt;%</code>”?</h3>
