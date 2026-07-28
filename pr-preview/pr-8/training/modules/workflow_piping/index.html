@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -218,10 +253,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#piping" id="toc-piping" class="nav-link active" data-scroll-target="#piping">Piping</a>
   <ul class="collapse">
   <li><a href="#example-where-we-dont-use-the-pipe" id="toc-example-where-we-dont-use-the-pipe" class="nav-link" data-scroll-target="#example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</a></li>
-  <li><a href="#introducing-the-pipe" id="toc-introducing-the-pipe" class="nav-link" data-scroll-target="#introducing-the-pipe">Introducing the pipe</a></li>
+  <li><a href="#introducing-the-pipe" id="toc-introducing-the-pipe" class="nav-link" data-scroll-target="#introducing-the-pipe">Introducing the pipe</a>
+  <ul class="collapse">
+  <li><a href="#using" id="toc-using" class="nav-link" data-scroll-target="#using">Using “<code>|&gt;</code>”</a></li>
+  <li><a href="#using-_" id="toc-using-_" class="nav-link" data-scroll-target="#using-_">Using “<code>_</code>”</a></li>
+  <li><a href="#what-about" id="toc-what-about" class="nav-link" data-scroll-target="#what-about">What about “<code>%&gt;%</code>”?</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules/workflow_piping/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
@@ -263,31 +303,186 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="piping" class="level1">
+<h1>Piping</h1>
 <section id="example-where-we-dont-use-the-pipe" class="level2">
 <h2 data-anchor-id="example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</h2>
+<p>Let’s say we want to keep the first 10 rows in the <code>mtcars</code> data, then keep the observations where <code>cyl &gt;= 6</code>, and finally sort the remaining data by the <code>am</code> column.</p>
+<p>Without using the pipe, we have two main approaches.</p>
+<p>First, we can assign each function output to an object. This object can either keep the same name and be overwritten at each step, or we can use a collection of temporary names:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same name gets overwritten</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars, <span class="dv">10</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">subset</span>(res, cyl <span class="sc">&gt;=</span> <span class="dv">6</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sort_by</span>(res, <span class="sc">~</span> am)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Temporary names</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tmp1 <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars, <span class="dv">10</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tmp2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(tmp1, cyl <span class="sc">&gt;=</span> <span class="dv">6</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sort_by</span>(tmp2, <span class="sc">~</span> am)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pre>
+</div>
+</div>
+<p>Each of these cases has drawbacks:</p>
 <ul>
-<li><p>assign each function output to an object</p>
-<ul>
-<li>drawback: either create plenty of temp object names, or overwrite the same object again and again, in which case we have to be careful if we want to rename this object later.</li>
-</ul></li>
-<li><p>alternative: use nested function calls</p>
-<ul>
-<li>drawback: harder to create because we have to start from the most nested function and progressively go outwards</li>
-</ul></li>
+<li><p>in the first case, if we want to rename <code>res</code> in the future then we must be careful to rename all its occurrences throughout the code. It also means that if, say, the call to <code>sort_by()</code> is wrong, then we must run the entire block again so that <code>res</code> is properly reset. Depending on the data size and operations to run, this can be very time-consuming.</p></li>
+<li><p>in the second case, we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.</p></li>
 </ul>
+<p>The second approach isn’t to define intermediate objects, but instead to run all those calls at once by nesting functions:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sort_by</span>(<span class="fu">subset</span>(<span class="fu">head</span>(mtcars, <span class="dv">10</span>), cyl <span class="sc">&gt;=</span> <span class="dv">6</span>), <span class="sc">~</span> am)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same but with different formatting</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sort_by</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(mtcars, <span class="dv">10</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    cyl <span class="sc">&gt;=</span> <span class="dv">6</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> am</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pre>
+</div>
+</div>
+<p>We didn’t define intermediate objects, but to read this code we now need to start from the innermost code (<code>head(mtcars, 10)</code>) and expand outwards. This may hurt code readability.</p>
 </section>
 <section id="introducing-the-pipe" class="level2">
 <h2 data-anchor-id="introducing-the-pipe">Introducing the pipe</h2>
-<p>[ add a quarto callout explaining the “history” of <code>%&gt;%</code> and <code>|&gt;</code> so that people know why <code>%&gt;%</code> still appears in a lot of docs and examples ]</p>
+<section id="using" class="level3">
+<h3 data-anchor-id="using">Using “<code>|&gt;</code>”</h3>
+<p>The pipe is a way to chain operations in natural reading order by automatically passing the output of the left-hand side code to the right-hand side. Using the pipe <code>|&gt;</code> with the example above would give:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars, <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(cyl <span class="sc">&gt;=</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort_by</span>(<span class="sc">~</span> am)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pre>
+</div>
+</div>
+<p>The pipe can be read as “and then”: we keep the first 10 rows, <em>and then</em> we apply our filter, <em>and then</em> we sort the remaining data.</p>
+<p>We now have some code that doesn’t require intermediate objects but is also easy to read because we see operations in the order in which they are executed.</p>
+<p>There are a couple of small restrictions in order to use <code>|&gt;</code>:</p>
 <ul>
-<li><p>explain <code>|&gt;</code>: how to use, constraints (R &gt;= 4.1, RHS must be a function call with <code>()</code>)</p></li>
-<li><p>explain <code>_</code>: how to use, constraints (R &gt;= 4.2, must be used as a named argument, can’t appear more than once in the RHS)</p></li>
-<li><p>rewrite the example above with the pipe and <code>_</code></p></li>
+<li><p>this operator is available since R 4.1, released in 2021;</p></li>
+<li><p>it requires a proper function call in the right-hand side:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> <span class="fu">mean</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in mean: The pipe operator requires a function call as RHS (&lt;input&gt;:1:8)</code></pre>
+</div>
+</div></li>
 </ul>
+</section>
+<section id="using-_" class="level3">
+<h3 data-anchor-id="using-_">Using “<code>_</code>”</h3>
+<p>In the code above, we could seamlessly chain operations because each of those functions take the input data as their first argument.</p>
+<p>This is not always the case. For instance, <code>grepl()</code> (which detects whether elements of a character vector match a specific pattern) takes the vector to check in second position:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>let <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">"a|e"</span>, let)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE FALSE FALSE  TRUE FALSE</code></pre>
+</div>
+</div>
+<p>Using <code>|&gt;</code> without specifying the position of the input would lead to wrong code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grepl(let, "a|e"): argument 'pattern' has length &gt; 1 and only the
+first element will be used</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>The code above is equivalent to <code>grepl(head(letters), "a|e")</code>, which is not what we want and is the cause of the warning. We want to tell <code>grepl()</code> that the data we’re passing via <code>|&gt;</code> should end up in second position. To do so, we can use <code>_</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>, <span class="at">x =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE FALSE FALSE  TRUE FALSE</code></pre>
+</div>
+</div>
+<p>Note that using <code>_</code> comes with a few restrictions:</p>
+<ul>
+<li><p>this operator is available since R 4.2 (released in 2022);</p></li>
+<li><p><code>_</code> must be used on a named argument, e.g.&nbsp;this fails:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>, _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in grepl("a|e", "_"): pipe placeholder can only be used as a named argument (&lt;input&gt;:2:3)</code></pre>
+</div>
+</div></li>
+<li><p>a function call can contain only one <code>_</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>drat <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">x =</span> _, <span class="at">y =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in cor(x = "_", y = "_"): pipe placeholder may only appear once (&lt;input&gt;:2:3)</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="what-about" class="level3">
+<h3 data-anchor-id="what-about">What about “<code>%&gt;%</code>”?</h3>
+<p>You may have seen code that chains operations using <code>%&gt;%</code>. This <code>%&gt;%</code> is part of the <code>magrittr</code> package. It predates <code>|&gt;</code> and was widely used in the <a href="https://tidyverse.org/"><code>tidyverse</code></a> until 2021, when <code>|&gt;</code> was introduced in base R.</p>
+<p>For simple cases, <code>|&gt;</code> and <code>%&gt;%</code> behave identically. We recommend using <code>|&gt;</code> simply because it is always available in R and doesn’t rely on an external package.</p>
 
 
+</section>
 </section>
 </section>
 
