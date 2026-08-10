@@ -7,6 +7,7 @@ categories: [r]
 difficulty: Intermediate
 image: R_logo.png
 toc: true
+syntax-highlighting: github
 format:
   html: default
   revealjs:
@@ -22,10 +23,27 @@ editor:
 
 [ TODO: why is it useful to know how to debug in the age of AI? ]
 
+<!-- For proper rendering of "diff" code blocks since Quarto won't do it: 
+https://github.com/orgs/quarto-dev/discussions/8387 -->
+```{css}
+/*| eval: true*/
+/*| echo: false*/
+code.sourceCode.diff span.va {
+	color: #b4f1b4;
+	background: #1b4721;
+}
+
+code.sourceCode.diff span.st {
+	color: #ffd8d3;
+	background-color: #78191b;
+}
+```
+
 
 The following code is taken from the ["Latitudinal trends in Phanerozoic reefs" vignette](https://palaeoverse.palaeoverse.org/articles/phanerozoic-reefs.html), but let's pretend we have written this code from scratch:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 library(palaeoverse)
 
 data(reefs)
@@ -69,7 +87,8 @@ dim(reefs)
 
 Let's try to reduce the size of our data:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 reefs2 <- head(reefs)
 
 reef_counts <- group_apply(occdf = reefs2, group = "interval", fun = nrow)
@@ -89,7 +108,8 @@ We still see the same error but now we only have 6 rows left, much better!
 Let's try to reduce that to one row and to remove some columns.
 
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 reefs2 <- head(reefs, n = 1)
 reefs2 <- reefs2[, 1:5]
 
@@ -109,7 +129,8 @@ bin_time(occdf = reefs2, bins = bins, method = "mid")
 Hmm, we don't have the same error anymore, so we removed too many columns.
 Let's try to keep 6 instead of 5:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 reefs2 <- head(reefs, n = 1)
 reefs2 <- reefs2[, 1:6]
 
@@ -136,7 +157,8 @@ Let's now try to reduce the size of the code.
 This is an important process: we want to remove as much code as possible to lower the number of potential causes leading to the error.
 
 Starting from this:
-```{r, error = TRUE}
+```{r}
+#| error: true
 reefs2 <- head(reefs, n = 1)
 reefs2 <- reefs2[, 1:6]
 
@@ -172,7 +194,8 @@ identical(reefs2, subset(reefs2, interval_max_ma <= 541))
 It doesn't affect `reefs2`, so let's remove it as well.
 
 We now have this:
-```{r, error = TRUE}
+```{r}
+#| error: true
 reefs2 <- head(reefs, n = 1)
 reefs2 <- reefs2[, 1:6]
 
@@ -314,29 +337,85 @@ One reflex is to put various `print()` statement in the function body to see whi
 
 However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: `browser()`. This allows us to run line by line *in the function body*, and it is therefore a key tool when you start writing your own functions.
 
+We will use [issue #280](github.com/palaeoverse/palaeoverse/issues/280) in `palaeoverse` as an example throughout this section.
 
 ## `browser()`
 
-Let's say we have this function:
+The bug report above gives a reprex to reproduce the error (note that at the time you are reading this, this bug may have been fixed):
 
 ```{r}
-f <- function() {
+#| error = TRUE
+library(palaeoverse)
 
-}
+occdf <- reefs[1:5, ]
+bin_space(occdf = occdf, spacing = 1000, sub_grid = 250, return = TRUE)
 ```
 
-Instead of putting `print()` statements in multiple places, we can add a `browser()` call at the start:
+The error happens in `bin_space()`, which is a long function:
+
+``` r
+palaeoverse::bin_space
+#> function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL, 
+#>     return = FALSE, plot = FALSE) 
+#> {
+#>     if (!is.data.frame(occdf)) {
+#>         stop("occdf should be of class dataframe")
+#>     }
+#>    
+#>    [ MANUALLY TRUNCATED ]
+#>   
+#> }
+```
+
+One approach to narrow down the cause of the error would be to add multiple `print()` statements, so that we can check which messages are printed (indicating that the code ran without error) and which are not because the error occurred before reaching them.
+
+However, it would be way more convenient to be able to execute the internal code line by line so that we can see precisely which line errors. This is the objective of `browser()`. We can start by putting a `browser()` at the top, re-load the function, and execute it again:
 
 ``` diff
-f <- function() {
-+browser()  
+function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL, 
+    return = FALSE, plot = FALSE) 
+{
++   browser()  
+    if (!is.data.frame(occdf)) {
+        stop("occdf should be of class dataframe")
+    }
+   
+   [ MANUALLY TRUNCATED ]
+  
 }
 ```
 
-Now, the next time we call `f()`, the execution will stop at `browser()` and we will be able to explore the current environment in the console. We can see exactly the environment the code has access to when it reaches this step, which makes it easier to for us to find the source of the bug. 
+In the video below, running the code with the function that now includes `browser()` doesn't error. Instead, it stops the execution at the `browser()` call:
+
+![](browser_1.webm)
+
+There are two interesting things in this video:
+
+1. we have access to the function environment, including the user-provided inputs. Note for instance that `sub_grid` is `NULL` by default in the function definition, but printing `sub_grid` in the console gives `250` because the user provided `sub_grid = 250`.
+
+2. We can execute the remaining function body statement by statement by pressing "Enter" in the console. Note that this goes doesn't necessarily execute *all* the code: an `if()` statement whose condition is `FALSE` will not be executed. `browser()` follows exactly the path taken by our code. 
+
+Pressing "Esc" or executing `Q` allows us to exit this "browsing" mode.
+
+Using this approach, we can find the exact source of the error:
+
+![](browser_2.webm)
+
+In our case, the error comes from the line:
+
+```r
+occdf <- list(occdf, grid, base_grid, primary, secondary)
+```
+
+Fixing this requires reading all the code prior to this line, but this is out of scope for this blog post. 
+
+If you are confident that some lines are irrelevant to the bug, you can move the `browser()` call past them so that you don't need to execute them all every time you enter "browsing" mode.
 
 
+## Breakpoints
 
+Breakpoints are a feature directly integrated in the software used to run R (e.g. RStudio or Positron. This is also known as IDE for "Integrated Development Environment").
 
+They are a way to mimic `browser()` calls without actually modifying the function. You can add one by clicking on the left of line numbers:
 
-## Breakpoints in the IDE
+![](breakpoints.webm)
