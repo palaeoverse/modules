@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -15,10 +15,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -76,14 +79,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-50db7f3496b96cf61c848824d92787f9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-34e29009f0e9e393ee3b28b120f4a08a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-50db7f3496b96cf61c848824d92787f9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-79fa85b9158398cc38c47c196c99c493.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bf4cac0a90176793fc91a7c9224ef198.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-79fa85b9158398cc38c47c196c99c493.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-621e7d618206a720d7fc9e09ed522b12.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-7a378e4af3acb6fbe614d1d7965336e2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-fc9f27e2836ab54d4e6969ced80e5500.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-7a378e4af3acb6fbe614d1d7965336e2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -262,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#debugging-a-function" id="toc-debugging-a-function" class="nav-link" data-scroll-target="#debugging-a-function">Debugging a function</a>
   <ul class="collapse">
   <li><a href="#browser" id="toc-browser" class="nav-link" data-scroll-target="#browser"><code>browser()</code></a></li>
-  <li><a href="#breakpoints-in-the-ide" id="toc-breakpoints-in-the-ide" class="nav-link" data-scroll-target="#breakpoints-in-the-ide">Breakpoints in the IDE</a></li>
+  <li><a href="#breakpoints" id="toc-breakpoints" class="nav-link" data-scroll-target="#breakpoints">Breakpoints</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules/browser_reprex/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
@@ -310,6 +313,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>[ TODO: why is it useful to know how to debug in the age of AI? ]</p>
+<!-- For proper rendering of "diff" code blocks since Quarto won't do it: 
+https://github.com/orgs/quarto-dev/discussions/8387 -->
+<div class="cell">
+<style type="text/css">
+code.sourceCode.diff span.va {
+    color: #b4f1b4;
+    background: #1b4721;
+}
+
+code.sourceCode.diff span.st {
+    color: #ffd8d3;
+    background-color: #78191b;
+}
+</style>
+</div>
 <p>The following code is taken from the <a href="https://palaeoverse.palaeoverse.org/articles/phanerozoic-reefs.html">“Latitudinal trends in Phanerozoic reefs” vignette</a>, but let’s pretend we have written this code from scratch:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -583,22 +601,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Debugging a function that you wrote (either in a package or as part of a project) can be annoying because an entire (internal) block of code gets executed and you only see the final error.</p>
 <p>One reflex is to put various <code>print()</code> statement in the function body to see which ones get evaluated (meaning that the code ran fine so far) and which ones didn’t because the function errored before.</p>
 <p>However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: <code>browser()</code>. This allows us to run line by line <em>in the function body</em>, and it is therefore a key tool when you start writing your own functions.</p>
+<p>We will use <a href="github.com/palaeoverse/palaeoverse/issues/280">issue #280</a> in <code>palaeoverse</code> as an example throughout this section.</p>
 <section id="browser" class="level2">
 <h2 data-anchor-id="browser"><code>browser()</code></h2>
-<p>Let’s say we have this function:</p>
+<p>The bug report above gives a reprex to reproduce the error (note that at the time you are reading this, this bug may have been fixed):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>occdf <span class="ot">&lt;-</span> reefs[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_space</span>(<span class="at">occdf =</span> occdf, <span class="at">spacing =</span> <span class="dv">1000</span>, <span class="at">sub_grid =</span> <span class="dv">250</span>, <span class="at">return =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `bin_space()`:
+! object 'secondary' not found</code></pre>
 </div>
-<p>Instead of putting <code>print()</code> statements in multiple places, we can add a <code>browser()</code> call at the start:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>f &lt;- function() {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">+browser()  </span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now, the next time we call <code>f()</code>, the execution will stop at <code>browser()</code> and we will be able to explore the current environment in the console. We can see exactly the environment the code has access to when it reaches this step, which makes it easier to for us to find the source of the bug.</p>
+</div>
+<p>The error happens in <code>bin_space()</code>, which is a long function:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>palaeoverse<span class="sc">::</span>bin_space</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL, </span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     return = FALSE, plot = FALSE) </span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (!is.data.frame(occdf)) {</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         stop("occdf should be of class dataframe")</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    </span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    [ MANUALLY TRUNCATED ]</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   </span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>One approach to narrow down the cause of the error would be to add multiple <code>print()</code> statements, so that we can check which messages are printed (indicating that the code ran without error) and which are not because the error occurred before reaching them.</p>
+<p>However, it would be way more convenient to be able to execute the internal code line by line so that we can see precisely which line errors. This is the objective of <code>browser()</code>. We can start by putting a <code>browser()</code> at the top, re-load the function, and execute it again:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    return = FALSE, plot = FALSE) </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="va">+   browser()  </span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    if (!is.data.frame(occdf)) {</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        stop("occdf should be of class dataframe")</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>   [ MANUALLY TRUNCATED ]</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the video below, running the code with the function that now includes <code>browser()</code> doesn’t error. Instead, it stops the execution at the <code>browser()</code> call:</p>
+<p><video src="browser_1.webm" class="img-fluid" controls=""><a href="browser_1.webm">Video</a></video></p>
+<p>There are two interesting things in this video:</p>
+<ol type="1">
+<li><p>we have access to the function environment, including the user-provided inputs. Note for instance that <code>sub_grid</code> is <code>NULL</code> by default in the function definition, but printing <code>sub_grid</code> in the console gives <code>250</code> because the user provided <code>sub_grid = 250</code>.</p></li>
+<li><p>We can execute the remaining function body statement by statement by pressing “Enter” in the console. Note that this goes doesn’t necessarily execute <em>all</em> the code: an <code>if()</code> statement whose condition is <code>FALSE</code> will not be executed. <code>browser()</code> follows exactly the path taken by our code.</p></li>
+</ol>
+<p>Pressing “Esc” or executing <code>Q</code> allows us to exit this “browsing” mode.</p>
+<p>Using this approach, we can find the exact source of the error:</p>
+<p><video src="browser_2.webm" class="img-fluid" controls=""><a href="browser_2.webm">Video</a></video></p>
+<p>In our case, the error comes from the line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>occdf <span class="ot">&lt;-</span> <span class="fu">list</span>(occdf, grid, base_grid, primary, secondary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Fixing this requires reading all the code prior to this line, but this is out of scope for this blog post.</p>
+<p>If you are confident that some lines are irrelevant to the bug, you can move the <code>browser()</code> call past them so that you don’t need to execute them all every time you enter “browsing” mode.</p>
 </section>
-<section id="breakpoints-in-the-ide" class="level2">
-<h2 data-anchor-id="breakpoints-in-the-ide">Breakpoints in the IDE</h2>
+<section id="breakpoints" class="level2">
+<h2 data-anchor-id="breakpoints">Breakpoints</h2>
+<p>Breakpoints are a feature directly integrated in the software used to run R (e.g.&nbsp;RStudio or Positron. This is also known as IDE for “Integrated Development Environment”).</p>
+<p>They are a way to mimic <code>browser()</code> calls without actually modifying the function. You can add one by clicking on the left of line numbers:</p>
+<p><video src="breakpoints.webm" class="img-fluid" controls=""><a href="breakpoints.webm">Video</a></video></p>
 
 
 </section>
@@ -638,6 +699,22 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+<!-- This is for site analytics. -->
+
+<!-- 
+Include the domain in the URL reported in goatcounter's dashboard.
+This is needed to separate subdomains that would point to the same page name, e.g.
+"palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
+
+https://goatcounter.com/help/domains
+  -->
+<script>
+    window.goatcounter = {
+        path: function (p) { return location.host + p }
+    }
+</script>
+
+<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 <script>
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and

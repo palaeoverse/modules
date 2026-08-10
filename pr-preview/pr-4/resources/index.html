@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -38,14 +41,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-50db7f3496b96cf61c848824d92787f9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-34e29009f0e9e393ee3b28b120f4a08a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-50db7f3496b96cf61c848824d92787f9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e5bcdb3a787ab268c756645007037576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-7bedbd96ab1891dc478082ef8f0195f3.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e5bcdb3a787ab268c756645007037576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-621e7d618206a720d7fc9e09ed522b12.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-2de17b4a084d7582bade3e9c109f2078.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d3fd0f4e0abb432a08b185359d6e380c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -239,6 +242,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<!-- Custom CSS for the resources table -->
 <div class="cell">
 <style type="text/css">
 .rt-td-inner > a {
@@ -249,15 +253,19 @@ ul.task-list li input[type="checkbox"] {
     border-bottom: none;
 }
 
+.resources-text {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 .ReactTable {
   background: transparent;
   margin-left: 5%;
   margin-right: 5%;
 }
 
-/* reactable clips cells/inners with overflow:hidden and scrolls the table body;
-   override those (with enough specificity to beat reactable.css) so the open
-   filter dropdown can spill out, and keep the header above the body rows. */
+/* Make sure the filter dropdowns appear above the table instead of being hidden behind
+the rows. */
 .Reactable .rt-table,
 .Reactable .rt-thead,
 .Reactable .rt-tr-filters,
@@ -279,13 +287,17 @@ ul.task-list li input[type="checkbox"] {
   font-size: 0.85rem;
 }
 
+.multi-filter > summary,
+.multi-filter__menu {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .multi-filter > summary {
   list-style: none;
   cursor: pointer;
   padding: 4px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -308,9 +320,6 @@ ul.task-list li input[type="checkbox"] {
   margin-top: 2px;
   max-height: 220px;
   overflow-y: auto;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
@@ -329,15 +338,7 @@ ul.task-list li input[type="checkbox"] {
   margin-right: 6px;
 }
 
-.resources-text {
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-/* Quarto promotes the "# Resources" heading into the page title block, which
-   sits in the narrow centred body-content column while the intro text lives in
-   a full-width `.column-screen`. Span the title across the same full-width grid
-   track and inset it 5% so the heading lines up with `.resources-text`. */
+/* We want the page title to be left aligned, just like the text. */
 #title-block-header {
   grid-column: screen-start / screen-end;
   padding-left: 5%;
@@ -347,7 +348,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="column-screen">
 <div class="resources-text">
-<p>This table was created by Christopher Dean and Erin Dillon to help the community to find relevant palaeobiological resources.</p>
+<p>This table was created by Christopher Dean and Erin Dillon to help the community find relevant palaeobiological resources.</p>
 <p>If you want to add entries to this table or correct existing ones, please reach out to <a href="mailto:info@palaeoverse.org">info@palaeoverse.org</a>.</p>
 </div>
 <div class="cell">
@@ -452,6 +453,22 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+<!-- This is for site analytics. -->
+
+<!-- 
+Include the domain in the URL reported in goatcounter's dashboard.
+This is needed to separate subdomains that would point to the same page name, e.g.
+"palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
+
+https://goatcounter.com/help/domains
+  -->
+<script>
+    window.goatcounter = {
+        path: function (p) { return location.host + p }
+    }
+</script>
+
+<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {

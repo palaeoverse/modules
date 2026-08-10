@@ -7,8 +7,8 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Will Gearty">
   <meta name="dcterms.date" content="2026-06-12">
@@ -22,10 +22,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -209,7 +212,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Will Gearty 
+Will Gearty
 </div>
 </div>
 </div>
@@ -220,13 +223,13 @@ Will Gearty
 <h1>Introduction</h1>
 <p>While you can make plots with just the packages that come bundled with base R, many R users make their visualizations entirely using the <a href="https://ggplot2.tidyverse.org/index.html"><code>ggplot2</code></a> package and an <a href="https://exts.ggplot2.tidyverse.org/gallery/">ecosystem of packages</a> designed around it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># load the ggplot2 package</span></span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># load the ggplot2 package</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As with the previous sessions, we’ll be using the Palmer penguins dataset. While we built our own combined dataset in the introduction session, now we’re going to use the built-in cleaned dataset. First, let’s load the dataset. Then let’s inspect the data using the <code>glimpse()</code> function.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">data</span>(penguins)</span>
-<span id="cb2-2"><a></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="fu">data</span>(penguins)</span>
+<span id="cb2-2"><a aria-label="2"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 344
 Columns: 8
@@ -247,7 +250,7 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h1>The ggplot2 basics</h1>
 <p>The most important function in the <code>ggplot2</code> package is <code>ggplot()</code>. Note that this function doesn’t include the “2” of the package name. Let’s go ahead and try using this function on our penguins data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">ggplot</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -259,8 +262,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <p>You’ll notice that the <code>ggplot()</code> function doesn’t actually do much by itself. Here, we provide it with the penguins dataset, but the result looks like someone started making a plot and then stopped after the first step of making the rectangle for the plot area. This is because <code>ggplot2</code> is designed around the “grammar of graphics”. Therefore, it expects you to build a sentence-like structure out of its functions. A single word (i.e., the call to <code>ggplot()</code> above) doesn’t make much of a sentence, so let’s start building up a real sentence.</p>
 <p>By using the <code>ggplot()</code> function, we are essentially stating that we are beginning a plotting “sentence”. We then combine this with other “words” (function calls) using the <code>+</code> operator. The next component you usually want to specify in a <code>ggplot</code> “sentence” is our “aesthetic” mappings. These specify the columns of the dataset that correspond to each axis of the plot, including the x/y axes, but also the axes of color, shape, etc. We do this with the <code>aes()</code> function:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb5-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb5-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -271,9 +274,9 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>Hey, it’s starting to look like a plot now! Except there isn’t any actual data being plotted. Let’s fix that. We’ll start off with a simple scatter plot by using the <code>geom_point()</code> function:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb6-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len) <span class="sc">+</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb6-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len) <span class="sc">+</span></span>
+<span id="cb6-3"><a aria-label="3"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -300,8 +303,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <div class="callout-content">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>penguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>penguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -311,9 +314,9 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>Now, let’s go a step further and color the points by another variable (e.g., the island of the penguins). With <code>ggplot2</code>, all that requires is specifying another aesthetic:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb8-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len, <span class="at">color =</span> island) <span class="sc">+</span></span>
-<span id="cb8-3"><a></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb8-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len, <span class="at">color =</span> island) <span class="sc">+</span></span>
+<span id="cb8-3"><a aria-label="3"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -325,10 +328,10 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <p>Notice that <code>ggplot2</code> comes with its own default color scheme. However, I would strongly discourage you from using the default colors, especially as the number of categories increases (with only 3 categories here it isn’t too bad). Let’s try out some of the more accessible color palettes that are also available in R.</p>
 <p>First, let’s try one of the <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html"><code>viridis</code></a> color palettes. Since this palette is included in <code>ggplot2</code>, all we need to do is add the proper “scale” to our <code>ggplot()</code> call. Scales tell ggplot how to handle a particular aesthetic, and are usually of the form <code>scale_[aesthetic]_[type]()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb9-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len, <span class="at">color =</span> island) <span class="sc">+</span></span>
-<span id="cb9-3"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb9-4"><a></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.7</span>) <span class="co"># avoid yellow at the end of the palette</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb9-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len, <span class="at">color =</span> island) <span class="sc">+</span></span>
+<span id="cb9-3"><a aria-label="3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a aria-label="4"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.7</span>) <span class="co"># avoid yellow at the end of the palette</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -339,10 +342,10 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>Now let’s try one of the <a href="https://r-graph-gallery.com/38-rcolorbrewers-palettes.html">brewer color palettes</a>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len, <span class="at">color =</span> island) <span class="sc">+</span></span>
-<span id="cb10-3"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb10-4"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb10-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len, <span class="at">color =</span> island) <span class="sc">+</span></span>
+<span id="cb10-3"><a aria-label="3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a aria-label="4"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -353,11 +356,11 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>Outside of color, there are many other <a href="https://ggplot2.tidyverse.org/articles/ggplot2-specs.html">aspects of the graph</a> that we can modify using aesthetics and “scale”s. For example, we can modify the shape of the points:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb11-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb11-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb11-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb11-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb11-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb11-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb11-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb11-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -377,12 +380,12 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div class="callout-content">
 <p>Urgh, more missing data! It appears that nine of the penguins are missing sex identification data. We can ignore the warning message, but that extra “NA” category in the legend is quite annoying. We can remove this category from the legend using <code>na.translate = FALSE</code> within <code>scale_shape_discrete()</code> (you could also use <code>scale_shape_manual()</code> if you wanted to supply your own shapes):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb12-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb12-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb12-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb12-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb12-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb12-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb12-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a aria-label="6"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -396,14 +399,14 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>And the x/y axes:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb13-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb13-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb13-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb13-6"><a></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb13-7"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
-<span id="cb13-8"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb13-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb13-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb13-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a aria-label="6"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a aria-label="7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a aria-label="8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -418,15 +421,15 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h1>Theming</h1>
 <p>The last basic thing you might want to do with <code>ggplot2</code> is modify the style of the visualization. This is extremely customizable, but the first place to start is with a <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">built-in theme</a>. I personally prefer the classic theme, which looks very similar to base R plots:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb14-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb14-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb14-6"><a></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
-<span id="cb14-8"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
-<span id="cb14-9"><a></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb14-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb14-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb14-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a aria-label="6"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a aria-label="7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a aria-label="8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
+<span id="cb14-9"><a aria-label="9"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -437,16 +440,16 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>Using this built-in theme has changed many visual aspects of the graph, including changing the plot background color, adding axis lines, and removing the internal grid lines. If you look very closely, however, the axis tick labels are still a slight grey. We can use the <code>theme()</code> function to further customize the appearance and change this. In this case, we’ll make the axis text elements have a black color instead of the default gray.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb15-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb15-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb15-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb15-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb15-6"><a></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb15-7"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
-<span id="cb15-8"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb15-10"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb15-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb15-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb15-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb15-6"><a aria-label="6"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a aria-label="7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a aria-label="8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
+<span id="cb15-9"><a aria-label="9"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb15-10"><a aria-label="10"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -470,11 +473,11 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h3 id="histograms">Histograms</h3>
 <p>We can visualize the density of values for a single variable with a histogram:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb16-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">fill =</span> species) <span class="sc">+</span></span>
-<span id="cb16-3"><a></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb16-4"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb16-5"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb16-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">fill =</span> species) <span class="sc">+</span></span>
+<span id="cb16-3"><a aria-label="3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb16-4"><a aria-label="4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb16-5"><a aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -494,11 +497,11 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div class="callout-content">
 <p>Histograms don’t require a y-axis aesthetic by default. The counts are tabulated for you. If you specify a “fill” aesthetic, the default is to stack the bars which can sometimes be a bit misleading. You can also dodge them to fix this:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb17-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">fill =</span> species) <span class="sc">+</span></span>
-<span id="cb17-3"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb17-4"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb17-5"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb17-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">fill =</span> species) <span class="sc">+</span></span>
+<span id="cb17-3"><a aria-label="3"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a aria-label="4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb17-5"><a aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -513,11 +516,11 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h3 id="boxplots-and-violin-plotss">Boxplots and Violin Plotss</h3>
 <p>We can visualize the density of values for a single variable across a discrete variable with boxplots or violin plots:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> bill_len) <span class="sc">+</span></span>
-<span id="cb18-3"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb18-4"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb18-5"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb18-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> bill_len) <span class="sc">+</span></span>
+<span id="cb18-3"><a aria-label="3"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb18-4"><a aria-label="4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -527,11 +530,11 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb19-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> bill_len) <span class="sc">+</span></span>
-<span id="cb19-3"><a></a>  <span class="fu">geom_violin</span>(<span class="at">scale =</span> <span class="st">"width"</span>, <span class="at">draw_quantiles =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>)) <span class="sc">+</span></span>
-<span id="cb19-4"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb19-5"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb19-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> bill_len) <span class="sc">+</span></span>
+<span id="cb19-3"><a aria-label="3"></a>  <span class="fu">geom_violin</span>(<span class="at">scale =</span> <span class="st">"width"</span>, <span class="at">draw_quantiles =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>)) <span class="sc">+</span></span>
+<span id="cb19-4"><a aria-label="4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb19-5"><a aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -556,11 +559,11 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h3 id="d-contours">2D Contours</h3>
 <p>We can also visualize the density of values across two continuous variables using a 2D contour:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
-<span id="cb20-3"><a></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb20-4"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb20-5"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb20-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
+<span id="cb20-3"><a aria-label="3"></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a aria-label="4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb20-5"><a aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -571,12 +574,12 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>Note that sometimes you may need to expand the axes a little bit to better show the contours:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb21-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
-<span id="cb21-3"><a></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb21-4"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="cn">NA</span>)) <span class="sc">+</span> <span class="co"># NA means "don't change"</span></span>
-<span id="cb21-5"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb21-6"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb21-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
+<span id="cb21-3"><a aria-label="3"></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a aria-label="4"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="cn">NA</span>)) <span class="sc">+</span> <span class="co"># NA means "don't change"</span></span>
+<span id="cb21-5"><a aria-label="5"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb21-6"><a aria-label="6"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -588,10 +591,10 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h3 id="time-series">Time Series</h3>
 <p>Since there isn’t really any time series data in the penguins dataset, we’ll take a quick detour and use the built-in <code>economics</code> dataset to explore visualizing a time series. In this case, we are looking at unemployment over time:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> unemploy)) <span class="sc">+</span></span>
-<span id="cb22-2"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb22-3"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb22-4"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> unemploy)) <span class="sc">+</span></span>
+<span id="cb22-2"><a aria-label="2"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb22-3"><a aria-label="3"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb22-4"><a aria-label="4"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -602,10 +605,10 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p><code>geom_path()</code> lets you explore how two variables are related over time. For example, unemployment and personal savings rate:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> unemploy <span class="sc">/</span> pop, <span class="at">y =</span> psavert)) <span class="sc">+</span></span>
-<span id="cb23-2"><a></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">as.numeric</span>(date))) <span class="sc">+</span></span>
-<span id="cb23-3"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb23-4"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> unemploy <span class="sc">/</span> pop, <span class="at">y =</span> psavert)) <span class="sc">+</span></span>
+<span id="cb23-2"><a aria-label="2"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">as.numeric</span>(date))) <span class="sc">+</span></span>
+<span id="cb23-3"><a aria-label="3"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb23-4"><a aria-label="4"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -632,16 +635,16 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h2>Combining layers</h2>
 <p>We can also combine multiple layers to show the same data in different ways in the same plot. For example, we could show the raw data for the above contour plot in addition to the contours:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb24-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
-<span id="cb24-3"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb24-4"><a></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb24-6"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>)) <span class="sc">+</span></span>
-<span id="cb24-7"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">23</span>)) <span class="sc">+</span></span>
-<span id="cb24-8"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># don't expand the axes so the background is all filled</span></span>
-<span id="cb24-9"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb24-10"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb24-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
+<span id="cb24-3"><a aria-label="3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb24-4"><a aria-label="4"></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb24-5"><a aria-label="5"></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a aria-label="6"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>)) <span class="sc">+</span></span>
+<span id="cb24-7"><a aria-label="7"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">23</span>)) <span class="sc">+</span></span>
+<span id="cb24-8"><a aria-label="8"></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># don't expand the axes so the background is all filled</span></span>
+<span id="cb24-9"><a aria-label="9"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb24-10"><a aria-label="10"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="index_files/figure-html/combined-layers-1.png" width="672" class="r-stretch"><div class="callout callout-note callout-titled callout-style-default">
@@ -662,16 +665,16 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h2>Facetting</h2>
 <p>Let’s take our scatterplot example from earlier:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb25-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb25-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb25-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb25-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb25-6"><a></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb25-7"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
-<span id="cb25-8"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
-<span id="cb25-9"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb25-10"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb25-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb25-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb25-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a aria-label="6"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb25-7"><a aria-label="7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
+<span id="cb25-8"><a aria-label="8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
+<span id="cb25-9"><a aria-label="9"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb25-10"><a aria-label="10"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -682,17 +685,17 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>Now, what if we wanted to also split the data by the species of the penguins? We’re already using color and shape, so what other aesthetic could we use? We could possible use some shapes that have both a fill and outline color, but that sounds messy. Instead of using another aesthetic, we could also use a <code>facet</code>. This splits the chart into multiple panels:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb26-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb26-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb26-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb26-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb26-7"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
-<span id="cb26-8"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
-<span id="cb26-9"><a></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(species), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb26-10"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb26-11"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb26-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb26-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb26-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb26-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a aria-label="6"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb26-7"><a aria-label="7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
+<span id="cb26-8"><a aria-label="8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a aria-label="9"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(species), <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb26-10"><a aria-label="10"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb26-11"><a aria-label="11"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -703,17 +706,17 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>We can get even crazier by faceting by multiple variables:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb27-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
-<span id="cb27-3"><a></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
-<span id="cb27-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb27-5"><a></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb27-6"><a></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb27-7"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
-<span id="cb27-8"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
-<span id="cb27-9"><a></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(species), <span class="at">cols =</span> <span class="fu">vars</span>(year)) <span class="sc">+</span></span>
-<span id="cb27-10"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb27-11"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb27-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb27-3"><a aria-label="3"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb27-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb27-5"><a aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a aria-label="6"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a aria-label="7"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
+<span id="cb27-8"><a aria-label="8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
+<span id="cb27-9"><a aria-label="9"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(species), <span class="at">cols =</span> <span class="fu">vars</span>(year)) <span class="sc">+</span></span>
+<span id="cb27-10"><a aria-label="10"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb27-11"><a aria-label="11"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -728,30 +731,30 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h1>Combining plots</h1>
 <p>When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own <a href="https://williamgearty.com/deeptime">deeptime</a> package has some functionality for it), but today we’ll check out the <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a> package which extends the “grammar of graphics” to combining plots (you may need to install it if you haven’t done so already).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>First, let’s go ahead and make some plots. Instead of plotting them, though, we’ll save them as objects in our environment. Note that when you save a plot to an object it isn’t displayed in the “Plots” tab.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb29-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len) <span class="sc">+</span></span>
-<span id="cb29-3"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb29-4"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb29-5"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span>
-<span id="cb29-6"><a></a></span>
-<span id="cb29-7"><a></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb29-8"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
-<span id="cb29-9"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb29-10"><a></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb29-11"><a></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb29-12"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>)) <span class="sc">+</span></span>
-<span id="cb29-13"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">23</span>)) <span class="sc">+</span></span>
-<span id="cb29-14"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb29-15"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb29-16"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb29-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len) <span class="sc">+</span></span>
+<span id="cb29-3"><a aria-label="3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb29-4"><a aria-label="4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb29-5"><a aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span>
+<span id="cb29-6"><a aria-label="6"></a></span>
+<span id="cb29-7"><a aria-label="7"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb29-8"><a aria-label="8"></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
+<span id="cb29-9"><a aria-label="9"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb29-10"><a aria-label="10"></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a aria-label="11"></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb29-12"><a aria-label="12"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>)) <span class="sc">+</span></span>
+<span id="cb29-13"><a aria-label="13"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">23</span>)) <span class="sc">+</span></span>
+<span id="cb29-14"><a aria-label="14"></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb29-15"><a aria-label="15"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb29-16"><a aria-label="16"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, in order to combine these, all we need to do is combine them using the <code>+</code> operator, like we did with the individual elements of the plots.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>g1 <span class="sc">+</span> g2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -762,13 +765,13 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <p>You can see that <code>patchwork</code> does all of the work for us, lining up the different components of the plots. If we have more plots to combine, we can then use the <code>|</code> (side-by-side) and <code>/</code> (above-and-below) operators to make more complex arrangements of plots.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
-<span id="cb31-2"><a></a>  <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> bill_len) <span class="sc">+</span></span>
-<span id="cb31-3"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb31-4"><a></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb31-5"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span>
-<span id="cb31-6"><a></a></span>
-<span id="cb31-7"><a></a>(g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb31-2"><a aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> bill_len) <span class="sc">+</span></span>
+<span id="cb31-3"><a aria-label="3"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb31-4"><a aria-label="4"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb31-5"><a aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span>
+<span id="cb31-6"><a aria-label="6"></a></span>
+<span id="cb31-7"><a aria-label="7"></a>(g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -784,9 +787,9 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <h1>Saving plots</h1>
 <p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code>ggsave()</code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code>ggsave()</code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>gg <span class="ot">&lt;-</span> (g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span>
-<span id="cb32-2"><a></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.pdf"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span>
-<span id="cb32-3"><a></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.jpg"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a>gg <span class="ot">&lt;-</span> (g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span>
+<span id="cb32-2"><a aria-label="2"></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.pdf"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span>
+<span id="cb32-3"><a aria-label="3"></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.jpg"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we’ll once again use GitHub Desktop to commit these files and push them to our GitHub repository. You should see all of the files that have been modified since we last committed. In this case, you should see your code file (modified from our last session) and your two new figures. Make sure the checkboxes are checked for these three files, write a succinct commit summary, then click the <kbd>Commit</kbd> button, then the <kbd>Push</kbd> button. And that’s that!</p>
 
