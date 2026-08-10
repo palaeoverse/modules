@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # Prepare a long-form Quarto module for dual html + revealjs rendering:
-#   1. Wrap each prose paragraph in `::: {.narration}` (speaker notes on
+#   1. Wrap each prose paragraph in `::: {.long-format}` (speaker notes on
 #      slides via web_and_slides.lua, normal prose on the website).
 #   2. Add the web_and_slides.lua filter to the front matter if it isn't there.
 #   3. Ensure slide-friendly YAML: execute.echo and execute.output-location
@@ -44,7 +44,7 @@ if (length(lines) > 0 && str_detect(lines[[1]], "^---\\s*$")) {
 }
 fm_len_orig <- length(yaml)   # original front-matter length, before any edits below
 
-# --- wrap prose paragraphs in .narration -------------------------------------
+# --- wrap prose paragraphs in .long-format -------------------------------------
 out     <- character()
 para    <- character()
 in_code <- FALSE
@@ -55,7 +55,7 @@ last_blank <- function() length(out) == 0 || str_detect(tail(out, 1), "^\\s*$")
 flush <- function() {
   if (length(para) == 0) return(invisible())
   if (!last_blank()) out[[length(out) + 1]] <<- ""
-  out  <<- c(out, "::: {.narration}", para, ":::", "")
+  out  <<- c(out, "::: {.long-format}", para, ":::", "")
   para <<- character()
 }
 
@@ -84,13 +84,13 @@ for (ln in body) {
 }
 flush()
 
-# --- add narration.lua to front matter (relative to the output doc) ----------
+# --- add web_and_slides.lua to front matter (relative to the output doc) ----------
 inject_filter <- function(yaml, filter_path, output) {
   if (length(yaml) == 0) { warning("No YAML front matter; skipping filter injection"); return(yaml) }
   rel <- path_rel(path_abs(filter_path), start = path_dir(path_abs(output)))
   # remove any prior entry for our filters (single-line or pre-ast block form),
   # so re-runs migrate cleanly to the current registration
-  names_re <- "(narrate|narration|fragmentcells|slidebreaks)\\.lua"
+  names_re <- "(web_and_slides)\\.lua"
   drop <- str_detect(yaml, names_re)
   for (i in which(drop)) {
     if (str_detect(yaml[i], "^\\s*path:") && i > 1 && str_detect(yaml[i - 1], "^\\s*-\\s*at:"))

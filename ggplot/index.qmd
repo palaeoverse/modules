@@ -26,7 +26,7 @@ filters:
 ---
 ## Introduction
 
-::: {.narration}
+::: {.long-format}
 While you can make plots with just the packages that come bundled with base R, many R users make their visualizations entirely using the [`ggplot2`](https://ggplot2.tidyverse.org/index.html) package and an [ecosystem of packages](https://exts.ggplot2.tidyverse.org/gallery/) designed around it.
 :::
 
@@ -35,7 +35,7 @@ While you can make plots with just the packages that come bundled with base R, m
 library(ggplot2)
 ```
 
-::: {.narration}
+::: {.long-format}
 As with the previous sessions, we'll be using the Palmer penguins dataset. While we built our own combined dataset in the introduction session, now we're going to use the built-in cleaned dataset. First, let's load the dataset. Then let's inspect the data using the `glimpse()` function.
 :::
 
@@ -44,13 +44,13 @@ data(penguins)
 dplyr::glimpse(penguins)
 ```
 
-::: {.narration}
+::: {.long-format}
 As we discovered before, this dataset includes many different measurements for individual penguins from three different studies. The studies cover both sexes of three different species of penguins from three different islands in the Palmer Archipelago.
 :::
 
 ## The ggplot2 basics
 
-::: {.narration}
+::: {.long-format}
 The most important function in the `ggplot2` package is `ggplot()`. Note that this function doesn't include the "2" of the package name. Let's go ahead and try using this function on our penguins data.
 :::
 
@@ -58,11 +58,11 @@ The most important function in the `ggplot2` package is `ggplot()`. Note that th
 ggplot(penguins)
 ```
 
-::: {.narration}
+::: {.long-format}
 You'll notice that the `ggplot()` function doesn't actually do much by itself. Here, we provide it with the penguins dataset, but the result looks like someone started making a plot and then stopped after the first step of making the rectangle for the plot area. This is because `ggplot2` is designed around the "grammar of graphics". Therefore, it expects you to build a sentence-like structure out of its functions. A single word (i.e., the call to `ggplot()` above) doesn't make much of a sentence, so let's start building up a real sentence.
 :::
 
-::: {.narration}
+::: {.long-format}
 By using the `ggplot()` function, we are essentially stating that we are beginning a plotting "sentence". We then combine this with other "words" (function calls) using the `+` operator. The next component you usually want to specify in a `ggplot` "sentence" is our "aesthetic" mappings. These specify the columns of the dataset that correspond to each axis of the plot, including the x/y axes, but also the axes of color, shape, etc. We do this with the `aes()` function:
 :::
 
@@ -71,7 +71,7 @@ ggplot(penguins) +
   aes(x = body_mass, y = flipper_len)
 ```
 
-::: {.narration}
+::: {.long-format}
 Hey, it's starting to look like a plot now! Except there isn't any actual data being plotted. Let's fix that. We'll start off with a simple scatter plot by using the `geom_point()` function:
 :::
 
@@ -81,7 +81,7 @@ ggplot(penguins) +
   geom_point()
 ```
 
-::: {.narration}
+::: {.long-format}
 And there we go! You'll notice that with just a few lines, we've already made a pretty nice visualization of this penguin data. `ggplot2` does most of the work for us once we specify our dataset and our `x` and `y` variables.
 :::
 
@@ -98,7 +98,7 @@ penguins <- penguins |>
 :::
 ::::
 
-::: {.narration}
+::: {.long-format}
 Now, let's go a step further and color the points by another variable (e.g., the island of the penguins). With `ggplot2`, all that requires is specifying another aesthetic:
 :::
 
@@ -108,11 +108,11 @@ ggplot(penguins) +
   geom_point()
 ```
 
-::: {.narration}
+::: {.long-format}
 Notice that `ggplot2` comes with its own default color scheme. However, I would strongly discourage you from using the default colors, especially as the number of categories increases (with only 3 categories here it isn't too bad). Let's try out some of the more accessible color palettes that are also available in R.
 :::
 
-::: {.narration}
+::: {.long-format}
 First, let's try one of the [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) color palettes. Since this palette is included in `ggplot2`, all we need to do is add the proper "scale" to our `ggplot()` call. Scales tell ggplot how to handle a particular aesthetic, and are usually of the form `scale_[aesthetic]_[type]()`.
 :::
 
@@ -123,7 +123,7 @@ ggplot(penguins) +
   scale_color_viridis_d(end = 0.7) # avoid yellow at the end of the palette
 ```
 
-::: {.narration}
+::: {.long-format}
 Now let's try one of the [brewer color palettes](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html).
 :::
 
@@ -134,7 +134,7 @@ ggplot(penguins) +
   scale_color_brewer(palette = "Set1")
 ```
 
-::: {.narration}
+::: {.long-format}
 Outside of color, there are many other [aspects of the graph](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html) that we can modify using aesthetics and "scale"s. For example, we can modify the shape of the points:
 :::
 
@@ -160,7 +160,7 @@ ggplot(penguins) +
 ```
 :::
 
-::: {.narration}
+::: {.long-format}
 And the x/y axes:
 :::
 
@@ -177,7 +177,7 @@ ggplot(penguins) +
 
 ## Theming
 
-::: {.narration}
+::: {.long-format}
 The last basic thing you might want to do with `ggplot2` is modify the style of the visualization. This is extremely customizable, but the first place to start is with a [built-in theme](https://ggplot2.tidyverse.org/reference/ggtheme.html). I personally prefer the classic theme, which looks very similar to base R plots:
 :::
 
@@ -193,7 +193,7 @@ ggplot(penguins) +
   theme_classic()
 ```
 
-::: {.narration}
+::: {.long-format}
 Using this built-in theme has changed many visual aspects of the graph, including changing the plot background color, adding axis lines, and removing the internal grid lines. If you look very closely, however, the axis tick labels are still a slight grey. We can use the `theme()` function to further customize the appearance and change this. In this case, we'll make the axis text elements have a black color instead of the default gray.
 :::
 
@@ -210,11 +210,11 @@ ggplot(penguins) +
   theme(axis.text = element_text(color = "black"))
 ```
 
-::: {.narration}
+::: {.long-format}
 And there we have it! With just 10 lines we've created what I would say is a publication quality graph! `ggplot` does a lot of the tedious work for us, giving us time to focus on the more important aspects, such as labeling and color. Admittedly, I've spent a LOT of time on these aspects in the past...
 :::
 
-::: {.narration}
+::: {.long-format}
 More information about all of the hierarchical theme components that you can customize is available [here](https://ggplot2.tidyverse.org/reference/theme.html). In order to change many of these components, you need to use theme elements like we did above with `element_text()`. That and other theme elements are documented [here](https://ggplot2.tidyverse.org/reference/element.html).
 :::
 
@@ -222,13 +222,13 @@ More information about all of the hierarchical theme components that you can cus
 
 ### Other layers
 
-::: {.narration}
+::: {.long-format}
 There are many other [types of plots](https://ggplot2.tidyverse.org/reference/#layers) that we can make with `ggplot2`.
 :::
 
 #### Histograms
 
-::: {.narration}
+::: {.long-format}
 We can visualize the density of values for a single variable with a histogram:
 :::
 
@@ -254,7 +254,7 @@ ggplot(penguins) +
 
 #### Boxplots and Violin Plotss
 
-::: {.narration}
+::: {.long-format}
 We can visualize the density of values for a single variable across a discrete variable with boxplots or violin plots:
 :::
 
@@ -281,7 +281,7 @@ Note that many of these "geom"s have lots of options. For example, here we've de
 
 #### 2D Contours
 
-::: {.narration}
+::: {.long-format}
 We can also visualize the density of values across two continuous variables using a 2D contour:
 :::
 
@@ -293,7 +293,7 @@ ggplot(penguins) +
   theme(axis.text = element_text(color = "black"))
 ```
 
-::: {.narration}
+::: {.long-format}
 Note that sometimes you may need to expand the axes a little bit to better show the contours:
 :::
 
@@ -308,7 +308,7 @@ ggplot(penguins) +
 
 #### Time Series
 
-::: {.narration}
+::: {.long-format}
 Since there isn't really any time series data in the penguins dataset, we'll take a quick detour and use the built-in `economics` dataset to explore visualizing a time series. In this case, we are looking at unemployment over time:
 :::
 
@@ -319,7 +319,7 @@ ggplot(economics, aes(x = date, y = unemploy)) +
   theme(axis.text = element_text(color = "black"))
 ```
 
-::: {.narration}
+::: {.long-format}
 `geom_path()` lets you explore how two variables are related over time. For example, unemployment and personal savings rate:
 :::
 
@@ -337,7 +337,7 @@ Note how we've used multiple columns of the data to define the x-axis here. You 
 
 ### Combining layers
 
-::: {.narration}
+::: {.long-format}
 We can also combine multiple layers to show the same data in different ways in the same plot. For example, we could show the raw data for the above contour plot in addition to the contours:
 :::
 
@@ -361,7 +361,7 @@ When combining layers, the layers are added to the plot in order, so in this cas
 
 ### Facetting
 
-::: {.narration}
+::: {.long-format}
 Let's take our scatterplot example from earlier:
 :::
 
@@ -378,7 +378,7 @@ ggplot(penguins) +
   theme(axis.text = element_text(color = "black"))
 ```
 
-::: {.narration}
+::: {.long-format}
 Now, what if we wanted to also split the data by the species of the penguins? We're already using color and shape, so what other aesthetic could we use? We could possible use some shapes that have both a fill and outline color, but that sounds messy. Instead of using another aesthetic, we could also use a `facet`. This splits the chart into multiple panels:
 :::
 
@@ -396,7 +396,7 @@ ggplot(penguins) +
   theme(axis.text = element_text(color = "black"))
 ```
 
-::: {.narration}
+::: {.long-format}
 We can get even crazier by faceting by multiple variables:
 :::
 
@@ -414,13 +414,13 @@ ggplot(penguins) +
   theme(axis.text = element_text(color = "black"))
 ```
 
-::: {.narration}
+::: {.long-format}
 OK, maybe we've gone a little too far here, but you get the picture!
 :::
 
 ## Combining plots
 
-::: {.narration}
+::: {.long-format}
 When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own [deeptime](https://williamgearty.com/deeptime) package has some functionality for it), but today we'll check out the [`patchwork`](https://patchwork.data-imaginist.com/) package which extends the "grammar of graphics" to combining plots (you may need to install it if you haven't done so already).
 :::
 
@@ -428,7 +428,7 @@ When publishing results, often we need to combine multiple figures into a single
 library(patchwork)
 ```
 
-::: {.narration}
+::: {.long-format}
 First, let's go ahead and make some plots. Instead of plotting them, though, we'll save them as objects in our environment. Note that when you save a plot to an object it isn't displayed in the "Plots" tab.
 :::
 
@@ -451,7 +451,7 @@ g2 <- ggplot(penguins) +
   theme(axis.text = element_text(color = "black"))
 ```
 
-::: {.narration}
+::: {.long-format}
 Now, in order to combine these, all we need to do is combine them using the `+` operator, like we did with the individual elements of the plots.
 :::
 
@@ -459,7 +459,7 @@ Now, in order to combine these, all we need to do is combine them using the `+` 
 g1 + g2
 ```
 
-::: {.narration}
+::: {.long-format}
 You can see that `patchwork` does all of the work for us, lining up the different components of the plots. If we have more plots to combine, we can then use the `|` (side-by-side) and `/` (above-and-below) operators to make more complex arrangements of plots.
 :::
 
@@ -473,13 +473,13 @@ g3 <- ggplot(penguins) +
 (g1 | g2) / g3
 ```
 
-::: {.narration}
+::: {.long-format}
 There's a lot more you can do with `patchwork`, including adjusting the widths and heights, but we'll stop here for now.
 :::
 
 ## Saving plots
 
-::: {.narration}
+::: {.long-format}
 The last big thing you'll need to know about plotting is how to save your plots. `ggplot2` comes with a nifty `ggsave()` function which you can use to save your plots in a number of different formats. Here we'll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka "lossless"). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka "lossy"). This results in the pixellation that you see when you zoom in on a JPEG. `ggsave()` detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It's usually a good idea to keep all figures in their own folder (which was already created for you).
 :::
 

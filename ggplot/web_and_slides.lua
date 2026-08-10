@@ -1,6 +1,6 @@
--- narrate.lua
+-- web_and_slides.lua
 -- Combined filter for dual html + revealjs Quarto modules:
---   * Div    : `::: {.narration}` -> speaker notes on revealjs, plain prose elsewhere.
+--   * Div    : `::: {.long-format}` -> speaker notes on revealjs, plain prose elsewhere.
 --   * Pandoc : on revealjs, headings below the slide level are promoted so each
 --              becomes its own slide, the slide closes after each plot (so no two
 --              plots share a slide and a plot's following prose stays with the
@@ -17,11 +17,11 @@
 -- normalizes them into custom AST nodes after that point).
 
 function Div(el)
-  if not el.classes:includes("narration") then
+  if not el.classes:includes("long-format") then
     return nil                                   -- leave every other div alone
   end
   if quarto.doc.is_format("revealjs") then
-    el.classes = el.classes:filter(function(c) return c ~= "narration" end)
+    el.classes = el.classes:filter(function(c) return c ~= "long-format" end)
     el.classes:insert("notes")                   -- Pandoc emits <aside class="notes">
     return el
   end
