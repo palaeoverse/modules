@@ -222,7 +222,11 @@ Etienne Bacher
 <ul>
 <li><a href="#/piping" id="/toc-piping">Piping</a>
 <ul>
-<li><a href="#/example-where-we-dont-use-the-pipe" id="/toc-example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</a></li>
+<li><a href="#/example-where-we-dont-use-the-pipe" id="/toc-example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</a>
+<ul>
+<li><a href="#/intermediate-objects" id="/toc-intermediate-objects">Intermediate objects</a></li>
+<li><a href="#/nested-calls" id="/toc-nested-calls">Nested calls</a></li>
+</ul></li>
 <li><a href="#/introducing-the-pipe" id="/toc-introducing-the-pipe">Introducing the pipe</a>
 <ul>
 <li><a href="#/using" id="/toc-using">Using “<code>|&gt;</code>”</a></li>
@@ -243,6 +247,7 @@ Etienne Bacher
 <h2>Example where we don’t use the pipe</h2>
 <p>Let’s say we want to keep the first 10 rows in the <code>mtcars</code> data, then keep the observations where <code>cyl &gt;= 6</code>, and finally sort the remaining data by the <code>am</code> column.</p>
 <p>Without using the pipe, we have two main approaches.</p>
+<h3 id="intermediate-objects">Intermediate objects</h3>
 <p>First, we can assign each function output to an object. This object can either keep the same name and be overwritten at each step, or we can use a collection of temporary names:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># Same name gets overwritten</span></span>
@@ -281,6 +286,7 @@ Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pr
 <li><p>in the first case, if we want to rename <code>res</code> in the future then we must be careful to rename all its occurrences throughout the code. It also means that if, say, the call to <code>sort_by()</code> is wrong, then we must run the entire block again so that <code>res</code> is properly reset. Depending on the data size and operations to run, this can be very time-consuming.</p></li>
 <li><p>in the second case, we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.</p></li>
 </ul>
+<h3 id="nested-calls">Nested calls</h3>
 <p>The second approach isn’t to define intermediate objects, but instead to run all those calls at once by nesting functions:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>res <span class="ot">&lt;-</span> <span class="fu">sort_by</span>(<span class="fu">subset</span>(<span class="fu">head</span>(mtcars, <span class="dv">10</span>), cyl <span class="sc">&gt;=</span> <span class="dv">6</span>), <span class="sc">~</span> am)</span>
@@ -295,7 +301,7 @@ Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
 Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="co"># Same but with different formatting</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="co"># Same code with different formatting</span></span>
 <span id="cb7-2"><a aria-label="2"></a>res <span class="ot">&lt;-</span> <span class="fu">sort_by</span>(</span>
 <span id="cb7-3"><a aria-label="3"></a>  <span class="fu">subset</span>(</span>
 <span id="cb7-4"><a aria-label="4"></a>    <span class="fu">head</span>(mtcars, <span class="dv">10</span>),</span>
@@ -424,7 +430,7 @@ Coefficients:
 </div>
 </div>
 <h3 id="what-about">What about “<code>%&gt;%</code>”?</h3>
-<p>You may have seen code that chains operations using <code>%&gt;%</code>. This <code>%&gt;%</code> is part of the <code>magrittr</code> package. It predates <code>|&gt;</code> and was widely used in the <a href="https://tidyverse.org/"><code>tidyverse</code></a> until 2021, when <code>|&gt;</code> was introduced in base R.</p>
+<p>You may have seen code that chains operations using <code>%&gt;%</code>. This <code>%&gt;%</code> is also a pipe and it is provided by the <code>magrittr</code> package. It predates <code>|&gt;</code> and was widely used in the <a href="https://tidyverse.org/"><code>tidyverse</code></a>. Its design and popularity inspired the implementation of <code>|&gt;</code> in base R in 2021.</p>
 <p>For simple cases, <code>|&gt;</code> and <code>%&gt;%</code> behave identically. We recommend using <code>|&gt;</code> simply because it is always available in R and doesn’t rely on an external package.</p>
 
 
