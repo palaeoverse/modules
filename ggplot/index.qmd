@@ -60,9 +60,7 @@ ggplot(penguins)
 
 ::: {.long-format}
 You'll notice that the `ggplot()` function doesn't actually do much by itself. Here, we provide it with the penguins dataset, but the result looks like someone started making a plot and then stopped after the first step of making the rectangle for the plot area. This is because `ggplot2` is designed around the "grammar of graphics". Therefore, it expects you to build a sentence-like structure out of its functions. A single word (i.e., the call to `ggplot()` above) doesn't make much of a sentence, so let's start building up a real sentence.
-:::
 
-::: {.long-format}
 By using the `ggplot()` function, we are essentially stating that we are beginning a plotting "sentence". We then combine this with other "words" (function calls) using the `+` operator. The next component you usually want to specify in a `ggplot` "sentence" is our "aesthetic" mappings. These specify the columns of the dataset that correspond to each axis of the plot, including the x/y axes, but also the axes of color, shape, etc. We do this with the `aes()` function:
 :::
 
@@ -110,9 +108,7 @@ ggplot(penguins) +
 
 ::: {.long-format}
 Notice that `ggplot2` comes with its own default color scheme. However, I would strongly discourage you from using the default colors, especially as the number of categories increases (with only 3 categories here it isn't too bad). Let's try out some of the more accessible color palettes that are also available in R.
-:::
 
-::: {.long-format}
 First, let's try one of the [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) color palettes. Since this palette is included in `ggplot2`, all we need to do is add the proper "scale" to our `ggplot()` call. Scales tell ggplot how to handle a particular aesthetic, and are usually of the form `scale_[aesthetic]_[type]()`.
 :::
 
@@ -212,9 +208,7 @@ ggplot(penguins) +
 
 ::: {.long-format}
 And there we have it! With just 10 lines we've created what I would say is a publication quality graph! `ggplot` does a lot of the tedious work for us, giving us time to focus on the more important aspects, such as labeling and color. Admittedly, I've spent a LOT of time on these aspects in the past...
-:::
 
-::: {.long-format}
 More information about all of the hierarchical theme components that you can customize is available [here](https://ggplot2.tidyverse.org/reference/theme.html). In order to change many of these components, you need to use theme elements like we did above with `element_text()`. That and other theme elements are documented [here](https://ggplot2.tidyverse.org/reference/element.html).
 :::
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env Rscript
 
 # Prepare a long-form Quarto module for dual html + revealjs rendering:
-#   1. Wrap each prose paragraph in `::: {.long-format}` (speaker notes on
-#      slides via web_and_slides.lua, normal prose on the website).
+#   1. Wrap each run of consecutive prose paragraphs in a single
+#      `::: {.long-format}` block (speaker notes on slides via
+#      web_and_slides.lua, normal prose on the website).
 #   2. Add the web_and_slides.lua filter to the front matter if it isn't there.
 #   3. Ensure slide-friendly YAML: execute.echo and execute.output-location
 #      (fragment) and revealjs.smaller = true, and remove revealjs.scrollable
@@ -49,10 +50,12 @@ out     <- character()
 para    <- character()
 in_code <- FALSE
 depth   <- 0L
+gap     <- FALSE
 
 last_blank <- function() length(out) == 0 || str_detect(tail(out, 1), "^\\s*$")
 
 flush <- function() {
+  gap <<- FALSE
   if (length(para) == 0) return(invisible())
   if (!last_blank()) out[[length(out) + 1]] <<- ""
   out  <<- c(out, "::: {.long-format}", para, ":::", "")
@@ -70,8 +73,10 @@ for (ln in body) {
     out <- c(out, ln); next
   }
   if (depth > 0) { out <- c(out, ln); next }         # callout internals: leave
-  if (str_detect(ln, "^\\s*$")) {                    # blank ends a paragraph
-    flush(); if (!last_blank()) out <- c(out, ""); next
+  if (str_detect(ln, "^\\s*$")) {                    # blank line
+    if (length(para)) gap <- TRUE                    # hold the run open, so adjacent
+    else if (!last_blank()) out <- c(out, "")        # paragraphs share one block
+    next
   }
   if (str_detect(ln, "^#{1,6}\\s") ||                # headings
       str_detect(ln, "^\\s*([-*+]|\\d+[.)])\\s") ||  # lists
@@ -80,6 +85,7 @@ for (ln in body) {
       str_detect(ln, "^\\s*!\\[.*\\]\\(.*\\)\\s*$")) {# standalone images
     flush(); out <- c(out, ln); next
   }
+  if (gap) { para <- c(para, ""); gap <- FALSE }      # paragraph break inside the block
   para <- c(para, ln)                                # prose
 }
 flush()
