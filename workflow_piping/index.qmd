@@ -27,6 +27,8 @@ Let's say we want to keep the first 10 rows in the `mtcars` data, then keep the 
 
 Without using the pipe, we have two main approaches.
 
+### Intermediate objects
+
 First, we can assign each function output to an object.
 This object can either keep the same name and be overwritten at each step, or we can use a collection of temporary names:
 
@@ -51,13 +53,15 @@ Each of these cases has drawbacks:
 - in the second case, we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.
 
 
+### Nested calls
+
 The second approach isn't to define intermediate objects, but instead to run all those calls at once by nesting functions:
 
 ```{r}
 res <- sort_by(subset(head(mtcars, 10), cyl >= 6), ~ am)
 res
 
-# Same but with different formatting
+# Same code with different formatting
 res <- sort_by(
   subset(
     head(mtcars, 10),
@@ -165,8 +169,9 @@ mtcars |>
 ### What about "`%>%`"?
 
 You may have seen code that chains operations using `%>%`.
-This `%>%` is part of the `magrittr` package.
-It predates `|>` and was widely used in the [`tidyverse`](https://tidyverse.org/) until 2021, when `|>` was introduced in base R.
+This `%>%` is also a pipe and it is provided by the `magrittr` package.
+It predates `|>` and was widely used in the [`tidyverse`](https://tidyverse.org/). 
+Its design and popularity inspired the implementation of `|>` in base R in 2021.
 
 For simple cases, `|>` and `%>%` behave identically.
 We recommend using `|>` simply because it is always available in R and doesn't rely on an external package.
