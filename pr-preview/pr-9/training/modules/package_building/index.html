@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Etienne Bacher">
+<meta name="dcterms.date" content="2026-08-10">
+
+<title>Package development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../_brand/logos/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e5bcdb3a787ab268c756645007037576.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-7bedbd96ab1891dc478082ef8f0195f3.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e5bcdb3a787ab268c756645007037576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-d3fd0f4e0abb432a08b185359d6e380c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta property="og:title" content="Palaeoverse">
+<meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
+<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-9/training/modules/package_building/R_logo.png">
+<meta property="og:locale" content="en_GB">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content">
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">    
+        <li>
+    <a class="dropdown-item" href="../../../about/about-us">
+ <span class="dropdown-text">About us</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../about/people">
+ <span class="dropdown-text">People</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../about/code-of-conduct">
+ <span class="dropdown-text">Code of Conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../about/ai-policy">
+ <span class="dropdown-text">AI policy</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../about/sponsors">
+ <span class="dropdown-text">Sponsors</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-zulip" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Zulip</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">    
+        <li>
+    <a class="dropdown-item" href="../../../zulip/join-zulip">
+ <span class="dropdown-text">Join Zulip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../zulip/user-guide">
+ <span class="dropdown-text">User guide</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../our-packages"> 
+<span class="menu-text">Software</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-training" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Training</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">    
+        <li>
+    <a class="dropdown-item" href="../../../training/workshops">
+ <span class="dropdown-text">Workshops</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../training/modules">
+ <span class="dropdown-text">Modules</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../training/lecture-series">
+ <span class="dropdown-text">Lecture series</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../events"> 
+<span class="menu-text">Events</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/palaeoverse" target="_blank"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"> <i class="bi bi-bluesky" role="img" aria-label="BlueSky">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/palaeoverse" target="_blank"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/palaeoverse/" target="_blank"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@ThePalaeoverse" target="_blank"> <i class="bi bi-youtube" role="img" aria-label="YouTube">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#should-you-create-a-package" id="toc-should-you-create-a-package" class="nav-link active" data-scroll-target="#should-you-create-a-package">Should you create a package?</a>
+  <ul class="collapse">
+  <li><a href="#pros" id="toc-pros" class="nav-link" data-scroll-target="#pros">Pros</a></li>
+  <li><a href="#cons" id="toc-cons" class="nav-link" data-scroll-target="#cons">Cons</a></li>
+  </ul></li>
+  <li><a href="#the-many-aspects-of-package-development" id="toc-the-many-aspects-of-package-development" class="nav-link" data-scroll-target="#the-many-aspects-of-package-development">The many aspects of package development</a></li>
+  <li><a href="#create-a-package" id="toc-create-a-package" class="nav-link" data-scroll-target="#create-a-package">Create a package</a>
+  <ul class="collapse">
+  <li><a href="#structure-of-a-package" id="toc-structure-of-a-package" class="nav-link" data-scroll-target="#structure-of-a-package">Structure of a package</a></li>
+  <li><a href="#practical-example" id="toc-practical-example" class="nav-link" data-scroll-target="#practical-example">Practical example</a></li>
+  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a></li>
+  <li><a href="#create-the-package" id="toc-create-the-package" class="nav-link" data-scroll-target="#create-the-package">Create the package</a></li>
+  <li><a href="#how-is-it-organized" id="toc-how-is-it-organized" class="nav-link" data-scroll-target="#how-is-it-organized">How is it organized?</a></li>
+  <li><a href="#add-our-functions" id="toc-add-our-functions" class="nav-link" data-scroll-target="#add-our-functions">Add our functions</a></li>
+  <li><a href="#add-our-functions-1" id="toc-add-our-functions-1" class="nav-link" data-scroll-target="#add-our-functions-1">Add our functions</a></li>
+  </ul></li>
+  <li><a href="#document-a-package" id="toc-document-a-package" class="nav-link" data-scroll-target="#document-a-package">Document a package</a>
+  <ul class="collapse">
+  <li><a href="#document-a-function" id="toc-document-a-function" class="nav-link" data-scroll-target="#document-a-function">Document a function</a></li>
+  </ul></li>
+  <li><a href="#test-a-package" id="toc-test-a-package" class="nav-link" data-scroll-target="#test-a-package">Test a package</a>
+  <ul class="collapse">
+  <li><a href="#test-a-function" id="toc-test-a-function" class="nav-link" data-scroll-target="#test-a-function">Test a function</a></li>
+  <li><a href="#structure-of-a-test" id="toc-structure-of-a-test" class="nav-link" data-scroll-target="#structure-of-a-test">Structure of a test</a></li>
+  <li><a href="#skip-some-tests" id="toc-skip-some-tests" class="nav-link" data-scroll-target="#skip-some-tests">Skip some tests</a></li>
+  <li><a href="#run-the-tests" id="toc-run-the-tests" class="nav-link" data-scroll-target="#run-the-tests">Run the tests</a></li>
+  <li><a href="#do-you-have-enough-tests" id="toc-do-you-have-enough-tests" class="nav-link" data-scroll-target="#do-you-have-enough-tests">Do you have enough tests?</a></li>
+  <li><a href="#check-a-package" id="toc-check-a-package" class="nav-link" data-scroll-target="#check-a-package">Check a package</a></li>
+  </ul></li>
+  <li><a href="#develop-a-package" id="toc-develop-a-package" class="nav-link" data-scroll-target="#develop-a-package">Develop a package</a>
+  <ul class="collapse">
+  <li><a href="#namespace" id="toc-namespace" class="nav-link" data-scroll-target="#namespace">Namespace</a></li>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a></li>
+  </ul></li>
+  <li><a href="#share-a-package" id="toc-share-a-package" class="nav-link" data-scroll-target="#share-a-package">Share a package</a>
+  <ul class="collapse">
+  <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github">Github</a></li>
+  <li><a href="#cran" id="toc-cran" class="nav-link" data-scroll-target="#cran">CRAN</a></li>
+  <li><a href="#website" id="toc-website" class="nav-link" data-scroll-target="#website">Website</a>
+  <ul class="collapse">
+  <li><a href="#local-website" id="toc-local-website" class="nav-link" data-scroll-target="#local-website">Local website</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#advanced" id="toc-advanced" class="nav-link" data-scroll-target="#advanced">Advanced</a>
+  <ul class="collapse">
+  <li><a href="#github-actions" id="toc-github-actions" class="nav-link" data-scroll-target="#github-actions">Github actions</a></li>
+  <li><a href="#list-of-things-to-be-careful" id="toc-list-of-things-to-be-careful" class="nav-link" data-scroll-target="#list-of-things-to-be-careful">List of things to be careful</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules/package_building/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Package development</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">r</div>
+    <div class="quarto-category">package development</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Etienne Bacher </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 10, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="should-you-create-a-package" class="level1">
+<h1>Should you create a package?</h1>
+<section id="pros" class="level2">
+<h2 data-anchor-id="pros">Pros</h2>
+<ul>
+<li><p>You want to implement some statistical methods in R</p></li>
+<li><p>You want to share some data or functions that you think are useful</p></li>
+</ul>
+</section>
+<section id="cons" class="level2">
+<h2 data-anchor-id="cons">Cons</h2>
+<ul>
+<li><p>Takes some time</p></li>
+<li><p>The statistical method may already be implemented (~ <em>24,000</em> packages on CRAN)</p></li>
+</ul>
+</section>
+</section>
+<section id="the-many-aspects-of-package-development" class="level1">
+<h1>The many aspects of package development</h1>
+<p>Developing an R package covers many aspects. There is an entire book on the topic (available for free <a href="https://r-pkgs.org/">here</a>).</p>
+<p>This module will cover three parts:</p>
+<ol type="1">
+<li><p><strong>Create a package</strong>: implement, document, export, and test functions</p></li>
+<li><p><strong>Share a package</strong>: put your package on Github, CRAN, make a website</p></li>
+<li><p><strong>Maintain a package</strong>: fix bugs, use Continuous Integration (CI)</p></li>
+</ol>
+</section>
+<section id="create-a-package" class="level1">
+<h1>Create a package</h1>
+<section id="structure-of-a-package" class="level2">
+<h2 data-anchor-id="structure-of-a-package">Structure of a package</h2>
+<p>At a minimum, a package <strong>must have</strong> two folders:</p>
+<ul>
+<li><p><code>R</code>: contains all the <code>.R</code> files where we will write our functions</p></li>
+<li><p><code>man</code>: short for “manual”. This will contain all the documentation that is accessible with <code>?</code> in R (for example <code>?factor</code>)</p></li>
+</ul>
+<p>It is recommended to have the following folders:</p>
+<ul>
+<li><p><code>tests</code>: contains all the tests for your package</p></li>
+<li><p><code>vignettes</code>: additional documentation that contains more extensive examples and tutorials for your package.</p></li>
+</ul>
+</section>
+<section id="practical-example" class="level2">
+<h2 data-anchor-id="practical-example">Practical example</h2>
+<p>The easiest way to learn how to make a package is to actually make one.</p>
+<p>Let’s say we want to create a package containing two functions.</p>
+<ol type="1">
+<li>A function to compute the logarithm that returns <code>NULL</code> if the input is not numeric:</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>safe_log <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(x)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">"Can't compute the logarithm of a non-numeric input."</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NULL</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="st">"a"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `log()`:
+! non-numeric argument to mathematical function</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">safe_log</span>(<span class="st">"a"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in safe_log("a"): Can't compute the logarithm of a non-numeric input.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>A function to count the number of unique elements in a vector:</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>n_unique <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(x))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">n_unique</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+</section>
+<section id="requirements" class="level2">
+<h2 data-anchor-id="requirements">Requirements</h2>
+<p>Our three best friends for this job:</p>
+<div class="columns center">
+<div class="column" style="width:33%;">
+<p><img src="devtools.svg" height="150"> <br> <code>devtools</code></p>
+</div><div class="column" style="width:33%;">
+<p><img src="usethis.png" height="150"> <br> <code>usethis</code></p>
+</div><div class="column" style="width:33%;">
+<p><img src="testthat.png" height="150"> <br> <code>testthat</code></p>
+</div>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if not already installed</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"usethis"</span>, <span class="st">"testthat"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="create-the-package" class="level2">
+<h2 data-anchor-id="create-the-package">Create the package</h2>
+<p>Create a package called “my.pkg”:</p>
+<ul>
+<li>either with <code>devtools</code></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">create</span>(<span class="st">"&lt;path&gt;/my.pkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>or with RStudio: File &gt; New Project &gt; New Directory &gt; R Package &gt; Name it and choose its location</li>
+</ul>
+</section>
+<section id="how-is-it-organized" class="level2">
+<h2 data-anchor-id="how-is-it-organized">How is it organized?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>├── DESCRIPTION</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>├── my.pkg.Rproj</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>├── NAMESPACE</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>├── R</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>│   └── hello.R</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>└── man</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    └── hello.Rd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We see the two mandatory folders: <code>R</code> and <code>man</code>.</p>
+<p>The <code>DESCRIPTION</code> file contains all the important information about our package:</p>
+<ul>
+<li>who built it?</li>
+<li>when?</li>
+<li>what is the goal of the package?</li>
+<li>what are its dependencies?</li>
+<li>what is its license?</li>
+<li>…</li>
+</ul>
+<p>The <code>NAMESPACE</code> file contains all the information about the functions that are imported and exported by our package.</p>
+</section>
+<section id="add-our-functions" class="level2">
+<h2 data-anchor-id="add-our-functions">Add our functions</h2>
+<ol type="1">
+<li><p>Remove <code>R/hello.R</code> and <code>man/hello.Rd</code></p></li>
+<li><p>Create two files in the folder <code>R</code>: <code>n_unique.R</code> and <code>safe_log.R</code>.</p></li>
+<li><p>Paste the functions we created in each of these files.</p></li>
+</ol>
+</section>
+<section id="add-our-functions-1" class="level2">
+<h2 data-anchor-id="add-our-functions-1">Add our functions</h2>
+<p>Run <code>devtools::load_all()</code> in the console.</p>
+<p>You should now be able to run our functions in the console!</p>
+<p>Next steps: <strong>documenting</strong> and <strong>testing</strong> our functions.</p>
+</section>
+</section>
+<section id="document-a-package" class="level1">
+<h1>Document a package</h1>
+<section id="document-a-function" class="level2">
+<h2 data-anchor-id="document-a-function">Document a function</h2>
+<p>The documentation of a function is done in the <code>.R</code> file: it will then automatically be converted to an <code>.Rd</code> file placed in the <code>man</code> folder.</p>
+<p>There is <em>no need</em> to create an <code>.Rd</code> file yourself!</p>
+<p>Writing the documentation is similar to writing comments, but you need to use <code>#'</code> (with an apostrophe) instead of <code>#</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To automatically generate the documentation structure for a function, put your cursor inside the function, and press:</p>
+<p>Ctrl + Alt + Shift + R</p>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Title</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>n_unique <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(x))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>@param</code> is the description of the expected input (there can be several <code>@param</code> tags).</p>
+<p><code>@return</code> is the description of what this function returns.</p>
+<p><code>@export</code> indicates whether this function should be exported, i.e be available to the user of this package.</p>
+<p><code>@examples</code> gives some examples that show how the function works.</p>
+<p>Let’s now run <code>devtools::document()</code> to create the <code>.Rd</code> file.</p>
+<p>You should have this message:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Skipping NAMESPACE</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>✖ It already exists and was not generated by roxygen2. </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Let’s delete the file <code>NAMESPACE</code> and re-run <code>devtools::document()</code>.</p>
+<p>You should then be able to access the documentation of our function with <code>?n_unique</code>.</p>
+<div style="text-align: center;">
+<p>TODO: update picture <!-- <img src="help.png" height=500> --></p>
+</div>
+<p>We have the minimal documentation but you can make it much bigger:</p>
+<ul>
+<li><p>You can write a longer description below the title;</p></li>
+<li><p>You can write long explanations about a statistical method or other things with the tag <code>@details</code> after the parameters.</p></li>
+<li><p>and <a href="https://roxygen2.r-lib.org/articles/rd.html">much more…</a></p></li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The help page is the first thing users will check to learn about your functions.</p>
+<p>Give details and <em>examples</em>!</p>
+</div>
+</div>
+</section>
+</section>
+<section id="test-a-package" class="level1">
+<h1>Test a package</h1>
+<section id="test-a-function" class="level2">
+<h2 data-anchor-id="test-a-function">Test a function</h2>
+<p>Testing a package is <strong>crucial</strong>.</p>
+<p>Having tests reassures:</p>
+<ul>
+<li><p>the user: it shows that you (the developer) have checked that your function produces the correct results, at least in basic cases.</p></li>
+<li><p>yourself: it ensures you can add functionalities to your package or fix bugs without breaking your existing code.</p></li>
+</ul>
+<p>Testing is made much easier by the package <code>testthat</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>To start using this package, run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>✔ Setting active project to <span class="st">'/home/etienne/Bureau/Git/misc/my.pkg'</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>✔ Adding <span class="st">'testthat'</span> to Suggests field <span class="cf">in</span> DESCRIPTION</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>✔ Setting Config<span class="sc">/</span>testthat<span class="sc">/</span>edition field <span class="cf">in</span> DESCRIPTION to <span class="st">'3'</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>✔ Creating <span class="st">'tests/testthat/'</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>✔ Writing <span class="st">'tests/testthat.R'</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>• Call <span class="st">`</span><span class="at">use_test()</span><span class="st">`</span> to initialize a basic test file and open it <span class="cf">for</span> editing.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This created a folder called <code>tests</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tests</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>├── testthat</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>└── testthat.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can now add tests files in <code>tests/testthat</code>.</p>
+<p>Go back to the file <code>n_unique.R</code> and run <code>usethis::use_test()</code>. This will create a file <code>test-n_unique.R</code> containing an example of test.</p>
+</section>
+<section id="structure-of-a-test" class="level2">
+<h2 data-anchor-id="structure-of-a-test">Structure of a test</h2>
+<p>Two main things:</p>
+<ul>
+<li><p><code>test_that()</code>: contains the title of the test and the code for the test</p></li>
+<li><p><code>expect_*()</code>: the expectations you have for the test.</p></li>
+</ul>
+<p>Example:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with all types of vector"</span>, {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>)), <span class="co"># the function we want to test</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>                           <span class="co"># our expectation</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>)),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Try to make sure your function covers corner cases!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with missing values"</span>, {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>)), <span class="dv">2</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with empty vectors"</span>, {</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(<span class="fu">c</span>()), <span class="dv">0</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>There are many helper functions for your expectations:</p>
+<ul>
+<li><code>expect_length()</code></li>
+<li><code>expect_type()</code></li>
+<li><code>expect_named()</code></li>
+<li><code>expect_warning()</code></li>
+<li><code>expect_error()</code></li>
+<li>and <a href="https://testthat.r-lib.org/reference/index.html">more…</a></li>
+</ul>
+</section>
+<section id="skip-some-tests" class="level2">
+<h2 data-anchor-id="skip-some-tests">Skip some tests</h2>
+<p>Some tests shouldn’t be run all the time:</p>
+<ul>
+<li>they might depend on another package, so use <code>skip_if_not_installed()</code></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with dataframes"</span>, {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skip_if_not_installed</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>band_members</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(data<span class="sc">$</span>band, <span class="dv">2</span>))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>they might require an Internet connection (e.g if you’re building a package wrapping an API), so use <code>skip_if_offline()</code></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works"</span>, {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skip_if_offline</span>()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">2</span>))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="run-the-tests" class="level2">
+<h2 data-anchor-id="run-the-tests">Run the tests</h2>
+<p>Two options:</p>
+<ul>
+<li><code>devtools::test()</code></li>
+<li>Pane “Build” (next to “Environment”, “History”, etc.) &gt; button “Test”</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ℹ Testing my.pkg</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span> F W S  OK <span class="sc">|</span> Context</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span>         <span class="dv">4</span> <span class="sc">|</span> n_unique                                                                        </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>══ Results ═════════════════════════════════════════════════════════════════════════════════════</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>Duration<span class="sc">:</span> <span class="fl">0.2</span> s</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>[ FAIL <span class="dv">0</span> <span class="sc">|</span> WARN <span class="dv">0</span> <span class="sc">|</span> SKIP <span class="dv">0</span> <span class="sc">|</span> PASS <span class="dv">4</span> ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="do-you-have-enough-tests" class="level2">
+<h2 data-anchor-id="do-you-have-enough-tests">Do you have enough tests?</h2>
+<p>We now have some tests in our package, but do they cover all function arguments? All possible use cases?</p>
+<p>This is hard to know because users will always find new <del>annoying</del> interesting bugs.</p>
+<p>We can use the package <code>covr</code> to see how much of our package is covered by tests:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>covr<span class="sc">::</span><span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="check-a-package" class="level2">
+<h2 data-anchor-id="check-a-package">Check a package</h2>
+<p>We have seen how to run tests, but we can now perform a more thorough check with <code>devtools::check()</code> (or the button “Check” in the “Build” pane).</p>
+<p>This will check that:</p>
+<ul>
+<li><p>you use all of your dependencies</p></li>
+<li><p>all of your examples can run</p></li>
+<li><p>all your tests pass</p></li>
+<li><p>and much more</p></li>
+</ul>
+</section>
+</section>
+<section id="develop-a-package" class="level1">
+<h1>Develop a package</h1>
+<p>We now know the basics of a package: how to create one, document it, and test it.</p>
+<p>But creating a package is not only that. There are plenty of choices to make, such as:</p>
+<ul>
+<li><p>how should I name my functions?</p></li>
+<li><p>what dependencies should my package have?</p></li>
+</ul>
+<section id="namespace" class="level2">
+<h2 data-anchor-id="namespace">Namespace</h2>
+<p>The <code>NAMESPACE</code> file contains the list of functions that your package exports.</p>
+<p>When someone loads your package with <code>library(my.pkg)</code>, all exported functions will be imported in the environment.</p>
+<p>In the (very likely) event where this person uses several packages, there can be a <strong>namespace conflict</strong> if two packages (or more) provide two functions with the same name.</p>
+<p>It is also possible that some of your functions have the same name as functions included by default in R.</p>
+<p>For example, <code>dplyr</code> overwrites several functions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: ‘dplyr’</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="do">## The following object are masked from ‘package:stats’:</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  </span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  filter, lag</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="do">## The following objects are masked from ‘package:base’:</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   </span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  intersect, setdiff, setequal, union</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>While the user has some means to fix such conflicts (e.g see the package <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a>), you should do your maximum to avoid them.</p>
+<p>In particular, be very careful that your functions don’t have the same names as other functions in popular packages (e.g <code>data.table</code>, <code>tidyverse</code> packages, etc.).</p>
+<p><strong>Advanced:</strong> S3 methods.</p>
+<p>Have you ever wondered how <code>summary()</code> worked with so many outputs? Or <code>print()</code>? Or <code>plot()</code>?</p>
+<p><code>summary()</code> is an <em>S3 method</em> that gets <em>dispatched</em> according to the class of its input.</p>
+<p><strong>EXPLAIN MORE ON S3 METHODS?</strong></p>
+</section>
+<section id="dependencies" class="level2">
+<h2 data-anchor-id="dependencies">Dependencies</h2>
+<div style="text-align: center;">
+<p><img src="dependencies.png" height="600"></p>
+</div>
+<p>When you develop your package, you can import other packages, either because they provide essential features or simply because they make the development easier.</p>
+<p>However, these dependencies have a <strong>cost</strong>:</p>
+<ul>
+<li><p>they make your package more fragile: changes in these dependencies also affect your package;</p></li>
+<li><p>they force users to have these dependencies [IS IT REALLY A COST?]</p></li>
+</ul>
+<p>Therefore, you have to find the right balance:</p>
+<ul>
+<li><p>dependencies are not a bad thing <em>per se</em></p></li>
+<li><p>but they increase the maintenance burden and the risk of failure in the long run.</p></li>
+</ul>
+<p>This might seem abstract, so let’s take an example. Suppose that for one reason or another, your package uses the function <code>select_vars()</code> from the package <code>dplyr</code>.</p>
+<p>This function was removed in <code>dplyr</code> v. 1.1.0.</p>
+<p>This has implications for the user of your package:</p>
+<ul>
+<li><p>if their version of <code>dplyr</code> is &lt; 1.1.0, it still works fine;</p></li>
+<li><p>if their version of <code>dplyr</code> is &gt;= 1.1.0, then the function in your package that uses <code>select_vars()</code> will error.</p></li>
+</ul>
+<p>Having dependencies forces you to stay aware of changes in these dependencies and this increase the maintenance burden.</p>
+</section>
+</section>
+<section id="share-a-package" class="level1">
+<h1>Share a package</h1>
+<p>Having a package is cool but it’s much less useful if you keep it for you<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>There are two main, non-exclusive ways to share your package to the world:</p>
+<ul>
+<li>put it on Github</li>
+<li>put it on CRAN</li>
+</ul>
+<section id="github" class="level2">
+<h2 data-anchor-id="github">Github</h2>
+<p>Git and Github are useful tools for code sharing, which means they’re perfect to share an R package.</p>
+<p>This is <em>not</em> a Git tutorial, I’ll “just” show how to connect Git and Github to RStudio.</p>
+<p>If this is already done, skip the next two slides.</p>
+<ol type="1">
+<li><p>Download and install <a href="https://git-scm.com/">Git</a>.</p></li>
+<li><p>Connect Git and RStudio:</p>
+<ul>
+<li><p>in RStudio: Tools &gt; Global Options &gt; Git/SVN &gt; Git executable &gt; Browse &gt; Find your installation of Git</p></li>
+<li><p>it should probably be similar to mine: “C:/Users/etienne/AppData/Local/Programs/Git/bin”</p></li>
+</ul></li>
+<li><p>If necessary, create an account on <a href="github.com/">Github</a>.</p></li>
+<li><p>In RStudio, run <code>usethis::use_git_config(user.name = "&lt;YOUR NAME&gt;", user.email = "&lt;YOUR EMAIL&gt;")</code> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p></li>
+<li><p>Now you need a token that will be stored in RStudio so that Github knows that RStudio has the right to push code to your repositories. You can create one with <code>usethis::create_github_token()</code> (you can also change the expiration date).</p></li>
+<li><p>Generate the token and store it in RStudio with <code>gitcreds::gitcreds_set()</code>.</p></li>
+<li><p>Restart RStudio.</p></li>
+</ol>
+<p>Doesn’t work? More info at <a href="https://happygitwithr.com">Happy Git with R</a>.</p>
+</section>
+<section id="cran" class="level2">
+<h2 data-anchor-id="cran">CRAN</h2>
+<div style="text-align: center; font-size: 2.3rem">
+<p>CRAN <br> <br> Comprehensive R Archive Network <br> <br> Where packages are stored (around 20,000 packages currently).</p>
+</div>
+<p>Put a package on CRAN:</p>
+<ul>
+<li>Pros:
+<ul>
+<li>More visibility</li>
+<li>Package is tested before being uploaded</li>
+<li>Package is tested with new versions of R or with new versions of its dependencies</li>
+</ul></li>
+<li>Cons:
+<ul>
+<li>Delay to fix a bug in your package can be short (2 weeks)</li>
+</ul></li>
+</ul>
+<p>CRAN has strict rules in terms of formatting or testing, but that shouldn’t worry you:</p>
+<ul>
+<li><p>there are some collaborative todo lists before submitting to CRAN, such as <a href="https://github.com/ThinkR-open/prepare-for-cran">this one</a></p></li>
+<li><p>there are a lot of packages to make your life easier (<a href="https://cran.r-project.org/web/packages/urlchecker/index.html">urlchecker</a>, <a href="https://cran.r-project.org/web/packages/spelling/index.html">spelling</a>, etc.)</p></li>
+</ul>
+</section>
+<section id="website" class="level2">
+<h2 data-anchor-id="website">Website</h2>
+<p>We could stop here, but we can add something more: a website!</p>
+<p>And no, it won’t (or rather shouldn’t) take long.</p>
+<div class="columns center">
+<div class="column" style="width:50%;">
+<p>We’re going to use an amazing package to build a package website in a few minutes: <code>pkgdown</code></p>
+</div><div class="column" style="width:50%;">
+<p><img src="pkgdown.png" height="150" style="margin-left: 5rem"></p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if not already installed</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pkgdown"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="local-website" class="level3">
+<h3 data-anchor-id="local-website">Local website</h3>
+<p>Before putting the website online, we can already create locally with <code>pkgdown::build_site()</code>.</p>
+<p>This takes care of everything:</p>
+<ul>
+<li>converting documentation</li>
+<li>create links to the Github repository</li>
+<li>create pages for license, authors, etc.</li>
+</ul>
+<p>Once you have a website, you can include it in the <code>DESCRIPTION</code> file.</p>
+</section>
+</section>
+</section>
+<section id="advanced" class="level1">
+<h1>Advanced</h1>
+<section id="github-actions" class="level2">
+<h2 data-anchor-id="github-actions">Github actions</h2>
+</section>
+<section id="list-of-things-to-be-careful" class="level2">
+<h2 data-anchor-id="list-of-things-to-be-careful">List of things to be careful</h2>
+<ul>
+<li><p>Check the name of your package: check that there’s not already a package with the same name with <code>available::available()</code></p></li>
+<li><p>Check the name of your functions: avoid name conflicts with functions from very popular packages</p></li>
+<li><p>Reduce the number of dependencies</p></li>
+<li><p><strong>Test your package</strong></p>
+<ul>
+<li>explain that CRAN tests the package 1) when you upload a new version, 2) if there’s a new version from a dependency</li>
+<li>linked to the dependencies topic</li>
+</ul></li>
+<li><p>If you have a statistical package, get peer-reviewed with <a href="https://ropensci.org/stat-software-review/">rOpenSci Statistical Software Peer Review</a></p></li>
+</ul>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>You might also be interested in <a href="https://github.com/markvanderloo/tinytest/"><code>tinytest</code></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Although it can be a fine practice.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note that the email must be the same as the one used to create the Github account.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script>
+// Quarto doesn't add an `active` class to the current page's navbar link in
+// this setup, so do it ourselves: match each top-level navbar link's path
+// against the current page and mark it.
+document.addEventListener('DOMContentLoaded', function () {
+  function norm(path) {
+    path = path.replace(/index\.html$/, '');
+    if (!path.endsWith('/')) path += '/';
+    return path;
+  }
+  var current = norm(window.location.pathname);
+  var links = document.querySelectorAll(
+    '.navbar a.nav-link[href], .navbar a.dropdown-item[href]'
+  );
+  links.forEach(function (a) {
+    // Never match dropdown toggles themselves: they use href="#", which
+    // resolves to the current page (matching everywhere), and the href can be
+    // rewritten at runtime — so exclude them by class. They get `active` only
+    // via the parent-marking below, when one of their menu items is current.
+    if (a.classList.contains('dropdown-toggle')) return;
+    if (a.host !== window.location.host) return;
+    if (norm(a.pathname) !== current) return;
+
+    a.classList.add('active');
+    // If this is a menu item, also light up its parent dropdown toggle.
+    var dropdown = a.closest('.nav-item.dropdown');
+    if (dropdown) {
+      var toggle = dropdown.querySelector('.nav-link.dropdown-toggle');
+      if (toggle) toggle.classList.add('active');
+    }
+  });
+});
+</script>
+<!-- This is for site analytics. -->
+
+<!-- 
+Include the domain in the URL reported in goatcounter's dashboard.
+This is needed to separate subdomains that would point to the same page name, e.g.
+"palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
+
+https://goatcounter.com/help/domains
+  -->
+<script>
+    window.goatcounter = {
+        path: function (p) { return location.host + p }
+    }
+</script>
+
+<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
+  // Shared behaviour for every module (included via _metadata.yml):
+  //  1) a "back to the modules list" button at the top, and
+  //  2) turning each category badge into a link that opens the list filtered by
+  //     that tag. Modules live at training/modules/<name>/index.html, so the
+  //     listing page is always one level up.
+  
+  // (function () {
+  //   function ready(fn) {
+  //     if (document.readyState !== "loading") {
+  //       fn();
+  //     } else {
+  //       document.addEventListener("DOMContentLoaded", fn);
+  //     }
+  //   }
+
+  //   ready(function () {
+  //     // The metadata also applies to the listing page itself; skip it there.
+  //     if (document.querySelector(".modules-grid")) return;
+
+  //     var header = document.getElementById("title-block-header");
+  //     if (header) {
+  //       var back = document.createElement("a");
+  //       back.className = "back-to-modules";
+  //       back.href = "../index.html";
+  //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+  //       header.parentNode.insertBefore(back, header);
+  //     }
+
+  //     document.querySelectorAll(".quarto-category").forEach(function (el) {
+  //       var cat = el.textContent.trim();
+  //       var link = document.createElement("a");
+  //       link.className = "quarto-category module-category-link";
+  //       link.href =
+  //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+  //       link.textContent = cat;
+  //       el.replaceWith(link);
+  //     });
+  //   });
+  // })();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/palaeoverse\.github\.io\/modules\/pr-preview\/pr-9");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules/package_building/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
