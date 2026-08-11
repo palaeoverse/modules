@@ -1,6 +1,10 @@
 -- web_and_slides.lua
 -- Combined filter for dual html + revealjs Quarto modules:
 --   * Div    : `::: {.long-format}` -> speaker notes on revealjs, plain prose elsewhere.
+--              `::: {.slides-only}` -> revealjs slides only: dropped elsewhere
+--              (equivalent to `::: {.content-visible when-format="revealjs"}`)
+--              `::: {.html-only}`   -> html only: dropped on revealjs slides
+--              (equivalent to `::: {.content-visible when-format="html"}`)
 --   * Pandoc : on revealjs, headings below the slide level are promoted so each
 --              becomes its own slide, the slide closes after each plot (so no two
 --              plots share a slide and a plot's following prose stays with the
@@ -17,6 +21,18 @@
 -- normalizes them into custom AST nodes after that point).
 
 function Div(el)
+  if el.classes:includes("slides-only") then
+    if not quarto.doc.is_format("revealjs") then
+      return {}                                  -- slides only: nothing on the website
+    end
+    return el.content
+  end
+  if el.classes:includes("html-only") then
+    if not quarto.doc.is_format("html") then
+      return {}                                  -- html only: nothing on the slides
+    end
+    return el.content
+  end
   if not el.classes:includes("long-format") then
     return nil                                   -- leave every other div alone
   end
