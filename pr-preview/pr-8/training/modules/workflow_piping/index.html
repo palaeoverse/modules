@@ -257,7 +257,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#example-where-we-dont-use-the-pipe" id="toc-example-where-we-dont-use-the-pipe" class="nav-link" data-scroll-target="#example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</a>
   <ul class="collapse">
-  <li><a href="#intermediate-objects" id="toc-intermediate-objects" class="nav-link" data-scroll-target="#intermediate-objects">Intermediate objects</a></li>
   <li><a href="#nested-calls" id="toc-nested-calls" class="nav-link" data-scroll-target="#nested-calls">Nested calls</a></li>
   </ul></li>
   <li><a href="#introducing-the-pipe" id="toc-introducing-the-pipe" class="nav-link" data-scroll-target="#introducing-the-pipe">Introducing the pipe</a>
@@ -312,10 +311,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Piping</h1>
 <section id="example-where-we-dont-use-the-pipe" class="level2">
 <h2 data-anchor-id="example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</h2>
-<p>Let’s say we want to keep the first 10 rows in the <code>mtcars</code> data, then keep the observations where <code>cyl &gt;= 6</code>, and finally sort the remaining data by the <code>am</code> column.</p>
-<p>Without using the pipe, we have two main approaches.</p>
-<section id="intermediate-objects" class="level3">
-<h3 data-anchor-id="intermediate-objects">Intermediate objects</h3>
+<p>Let’s say we want to process the <code>mtcars</code> dataset as follows:</p>
+<ul>
+<li>keep the first 10 rows</li>
+<li>keep the observations where <code>cyl &gt;= 6</code></li>
+<li>sort the remaining data by the <code>am</code> column.</li>
+</ul>
+<p>We could do this in two different ways: by assigning intermediate output or by nesting function calls. ### Intermediate objects</p>
 <p>First, we can assign each function output to an object. This object can either keep the same name and be overwritten at each step, or we can use a collection of temporary names:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same name gets overwritten</span></span>
@@ -354,7 +356,6 @@ Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pr
 <li><p>in the first case, if we want to rename <code>res</code> in the future then we must be careful to rename all its occurrences throughout the code. It also means that if, say, the call to <code>sort_by()</code> is wrong, then we must run the entire block again so that <code>res</code> is properly reset. Depending on the data size and operations to run, this can be very time-consuming.</p></li>
 <li><p>in the second case, we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.</p></li>
 </ul>
-</section>
 <section id="nested-calls" class="level3">
 <h3 data-anchor-id="nested-calls">Nested calls</h3>
 <p>The second approach isn’t to define intermediate objects, but instead to run all those calls at once by nesting functions:</p>
@@ -416,40 +417,80 @@ Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pr
 </div>
 </div>
 <p>The pipe can be read as “and then”: we keep the first 10 rows, <em>and then</em> we apply our filter, <em>and then</em> we sort the remaining data.</p>
-<p>We now have some code that doesn’t require intermediate objects but is also easy to read because we see operations in the order in which they are executed.</p>
-<p>There are a couple of small restrictions in order to use <code>|&gt;</code>:</p>
-<ul>
-<li><p>this operator is available since R 4.1, released in 2021;</p></li>
-<li><p>it requires a proper function call in the right-hand side:</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Assigning the output">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Assigning the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>While we have used <code>&lt;-</code> to assign the output above, we could have used <code>-&gt;</code> to move the assignment to the end of the chain:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> <span class="fu">mean</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars, <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(cyl <span class="sc">&gt;=</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort_by</span>(<span class="sc">~</span> am) <span class="ot">-&gt;</span> res</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalent:</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars, <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(cyl <span class="sc">&gt;=</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort_by</span>(<span class="sc">~</span> am) <span class="ot">-&gt;</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>We now have some code that doesn’t require intermediate objects but is also easy to read because we see operations in the order in which they are executed.</p>
+<p>The <code>|&gt;</code> operator was introduced in R 4.1, released in 2021, meaning that you cannot use it in older versions of R.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Error: The pipe operator requires a function call as RHS">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Error: The pipe operator requires a function call as RHS
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Note that <code>|&gt;</code> requires a function call on the right-hand side:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> <span class="fu">mean</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in mean: The pipe operator requires a function call as RHS (&lt;input&gt;:1:8)</code></pre>
 </div>
-</div></li>
-</ul>
+</div>
+<p>This differs from the <code>magrittr</code> pipe, <code>%&gt;%</code>.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="using-_" class="level3">
 <h3 data-anchor-id="using-_">Using “<code>_</code>”</h3>
 <p>In the code above, we could seamlessly chain operations because each of those functions take the input data as their first argument.</p>
 <p>This is not always the case. For instance, <code>grepl()</code> (which detects whether elements of a character vector match a specific pattern) takes the vector to check in second position:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>let <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">"a|e"</span>, let)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>let <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">"a|e"</span>, let)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE FALSE FALSE FALSE  TRUE FALSE</code></pre>
 </div>
 </div>
 <p>Using <code>|&gt;</code> without specifying the position of the input would lead to wrong code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in grepl(let, "a|e"): argument 'pattern' has length &gt; 1 and only the
 first element will be used</code></pre>
@@ -460,27 +501,36 @@ first element will be used</code></pre>
 </div>
 <p>The code above is equivalent to <code>grepl(let, "a|e")</code>, which is not what we want and is the cause of the warning. We want to tell <code>grepl()</code> that the data we’re passing via <code>|&gt;</code> should end up in second position. To do so, we can use <code>_</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>, <span class="at">x =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>, <span class="at">x =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE FALSE FALSE FALSE  TRUE FALSE</code></pre>
+</div>
+</div>
+<p>Some operations don’t have named arguments but still require specifying <code>_</code>, e.g.&nbsp;to extract a column and then compute its mean:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  _<span class="sc">$</span>drat <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.596563</code></pre>
 </div>
 </div>
 <p>Note that using <code>_</code> comes with a few restrictions:</p>
 <ul>
 <li><p>this operator is available since R 4.2 (released in 2022);</p></li>
-<li><p><code>_</code> must be used on a named argument, e.g.&nbsp;this fails:</p>
+<li><p><code>_</code> must be used on a named argument (except in some cases, such as <code>$</code> shown above). For example, this fails:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>, _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>, _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in grepl("a|e", "_"): pipe placeholder can only be used as a named argument (&lt;input&gt;:2:3)</code></pre>
 </div>
 </div></li>
 <li><p>a function call can contain only one <code>_</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>drat <span class="sc">|&gt;</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">x =</span> _, <span class="at">y =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>drat <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">x =</span> _, <span class="at">y =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in cor(x = "_", y = "_"): pipe placeholder may only appear once (&lt;input&gt;:2:3)</code></pre>
 </div>
@@ -489,12 +539,19 @@ first element will be used</code></pre>
 </section>
 <section id="using-anonymous-functions-in-a-piped-chain" class="level3">
 <h3 data-anchor-id="using-anonymous-functions-in-a-piped-chain">Using anonymous functions in a piped chain</h3>
-<p>So far, we have only used named functions provided in base R (though we could have used functions from other packages). Sometimes, it is necessary to run custom code on the data without creating a dedicated new function for that.</p>
-<p>To do so, we need to wrap the call to the anonymous function in parenthesis and evaluate it with <code>()</code> at the end of its definition:</p>
+<p>So far, we have only used functions provided in base R (though we could have used functions from other packages). Sometimes, it is necessary to run custom code on the data without creating a dedicated new function for that, i.e.&nbsp;we want to use an <em>anonymous</em> function. If you have used one of the <code>*apply()</code> functions before, then you may have used anonymous functions:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(cyl <span class="sc">==</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  (<span class="cf">function</span>(d) <span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> d))()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The function below is anonymous: it isn't assigned to anything, we </span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># just create it on the fly:</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(my_list, <span class="cf">function</span>(x) {</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x) <span class="sc">/</span> <span class="fu">sd</span>(x))</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To use an anonymous function in a piped chain, we need to wrap it in parentheses and evaluate it with <code>()</code> at the end of its definition:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(cyl <span class="sc">==</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  (<span class="cf">function</span>(d) <span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> d))()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -509,7 +566,7 @@ Coefficients:
 <section id="what-about" class="level3">
 <h3 data-anchor-id="what-about">What about “<code>%&gt;%</code>”?</h3>
 <p>You may have seen code that chains operations using <code>%&gt;%</code>. This <code>%&gt;%</code> is also a pipe and it is provided by the <code>magrittr</code> package. It predates <code>|&gt;</code> and was widely used in the <a href="https://tidyverse.org/"><code>tidyverse</code></a>. Its design and popularity inspired the implementation of <code>|&gt;</code> in base R in 2021.</p>
-<p>For simple cases, <code>|&gt;</code> and <code>%&gt;%</code> behave identically. We recommend using <code>|&gt;</code> simply because it is always available in R and doesn’t rely on an external package.</p>
+<p>For simple cases, <code>|&gt;</code> and <code>%&gt;%</code> behave identically. We recommend using <code>|&gt;</code> simply because it is always available in R and doesn’t rely on an external package (and the <a href="https://style.tidyverse.org/pipes.html">Tidyverse style guide</a> also recommends <code>|&gt;</code>).</p>
 
 
 </section>
