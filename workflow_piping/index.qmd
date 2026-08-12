@@ -23,10 +23,13 @@ editor:
 
 ## Example where we don't use the pipe
 
-Let's say we want to keep the first 10 rows in the `mtcars` data, then keep the observations where `cyl >= 6`, and finally sort the remaining data by the `am` column.
+Let's say we want to process the `mtcars` dataset as follows:
 
-Without using the pipe, we have two main approaches.
+* keep the first 10 rows 
+* keep the observations where `cyl >= 6`
+* sort the remaining data by the `am` column.
 
+We could do this in two different ways: by assigning intermediate output or by nesting function calls.
 ### Intermediate objects
 
 First, we can assign each function output to an object.
@@ -92,19 +95,39 @@ res
 
 The pipe can be read as "and then": we keep the first 10 rows, *and then* we apply our filter, *and then* we sort the remaining data.
 
+:::{.callout-note title="Assigning the output" collapse="true"}
+While we have used `<-` to assign the output above, we could have used `->` to move the assignment to the end of the chain:
+
+```{r}
+head(mtcars, 10) |> 
+  subset(cyl >= 6) |> 
+  sort_by(~ am) -> res
+
+# Equivalent:
+head(mtcars, 10) |> 
+  subset(cyl >= 6) |> 
+  sort_by(~ am) -> 
+  res
+```
+:::
+
 We now have some code that doesn't require intermediate objects but is also easy to read because we see operations in the order in which they are executed.
 
-There are a couple of small restrictions in order to use `|>`:
+The `|>` operator was introduced in R 4.1, released in 2021, meaning that you cannot use it in older versions of R.
 
-- this operator is available since R 4.1, released in 2021;
-- it requires a proper function call in the right-hand side:
-  ```{r}
-  1:3 |> mean()
-  ```
-  ```{r}
-  #| error: true
-  1:3 |> mean
-  ```
+:::{.callout-note title="Error: The pipe operator requires a function call as RHS" collapse="true"}
+Note that `|>` requires a function call on the right-hand side:
+
+```{r}
+1:3 |> mean()
+```
+```{r}
+#| error: true
+1:3 |> mean
+```
+
+This differs from the `magrittr` pipe, `%>%`.
+:::
 
 
 ### Using "`_`"
@@ -135,10 +158,19 @@ let |>
   grepl("a|e", x = _)
 ```
 
+Some operations don't have named arguments but still require specifying `_`, e.g. to extract a column and then compute its mean:
+
+```{r}
+mtcars |> 
+  _$drat |> 
+  mean()
+```
+
+
 Note that using `_` comes with a few restrictions:
 
 - this operator is available since R 4.2 (released in 2022);
-- `_` must be used on a named argument, e.g. this fails:
+- `_` must be used on a named argument (except in some cases, such as `$` shown above). For example, this fails:
   ```{r}
   #| error: true
   let |> 
@@ -154,10 +186,19 @@ Note that using `_` comes with a few restrictions:
 
 ### Using anonymous functions in a piped chain
 
-So far, we have only used named functions provided in base R (though we could have used functions from other packages).
-Sometimes, it is necessary to run custom code on the data without creating a dedicated new function for that.
+So far, we have only used functions provided in base R (though we could have used functions from other packages).
+Sometimes, it is necessary to run custom code on the data without creating a dedicated new function for that, i.e. we want to use an *anonymous* function.
+If you have used one of the `*apply()` functions before, then you may have used anonymous functions:
 
-To do so, we need to wrap the call to the anonymous function in parenthesis and evaluate it with `()` at the end of its definition:
+```{r eval = FALSE}
+# The function below is anonymous: it isn't assigned to anything, we 
+# just create it on the fly:
+lapply(my_list, function(x) {
+  (x - mean(x) / sd(x))
+})
+```
+
+To use an anonymous function in a piped chain, we need to wrap it in parentheses and evaluate it with `()` at the end of its definition:
 
 ```{r}
 mtcars |> 
@@ -174,4 +215,4 @@ It predates `|>` and was widely used in the [`tidyverse`](https://tidyverse.org/
 Its design and popularity inspired the implementation of `|>` in base R in 2021.
 
 For simple cases, `|>` and `%>%` behave identically.
-We recommend using `|>` simply because it is always available in R and doesn't rely on an external package.
+We recommend using `|>` simply because it is always available in R and doesn't rely on an external package (and the [Tidyverse style guide](https://style.tidyverse.org/pipes.html) also recommends `|>`).
