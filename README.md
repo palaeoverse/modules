@@ -134,7 +134,7 @@ It does the following:
    - adds `execute.echo: true` (renders source code on slides)
    - adds `execute.output-location: fragment` (renders code results as separate chunk)
    - adds `format.revealjs.smaller: true` (text shrinks to fit on slides)
-   - removes `format.revealjs.scrollable` (disables scrolling through slides)
+   - removes `format.revealjs.scrollable` (disables scrolling through slides)
 4. Reports headings that will render awkwardly (e.g., `#` become centered title slides).
    You should fix these by hand.
 
@@ -183,8 +183,8 @@ content appear in the prose tutorial and be shown as speaker notes for the slide
 
 # Additional references:
 
-- Quarto tutorial ([with Positron](https://quarto.org/docs/get-started/hello/positron.html) | [with RStudio](https://quarto.org/docs/get-started/computations/rstudio.html))
+- Quarto tutorial ([with Positron](https://quarto.org/docs/get-started/hello/positron.html) | [with RStudio](https://quarto.org/docs/get-started/computations/rstudio.html))
 - [Markdown basics in Quarto](https://quarto.org/docs/authoring/markdown-basics.html)
 - [HTML basics in Quarto](https://quarto.org/docs/output-formats/html-basics.html)
 - [Revealjs in Quarto](https://quarto.org/docs/presentations/revealjs/)
-- [Quarto Listings](https://quarto.org/docs/websites/website-listings.html)
+- [Quarto Listings](https://quarto.org/docs/websites/website-listings.html)
