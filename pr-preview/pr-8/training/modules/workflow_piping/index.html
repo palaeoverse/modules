@@ -83,9 +83,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e5bcdb3a787ab268c756645007037576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-d3fd0f4e0abb432a08b185359d6e380c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-a101dc32edc0fe08a8ac9a5ddf892855.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-d24744790deb571dbb3ea4d2c406ae71.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-a101dc32edc0fe08a8ac9a5ddf892855.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -257,6 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#example-where-we-dont-use-the-pipe" id="toc-example-where-we-dont-use-the-pipe" class="nav-link" data-scroll-target="#example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</a>
   <ul class="collapse">
+  <li><a href="#intermediate-objects" id="toc-intermediate-objects" class="nav-link" data-scroll-target="#intermediate-objects">Intermediate objects</a></li>
   <li><a href="#nested-calls" id="toc-nested-calls" class="nav-link" data-scroll-target="#nested-calls">Nested calls</a></li>
   </ul></li>
   <li><a href="#introducing-the-pipe" id="toc-introducing-the-pipe" class="nav-link" data-scroll-target="#introducing-the-pipe">Introducing the pipe</a>
@@ -317,7 +318,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>keep the observations where <code>cyl &gt;= 6</code></li>
 <li>sort the remaining data by the <code>am</code> column.</li>
 </ul>
-<p>We could do this in two different ways: by assigning intermediate output or by nesting function calls. ### Intermediate objects</p>
+<p>We could do this in two different ways: by assigning intermediate output or by nesting function calls.</p>
+<section id="intermediate-objects" class="level3">
+<h3 data-anchor-id="intermediate-objects">Intermediate objects</h3>
 <p>First, we can assign each function output to an object. This object can either keep the same name and be overwritten at each step, or we can use a collection of temporary names:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same name gets overwritten</span></span>
@@ -356,6 +359,7 @@ Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pr
 <li><p>in the first case, if we want to rename <code>res</code> in the future then we must be careful to rename all its occurrences throughout the code. It also means that if, say, the call to <code>sort_by()</code> is wrong, then we must run the entire block again so that <code>res</code> is properly reset. Depending on the data size and operations to run, this can be very time-consuming.</p></li>
 <li><p>in the second case, we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.</p></li>
 </ul>
+</section>
 <section id="nested-calls" class="level3">
 <h3 data-anchor-id="nested-calls">Nested calls</h3>
 <p>The second approach isn’t to define intermediate objects, but instead to run all those calls at once by nesting functions:</p>
