@@ -34,7 +34,7 @@ We could do this in two different ways: by assigning intermediate output or by n
 ### Intermediate objects
 
 First, we can assign each function output to an object.
-This object can either keep the same name and be overwritten at each step, or we can use a collection of temporary names:
+This object can keep the same name and be overwritten at each step:
 
 ```{r}
 # Same name gets overwritten
@@ -42,7 +42,12 @@ res <- head(mtcars, 10)
 res <- subset(res, cyl >= 6)
 res <- sort_by(res, ~ am)
 res
+```
 
+However, if we want to rename `res` in the future then we must be careful to rename all its occurrences throughout the code. It also means that if, say, the call to `sort_by()` is wrong, then we must run the entire block again so that `res` is properly reset. Depending on the data size and operations to run, this can be very time-consuming.
+
+An alternative is to use a collection of temporary names:
+```{r}
 # Temporary names
 tmp1 <- head(mtcars, 10)
 tmp2 <- subset(tmp1, cyl >= 6)
@@ -50,11 +55,7 @@ res <- sort_by(tmp2, ~ am)
 res
 ```
 
-Each of these cases has drawbacks:
-
-- in the first case, if we want to rename `res` in the future then we must be careful to rename all its occurrences throughout the code. It also means that if, say, the call to `sort_by()` is wrong, then we must run the entire block again so that `res` is properly reset. Depending on the data size and operations to run, this can be very time-consuming.
-
-- in the second case, we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.
+But this is also not ideal because we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.
 
 
 ### Nested calls
