@@ -85,9 +85,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e5bcdb3a787ab268c756645007037576.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-d3fd0f4e0abb432a08b185359d6e380c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-3d982f6e69c0adbd4c9e5267b9a48e05.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-a101dc32edc0fe08a8ac9a5ddf892855.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-d24744790deb571dbb3ea4d2c406ae71.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-a101dc32edc0fe08a8ac9a5ddf892855.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -668,7 +668,7 @@ or logical: returning NA</code></pre>
 <h1>Other ways to use and create functions</h1>
 <section id="functions-as-arguments" class="level2">
 <h2 data-anchor-id="functions-as-arguments">Functions as arguments</h2>
-<p>In R, functions are treated as <em>first order citizens</em>, meaning they can be assigned to variables and passed over to other functions. Let’s look at the built-in function for the mean as an example.</p>
+<p>In R, functions are just another type of objects, meaning that they can be updated by the user, assigned to variables, and passed over to other functions. at the built-in function for the mean as an example.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>my_variable <span class="ot">&lt;-</span> mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -694,10 +694,10 @@ or logical: returning NA</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> median)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] 0.02199934
+[1] 0.1703078
 
 $b
-[1] 2.979812</code></pre>
+[1] 3.015359</code></pre>
 </div>
 </div>
 <p>Note again that we pass <code>median</code> (the function) as an argument without parenthesis. Using <code>median()</code> instead equates to calling the median function without passing it any arguments and will result in an error. For the curious: <code>lapply</code> is what is called a <a href="https://en.wikipedia.org/wiki/Higher-order_function">“higher-order function”</a>.</p>
@@ -714,10 +714,10 @@ $b
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">abs</span>(x[<span class="dv">3</span>] <span class="sc">-</span> x[<span class="dv">5</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] 0.7373102
+[1] 1.140083
 
 $b
-[1] 0.07253063</code></pre>
+[1] 0.982681</code></pre>
 </div>
 </div>
 </section>
