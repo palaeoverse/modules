@@ -167,7 +167,8 @@ my_std <- function() {}
 
 For now, this function is useless:
 
-```{r, eval=TRUE}
+```{r}
+#| eval: true
 my_std()
 ```
 
@@ -177,7 +178,8 @@ my_std()
 
 Let's add a simple message:
 
-```{r, eval=TRUE}
+```{r}
+#| eval: true
 my_std <- function() {
   print("Hello from my_std()!")
 }
@@ -286,7 +288,8 @@ We can pass our own values to `my_std()`, so we can also make mistakes!
 
 If we pass a column name that doesn't exist in the data:
 
-```{r, warning = TRUE}
+```{r}
+#| warning: true
 my_std("unknown_column")
 ```
 
@@ -335,7 +338,8 @@ my_std <- function(column) {
 }
 ```
 
-```{r, echo=FALSE}
+```{r}
+#| echo: false
 my_std <- function(column) {
   if (length(column) != 1) {
     stop("The `column` parameter must be of length 1.")
@@ -357,7 +361,8 @@ my_std <- function(column) {
 
 And now we have proper error messages!
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 my_std(c("Sepal.Length", "Petal.Width"))
 my_std(1)
 my_std("column_1")
@@ -376,7 +381,8 @@ useful error messages, for example [`rlang`](https://rlang.r-lib.org/reference/i
 
 #### With `rlang`
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 ### With rlang
 my_std <- function(column) {
   rlang::check_string(column)
@@ -394,7 +400,8 @@ my_std("column_1")
 
 #### With `checkmate`
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 my_std <- function(column) {
   checkmate::assert_string(column)
   checkmate::assert_subset(column, names(iris))

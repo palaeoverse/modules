@@ -172,7 +172,8 @@ The user can now pass custom column names to the function, but this also
 means that they can pass wrong values! This is what happens if they pass
 a column name that doesn't exist in the data:
 
-```{r, warning = TRUE}
+```{r}
+#| warning: true
 my_std("unknown_column")
 ```
 
@@ -211,7 +212,8 @@ my_std <- function(column) {
 
 And now we have proper error messages and avoid nonsensical results!
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 my_std(c("Sepal.Length", "Petal.Width"))
 my_std(1)
 my_std("column_1")
@@ -226,7 +228,8 @@ and [`checkmate`](https://mllg.github.io/checkmate/).
 
 #### With `rlang`
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 ### With rlang
 my_std <- function(column) {
   rlang::check_string(column)
@@ -244,7 +247,8 @@ my_std("column_1")
 
 #### With `checkmate`
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 my_std <- function(column) {
   checkmate::assert_string(column)
   checkmate::assert_subset(column, names(iris))
@@ -420,7 +424,8 @@ functions that are defined on the spot and immediately evaluated without
 being assigned to a variable. Their syntax is straightforward, as you
 just skip the variable assignment:
 
-```{r eval=FALSE}
+```{r}
+#| eval: false
 function(x){ some code }
 ```
 
