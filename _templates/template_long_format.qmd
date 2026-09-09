@@ -1,0 +1,52 @@
+---
+title: "Template for long format document with Quarto"
+description: ""
+author: 
+  - An author
+  - Another author
+date: "`r Sys.Date()`"
+categories: [r, tidyverse, dataviz]
+difficulty: Beginner
+format:
+  html: default
+execute:
+  warning: false
+  message: false
+  freeze: auto
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Introduction
+
+Here is some text with **some** *formatting*.
+
+## A subsection
+
+Here's a code chunk:
+
+```{r}
+plot(mtcars)
+```
+
+Same code chunk but not executed:
+
+```{r}
+#| eval: false
+plot(mtcars)
+```
+
+## Another subsection
+
+A callout:
+
+::: {.callout-note title="Note 1"}
+This is a note.
+:::
+
+A collapsed callout:
+
+::: {.callout-note collapse = true}
+This is a note.
+:::
