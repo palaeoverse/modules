@@ -102,6 +102,11 @@ The following changes are applied to the reveal.js slides via our custom Lua fil
   own, titled by its own heading. Give a callout a `## Heading` as its first line
   (rather than `title="..."`) if you want that title on the slide; an untitled
   callout keeps the section title.
+- **Collapsed callouts stay hidden:** A callout with `collapse="true"` keeps its
+  box and title instead of being un-boxed, and its body is held back as a
+  reveal.js fragment, so a solution is revealed on the next advance rather than
+  given away. This applies wherever the callout sits, including inside a broader
+  callout. (reveal.js ignores Quarto's own `collapse`, hence the fragment.)
 - **Multi-chunk slides build up:** A slide holding two or more code chunks is
   expanded into an auto-animate sequence: one step per chunk, earlier chunks
   staying on screen, and the notes for each chunk advancing with it.

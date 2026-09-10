@@ -12,7 +12,9 @@
 --              which case it stays put rather than making a blank slide), and each
 --              callout is unwrapped onto its own slide titled by its own heading
 --              (no box, so any figure inside hoists and stretches; an untitled
---              callout keeps the section title). Split slides repeat the current
+--              callout keeps the section title; a callout the author collapsed
+--              keeps its box, its body held back as a fragment, since revealjs
+--              ignores Quarto's `collapse`). Split slides repeat the current
 --              heading so they keep a title. Finally, any slide with 2+ cells is
 --              expanded into an auto-animate build-up (one step per cell, cells
 --              accumulating, notes advancing) so each step is a real slide whose
@@ -69,6 +71,32 @@ function Pandoc(doc)
     return false
   end
 
+  local kept_collapsed = false   -- a collapsed callout kept its box; needs the CSS below
+
+  -- revealjs ignores Quarto's `collapse`, so a callout the author collapsed (a
+  -- hidden solution, say) would otherwise be given away on the slide. Keep its
+  -- box and title and hold the body back as a fragment, revealed on the next
+  -- advance. `collapse="false"` (collapsible but open) is not affected.
+  local function is_collapsed(el)
+    local c = el.attributes["collapse"]
+    return c ~= nil and c ~= "false"
+  end
+
+  -- clone a collapsed callout with everything after its title heading wrapped in
+  -- a `.fragment` div; its nested content is left exactly as the author wrote it
+  local function hold_collapsed(el)
+    kept_collapsed = true
+    local kept, body = el:clone(), pandoc.List()
+    local titled = #kept.content > 0 and kept.content[1].t == "Header"
+    for j = (titled and 2 or 1), #kept.content do body:insert(kept.content[j]) end
+    if #body == 0 then return kept end
+    local held = pandoc.List()
+    if titled then held:insert(kept.content[1]) end
+    held:insert(pandoc.Div(body, pandoc.Attr("", { "fragment" })))
+    kept.content = held
+    return kept
+  end
+
   -- unwrap callouts to plain blocks (recursively, for nested callouts) so their
   -- content sits directly on the slide -- a de-boxed callout behaves like normal
   -- slide content, and any figure inside hoists and auto-stretches. Headings at
@@ -77,7 +105,9 @@ function Pandoc(doc)
   local function unwrap_callouts(blocks)
     local flat = pandoc.List()
     for _, b in ipairs(blocks) do
-      if b.t == "Div" and is_callout(b) then
+      if b.t == "Div" and is_callout(b) and is_collapsed(b) then
+        flat:insert(hold_collapsed(b))         -- collapsed: keep the box
+      elseif b.t == "Div" and is_callout(b) then
         flat:extend(unwrap_callouts(b.content))
       elseif b.t == "Header" and b.level <= slide_level then
         local h = b:clone(); h.level = slide_level + 1; flat:insert(h)
@@ -128,6 +158,12 @@ function Pandoc(doc)
     elseif blk.t == "HorizontalRule" then
       pending = false; filled = false
       out:insert(blk)
+    elseif blk.t == "Div" and is_callout(blk) and is_collapsed(blk) then
+      -- collapsed: keep the box, since unwrapping it would reveal the content.
+      -- Lands on its own slide under the section title, body held as a fragment.
+      if pending or filled then out:insert(slide_break()) end
+      out:insert(hold_collapsed(blk))
+      filled = true; pending = true
     elseif blk.t == "Div" and is_callout(blk) then
       -- give the callout its own slide titled by its own heading (promoted to the
       -- slide level, so the heading is itself the slide boundary); content is
@@ -219,5 +255,22 @@ function Pandoc(doc)
   end
   emit_slide(delim, body, expanded)                -- flush the last slide
 
+
+  -- the revealjs theme shrinks every callout box to 0.7em (and compensates for
+  -- that in headings). A kept box holds ordinary slide content, so put the
+  -- slide's own sizes back inside it -- an extra class beats the theme's
+  -- specificity, and the heading variables keep a custom theme's scale.
+  if kept_collapsed then
+    quarto.doc.include_text("in-header", [==[<style>
+.reveal .slides section div.callout.callout-style-simple,
+.reveal .slides section div.callout.callout-style-default { font-size: inherit; }
+.reveal .slides section div.callout.callout-style-simple h1,
+.reveal .slides section div.callout.callout-style-default h1 { font-size: var(--r-heading1-size); }
+.reveal .slides section div.callout.callout-style-simple h2,
+.reveal .slides section div.callout.callout-style-default h2 { font-size: var(--r-heading2-size); }
+.reveal .slides section div.callout.callout-style-simple h3,
+.reveal .slides section div.callout.callout-style-default h3 { font-size: var(--r-heading3-size); }
+</style>]==])
+  end
   return pandoc.Pandoc(expanded, doc.meta)
 end
