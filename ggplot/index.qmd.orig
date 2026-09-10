@@ -50,6 +50,7 @@ You'll notice that the `ggplot()` function doesn't actually do much by itself. H
 By using the `ggplot()` function, we are essentially stating that we are beginning a plotting "sentence". We then combine this with other "words" (function calls) using the `+` operator. The next component you usually want to specify in a `ggplot` "sentence" is our "aesthetic" mappings. These specify the columns of the dataset that correspond to each axis of the plot, including the x/y axes, but also the axes of color, shape, etc. We do this with the `aes()` function:
 
 ```{r ggplot-aes}
+#| code-line-numbers: "2"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len)
 ```
@@ -57,6 +58,7 @@ ggplot(penguins) +
 Hey, it's starting to look like a plot now! Except there isn't any actual data being plotted. Let's fix that. We'll start off with a simple scatter plot by using the `geom_point()` function:
 
 ```{r geom_point}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len) +
   geom_point()
@@ -80,8 +82,10 @@ penguins <- penguins |>
 Now, let's go a step further and color the points by another variable (e.g., the island of the penguins). With `ggplot2`, all that requires is specifying another aesthetic:
 
 ```{r geom_point-color}
+#| code-line-numbers: "3"
 ggplot(penguins) +
-  aes(x = body_mass, y = flipper_len, color = island) +
+  aes(x = body_mass, y = flipper_len,
+      color = island) +
   geom_point()
 ```
 
@@ -90,8 +94,10 @@ Notice that `ggplot2` comes with its own default color scheme. However, I would 
 First, let's try one of the [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) color palettes. Since this palette is included in `ggplot2`, all we need to do is add the proper "scale" to our `ggplot()` call. Scales tell ggplot how to handle a particular aesthetic, and are usually of the form `scale_[aesthetic]_[type]()`.
 
 ```{r viridis}
+#| code-line-numbers: "5"
 ggplot(penguins) +
-  aes(x = body_mass, y = flipper_len, color = island) +
+  aes(x = body_mass, y = flipper_len,
+      color = island) +
   geom_point() +
   scale_color_viridis_d(end = 0.7) # avoid yellow at the end of the palette
 ```
@@ -99,8 +105,10 @@ ggplot(penguins) +
 Now let's try one of the [brewer color palettes](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html).
 
 ```{r brewer}
+#| code-line-numbers: "5"
 ggplot(penguins) +
-  aes(x = body_mass, y = flipper_len, color = island) +
+  aes(x = body_mass, y = flipper_len,
+      color = island) +
   geom_point() +
   scale_color_brewer(palette = "Set1")
 ```
@@ -108,9 +116,11 @@ ggplot(penguins) +
 Outside of color, there are many other [aspects of the graph](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html) that we can modify using aesthetics and "scale"s. For example, we can modify the shape of the points:
 
 ```{r shape-aes}
+#| code-line-numbers: "4"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1")
 ```
@@ -120,9 +130,11 @@ ggplot(penguins) +
 Urgh, more missing data! It appears that nine of the penguins are missing sex identification data. We can ignore the warning message, but that extra "NA" category in the legend is quite annoying. We can remove this category from the legend using `na.translate = FALSE` within `scale_shape_discrete()` (you could also use `scale_shape_manual()` if you wanted to supply your own shapes):
 
 ```{r na.translate}
+#| code-line-numbers: "7"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE)
@@ -132,9 +144,11 @@ ggplot(penguins) +
 And the x/y axes:
 
 ```{r axis-scales}
+#| code-line-numbers: "8-9"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE) +
@@ -147,9 +161,11 @@ ggplot(penguins) +
 The last basic thing you might want to do with `ggplot2` is modify the style of the visualization. This is extremely customizable, but the first place to start is with a [built-in theme](https://ggplot2.tidyverse.org/reference/ggtheme.html). I personally prefer the classic theme, which looks very similar to base R plots:
 
 ```{r theme_classic}
+#| code-line-numbers: "10"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE) +
@@ -161,9 +177,11 @@ ggplot(penguins) +
 Using this built-in theme has changed many visual aspects of the graph, including changing the plot background color, adding axis lines, and removing the internal grid lines. If you look very closely, however, the axis tick labels are still a slight grey. We can use the `theme()` function to further customize the appearance and change this. In this case, we'll make the axis text elements have a black color instead of the default gray.
 
 ```{r theming}
+#| code-line-numbers: "11"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE) +
@@ -188,6 +206,7 @@ There are many other [types of plots](https://ggplot2.tidyverse.org/reference/#l
 We can visualize the density of values for a single variable with a histogram:
 
 ```{r geom_histogram}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = body_mass, fill = species) +
   geom_histogram() +
@@ -199,6 +218,7 @@ ggplot(penguins) +
 Histograms don't require a y-axis aesthetic by default. The counts are tabulated for you. If you specify a "fill" aesthetic, the default is to stack the bars which can sometimes be a bit misleading. You can also dodge them to fix this:
 
 ```{r hist-dodge}
+#| code-line-numbers: "2-3"
 ggplot(penguins) +
   aes(x = body_mass, fill = species) +
   geom_histogram(position = "dodge") +
@@ -212,6 +232,7 @@ ggplot(penguins) +
 We can visualize the density of values for a single variable across a discrete variable with boxplots or violin plots:
 
 ```{r geom_boxplot}
+#| code-line-numbers: "2-3"
 ggplot(penguins) +
   aes(x = island, y = bill_len) +
   geom_boxplot() +
@@ -220,6 +241,7 @@ ggplot(penguins) +
 ```
 
 ```{r geom_violin}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = island, y = bill_len) +
   geom_violin(scale = "width", draw_quantiles = c(0.25, 0.5, 0.75)) +
@@ -237,6 +259,7 @@ Note that many of these "geom"s have lots of options. For example, here we've de
 We can also visualize the density of values across two continuous variables using a 2D contour:
 
 ```{r geom_density_2d}
+#| code-line-numbers: "2-3"
 ggplot(penguins) +
   aes(x = bill_len, y = bill_dep) +
   geom_density_2d(linewidth = 0.25, colour = "black") +
@@ -246,6 +269,7 @@ ggplot(penguins) +
 Note that sometimes you may need to expand the axes a little bit to better show the contours:
 
 ```{r geom_density_2d_expand}
+#| code-line-numbers: "4"
 ggplot(penguins) +
   aes(x = bill_len, y = bill_dep) +
   geom_density_2d(linewidth = 0.25, colour = "black") +
@@ -259,7 +283,8 @@ ggplot(penguins) +
 Since there isn't really any time series data in the penguins dataset, we'll take a quick detour and use the built-in `economics` dataset to explore visualizing a time series. In this case, we are looking at unemployment over time:
 
 ```{r geom_line}
-ggplot(economics, aes(x = date, y = unemploy)) +
+ggplot(economics) +
+  aes(x = date, y = unemploy) +
   geom_line() +
   theme_classic() +
   theme(axis.text = element_text(color = "black"))
@@ -268,7 +293,9 @@ ggplot(economics, aes(x = date, y = unemploy)) +
 `geom_path()` lets you explore how two variables are related over time. For example, unemployment and personal savings rate:
 
 ```{r geom_path}
-ggplot(economics, aes(x = unemploy / pop, y = psavert)) +
+#| code-line-numbers: "2-3"
+ggplot(economics) +
+  aes(x = unemploy / pop, y = psavert) +
   geom_path(aes(colour = as.numeric(date))) +
   theme_classic() +
   theme(axis.text = element_text(color = "black"))
@@ -321,6 +348,7 @@ ggplot(penguins) +
 Now, what if we wanted to also split the data by the species of the penguins? We're already using color and shape, so what other aesthetic could we use? We could possible use some shapes that have both a fill and outline color, but that sounds messy. Instead of using another aesthetic, we could also use a `facet`. This splits the chart into multiple panels:
 
 ```{r scatter-facet}
+#| code-line-numbers: "9"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
       color = island, shape = sex) +
@@ -337,6 +365,7 @@ ggplot(penguins) +
 We can get even crazier by faceting by multiple variables:
 
 ```{r scatter-facet-grid}
+#| code-line-numbers: "9"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
       color = island, shape = sex) +

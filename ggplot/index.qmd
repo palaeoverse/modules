@@ -65,6 +65,7 @@ By using the `ggplot()` function, we are essentially stating that we are beginni
 :::
 
 ```{r ggplot-aes}
+#| code-line-numbers: "2"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len)
 ```
@@ -74,6 +75,7 @@ Hey, it's starting to look like a plot now! Except there isn't any actual data b
 :::
 
 ```{r geom_point}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len) +
   geom_point()
@@ -101,8 +103,10 @@ Now, let's go a step further and color the points by another variable (e.g., the
 :::
 
 ```{r geom_point-color}
+#| code-line-numbers: "3"
 ggplot(penguins) +
-  aes(x = body_mass, y = flipper_len, color = island) +
+  aes(x = body_mass, y = flipper_len,
+      color = island) +
   geom_point()
 ```
 
@@ -113,8 +117,10 @@ First, let's try one of the [`viridis`](https://cran.r-project.org/web/packages/
 :::
 
 ```{r viridis}
+#| code-line-numbers: "5"
 ggplot(penguins) +
-  aes(x = body_mass, y = flipper_len, color = island) +
+  aes(x = body_mass, y = flipper_len,
+      color = island) +
   geom_point() +
   scale_color_viridis_d(end = 0.7) # avoid yellow at the end of the palette
 ```
@@ -124,8 +130,10 @@ Now let's try one of the [brewer color palettes](https://r-graph-gallery.com/38-
 :::
 
 ```{r brewer}
+#| code-line-numbers: "5"
 ggplot(penguins) +
-  aes(x = body_mass, y = flipper_len, color = island) +
+  aes(x = body_mass, y = flipper_len,
+      color = island) +
   geom_point() +
   scale_color_brewer(palette = "Set1")
 ```
@@ -135,9 +143,11 @@ Outside of color, there are many other [aspects of the graph](https://ggplot2.ti
 :::
 
 ```{r shape-aes}
+#| code-line-numbers: "4"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1")
 ```
@@ -147,9 +157,11 @@ ggplot(penguins) +
 Urgh, more missing data! It appears that nine of the penguins are missing sex identification data. We can ignore the warning message, but that extra "NA" category in the legend is quite annoying. We can remove this category from the legend using `na.translate = FALSE` within `scale_shape_discrete()` (you could also use `scale_shape_manual()` if you wanted to supply your own shapes):
 
 ```{r na.translate}
+#| code-line-numbers: "7"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE)
@@ -161,9 +173,11 @@ And the x/y axes:
 :::
 
 ```{r axis-scales}
+#| code-line-numbers: "8-9"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE) +
@@ -178,9 +192,11 @@ The last basic thing you might want to do with `ggplot2` is modify the style of 
 :::
 
 ```{r theme_classic}
+#| code-line-numbers: "10"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE) +
@@ -194,9 +210,11 @@ Using this built-in theme has changed many visual aspects of the graph, includin
 :::
 
 ```{r theming}
+#| code-line-numbers: "11"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
-      color = island, shape = sex) +
+      color = island,
+      shape = sex) +
   geom_point() +
   scale_color_brewer(palette = "Set1") +
   scale_shape_discrete(na.translate = FALSE) +
@@ -227,6 +245,7 @@ We can visualize the density of values for a single variable with a histogram:
 :::
 
 ```{r geom_histogram}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = body_mass, fill = species) +
   geom_histogram() +
@@ -238,6 +257,7 @@ ggplot(penguins) +
 Histograms don't require a y-axis aesthetic by default. The counts are tabulated for you. If you specify a "fill" aesthetic, the default is to stack the bars which can sometimes be a bit misleading. You can also dodge them to fix this:
 
 ```{r hist-dodge}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = body_mass, fill = species) +
   geom_histogram(position = "dodge") +
@@ -253,6 +273,7 @@ We can visualize the density of values for a single variable across a discrete v
 :::
 
 ```{r geom_boxplot}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = island, y = bill_len) +
   geom_boxplot() +
@@ -261,6 +282,7 @@ ggplot(penguins) +
 ```
 
 ```{r geom_violin}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = island, y = bill_len) +
   geom_violin(scale = "width", draw_quantiles = c(0.25, 0.5, 0.75)) +
@@ -280,6 +302,7 @@ We can also visualize the density of values across two continuous variables usin
 :::
 
 ```{r geom_density_2d}
+#| code-line-numbers: "3"
 ggplot(penguins) +
   aes(x = bill_len, y = bill_dep) +
   geom_density_2d(linewidth = 0.25, colour = "black") +
@@ -292,6 +315,7 @@ Note that sometimes you may need to expand the axes a little bit to better show 
 :::
 
 ```{r geom_density_2d_expand}
+#| code-line-numbers: "4"
 ggplot(penguins) +
   aes(x = bill_len, y = bill_dep) +
   geom_density_2d(linewidth = 0.25, colour = "black") +
@@ -307,7 +331,8 @@ Since there isn't really any time series data in the penguins dataset, we'll tak
 :::
 
 ```{r geom_line}
-ggplot(economics, aes(x = date, y = unemploy)) +
+ggplot(economics) +
+  aes(x = date, y = unemploy) +
   geom_line() +
   theme_classic() +
   theme(axis.text = element_text(color = "black"))
@@ -318,7 +343,8 @@ ggplot(economics, aes(x = date, y = unemploy)) +
 :::
 
 ```{r geom_path}
-ggplot(economics, aes(x = unemploy / pop, y = psavert)) +
+ggplot(economics) +
+  aes(x = unemploy / pop, y = psavert) +
   geom_path(aes(colour = as.numeric(date))) +
   theme_classic() +
   theme(axis.text = element_text(color = "black"))
@@ -377,6 +403,7 @@ Now, what if we wanted to also split the data by the species of the penguins? We
 :::
 
 ```{r scatter-facet}
+#| code-line-numbers: "9"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
       color = island, shape = sex) +
@@ -395,6 +422,7 @@ We can get even crazier by faceting by multiple variables:
 :::
 
 ```{r scatter-facet-grid}
+#| code-line-numbers: "9"
 ggplot(penguins) +
   aes(x = body_mass, y = flipper_len,
       color = island, shape = sex) +
