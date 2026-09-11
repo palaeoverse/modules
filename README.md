@@ -18,6 +18,9 @@ the deck for you under "Other Formats". Strategy 3 renders two independent
 documents, so the long-form file has to point at the deck itself with an
 `other-links:` entry (see the template for an example).
 
+Any of the three can also carry editable, runnable code cells; see
+[Interactive code cells](#interactive-code-cells) below.
+
 ## 1. One file, slide layout by the Lua filter
 
 _Best when the page and the deck say the same things in the same order._
@@ -86,6 +89,36 @@ Keep a long-form `index.qmd` and a separate slide deck whose `output-file:` is
 automatically, so the long-form file needs the `other-links:` entry shown in
 [`template_long_format.qmd`](_templates/template_long_format.qmd). Anything the
 two share has to be kept in sync by hand.
+
+## Interactive code cells
+
+_Optional, and works with any of the three strategies above._
+
+Cells can be made editable and runnable in the reader's browser with the [quarto-live](https://r-wasm.github.io/quarto-live/)
+extension. [`template_single_file_live.qmd`](_templates/template_single_file_live.qmd)
+showcases strategy 1 with interactive cells, an exercise, and a hidden solution.
+
+Four things change:
+
+1. **Install the extension into the module directory and commit it** with
+   `cd mymodule && quarto add r-wasm/quarto-live`.
+2. **The formats become `live-html` and `live-revealjs`.** They derive from the
+   usual formats, so `.narration`, the conditional-content classes and the whole
+   slide layout keep working.
+3. **`engine: knitr`, plus `{{< include _extensions/r-wasm/live/_knitr.qmd >}}`
+   near the top.** That include registers the passthrough engines knitr needs to
+   leave `{webr}` blocks alone.
+4. **Interactive cells are `{webr}` instead of `{r}`.** A `{r}` chunk still runs
+   at render time, so use it for figures baked into the page and `{webr}` for
+   code the reader should type in.
+
+Note that interactive cells are
+deliberately left out of the code build-up, so two editors under one heading
+share a slide rather than appearing one after the other.
+
+The cost is borne by the reader: the first run downloads a WebAssembly R build,
+and any package a cell uses is fetched at run time. This is worth keeping in mind
+for live teaching on unreliable wifi.
 
 # Authoring a module with the Lua filter
 

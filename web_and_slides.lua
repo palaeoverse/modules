@@ -18,7 +18,9 @@
 --              heading so they keep a title. Finally, any slide with 2+ cells is
 --              expanded into an auto-animate build-up (one step per cell, cells
 --              accumulating, notes advancing) so each step is a real slide whose
---              figure still hoists and auto-stretches. Other formats untouched.
+--              figure still hoists and auto-stretches; an interactive quarto-live
+--              cell is skipped there, since duplicating it duplicates the editor.
+--              Other formats untouched.
 -- Register at the `pre-ast` stage so callouts are still plain divs here (Quarto
 -- normalizes them into custom AST nodes after that point).
 
@@ -202,7 +204,32 @@ function Pandoc(doc)
   -- -- one step per cell, cells accumulating, notes advancing with each new cell.
   -- Each step is a real slide, so its figure still hoists and auto-stretches
   -- (unlike a fragment). Single-cell and cell-free slides pass through unchanged.
-  local function is_cell(b) return b.t == "Div" and b.classes:includes("cell") end
+
+  -- a quarto-live editor cell (`{webr}` / `{pyodide}`): at this stage knitr has
+  -- passed the block through, so the cell holds a CodeBlock whose language is
+  -- still brace-wrapped
+  local live_langs = {                           -- the spellings live.lua itself accepts
+    ["{webr}"] = true, webr = true, ["{webr-r}"] = true,
+    ["{pyodide}"] = true, pyodide = true, ["{pyodide-python}"] = true,
+  }
+  local function is_interactive(b)
+    if b.t ~= "Div" or not b.classes:includes("cell") then return false end
+    for _, c in ipairs(b.content) do
+      if c.t == "CodeBlock" then
+        for _, cl in ipairs(c.classes) do
+          if live_langs[cl] then return true end
+        end
+      end
+    end
+    return false
+  end
+
+  -- only executed cells make build-up steps: an interactive cell is left where
+  -- the author put it, because duplicating it across steps duplicates the
+  -- editor, and whatever a student typed on one step would not carry to the next
+  local function is_cell(b)
+    return b.t == "Div" and b.classes:includes("cell") and not is_interactive(b)
+  end
 
   local function strip_ids(cell)                 -- clone a cell with ids blanked (it is duplicated across steps)
     local c = cell:clone()

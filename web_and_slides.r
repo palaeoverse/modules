@@ -9,6 +9,8 @@
 #   3. Ensure slide-friendly YAML: execute.echo and execute.output-location
 #      (fragment) and revealjs.smaller = true, and remove revealjs.scrollable
 #      (scrolling mid-talk is awkward; chunks reveal as fragments instead).
+#      Whichever slide format the document declares is the one edited:
+#      `revealjs`, or `live-revealjs` if it uses the quarto-live extension.
 #   4. Report headings that will render awkwardly as revealjs slides.
 # Code blocks, headings, images, fenced divs (callouts), lists, blockquotes
 # and tables are left untouched.
@@ -206,11 +208,28 @@ remove_nested <- function(yaml, path, key) {
   yaml
 }
 
+# --- which slide format is in use: `revealjs`, or quarto-live's `live-revealjs`?
+# Editing the wrong one would leave the real deck untouched and add a spurious
+# third format, so look for whichever key the document already has.
+revealjs_key <- function(yaml) {
+  fi <- which(str_detect(yaml, "^format:"))[1]
+  if (is.na(fi) || fi >= length(yaml)) return("revealjs")
+  for (i in (fi + 1L):length(yaml)) {
+    ln <- yaml[[i]]
+    if (str_detect(ln, "^[[:space:]]*$")) next
+    if (indent_of(ln) == 0L) break                   # left the format block
+    m <- str_match(ln, "^  (live-revealjs|revealjs):")   # format children sit at indent 2
+    if (!is.na(m[1, 1])) return(m[1, 2])
+  }
+  "revealjs"                                          # absent: ensure_nested creates it
+}
+
 if (set_settings) {
-  yaml <- ensure_nested(yaml, c("execute"),            "echo",            "true")
-  yaml <- ensure_nested(yaml, c("execute"),            "output-location", "fragment")
-  yaml <- ensure_nested(yaml, c("format", "revealjs"), "smaller",         "true")
-  yaml <- remove_nested(yaml, c("format", "revealjs"), "scrollable")
+  rj   <- revealjs_key(yaml)
+  yaml <- ensure_nested(yaml, c("execute"),      "echo",            "true")
+  yaml <- ensure_nested(yaml, c("execute"),      "output-location", "fragment")
+  yaml <- ensure_nested(yaml, c("format", rj),   "smaller",         "true")
+  yaml <- remove_nested(yaml, c("format", rj),   "scrollable")
 }
 
 # --- validate the edited front matter parses as YAML before writing ----------
