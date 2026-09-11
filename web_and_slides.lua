@@ -4,7 +4,7 @@
 --              `::: {.slides-only}` -> revealjs slides only: dropped elsewhere
 --              (equivalent to `::: {.content-visible when-format="revealjs"}`)
 --              `::: {.html-only}`   -> html only: dropped on revealjs slides
---              (equivalent to `::: {.content-visible when-format="html"}`)
+--              (equivalent to `::: {.content-hidden when-format="revealjs"}`)
 --   * Pandoc : on revealjs, headings below the slide level are promoted so each
 --              becomes its own slide, the slide closes after each plot (so no two
 --              plots share a slide and a plot's following prose stays with the
@@ -30,7 +30,7 @@ function Div(el)
     return el.content
   end
   if el.classes:includes("html-only") then
-    if not quarto.doc.is_format("html") then
+    if quarto.doc.is_format("revealjs") then
       return {}                                  -- html only: nothing on the slides
     end
     return el.content
