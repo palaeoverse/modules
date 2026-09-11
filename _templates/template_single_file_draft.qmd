@@ -1,0 +1,79 @@
+---
+title: "Template for a single-file module: the long-form draft"
+description: ""
+author:
+  - An author
+  - Another author
+date: "`r Sys.Date()`"
+categories: [r, tidyverse, dataviz]
+difficulty: Beginner
+image: img/2d_density.png
+format:
+  html:
+    toc: true
+  revealjs:
+    output-file: index-slides.html
+execute:
+  warning: false
+  message: false
+  freeze: auto
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Introduction
+
+Write the tutorial as you would if there were no slides. Each paragraph of prose
+becomes a `::: {.narration}` block when you run the script, which means it stays
+prose on the website and becomes the speaker notes you talk from on the slides.
+
+Consecutive paragraphs end up in the same block, so keep related sentences
+together and start a new paragraph where the narration should break.
+
+## A section
+
+Every `##` heading becomes a slide, so a section is roughly "one point, one
+slide". Keep them short.
+
+```{r}
+plot(mtcars$wt, mtcars$mpg)
+```
+
+Prose between plots is treated as an introduction to the next plot. It ends up as speaker notes on the slide with the next plot.
+
+```{r}
+plot(mtcars$hp, mtcars$mpg)
+```
+
+## Another section
+
+Lists, tables, images and blockquotes are left alone by the script so they appear in both outputs as-is:
+
+-   a list item
+-   another list item
+
+A callout is left alone too, and gets a slide of its own:
+
+::: {.callout-note}
+## A note
+Give a callout a heading like this and the heading becomes the slide title.
+:::
+
+::: {.callout-caution collapse="true"}
+## An exercise solution
+A collapsed callout stays collapsed: on the website it is a click-to-open box, and
+on the slides it keeps its box with the content hidden until you advance.
+:::
+
+## What to do after converting
+
+Once you have run the script, look through the output for:
+
+1.  headings the script flagged as awkward for slides,
+2.  places where the two outputs should differ: add `::: {.slides-only}` or
+    `::: {.html-only}` blocks by hand,
+3.  narration blocks that should be split or merged.
+
+From then on, edit the converted file. Keep this draft only if you would rather
+keep iterating on the prose and re-generate.
