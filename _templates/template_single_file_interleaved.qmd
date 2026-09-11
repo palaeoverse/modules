@@ -1,0 +1,130 @@
+---
+title: "Template for a single-file module (interleaved, no filter)"
+description: ""
+author:
+  - An author
+  - Another author
+date: "`r Sys.Date()`"
+categories: [r, tidyverse, dataviz]
+difficulty: Beginner
+image: img/2d_density.png
+format:
+  html:
+    toc: true
+  revealjs:
+    smaller: true
+    output-file: index-slides.html
+execute:
+  output-location: fragment
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Introduction
+
+::: {.notes}
+A `.notes` block is the workhorse here: Quarto renders it as ordinary prose on
+the website and as speaker notes on the slides (press `s` in the deck).
+
+Consecutive paragraphs can share one block.
+:::
+
+::: {.content-visible when-format="revealjs"}
+Content for the slides only goes in a `.content-visible when-format="revealjs"` block.
+
+-   a bullet summary for the slide
+-   which would be redundant on the page
+:::
+
+::: {.content-hidden when-format="revealjs"}
+Content for the website only goes in a `.content-hidden when-format="revealjs"`
+block.
+:::
+
+## You decide when slide breaks happen
+
+::: {.notes}
+Each `##` heading starts a slide. To split content across two slides, you
+must repeat the heading, but this can look awkward on the website, so keep
+the repeat short or move it into a `revealjs`-only block.
+:::
+
+```{r}
+plot(mtcars$wt, mtcars$mpg)
+```
+
+## You decide when slide breaks happen
+
+```{r}
+plot(mtcars$hp, mtcars$mpg)
+```
+
+## Revealing content step by step
+
+::: {.notes}
+Reveal things in sequence with reveal.js's own tools: `. . .` for a pause, or a
+`.fragment` / `.incremental` block. These are ignored on the website, so they are
+safe to leave in the shared text.
+:::
+
+A first point.
+
+. . .
+
+A second point, one advance later.
+
+::: {.incremental}
+-   then this
+-   then this
+:::
+
+## Handling a long slide
+
+::: {.notes}
+Because nothing shrinks content for you, use per-slide classes when a
+slide overflows: `## Heading {.smaller}` shrinks the text, and
+`## Heading {.scrollable}` lets that one slide scroll.
+:::
+
+::: {.smaller .content-visible when-format="revealjs"}
+This slide is a good candidate for `{.smaller}` since the code and its output
+would not fit otherwise.
+
+```{r}
+head(mtcars[, 1:4], 30)
+```
+:::
+
+## Callouts
+
+::: {.notes}
+Callouts keep their boxes on the slides, and reveal.js renders callout text
+smaller than slide text. A `collapse="true"` callout is *not* collapsible in a
+deck -- Quarto only honours that in HTML -- so on the slide the content is simply
+visible. If you want to hide a solution until you advance, wrap it in a
+`.fragment` block yourself.
+:::
+
+::: {.callout-note}
+## A note
+Visible in both outputs, box and all.
+:::
+
+:::: {.callout-caution}
+## An exercise solution
+::: {.fragment}
+Wrapped in a `.fragment`, so it appears on the next advance in the deck while
+staying plain prose on the website.
+:::
+::::
+
+## More info
+
+- [Conditional content](https://quarto.org/docs/authoring/conditional.html)
+- [Quarto revealjs](https://quarto.org/docs/presentations/revealjs/)
+- the repo README, for the other two ways to build a module
