@@ -456,7 +456,7 @@ OK, maybe we've gone a little too far here, but you get the picture!
 
 ## Combining plots
 
-# Combining plots
+::: {.narration}
 When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own [deeptime](https://williamgearty.com/deeptime) package has some functionality for it), but today we'll check out the [`patchwork`](https://patchwork.data-imaginist.com/) package which extends the "grammar of graphics" to combining plots (you may need to install it if you haven't done so already).
 :::
 
@@ -523,6 +523,7 @@ There's a lot more you can do with `patchwork`, including [adjusting the widths 
 
 ## Saving plots
 
+::: {.narration}
 The last big thing you'll need to know about plotting is how to save your plots. `ggplot2` comes with a nifty `ggsave()` function which you can use to save your plots in a number of different formats. Here we'll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka "lossless"). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka "lossy"). This results in the pixellation that you see when you zoom in on a JPEG. `ggsave()` detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It's usually a good idea to keep all figures in their own folder (which was already created for you).
 :::
 
