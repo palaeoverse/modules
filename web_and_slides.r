@@ -255,7 +255,7 @@ write_lines(c(yaml, out), output)
 report_headings <- function(yaml, body, offset, ref) {
   sl <- 2L                                           # revealjs default slide-level
   m  <- str_match(yaml, "^\\s*slide-level:\\s*(\\d+)")
-  if (any(!is.na(m[, 2]))) sl <- as.integer(m[!is.na(m[, 2]), 2][1])
+  if (!all(is.na(m[, 2]))) sl <- as.integer(m[!is.na(m[, 2]), 2][1])
 
   in_code <- FALSE; depth <- 0L
   real <- rep(FALSE, length(body)); lvl <- integer(length(body))
