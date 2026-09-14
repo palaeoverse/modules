@@ -18,6 +18,9 @@ the deck for you under "Other Formats". Strategy 3 renders two independent
 documents, so the long-form file has to point at the deck itself with an
 `other-links:` entry (see the template for an example).
 
+**Note that, no matter which template you choose, you need to copy the `_templates/background` subfolder and the
+`_templates/template.css` file in your module folder, since these are used to style the slides.**
+
 Any of the three can also carry editable, runnable code cells; see
 [Interactive code cells](#interactive-code-cells) below.
 
@@ -89,9 +92,6 @@ Keep a long-form `index.qmd` and a separate slide deck whose `output-file:` is
 automatically, so the long-form file needs the `other-links:` entry shown in
 [`template_long_format.qmd`](_templates/template_long_format.qmd). Anything the
 two share has to be kept in sync by hand.
-
-Note that `template_long_format.qmd` uses background images stored in `_templates/background`,
-so you should also copy this folder to your module's folder.
 
 ## Interactive code cells
 
