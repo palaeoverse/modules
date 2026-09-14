@@ -90,6 +90,9 @@ automatically, so the long-form file needs the `other-links:` entry shown in
 [`template_long_format.qmd`](_templates/template_long_format.qmd). Anything the
 two share has to be kept in sync by hand.
 
+Note that `template_long_format.qmd` uses background images stored in `_templates/background`,
+so you should also copy this folder to your module's folder.
+
 ## Interactive code cells
 
 _Optional, and works with any of the three strategies above._
