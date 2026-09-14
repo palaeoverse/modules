@@ -266,10 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#facetting" id="toc-facetting" class="nav-link" data-scroll-target="#facetting">Facetting</a></li>
   </ul></li>
   <li><a href="#combining-plots" id="toc-combining-plots" class="nav-link" data-scroll-target="#combining-plots">Combining plots</a></li>
-  <li><a href="#combining-plots-1" id="toc-combining-plots-1" class="nav-link" data-scroll-target="#combining-plots-1">Combining plots</a>
-  <ul class="collapse">
   <li><a href="#saving-plots" id="toc-saving-plots" class="nav-link" data-scroll-target="#saving-plots">Saving plots</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules/ggplot/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
@@ -850,10 +847,7 @@ Note
 </section>
 <section id="combining-plots" class="level2">
 <h2 data-anchor-id="combining-plots">Combining plots</h2>
-</section>
-<section id="combining-plots-1" class="level1">
-<h1>Combining plots</h1>
-<p>When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own <a href="https://williamgearty.com/deeptime">deeptime</a> package has some functionality for it), but today we’ll check out the <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a> package which extends the “grammar of graphics” to combining plots (you may need to install it if you haven’t done so already). :::</p>
+<p>When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own <a href="https://williamgearty.com/deeptime">deeptime</a> package has some functionality for it), but today we’ll check out the <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a> package which extends the “grammar of graphics” to combining plots (you may need to install it if you haven’t done so already).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -905,9 +899,10 @@ Note
 </div>
 </div>
 <p>There’s a lot more you can do with <code>patchwork</code>, including <a href="https://patchwork.data-imaginist.com/articles/guides/layout.html">adjusting the widths and heights</a> and <a href="https://patchwork.data-imaginist.com/articles/guides/annotation.html">adding annotations and styling</a>, but we’ll stop here for now.</p>
+</section>
 <section id="saving-plots" class="level2">
 <h2 data-anchor-id="saving-plots">Saving plots</h2>
-<p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code>ggsave()</code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code>ggsave()</code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you). :::</p>
+<p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code>ggsave()</code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code>ggsave()</code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> (g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.pdf"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span>
@@ -915,7 +910,6 @@ Note
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

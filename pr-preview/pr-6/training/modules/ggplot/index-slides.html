@@ -934,19 +934,27 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
           display:block!important;
       }</style></aside>
 </section>
-<section id="combining-plots" class="slide level2">
-<h2>Combining plots</h2>
-</section>
-<section class="title-slide slide level1 center" data-auto-animate="true">
-<h1 data-id="quarto-animate-title">Combining plots</h1>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Combining plots</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb29-1" class="hljs-ln-code"><a aria-label="1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own <a href="https://williamgearty.com/deeptime">deeptime</a> package has some functionality for it), but today we’ll check out the <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a> package which extends the “grammar of graphics” to combining plots (you may need to install it if you haven’t done so already). :::</p>
+<aside class="notes">
+<p>When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own <a href="https://williamgearty.com/deeptime">deeptime</a> package has some functionality for it), but today we’ll check out the <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a> package which extends the “grammar of graphics” to combining plots (you may need to install it if you haven’t done so already).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-
-<section class="title-slide slide level1 center" data-auto-animate="true">
-<h1 data-id="quarto-animate-title">Combining plots</h1>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Combining plots</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -982,10 +990,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
           display:block!important;
       }</style></aside>
 </section>
-
-<section>
-<section class="title-slide slide level1 center" data-auto-animate="true">
-<h1 data-id="quarto-animate-title">Combining plots</h1>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Combining plots</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1066,7 +1072,19 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </section>
 <section id="saving-plots" class="slide level2">
 <h2>Saving plots</h2>
-<p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code>ggsave()</code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code>ggsave()</code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you). :::</p>
+<aside class="notes">
+<p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code>ggsave()</code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code>ggsave()</code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-label="1"></a>gg <span class="ot">&lt;-</span> (g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span>
 <span id="cb36-2"><a aria-label="2"></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.pdf"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span>
@@ -1074,7 +1092,7 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
