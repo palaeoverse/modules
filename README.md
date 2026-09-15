@@ -7,11 +7,11 @@ Directory of teaching modules built by the Palaeoverse team.
 Every module should contain Quarto (.qmd) content that renders a long-form website page (for async learning) plus a reveal.js slide deck (for live teaching). There are many ways to accomplish this; we've outlined and templated the three strategies that we think work well below. Pick one of them and start from its template in
 [`_templates`](_templates):
 
-| | Strategy | Start from |
-| --- | --- | --- |
-| 1 | **One file, slide layout by filter.** A single `index.qmd` registers the [`web_and_slides.lua`](web_and_slides.lua) filter, which turns your prose into speaker notes and breaks the remaining content into slides for you (ideal if you are new to Quarto). | [`template_single_file.qmd`](_templates/template_single_file.qmd) |
-| 2 | **One file, interleaved by hand.** A single `index.qmd` using plain Quarto conditional content (ideal if you are comfortable with Quarto syntax and don't have too many customizations). | [`template_single_file_interleaved.qmd`](_templates/template_single_file_interleaved.qmd) |
-| 3 | **Two separate files.** A long-form document and a slide deck, maintained side by side (ideal if you really need customized content for both formats). | [`template_long_format.qmd`](_templates/template_long_format.qmd) + [`template_slides.qmd`](_templates/template_slides.qmd) |
+  |     | Strategy                                                                                                                                                                                                                                                     | Start from                                                                                                                  |
+  | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+  | 1   | **One file, slide layout by filter.** A single `index.qmd` registers the [`web_and_slides.lua`](web_and_slides.lua) filter, which turns your prose into speaker notes and breaks the remaining content into slides for you (ideal if you are new to Quarto). | [`template_single_file.qmd`](_templates/template_single_file.qmd)                                                           |
+  | 2   | **One file, interleaved by hand.** A single `index.qmd` using plain Quarto conditional content (ideal if you are comfortable with Quarto syntax and don't have too many customizations).                                                                     | [`template_single_file_interleaved.qmd`](_templates/template_single_file_interleaved.qmd)                                   |
+  | 3   | **Two separate files.** A long-form document and a slide deck, maintained side by side (ideal if you really need customized content for both formats).                                                                                                       | [`template_long_format.qmd`](_templates/template_long_format.qmd) + [`template_slides.qmd`](_templates/template_slides.qmd) |
 
 Strategies 1 and 2 render one file to both formats, so Quarto links the page and
 the deck for you under "Other Formats". Strategy 3 renders two independent
@@ -35,6 +35,7 @@ layout it applies). You can get there two ways:
 
 - **Tag as you go.** Copy [`template_single_file.qmd`](_templates/template_single_file.qmd)
   and write with the blocks from the start.
+
 - **Write long-form first, then convert.** Draft the module as an ordinary
   written tutorial (see [`template_single_file_draft.qmd`](_templates/template_single_file_draft.qmd) for an example)
   and run `web_and_slides.r` over it once:
@@ -56,11 +57,11 @@ regenerate.
 Once the filter is registered and copied into the module directory, you get the
 following automatic behavior:
 
- - slides close after each figure
- - deeper headings become their own slides
- - callouts keep their boxes (and collapsed callouts stay collapsed)
- - content on long slides is shrunk as needed
- - back-to-back code chunks are revealed one at a time
+- slides close after each figure
+- deeper headings become their own slides
+- callouts keep their boxes (and collapsed callouts stay collapsed)
+- content on long slides is shrunk as needed
+- back-to-back code chunks are revealed one at a time
 
 ## 2. One file, interleaved by hand
 
@@ -70,11 +71,11 @@ the way._
 Same single-file idea, but using Quarto's own conditional content instead of our
 classes, so there is nothing to generate and nothing to register:
 
-| Class | Behavior |
-| --- | --- |
-| `::: {.notes}` |  Quarto renders it as prose on the page and as speaker notes in the slide deck |
-| `::: {.content-visible when-format="revealjs"}` | Content is only rendered on the slides, not on the page |
-| `::: {.content-hidden when-format="revealjs"}` | Content is only rendered on the page, not on the slides |
+  | Class                                           | Behavior                                                                      |
+  | ----------------------------------------------- | ----------------------------------------------------------------------------- |
+  | `::: {.notes}`                                  | Quarto renders it as prose on the page and as speaker notes in the slide deck |
+  | `::: {.content-visible when-format="revealjs"}` | Content is only rendered on the slides, not on the page                       |
+  | `::: {.content-hidden when-format="revealjs"}`  | Content is only rendered on the page, not on the slides                       |
 
 In exchange for the control you take on the work the
 filter was doing: slides do not close after a figure, deeper headings do not
@@ -129,10 +130,10 @@ This section covers **strategy 1** in detail: the front matter is much the same
 whichever strategy you pick, but the classes and the automation below come from
 the two files at the root of this repo.
 
-| File | Role |
-| --- | --- |
-| `web_and_slides.lua` | Pandoc/Quarto filter, applied at render time. Decides what appears on the website, what appears on the slides, and how the slides are broken up. |
-| `web_and_slides.r` | One-shot authoring helper. Converts a finished long-form document into the tagged form the filter expects. |
+  | File                 | Role                                                                                                                                             |
+  | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | `web_and_slides.lua` | Pandoc/Quarto filter, applied at render time. Decides what appears on the website, what appears on the slides, and how the slides are broken up. |
+  | `web_and_slides.r`   | One-shot authoring helper. Converts a finished long-form document into the tagged form the filter expects.                                       |
 
 ## Front matter
 
@@ -171,11 +172,11 @@ everything below; `web_and_slides.r` adds it for you, or you can copy it.
 
 Three fenced-div (`:::`) classes control where content lands:
 
-| Class | Website Tutorial | Slides |
-| --- | --- | --- |
-| `.narration` | normal prose | speaker notes |
-| `.slides-only` | dropped | shown on the slide |
-| `.html-only` | shown | dropped |
+  | Class          | Website Tutorial | Slides             |
+  | -------------- | ---------------- | ------------------ |
+  | `.narration`   | normal prose     | speaker notes      |
+  | `.slides-only` | dropped          | shown on the slide |
+  | `.html-only`   | shown            | dropped            |
 
 Anything not wrapped in one of these appears in both outputs. So the usual shape
 of a module is: headings and code chunks shared by both outputs, the connecting
