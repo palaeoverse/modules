@@ -5,10 +5,25 @@ author:
   - An author
   - Another author
 date: "`r Sys.Date()`"
+brand: _brand/_brand.yml
 format:
   revealjs:
     output-file: index-slides.html
     toc: false
+    css: template.css
+    slide-number: c/t
+    include-in-header:
+      text: |
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+    include-after-body:
+      text: |
+        <div class="title-footer">
+          <span><a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i>&nbsp;&nbsp;palaeoverse</a></span>
+          <span><a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i>&nbsp;&nbsp;palaeoverse.bsky.social</a></span>
+          <span><a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i>&nbsp;&nbsp;Palaeoverse</a></span>
+          <span><a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i>&nbsp;&nbsp;palaeoverse</a></span>
+          <span><a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i>&nbsp;&nbsp;ThePalaeoverse</a></span>
+        </div>
 execute:
   echo: true
   eval: false
@@ -158,11 +173,9 @@ mean(x)
 
 <br>
 
-In a code block, we can use `code-line-numbers` to highlight lines of code.
+Use `code-line-numbers` to highlight lines of code.
 
 Using `#| code-line-numbers: "1|2-5|6|"` will highlight the first line, then lines 2-5, then line 6, and finally the entire block:
-
-<br>
 
 ```{r}
 #| code-line-numbers: "1|2-5|6|"
@@ -193,11 +206,33 @@ This is a `.callout-warning`:
 Hello, this is a warning.
 :::
 
-## Write on several columns
+## Callouts
 
 <br>
 
-Use this to write on multiple columns (see the result on the next slide):
+Use a pause in callouts to wait before showing a solution:
+
+::: {.callout-note}
+What is 1 + 1?
+
+::::: {.callout-caution collapse="true" appearance="simple" icon="false"}
+##### Solution
+
+. . .
+
+```{r}
+#| eval: true
+
+1 + 1
+```
+:::::
+:::
+
+## Write on several <br>columns
+
+<br>
+
+Use this to write on multiple columns (result next slide):
 
 ```
 :::: {.columns}
@@ -213,7 +248,7 @@ Right column
 ::::
 ```
 
-## Write on several columns
+## Write on several <br>columns
 
 <br>
 
@@ -233,24 +268,56 @@ Right column
 
 You can put any content in each column, such as plots:
 
-<br>
-
 ::: {.columns}
-::::: {.column width="40%"}
-Left column
-:::::
-
-::::: {.column width="60%"}
+::::: {.column width="30%"}
 ```{r}
 #| eval: true
+#| dev-args:
+#|   bg: "transparent"
 
 plot(iris)
 ```
 :::::
+
+::::: {.column width="70%"}
+```{r}
+#| eval: true
+#| dev-args:
+#|   bg: "transparent"
+
+library(ggplot2)
+ggplot(mtcars, aes(drat, mpg)) +
+  geom_point() +
+  theme_bw(paper = "transparent")
+```
+:::::
 :::
 
-## More info
+## Change the font size for <br> parts of the slide
 
+<br>
+
+This is some text.
+
+<br>
+
+::: {style="font-size: 50%;"}
+This is smaller text.
+:::
+
+<br>
+
+::: {style="font-size: 25%;"}
+Even smaller text.
+:::
+
+<br>
+
+Text whose <span style="font-size: 50%;">size changes</span> <span style="font-size: 150%;">in the same line</span>.
+
+## The end
+
+<br>
 <br>
 <br>
 
