@@ -1,0 +1,498 @@
+---
+title: "Writing functions"
+description: "How to re-use code while avoiding copy-pasting"
+author: 
+  - Etienne Bacher
+  - Niklas Hohmann
+date: "2026-06-18"
+categories: [r, package development]
+difficulty: Intermediate
+image: R_logo.png
+toc: true
+format:
+  html: default
+execute:
+  warning: false
+  message: false
+  freeze: auto
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Functions in R
+
+If you have performed any kind of analysis with R, you have used
+functions. They are everywhere and you can't do anything without them. R
+comes with hundreds of functions by default, and thousands more are
+available via user-written packages.
+
+It is possible to create entire R projects without ever needing to write
+your own functions. However, knowing how to write a custom function can
+be extremely useful.
+
+# Demo: standardizing values
+
+Let's say that you want to [standardize
+values](https://en.wikipedia.org/wiki/Standard_score), i.e. run this
+formula on multiple columns in your data:
+
+$$z = \frac{x - mean(x)}{sd(x)}$$
+
+We could run this by hand on a list of columns in our data:
+
+```{r}
+iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - mean(iris[["Petal.Length"]])) /
+  sd(iris[["Petal.Length"]])
+iris[["Sepal.Length_std"]] <- (iris[["Sepal.Length"]] - mean(iris[["Sepal.Length"]])) /
+  sd(iris[["Sepal.Length"]])
+iris[["Petal.Width_std"]] <- (iris[["Petal.Width"]] - mean(iris[["Sepal.Width"]])) /
+  sd(iris[["Petal.Width"]])
+iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] - mean(iris[["Sepal.Width"]])) /
+  sd(iris[["Sepal.Width"]])
+```
+
+This works, but what if we want to ignore missing values? We have to add
+8 parameters:
+
+```{r}
+iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - mean(iris[["Petal.Length"]], na.rm = TRUE)) /
+  sd(iris[["Petal.Length"]], na.rm = TRUE)
+iris[["Sepal.Length_std"]] <- (iris[["Sepal.Length"]] - mean(iris[["Sepal.Length"]], na.rm = TRUE)) /
+  sd(iris[["Sepal.Length"]], na.rm = TRUE)
+iris[["Petal.Width_std"]] <- (iris[["Petal.Width"]] - mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
+  sd(iris[["Petal.Width"]], na.rm = TRUE)
+iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] - mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
+  sd(iris[["Sepal.Width"]], na.rm = TRUE)
+```
+
+Do you notice anything weird about the code in the previous two blocks?
+
+Look again...
+
+On the third line, we used `mean(iris[["Sepal.Width"]])` instead of
+`mean(iris[["Petal.Width"]])`! By duplicating lines of code with very
+small variations, we make it harder to notice mistakes like this one,
+small in size but with important consequences for our results.
+
+Let's write a function instead of repeating this formula four times.
+
+## The most basic function
+
+We start with the template of a function:
+
+```{r}
+my_std <- function() {}
+```
+
+-   `my_std` is the **function name**, meaning that we can use it like
+    `my_std(<more code>)`;
+-   `function()` is the **function definition**. In the next steps we
+    will add **function arguments** (or **function parameters**) in
+    `()`;
+-   `{}` contains the **function body**. This is where we will add the
+    code that runs every time we call the function.
+
+For now, this function is useless:
+
+```{r}
+my_std()
+```
+
+Let's add a simple message:
+
+```{r}
+my_std <- function() {
+  print("Hello from my_std()!")
+}
+
+my_std()
+```
+
+This doesn't take any user input, so it always does the same thing,
+which is not very interesting for us. Let's add function parameters!
+
+## Introducing function parameters
+
+The body of a function never changes, the variation comes from the
+inputs passed by the user, *aka* function parameters. Therefore, to move
+existing code into a function, we need to identify its moving components
+and its "stable" components.
+
+In the code below, the parts in [red]{style="color:red;"} change across
+lines and the rest stays identical across lines:
+
+::: {.sourceCode .cell-code}
+```{=html}
+<pre class="sourceCode r code-with-copy">
+<p><span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span_std><span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]] - <span style="color: #795e26;">mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]])) / <span style="color: #795e26;">sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
+<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Length_std"<span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Length"<span style="color: #000000;">]] - <span style="color: #795e26;">mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Length"<span style="color: #000000;">]])) / <span style="color: #795e26;">sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Length"<span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
+<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Petal.Width_std"<span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Petal.Width"<span style="color: #000000;">]] - <span style="color: #795e26;">mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Petal.Width"<span style="color: #000000;">]])) / <span style="color: #795e26;">sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Petal.Width"<span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
+<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width_std"<span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]] - <span style="color: #795e26;">mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]])) / <span style="color: #795e26;">sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+</pre>
+```
+:::
+
+These red parts indicate the column name used in the computation, which
+will become our function parameter:
+
+```{r}
+my_std <- function(column) {}
+```
+
+## Adding the function body
+
+We added the moving parts as function parameters, now we need to move
+the stable parts in the function body, replacing the moving parts by the
+name of the new function parameter:
+
+```{r}
+my_std <- function(column) {
+  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+}
+```
+
+Note that we don't assign the output *inside* the function: the function
+merely makes the computation and we assign its output to our object when
+we call the function:
+
+```{r}
+iris[["Petal.Length_std"]] <- my_std("Petal.Length")
+iris[["Sepal.Length_std"]] <- my_std("Sepal.Length")
+iris[["Petal.Width_std"]] <- my_std("Petal.Width")
+iris[["Sepal.Width_std"]] <- my_std("Sepal.Width")
+```
+
+Notice how it is much easier to check whether we made a typo in this
+code.
+
+## Validating function parameters
+
+The user can now pass custom column names to the function, but this also
+means that they can pass wrong values! This is what happens if they pass
+a column name that doesn't exist in the data:
+
+```{r}
+#| warning: true
+my_std("unknown_column")
+```
+
+Note that this doesn't error, it just throws a warning and returns a
+useless result. To prevent that, we should add some validation steps in
+our function body to ensure that we don't run nonsensical code and that
+we clearly tell the user when they have given wrong inputs to the
+function. It is good to first list all the requirements of the input so
+that we can then add one check per requirement. In our case:
+
+-   the column should be a single value, e.g.
+    `my_std(c("Sepal.Length", "Petal.Width"))` should fail;
+-   the column should be a character value, e.g. `my_std(1)` should
+    fail;
+-   the column should exist in the data, e.g. `my_std("column_1")`
+    should fail.
+
+Now that we have clarified are requirements, we can add one `if()`
+condition for each of them:
+
+```{r}
+my_std <- function(column) {
+  if (length(column) != 1) {
+    stop("The `column` parameter must be of length 1.")
+  }
+  if (!is.character(column)) {
+    stop("The `column` parameter must be a character.")
+  }
+  if (!(column %in% names(iris))) {
+    stop("Column '", column, "' doesn't exist in the data.")
+  }
+
+  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+}
+```
+
+And now we have proper error messages and avoid nonsensical results!
+
+```{r}
+#| error: true
+my_std(c("Sepal.Length", "Petal.Width"))
+my_std(1)
+my_std("column_1")
+```
+
+::: {.callout-note collapse="true" title="Packages for input checking"}
+Several packages provide functions to easily check inputs and report
+useful error messages. There are too many to list all of them here, but
+you could for instance look at
+[`rlang`](https://rlang.r-lib.org/reference/index.html#function-arguments)
+and [`checkmate`](https://mllg.github.io/checkmate/).
+
+#### With `rlang`
+
+```{r}
+#| error: true
+### With rlang
+my_std <- function(column) {
+  rlang::check_string(column)
+  if (!(column %in% names(iris))) {
+    stop("Column '", column, "' doesn't exist in the data.")
+  }
+
+  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+}
+
+my_std(c("Sepal.Length", "Petal.Width"))
+my_std(1)
+my_std("column_1")
+```
+
+#### With `checkmate`
+
+```{r}
+#| error: true
+my_std <- function(column) {
+  checkmate::assert_string(column)
+  checkmate::assert_subset(column, names(iris))
+
+  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+}
+
+my_std(c("Sepal.Length", "Petal.Width"))
+my_std(1)
+my_std("column_1")
+
+```
+
+See also [`dreamerr`](https://lrberge.github.io/dreamerr/),
+[`arg`](https://ngreifer.github.io/arg/),
+[`chk`](https://poissonconsulting.github.io/chk/), and more!
+:::
+
+## Setting default value for parameters
+
+So far, we used `na.rm = TRUE` in the function body but maybe we also
+want to let the user determine this option. We can add a function
+parameter `na.rm` and use its value in `mean()` and `sd()`:
+
+```{r}
+my_std <- function(column, na.rm) {
+  # [parameter checks]
+
+  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)
+}
+```
+
+*For conciseness, I hid the parameter checks we have written above.*
+
+This works fine but it forces the user to explicitly pass the parameter
+when calling the function, no matter whether it is `TRUE` or `FALSE`:
+
+```{r}
+head(my_std("Sepal.Length", na.rm = FALSE))
+```
+
+This isn't a bad approach since it forces the user to be explicit, but
+let's say we want to follow the `mean()` function and never remove `NA`
+by default. We can set the default value in the function definition:
+
+```{r}
+my_std <- function(column, na.rm = FALSE) {
+  # [parameter checks]
+
+  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)
+}
+```
+
+and then this default value is implicitly used (i.e. we don't need to
+write it in the call):
+
+```{r}
+head(my_std("Sepal.Length"))
+```
+
+## Exiting a function early
+
+Sometimes, we want to return an object early on instead of executing the
+rest of the function.
+
+For example, suppose we have a function where we want to return `NA` if
+any of the input values is `NA`. In this case, we could use `return()`
+in an `if` condition to skip the rest of the function:
+
+```{r}
+f <- function(x) {
+
+  if (anyNA(x)) {
+    return(NA)
+  }
+
+  # if x doesn't contain NA, then we continue the function here...
+}
+```
+
+Note that the last value in the function is implicitly returned, so you
+don't need to wrap it in `return()` (but you can if you want, it's just
+a matter of preferences). Note that if the last statement in the
+function is an assignment, then the function returns the value of this
+assignment but doesn't print it when you call it:
+
+```{r}
+# Returns the value of `x` and prints it
+f <- function() {
+  x <- 1
+  x
+}
+f()
+result_1 <- f()
+
+# Also returns the value of `x`, but doesn't print it!
+f <- function() {
+  x <- 1
+}
+f()
+result_2 <- f()
+
+identical(result_1, result_2)
+```
+
+
+## Documenting functions
+
+\[UNSURE: this could fit better in the package development module\]
+
+If you plan to keep using custom functions in your project, or if you
+want to share those with colleagues, then it is important to write
+documentation. The documentation should include:
+
+-   an explanation of the function's purpose
+-   an explanation of each function parameter, including the expected
+    type (e.g. "a character value of length 1")
+-   details on the expected output
+
+
+# Other ways to use and create functions
+
+## Functions as arguments
+
+In R, functions are just another type of objects, meaning that they can be updated
+by the user, assigned to variables, and passed over to other functions.
+at the built-in function for the mean as an example.
+
+```{r}
+my_variable <- mean
+```
+
+Note that the parentheses are missing from `mean` here, which means we
+are not evaluating the function but just refering to it.
+
+Passing functions as arguments is a powerful programming technique,
+which can be best demonstrated by the family of `apply` functions. As an
+example, let's assume we have data stored in a list:
+
+```{r}
+data_list <- list("a" = rnorm(100),
+                 "b" = rnorm(100, mean = 3))
+```
+
+We're looking for the median values of our data. We would loop through
+each of the list entries and apply the `median` function individually.
+However, the `lapply` functions provides a more elegant solution, where
+we can just pass the list and a function as argument to `lapply`, and
+the function will be applied to each list entry individually:
+
+```{r}
+lapply(X = data_list, FUN = median)
+```
+
+Note again that we pass `median` (the function) as an argument without
+parenthesis. Using `median()` instead equates to calling the median
+function without passing it any arguments and will result in an error.
+For the curious: `lapply` is what is called a ["higher-order
+function"](https://en.wikipedia.org/wiki/Higher-order_function).
+
+## Anonymous functions
+
+All functions you have encountered so far have been named either by R,
+the package developer, or yourself (e.g., the `my_std` functions above).
+Generally, it is good practice to give your variables and functions
+informative names so others and your future self can understand their
+purpose.
+
+However, sometimes you will just need a quick, short throwaway function
+that serves one purpose without wanting to bother to write a full size
+function. For this, you can use *anonymous functions.* These are
+functions that are defined on the spot and immediately evaluated without
+being assigned to a variable. Their syntax is straightforward, as you
+just skip the variable assignment:
+
+```{r}
+#| eval: false
+function(x){ some code }
+```
+
+A typical usecase is when you want to make some quick, on the spot data
+manipulation of a data frame or list. As an example, to get the absolute
+difference between the 3rd and 5th value of our list defined above, we
+can use
+
+```{r}
+lapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))
+```
+
+## Inspecting Source Code
+
+When working with R, you will interact with functions all the time. The
+primary purpose of functions is to combine a number of complex
+operations and give them a shared name (the name of the function).
+However, sometimes it is useful to unwarp a function to understand
+exactly what it is doing and how your inputs are modified. For this, you
+can simply enter the name of the function (without parentheses) into the
+console, which will display the body of the function to give you some
+insight into how it is implemented:\
+
+```{r}
+my_std
+```
+
+Note that functions themselves will call other functions, so to really
+understand what a function is doing might require you to iteratively dig
+through a number of functions.
+
+Working through the source code of functions can be very insightful, but
+can quickly expose you to a lot of low-level functionality of R that
+comes with a steep learning curve. As an (advanced) exercise, have a
+look at the implementation of `sd` or `lapply` and try to understand
+what they are doing using the documentation.
+
+::: {.callout-note collapse="true" title="Tip to see the source code of a function"}
+In RStudio and Positron, you can press <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on macOS) and click on a function name in a script to open a tab containing its source code:
+
+![](demo_source_function.webm)
+:::
+
+# Going further
+
+Designing functions and ensuring their robustness is not trivial. There
+are many choices one can make, such as using positional or named
+arguments, harmonising parameter names, and whether to use default
+values.
+
+If you want to explore more, we recommend reading the [Tidyverse
+design](https://design.tidyverse.org/) book. While the primary audience
+is package developers, a lot of advice there apply to any custom
+function.
+
+# Conclusion
+
+In this module, we have seen how to convert existing, duplicated code
+into a function.
+
+Now that you have a function that does something useful, maybe you want
+to share it with colleagues. You could put it in an `.R` file and send
+it via email, but what happens if you notice a small mistake and want to
+fix it in the future? You'd have to tell all the people to which you
+sent the original function. This is fine if you shared it with a couple
+of colleagues, but what if they also shared it with other people?
+
+The best way to share functions with other people is to wrap them in an
+R package. This might sound intimidating but don't worry, we have an
+[entire module dedicated to package development]()!
