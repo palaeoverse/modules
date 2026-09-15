@@ -95,3 +95,14 @@ body:has(#title-slide.present) .title-footer {
 h1 {
   text-align: center;
 }
+
+/* Slide numbers: plain text, not on the title slide */
+.reveal .slide-number a {
+  color: #575756;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+body:has(#title-slide.present) .reveal .slide-number {
+  display: none !important;
+}
