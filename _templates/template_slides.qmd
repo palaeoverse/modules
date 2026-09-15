@@ -262,24 +262,33 @@ Right column
 :::::
 :::
 
-## Write on several <br>columns
+## Write on several columns
 
 <br>
 
 You can put any content in each column, such as plots:
 
-<br>
-
 ::: {.columns}
-::::: {.column width="40%"}
-Left column
-:::::
-
-::::: {.column width="60%"}
+::::: {.column width="30%"}
 ```{r}
 #| eval: true
+#| dev-args: 
+#|   bg: "transparent"
 
 plot(iris)
+```
+:::::
+
+::::: {.column width="70%"}
+```{r}
+#| eval: true
+#| dev-args: 
+#|   bg: "transparent"
+
+library(ggplot2)
+ggplot(mtcars, aes(drat, mpg)) +
+  geom_point() +
+  theme_bw(paper = "transparent")
 ```
 :::::
 :::
