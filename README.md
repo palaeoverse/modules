@@ -19,7 +19,7 @@ documents, so the long-form file has to point at the deck itself with an
 `other-links:` entry (see the template for an example).
 
 **Note that, no matter which template you choose, you need to copy the `_templates/background` subfolder and the
-`_templates/template.css` file in your module folder, since these are used to style the slides.**
+`_templates/template.css` file in your module folder, since these are used to style the slides.** `_templates/background` contains SVG files that can be used as background (see the `.qmd` files in `_templates` for examples), and PNG files to see what they look like.
 
 Any of the three can also carry editable, runnable code cells; see
 [Interactive code cells](#interactive-code-cells) below.
