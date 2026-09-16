@@ -48,6 +48,11 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Sync the Lua filter into each module
+        # Mirrors _quarto.yml's pre-render hook that runs locally.
+        working-directory: modules
+        run: Rscript sync_filter.r
+
       - name: Copy PR module(s) into the website
         shell: Rscript {0}
         env:
@@ -121,7 +126,7 @@ jobs:
           keep_files: true  # don't wipe other PRs' previews
 
       - name: Comment the preview link on the PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const pr = context.payload.pull_request.number;
