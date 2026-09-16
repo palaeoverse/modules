@@ -2,6 +2,10 @@
 
 Directory of teaching modules built by the Palaeoverse team.
 
+# Requirements
+
+Building modules requires Quarto >= 1.10.18 and Pandoc >= 3.10.0. See [this page](https://quarto.org/docs/get-started/) to install Quarto. You can check the Quarto and Pandoc versions by running `quarto check` in the terminal.
+
 # Building a module
 
 Every module should contain Quarto (.qmd) content that renders a long-form website page (for async learning) plus a reveal.js slide deck (for live teaching). There are many ways to accomplish this; we've outlined and templated the three strategies that we think work well below. Pick one of them and start from its template in
