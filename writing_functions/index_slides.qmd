@@ -4,18 +4,24 @@ description: "How to re-use code while avoiding copy-pasting"
 author: 
   - Etienne Bacher
   - Niklas Hohmann
-date: "2026-06-18"
+date: "`r Sys.Date()`"
+brand: _brand/_brand.yml
 format:
   revealjs:
     output-file: index-slides.html
     toc: false
+    css: style/template.css
+    slide-number: c/t
+    include-in-header: style/header.html
+    include-after-body: style/footer.html
 execute:
   echo: true
+  eval: false
   warning: false
   message: false
   freeze: auto
-editor: 
-  markdown: 
+editor:
+  markdown:
     wrap: 72
 ---
 
@@ -31,30 +37,14 @@ Functions are used everywhere:
 
 - `read.csv()`
 
-- `mean()`
-
 etc.
 
 <br>
 
 . . .
 
-R comes with comes with hundreds of functions by default.
+R comes with comes with hundreds of functions by default. Thousands more are available via user-written packages.
 
-. . . 
-
-Thousands more are available via user-written packages.
-
-## Functions in R
-
-<br>
-
-You can do entire R projects without ever needing to write your own functions.
-
-<br>
-<br>
-
-However, knowing how to write a custom function can be extremely useful.
 
 # Demo: standardizing values
 
@@ -71,9 +61,9 @@ $$z = \frac{x - mean(x)}{sd(x)}$$
 
 <br>
 
-Option 1: run the code by hand on a list of columns in our data:
+Option 1: same code for several columns in our data:
 
-<br>
+::: {style="font-size: 75%;"}
 
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
@@ -90,6 +80,7 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   sd(iris[["Sepal.Width"]])
 ```
 
+:::
 
 ## Demo: standardizing values
 
@@ -97,6 +88,8 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
 
 This works, but what if we want to ignore missing values? We have to add
 8 parameters:
+
+::: {style="font-size: 75%;"}
 
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
@@ -113,6 +106,8 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   sd(iris[["Sepal.Width"]], na.rm = TRUE)
 ```
 
+:::
+
 . . .
 
 Do you notice anything weird about the code above?
@@ -123,6 +118,8 @@ Do you notice anything weird about the code above?
 <br>
 
 A small typo with big consequences!
+
+::: {style="font-size: 75%;"}
 
 ```{.r code-line-numbers="8"}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
@@ -139,9 +136,16 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   sd(iris[["Sepal.Width"]], na.rm = TRUE)
 ```
 
-. . . 
+:::
+
+## Demo: standardizing values
+
+<br>
+<br>
 
 Duplicating code makes it easy to introduce bugs.
+
+<br>
 
 Let's write a function instead of repeating this formula four times.
 
@@ -152,6 +156,7 @@ Let's write a function instead of repeating this formula four times.
 <br>
 
 ```{r}
+#| eval: true
 my_std <- function() {}
 ```
 
@@ -174,8 +179,6 @@ my_std()
 
 . . .
 
-<br>
-
 Let's add a simple message:
 
 ```{r}
@@ -187,11 +190,6 @@ my_std <- function() {
 my_std()
 ```
 
-. . .
-
-<br>
-
-Let's add function parameters!
 
 ## Introduce function parameters
 
@@ -200,6 +198,8 @@ Let's add function parameters!
 Function parameters are inputs passed by the user.
 
 They are the parts that the user can modify to change the output.
+
+. . . 
 
 <br>
 
@@ -212,7 +212,9 @@ and its **"stable" components**.
 
 Parts in [red]{style="color:red;"} are the parts that change across lines (the column name that is used):
 
-::: {.sourceCode .cell-code}
+::: {style="font-size: 75%;"}
+
+::::: {.sourceCode .cell-code}
 ```{=html}
 <pre class="sourceCode r code-with-copy">
 <p><span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span_std><span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]] - <span style="color: #795e26;"><br>  mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]])) / <br><span style="color: #795e26;">  sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
@@ -221,6 +223,7 @@ Parts in [red]{style="color:red;"} are the parts that change across lines (the c
 <span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width_std"<span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]] - <span style="color: #795e26;"><br>  mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]])) / <br><span style="color: #795e26;">  sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
 </pre>
 ```
+:::::
 :::
 
 ## Introduce function parameters
@@ -249,16 +252,28 @@ my_std <- function(column) {
 }
 ```
 
-. . .
+## Add the function body
 
-and we can replace the moving parts by our new `column` parameter:
+<br>
+
+The function body takes the code that doesn't change across lines:
 
 ```{r}
+#| eval: true
 my_std <- function(column) {
-  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) /
+  (iris[[column]] - 
+    mean(iris[[column]], na.rm = TRUE)) /
     sd(iris[[column]], na.rm = TRUE)
 }
 ```
+
+and we can replace the moving parts by our new `column` parameter.
+
+
+## Add the function body
+
+<br>
+<br>
 
 :::{.callout-note} 
 We don't assign the output *inside* the function: the function merely makes the computation and we assign its output to our object when we call the function.
@@ -270,12 +285,16 @@ We don't assign the output *inside* the function: the function merely makes the 
 <br>
 <br>
 
+::: {style="font-size: 75%;"}
+
 ```{r}
 iris[["Petal.Length_std"]] <- my_std("Petal.Length")
 iris[["Sepal.Length_std"]] <- my_std("Sepal.Length")
 iris[["Petal.Width_std"]] <- my_std("Petal.Width")
 iris[["Sepal.Width_std"]] <- my_std("Sepal.Width")
 ```
+
+:::
 
 Notice how it is much easier to check whether we made a typo in this code.
 
@@ -284,19 +303,21 @@ Notice how it is much easier to check whether we made a typo in this code.
 
 <br>
 
-We can pass our own values to `my_std()`, so we can also make mistakes!
+We can pass wrong values to `my_std()`!
 
 If we pass a column name that doesn't exist in the data:
 
 ```{r}
 #| warning: true
+#| eval: true
 my_std("unknown_column")
 ```
 
 . . .
 
-This doesn't error, it just throws a warning and returns a useless result!
+No error, just a warning and a useless result!
 
+<br>
 
 {{< fa arrow-right >}} &nbsp; we need to check user inputs
 
@@ -311,8 +332,14 @@ Step 1: list all input requirements.
 
   - the column should be a single value, e.g.
     `my_std(c("Sepal.Length", "Petal.Width"))` should fail;
+
+. . .
+
   - the column should be a character value, e.g. `my_std(1)` should
     fail;
+
+. . .
+
   - the column should exist in the data, e.g. `my_std("column_1")`
     should fail.
 
@@ -321,6 +348,8 @@ Step 1: list all input requirements.
 <br>
 
 Step 2: check each of those.
+
+::: {style="font-size: 75%;"}
 
 ```{.r code-line-numbers="2-4|5-7|8-10|"}
 my_std <- function(column) {
@@ -338,8 +367,11 @@ my_std <- function(column) {
 }
 ```
 
+:::
+
 ```{r}
 #| echo: false
+#| eval: true
 my_std <- function(column) {
   if (length(column) != 1) {
     stop("The `column` parameter must be of length 1.")
@@ -361,19 +393,36 @@ my_std <- function(column) {
 
 And now we have proper error messages!
 
+::: {style="font-size: 75%;"}
+
 ```{r}
 #| error: true
+#| eval: true
 my_std(c("Sepal.Length", "Petal.Width"))
+```
+
+<br>
+
+```{r}
+#| error: true
+#| eval: true
 my_std(1)
+```
+
+<br>
+```{r}
+#| error: true
+#| eval: true
 my_std("column_1")
 ```
 
+:::
 
 ## Validate function parameters
 
 ::: {.callout-note collapse="true" title="Packages for input checking"}
-Several packages provide functions to easily check inputs and report
-useful error messages, for example [`rlang`](https://rlang.r-lib.org/reference/index.html#function-arguments) and [`checkmate`](https://mllg.github.io/checkmate/) (see also [`dreamerr`](https://lrberge.github.io/dreamerr/),
+Several packages provide functions to check inputs and report
+useful error messages, e.g. [`rlang`](https://rlang.r-lib.org/reference/index.html#function-arguments) and [`checkmate`](https://mllg.github.io/checkmate/) (see also [`dreamerr`](https://lrberge.github.io/dreamerr/),
 [`arg`](https://ngreifer.github.io/arg/),
 [`chk`](https://poissonconsulting.github.io/chk/), and more!).
 
