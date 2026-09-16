@@ -5,10 +5,15 @@ author:
   - An author
   - Another author
 date: "`r Sys.Date()`"
+brand: _brand/_brand.yml
 format:
   revealjs:
     output-file: index-slides.html
     toc: false
+    css: style/template.css
+    slide-number: c/t
+    include-in-header: style/header.html
+    include-after-body: style/footer.html
 execute:
   echo: true
   eval: false
@@ -158,11 +163,9 @@ mean(x)
 
 <br>
 
-In a code block, we can use `code-line-numbers` to highlight lines of code.
+Use `code-line-numbers` to highlight lines of code.
 
 Using `#| code-line-numbers: "1|2-5|6|"` will highlight the first line, then lines 2-5, then line 6, and finally the entire block:
-
-<br>
 
 ```{r}
 #| code-line-numbers: "1|2-5|6|"
@@ -193,11 +196,33 @@ This is a `.callout-warning`:
 Hello, this is a warning.
 :::
 
+## Callouts
+
+<br>
+
+Use a pause in callouts to wait before showing a solution:
+
+::: {.callout-note}
+What is 1 + 1?
+
+::::: {.callout-caution appearance="simple" icon="false"}
+##### Solution
+
+. . .
+
+```{r}
+#| eval: true
+
+1 + 1
+```
+:::::
+:::
+
 ## Write on several columns
 
 <br>
 
-Use this to write on multiple columns (see the result on the next slide):
+Use this to write on multiple columns (result next slide):
 
 ```
 :::: {.columns}
@@ -233,24 +258,58 @@ Right column
 
 You can put any content in each column, such as plots:
 
-<br>
-
-::: {.columns}
-::::: {.column width="40%"}
-Left column
-:::::
-
-::::: {.column width="60%"}
+::: {style="font-size: 70%;"}
+::::: {.columns}
+::::::: {.column width="40%"}
 ```{r}
 #| eval: true
+#| dev-args:
+#|   bg: "transparent"
 
 plot(iris)
 ```
+:::::::
+
+::::::: {.column width="60%"}
+```{r}
+#| eval: true
+#| dev-args:
+#|   bg: "transparent"
+
+library(ggplot2)
+ggplot(mtcars, aes(drat, mpg)) +
+  geom_point() +
+  theme_bw(paper = "transparent")
+```
+:::::::
 :::::
 :::
 
-## More info
+## Change the font size for parts of the slide
 
+<br>
+
+This is some text.
+
+<br>
+
+::: {style="font-size: 50%;"}
+This is smaller text.
+:::
+
+<br>
+
+::: {style="font-size: 25%;"}
+Even smaller text.
+:::
+
+<br>
+
+Text whose <span style="font-size: 50%;">size changes</span> <span style="font-size: 150%;">in the same line</span>.
+
+## The end
+
+<br>
 <br>
 <br>
 
