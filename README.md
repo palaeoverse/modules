@@ -18,7 +18,7 @@ the deck for you under "Other Formats". Strategy 3 renders two independent
 documents, so the long-form file has to point at the deck itself with an
 `other-links:` entry (see the template for an example).
 
-**Note that, no matter which template you choose, you need to copy the `_templates/style` subfolder in your module folder, since it is used to style the slides.** 
+**Note that, no matter which template you choose, you need to copy the `_templates/style` subfolder in your module folder, since it is used to style the slides.**
 
 Any of the three can also carry editable, runnable code cells; see
 [Interactive code cells](#interactive-code-cells) below.
