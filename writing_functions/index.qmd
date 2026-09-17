@@ -1,7 +1,7 @@
 ---
 title: "Writing functions"
 description: "How to re-use code while avoiding copy-pasting"
-author: 
+author:
   - Etienne Bacher
   - Niklas Hohmann
 date: "2026-06-18"
@@ -15,8 +15,8 @@ execute:
   warning: false
   message: false
   freeze: auto
-editor: 
-  markdown: 
+editor:
+  markdown:
     wrap: 72
 ---
 
@@ -85,13 +85,13 @@ We start with the template of a function:
 my_std <- function() {}
 ```
 
--   `my_std` is the **function name**, meaning that we can use it like
-    `my_std(<more code>)`;
--   `function()` is the **function definition**. In the next steps we
-    will add **function arguments** (or **function parameters**) in
-    `()`;
--   `{}` contains the **function body**. This is where we will add the
-    code that runs every time we call the function.
+- `my_std` is the **function name**, meaning that we can use it like
+  `my_std(<more code>)`;
+- `function()` is the **function definition**. In the next steps we
+  will add **function arguments** (or **function parameters**) in
+  `()`;
+- `{}` contains the **function body**. This is where we will add the
+  code that runs every time we call the function.
 
 For now, this function is useless:
 
@@ -174,6 +174,7 @@ a column name that doesn't exist in the data:
 
 ```{r}
 #| warning: true
+
 my_std("unknown_column")
 ```
 
@@ -184,12 +185,12 @@ we clearly tell the user when they have given wrong inputs to the
 function. It is good to first list all the requirements of the input so
 that we can then add one check per requirement. In our case:
 
--   the column should be a single value, e.g.
-    `my_std(c("Sepal.Length", "Petal.Width"))` should fail;
--   the column should be a character value, e.g. `my_std(1)` should
-    fail;
--   the column should exist in the data, e.g. `my_std("column_1")`
-    should fail.
+- the column should be a single value, e.g.
+  `my_std(c("Sepal.Length", "Petal.Width"))` should fail;
+- the column should be a character value, e.g. `my_std(1)` should
+  fail;
+- the column should exist in the data, e.g. `my_std("column_1")`
+  should fail.
 
 Now that we have clarified are requirements, we can add one `if()`
 condition for each of them:
@@ -214,6 +215,7 @@ And now we have proper error messages and avoid nonsensical results!
 
 ```{r}
 #| error: true
+
 my_std(c("Sepal.Length", "Petal.Width"))
 my_std(1)
 my_std("column_1")
@@ -230,6 +232,7 @@ and [`checkmate`](https://mllg.github.io/checkmate/).
 
 ```{r}
 #| error: true
+
 ### With rlang
 my_std <- function(column) {
   rlang::check_string(column)
@@ -249,6 +252,7 @@ my_std("column_1")
 
 ```{r}
 #| error: true
+
 my_std <- function(column) {
   checkmate::assert_string(column)
   checkmate::assert_subset(column, names(iris))
@@ -354,7 +358,6 @@ result_2 <- f()
 identical(result_1, result_2)
 ```
 
-
 ## Documenting functions
 
 \[UNSURE: this could fit better in the package development module\]
@@ -363,11 +366,10 @@ If you plan to keep using custom functions in your project, or if you
 want to share those with colleagues, then it is important to write
 documentation. The documentation should include:
 
--   an explanation of the function's purpose
--   an explanation of each function parameter, including the expected
-    type (e.g. "a character value of length 1")
--   details on the expected output
-
+- an explanation of the function's purpose
+- an explanation of each function parameter, including the expected
+  type (e.g. "a character value of length 1")
+- details on the expected output
 
 # Other ways to use and create functions
 
@@ -426,6 +428,7 @@ just skip the variable assignment:
 
 ```{r}
 #| eval: false
+
 function(x){ some code }
 ```
 

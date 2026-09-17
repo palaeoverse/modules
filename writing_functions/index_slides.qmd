@@ -1,7 +1,7 @@
 ---
 title: "Writing functions"
 description: "How to re-use code while avoiding copy-pasting"
-author: 
+author:
   - Etienne Bacher
   - Niklas Hohmann
 date: "`r Sys.Date()`"
@@ -45,7 +45,6 @@ etc.
 
 R comes with comes with hundreds of functions by default. Thousands more are available via user-written packages.
 
-
 # Demo: standardizing values
 
 ## Demo: standardizing values
@@ -56,7 +55,6 @@ We want to [standardize values](https://en.wikipedia.org/wiki/Standard_score) on
 
 $$z = \frac{x - mean(x)}{sd(x)}$$
 
-
 ## Demo: standardizing values
 
 <br>
@@ -64,7 +62,6 @@ $$z = \frac{x - mean(x)}{sd(x)}$$
 Option 1: same code for several columns in our data:
 
 ::: {style="font-size: 75%;"}
-
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
   mean(iris[["Petal.Length"]])) /
@@ -79,7 +76,6 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   mean(iris[["Sepal.Width"]])) /
   sd(iris[["Sepal.Width"]])
 ```
-
 :::
 
 ## Demo: standardizing values
@@ -90,7 +86,6 @@ This works, but what if we want to ignore missing values? We have to add
 8 parameters:
 
 ::: {style="font-size: 75%;"}
-
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
   mean(iris[["Petal.Length"]], na.rm = TRUE)) /
@@ -105,13 +100,11 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
   sd(iris[["Sepal.Width"]], na.rm = TRUE)
 ```
-
 :::
 
 . . .
 
 Do you notice anything weird about the code above?
-
 
 ## Demo: standardizing values
 
@@ -120,8 +113,7 @@ Do you notice anything weird about the code above?
 A small typo with big consequences!
 
 ::: {style="font-size: 75%;"}
-
-```{.r code-line-numbers="8"}
+```r {code-line-numbers="8"}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
   mean(iris[["Petal.Length"]], na.rm = TRUE)) /
   sd(iris[["Petal.Length"]], na.rm = TRUE)
@@ -135,7 +127,6 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
   sd(iris[["Sepal.Width"]], na.rm = TRUE)
 ```
-
 :::
 
 ## Demo: standardizing values
@@ -157,14 +148,15 @@ Let's write a function instead of repeating this formula four times.
 
 ```{r}
 #| eval: true
+
 my_std <- function() {}
 ```
 
 <br>
 
--   `my_std` is the **function name**
--   `function()` is the **function definition**, that can take **function arguments**
--   `{}` contains the **function body**
+- `my_std` is the **function name**
+- `function()` is the **function definition**, that can take **function arguments**
+- `{}` contains the **function body**
 
 ## The most basic function
 
@@ -174,6 +166,7 @@ For now, this function is useless:
 
 ```{r}
 #| eval: true
+
 my_std()
 ```
 
@@ -183,13 +176,13 @@ Let's add a simple message:
 
 ```{r}
 #| eval: true
+
 my_std <- function() {
   print("Hello from my_std()!")
 }
 
 my_std()
 ```
-
 
 ## Introduce function parameters
 
@@ -199,7 +192,7 @@ Function parameters are inputs passed by the user.
 
 They are the parts that the user can modify to change the output.
 
-. . . 
+. . .
 
 <br>
 
@@ -213,7 +206,6 @@ and its **"stable" components**.
 Parts in [red]{style="color:red;"} are the parts that change across lines (the column name that is used):
 
 ::: {style="font-size: 75%;"}
-
 ::::: {.sourceCode .cell-code}
 ```{=html}
 <pre class="sourceCode r code-with-copy">
@@ -260,6 +252,7 @@ The function body takes the code that doesn't change across lines:
 
 ```{r}
 #| eval: true
+
 my_std <- function(column) {
   (iris[[column]] - 
     mean(iris[[column]], na.rm = TRUE)) /
@@ -269,16 +262,14 @@ my_std <- function(column) {
 
 and we can replace the moving parts by our new `column` parameter.
 
-
 ## Add the function body
 
 <br>
 <br>
 
-:::{.callout-note} 
+::: {.callout-note}
 We don't assign the output *inside* the function: the function merely makes the computation and we assign its output to our object when we call the function.
 :::
-
 
 ## Use our new function
 
@@ -286,18 +277,15 @@ We don't assign the output *inside* the function: the function merely makes the 
 <br>
 
 ::: {style="font-size: 75%;"}
-
 ```{r}
 iris[["Petal.Length_std"]] <- my_std("Petal.Length")
 iris[["Sepal.Length_std"]] <- my_std("Sepal.Length")
 iris[["Petal.Width_std"]] <- my_std("Petal.Width")
 iris[["Sepal.Width_std"]] <- my_std("Sepal.Width")
 ```
-
 :::
 
 Notice how it is much easier to check whether we made a typo in this code.
-
 
 ## Validate function parameters
 
@@ -307,11 +295,14 @@ We can pass wrong values to `my_std()`!
 
 If we pass a column name that doesn't exist in the data:
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| warning: true
 #| eval: true
+
 my_std("unknown_column")
 ```
+:::
 
 . . .
 
@@ -321,27 +312,26 @@ No error, just a warning and a useless result!
 
 {{< fa arrow-right >}} &nbsp; we need to check user inputs
 
-
 ## Validate function parameters
 
 <br>
 
-Step 1: list all input requirements. 
+Step 1: list all input requirements.
 
 . . .
 
-  - the column should be a single value, e.g.
-    `my_std(c("Sepal.Length", "Petal.Width"))` should fail;
+- the column should be a single value, e.g.
+  `my_std(c("Sepal.Length", "Petal.Width"))` should fail;
 
 . . .
 
-  - the column should be a character value, e.g. `my_std(1)` should
-    fail;
+- the column should be a character value, e.g. `my_std(1)` should
+  fail;
 
 . . .
 
-  - the column should exist in the data, e.g. `my_std("column_1")`
-    should fail.
+- the column should exist in the data, e.g. `my_std("column_1")`
+  should fail.
 
 ## Validate function parameters
 
@@ -350,8 +340,7 @@ Step 1: list all input requirements.
 Step 2: check each of those.
 
 ::: {style="font-size: 75%;"}
-
-```{.r code-line-numbers="2-4|5-7|8-10|"}
+```r {code-line-numbers="2-4|5-7|8-10|"}
 my_std <- function(column) {
   if (length(column) != 1) {
     stop("The `column` parameter must be of length 1.")
@@ -366,12 +355,12 @@ my_std <- function(column) {
   (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
 }
 ```
-
 :::
 
 ```{r}
 #| echo: false
 #| eval: true
+
 my_std <- function(column) {
   if (length(column) != 1) {
     stop("The `column` parameter must be of length 1.")
@@ -394,10 +383,10 @@ my_std <- function(column) {
 And now we have proper error messages!
 
 ::: {style="font-size: 75%;"}
-
 ```{r}
 #| error: true
 #| eval: true
+
 my_std(c("Sepal.Length", "Petal.Width"))
 ```
 
@@ -406,16 +395,18 @@ my_std(c("Sepal.Length", "Petal.Width"))
 ```{r}
 #| error: true
 #| eval: true
+
 my_std(1)
 ```
 
 <br>
+
 ```{r}
 #| error: true
 #| eval: true
+
 my_std("column_1")
 ```
-
 :::
 
 ## Validate function parameters
@@ -426,12 +417,12 @@ useful error messages, e.g. [`rlang`](https://rlang.r-lib.org/reference/index.ht
 [`arg`](https://ngreifer.github.io/arg/),
 [`chk`](https://poissonconsulting.github.io/chk/), and more!).
 
-::: {.panel-tabset}
-
+::::: {.panel-tabset}
 #### With `rlang`
 
 ```{r}
 #| error: true
+
 ### With rlang
 my_std <- function(column) {
   rlang::check_string(column)
@@ -451,6 +442,7 @@ my_std("column_1")
 
 ```{r}
 #| error: true
+
 my_std <- function(column) {
   checkmate::assert_string(column)
   checkmate::assert_subset(column, names(iris))
@@ -463,15 +455,14 @@ my_std(1)
 my_std("column_1")
 
 ```
-
-:::
+:::::
 :::
 
 ## Set default value for parameters
 
 <br>
 
-Instead of setting `na.rm = TRUE` in the function body, we could let the user determine this option. 
+Instead of setting `na.rm = TRUE` in the function body, we could let the user determine this option.
 
 . . .
 
@@ -485,11 +476,9 @@ my_std <- function(column, na.rm) {
 }
 ```
 
-
 <br>
 
 <small>For conciseness, I hid the parameter checks we wrote before.</small>
-
 
 ## Set default value for parameters
 
@@ -553,7 +542,6 @@ documentation. The documentation should include:
     type (e.g. "a character value of length 1")
 -   details on the expected output -->
 
-
 # Other ways to use and create functions
 
 ## Functions as arguments
@@ -570,7 +558,6 @@ my_variable <- mean
 
 The absence of parentheses after `mean` means we are not evaluating the function, just refering to it.
 
-
 ## Functions as arguments
 
 <br>
@@ -581,7 +568,6 @@ The family of `apply` functions can use these function objects:
 data_list <- list(a = rnorm(100), b = rnorm(100, mean = 3))
 lapply(X = data_list, FUN = median)
 ```
-
 
 ## Anonymous functions
 
@@ -617,6 +603,7 @@ lapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))
 It can be useful to see the inside of a function created by someone else.
 
 Running the function name (without parentheses) in the console shows the source code:
+
 ```{r}
 my_std
 ```
@@ -635,11 +622,11 @@ In RStudio and Positron, you can press <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on mac
 
 <br>
 
-Designing functions and ensuring their robustness is not trivial. 
+Designing functions and ensuring their robustness is not trivial.
 
 There are many choices one can make:
 
-- using positional or named arguments 
+- using positional or named arguments
 - harmonising parameter names
 - whether to use default values
 - and more
@@ -648,6 +635,4 @@ There are many choices one can make:
 
 <br>
 
-Explore more in the [Tidyverse design](https://design.tidyverse.org/) book. 
-
-
+Explore more in the [Tidyverse design](https://design.tidyverse.org/) book.
