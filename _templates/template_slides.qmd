@@ -107,26 +107,6 @@ or on its own line with `$$ my equation $$`, like this:
 
 $$x + 1 = y$$
 
-## Images
-
-<br>
-
-Use `![](path/to/file.png)` to add an image:
-
-![](img/2d_density.png)
-
-## Images
-
-<br>
-
-Pass options with
-
-`![](path/to/file.png){some options here}`
-
-e.g. `{width="25%" height="25%"}`:
-
-![](img/2d_density.png){width="25%" height="25%"}
-
 ## Code formatting
 
 <br>
@@ -158,6 +138,45 @@ Below, I hide the original code but show its output:
 x <- 1:5
 mean(x)
 ```
+
+## Images
+
+<br>
+
+Use `![](path/to/file.png)` to add an image:
+
+![](img/2d_density.png)
+
+## Images
+
+<br>
+
+Pass options with
+
+`![](path/to/file.png){some options here}`
+
+e.g. `{width="25%" height="25%"}`:
+
+![](img/2d_density.png){width="25%" height="25%"}
+
+## Images and alt-text
+
+<br>
+
+All images must have an alt-text description.
+
+Use the `fig-alt` option:
+
+- for an external file: `![](path/to/file.png){fig-alt="A figure containing..."}`.
+
+- in a chunk that produces a figure:
+
+::: {style="font-size: 70%;"}
+```{{r}}
+#| fig-alt: A plot that shows...
+plot(mtcars)
+```
+:::
 
 ## Highlight lines of code
 
