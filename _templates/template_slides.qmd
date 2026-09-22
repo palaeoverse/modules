@@ -171,12 +171,10 @@ Use the `fig-alt` option:
 
 - in a chunk that produces a figure:
 
-::: {style="font-size: 70%;"}
 ```{{r}}
 #| fig-alt: A plot that shows...
 plot(mtcars)
 ```
-:::
 
 ## Highlight lines of code
 
@@ -229,11 +227,13 @@ What is 1 + 1?
 
 . . .
 
+::::::: {style="font-size: 130%;"}
 ```{r}
 #| eval: true
 
 1 + 1
 ```
+:::::::
 :::::
 :::
 
@@ -277,9 +277,8 @@ Right column
 
 You can put any content in each column, such as plots:
 
-::: {style="font-size: 70%;"}
-::::: {.columns}
-::::::: {.column width="40%"}
+::: {.columns}
+::::: {.column width="40%"}
 ```{r}
 #| eval: true
 #| dev-args:
@@ -287,9 +286,9 @@ You can put any content in each column, such as plots:
 
 plot(iris)
 ```
-:::::::
+:::::
 
-::::::: {.column width="60%"}
+::::: {.column width="60%"}
 ```{r}
 #| eval: true
 #| dev-args:
@@ -300,7 +299,6 @@ ggplot(mtcars, aes(drat, mpg)) +
   geom_point() +
   theme_bw(paper = "transparent")
 ```
-:::::::
 :::::
 :::
 
