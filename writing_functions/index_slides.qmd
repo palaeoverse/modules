@@ -61,7 +61,6 @@ $$z = \frac{x - mean(x)}{sd(x)}$$
 
 Option 1: same code for several columns in our data:
 
-::: {style="font-size: 75%;"}
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
   mean(iris[["Petal.Length"]])) /
@@ -76,16 +75,13 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   mean(iris[["Sepal.Width"]])) /
   sd(iris[["Sepal.Width"]])
 ```
-:::
 
 ## Demo: standardizing values
 
 <br>
 
-This works, but what if we want to ignore missing values? We have to add
-8 parameters:
+This works, but what if we want to ignore missing values? 
 
-::: {style="font-size: 75%;"}
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
   mean(iris[["Petal.Length"]], na.rm = TRUE)) /
@@ -100,7 +96,6 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
   sd(iris[["Sepal.Width"]], na.rm = TRUE)
 ```
-:::
 
 . . .
 
@@ -112,7 +107,6 @@ Do you notice anything weird about the code above?
 
 A small typo with big consequences!
 
-::: {style="font-size: 75%;"}
 ```r {code-line-numbers="8"}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
   mean(iris[["Petal.Length"]], na.rm = TRUE)) /
@@ -127,7 +121,6 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
   mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
   sd(iris[["Sepal.Width"]], na.rm = TRUE)
 ```
-:::
 
 ## Demo: standardizing values
 
@@ -205,7 +198,6 @@ and its **"stable" components**.
 
 Parts in [red]{style="color:red;"} are the parts that change across lines (the column name that is used):
 
-::: {style="font-size: 75%;"}
 ::::: {.sourceCode .cell-code}
 ```{=html}
 <pre class="sourceCode r code-with-copy">
@@ -216,7 +208,6 @@ Parts in [red]{style="color:red;"} are the parts that change across lines (the c
 </pre>
 ```
 :::::
-:::
 
 ## Introduce function parameters
 
@@ -276,14 +267,12 @@ We don't assign the output *inside* the function: the function merely makes the 
 <br>
 <br>
 
-::: {style="font-size: 75%;"}
 ```{r}
 iris[["Petal.Length_std"]] <- my_std("Petal.Length")
 iris[["Sepal.Length_std"]] <- my_std("Sepal.Length")
 iris[["Petal.Width_std"]] <- my_std("Petal.Width")
 iris[["Sepal.Width_std"]] <- my_std("Sepal.Width")
 ```
-:::
 
 Notice how it is much easier to check whether we made a typo in this code.
 
@@ -295,14 +284,12 @@ We can pass wrong values to `my_std()`!
 
 If we pass a column name that doesn't exist in the data:
 
-::: {style="font-size: 75%;"}
 ```{r}
 #| warning: true
 #| eval: true
 
 my_std("unknown_column")
 ```
-:::
 
 . . .
 
@@ -339,7 +326,6 @@ Step 1: list all input requirements.
 
 Step 2: check each of those.
 
-::: {style="font-size: 75%;"}
 ```r {code-line-numbers="2-4|5-7|8-10|"}
 my_std <- function(column) {
   if (length(column) != 1) {
@@ -355,7 +341,6 @@ my_std <- function(column) {
   (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
 }
 ```
-:::
 
 ```{r}
 #| echo: false
@@ -382,7 +367,6 @@ my_std <- function(column) {
 
 And now we have proper error messages!
 
-::: {style="font-size: 75%;"}
 ```{r}
 #| error: true
 #| eval: true
@@ -407,7 +391,6 @@ my_std(1)
 
 my_std("column_1")
 ```
-:::
 
 ## Validate function parameters
 
@@ -422,6 +405,7 @@ useful error messages, e.g. [`rlang`](https://rlang.r-lib.org/reference/index.ht
 
 ```{r}
 #| error: true
+#| eval: true
 
 ### With rlang
 my_std <- function(column) {
@@ -429,32 +413,25 @@ my_std <- function(column) {
   if (!(column %in% names(iris))) {
     stop("Column '", column, "' doesn't exist in the data.")
   }
-
   (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
 }
-
 my_std(c("Sepal.Length", "Petal.Width"))
-my_std(1)
-my_std("column_1")
 ```
 
 #### With `checkmate`
 
 ```{r}
 #| error: true
+#| eval: true
 
 my_std <- function(column) {
   checkmate::assert_string(column)
   checkmate::assert_subset(column, names(iris))
-
   (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
 }
-
 my_std(c("Sepal.Length", "Petal.Width"))
-my_std(1)
-my_std("column_1")
-
 ```
+
 :::::
 :::
 
@@ -476,10 +453,6 @@ my_std <- function(column, na.rm) {
 }
 ```
 
-<br>
-
-<small>For conciseness, I hid the parameter checks we wrote before.</small>
-
 ## Set default value for parameters
 
 <br>
@@ -492,7 +465,7 @@ head(my_std("Sepal.Length", na.rm = FALSE))
 
 . . .
 
-We could set a default value instead (like in `mean()` for instance):
+We could set a default value instead:
 
 ```{r}
 my_std <- function(column, na.rm = FALSE) {

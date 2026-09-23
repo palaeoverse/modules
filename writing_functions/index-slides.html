@@ -13,7 +13,7 @@
 
   <meta name="author" content="Etienne Bacher">
   <meta name="author" content="Niklas Hohmann">
-  <meta name="dcterms.date" content="2026-09-16">
+  <meta name="dcterms.date" content="2026-09-23">
   <title>Writing functions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -220,7 +220,7 @@ Niklas Hohmann
 </div>
 </div>
 
-  <p class="date">2026-09-16</p>
+  <p class="date">2026-09-23</p>
 </section>
 <section>
 <section id="functions-in-r" class="title-slide slide level1 center">
@@ -256,7 +256,6 @@ Niklas Hohmann
 <h2>Demo: standardizing values</h2>
 <p><br></p>
 <p>Option 1: same code for several columns in our data:</p>
-<div style="font-size: 75%;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-label="1"></a>iris[[<span class="st">"Petal.Length_std"</span>]] <span class="ot">&lt;-</span> (iris[[<span class="st">"Petal.Length"</span>]] <span class="sc">-</span> </span>
 <span id="cb1-2"><a href="" aria-label="2"></a>  <span class="fu">mean</span>(iris[[<span class="st">"Petal.Length"</span>]])) <span class="sc">/</span></span>
@@ -271,13 +270,11 @@ Niklas Hohmann
 <span id="cb1-11"><a href="" aria-label="11"></a>  <span class="fu">mean</span>(iris[[<span class="st">"Sepal.Width"</span>]])) <span class="sc">/</span></span>
 <span id="cb1-12"><a href="" aria-label="12"></a>  <span class="fu">sd</span>(iris[[<span class="st">"Sepal.Width"</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
 </section>
 <section id="demo-standardizing-values-3" class="slide level2">
 <h2>Demo: standardizing values</h2>
 <p><br></p>
-<p>This works, but what if we want to ignore missing values? We have to add 8 parameters:</p>
-<div style="font-size: 75%;">
+<p>This works, but what if we want to ignore missing values?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-label="1"></a>iris[[<span class="st">"Petal.Length_std"</span>]] <span class="ot">&lt;-</span> (iris[[<span class="st">"Petal.Length"</span>]] <span class="sc">-</span> </span>
 <span id="cb2-2"><a href="" aria-label="2"></a>  <span class="fu">mean</span>(iris[[<span class="st">"Petal.Length"</span>]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span></span>
@@ -291,7 +288,6 @@ Niklas Hohmann
 <span id="cb2-10"><a href="" aria-label="10"></a>iris[[<span class="st">"Sepal.Width_std"</span>]] <span class="ot">&lt;-</span> (iris[[<span class="st">"Sepal.Width"</span>]] <span class="sc">-</span> </span>
 <span id="cb2-11"><a href="" aria-label="11"></a>  <span class="fu">mean</span>(iris[[<span class="st">"Sepal.Width"</span>]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span></span>
 <span id="cb2-12"><a href="" aria-label="12"></a>  <span class="fu">sd</span>(iris[[<span class="st">"Sepal.Width"</span>]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 <div class="fragment">
 <p>Do you notice anything weird about the code above?</p>
@@ -443,13 +439,11 @@ Niklas Hohmann
 <section id="use-our-new-function" class="slide level2">
 <h2>Use our new function</h2>
 <p><br> <br></p>
-<div style="font-size: 75%;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-label="1"></a>iris[[<span class="st">"Petal.Length_std"</span>]] <span class="ot">&lt;-</span> <span class="fu">my_std</span>(<span class="st">"Petal.Length"</span>)</span>
 <span id="cb12-2"><a href="" aria-label="2"></a>iris[[<span class="st">"Sepal.Length_std"</span>]] <span class="ot">&lt;-</span> <span class="fu">my_std</span>(<span class="st">"Sepal.Length"</span>)</span>
 <span id="cb12-3"><a href="" aria-label="3"></a>iris[[<span class="st">"Petal.Width_std"</span>]] <span class="ot">&lt;-</span> <span class="fu">my_std</span>(<span class="st">"Petal.Width"</span>)</span>
 <span id="cb12-4"><a href="" aria-label="4"></a>iris[[<span class="st">"Sepal.Width_std"</span>]] <span class="ot">&lt;-</span> <span class="fu">my_std</span>(<span class="st">"Sepal.Width"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 <p>Notice how it is much easier to check whether we made a typo in this code.</p>
 </section>
@@ -498,7 +492,6 @@ or logical: returning NA</code></pre>
 <h2>Validate function parameters</h2>
 <p><br></p>
 <p>Step 2: check each of those.</p>
-<div style="font-size: 75%;">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" data-code-line-numbers="2-4|5-7|8-10|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-label="1"></a>my_std <span class="ot">&lt;-</span> <span class="cf">function</span>(column) {</span>
 <span id="cb16-2"><a href="" aria-label="2"></a>  <span class="cf">if</span> (<span class="fu">length</span>(column) <span class="sc">!=</span> <span class="dv">1</span>) {</span>
 <span id="cb16-3"><a href="" aria-label="3"></a>    <span class="fu">stop</span>(<span class="st">"The `column` parameter must be of length 1."</span>)</span>
@@ -512,13 +505,11 @@ or logical: returning NA</code></pre>
 <span id="cb16-11"><a href="" aria-label="11"></a></span>
 <span id="cb16-12"><a href="" aria-label="12"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb16-13"><a href="" aria-label="13"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </section>
 <section id="validate-function-parameters-3" class="slide level2">
 <h2>Validate function parameters</h2>
 <p><br></p>
 <p>And now we have proper error messages!</p>
-<div style="font-size: 75%;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-label="1"></a><span class="fu">my_std</span>(<span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Width"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
@@ -540,7 +531,6 @@ or logical: returning NA</code></pre>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `my_std()`:
 ! Column 'column_1' doesn't exist in the data.</code></pre>
-</div>
 </div>
 </div>
 </section>
@@ -568,27 +558,27 @@ or logical: returning NA</code></pre>
 <span id="cb23-4"><a href="" aria-label="4"></a>  <span class="cf">if</span> (<span class="sc">!</span>(column <span class="sc">%in%</span> <span class="fu">names</span>(iris))) {</span>
 <span id="cb23-5"><a href="" aria-label="5"></a>    <span class="fu">stop</span>(<span class="st">"Column '"</span>, column, <span class="st">"' doesn't exist in the data."</span>)</span>
 <span id="cb23-6"><a href="" aria-label="6"></a>  }</span>
-<span id="cb23-7"><a href="" aria-label="7"></a></span>
-<span id="cb23-8"><a href="" aria-label="8"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb23-9"><a href="" aria-label="9"></a>}</span>
-<span id="cb23-10"><a href="" aria-label="10"></a></span>
-<span id="cb23-11"><a href="" aria-label="11"></a><span class="fu">my_std</span>(<span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Width"</span>))</span>
-<span id="cb23-12"><a href="" aria-label="12"></a><span class="fu">my_std</span>(<span class="dv">1</span>)</span>
-<span id="cb23-13"><a href="" aria-label="13"></a><span class="fu">my_std</span>(<span class="st">"column_1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb23-7"><a href="" aria-label="7"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-8"><a href="" aria-label="8"></a>}</span>
+<span id="cb23-9"><a href="" aria-label="9"></a><span class="fu">my_std</span>(<span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Width"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `my_std()`:
+! `column` must be a single string, not a character vector.</code></pre>
+</div>
 </div>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-label="1"></a>my_std <span class="ot">&lt;-</span> <span class="cf">function</span>(column) {</span>
-<span id="cb24-2"><a href="" aria-label="2"></a>  checkmate<span class="sc">::</span><span class="fu">assert_string</span>(column)</span>
-<span id="cb24-3"><a href="" aria-label="3"></a>  checkmate<span class="sc">::</span><span class="fu">assert_subset</span>(column, <span class="fu">names</span>(iris))</span>
-<span id="cb24-4"><a href="" aria-label="4"></a></span>
-<span id="cb24-5"><a href="" aria-label="5"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-6"><a href="" aria-label="6"></a>}</span>
-<span id="cb24-7"><a href="" aria-label="7"></a></span>
-<span id="cb24-8"><a href="" aria-label="8"></a><span class="fu">my_std</span>(<span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Width"</span>))</span>
-<span id="cb24-9"><a href="" aria-label="9"></a><span class="fu">my_std</span>(<span class="dv">1</span>)</span>
-<span id="cb24-10"><a href="" aria-label="10"></a><span class="fu">my_std</span>(<span class="st">"column_1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a>my_std <span class="ot">&lt;-</span> <span class="cf">function</span>(column) {</span>
+<span id="cb25-2"><a href="" aria-label="2"></a>  checkmate<span class="sc">::</span><span class="fu">assert_string</span>(column)</span>
+<span id="cb25-3"><a href="" aria-label="3"></a>  checkmate<span class="sc">::</span><span class="fu">assert_subset</span>(column, <span class="fu">names</span>(iris))</span>
+<span id="cb25-4"><a href="" aria-label="4"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-5"><a href="" aria-label="5"></a>}</span>
+<span id="cb25-6"><a href="" aria-label="6"></a><span class="fu">my_std</span>(<span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Width"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `my_std()`:
+! Assertion on 'column' failed: Must have length 1.</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -605,14 +595,12 @@ or logical: returning NA</code></pre>
 <div class="fragment">
 <p>We can add a <code>na.rm</code> parameter and use its value in <code>mean()</code> and <code>sd()</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a>my_std <span class="ot">&lt;-</span> <span class="cf">function</span>(column, na.rm) {</span>
-<span id="cb25-2"><a href="" aria-label="2"></a>  <span class="co"># [parameter checks]</span></span>
-<span id="cb25-3"><a href="" aria-label="3"></a></span>
-<span id="cb25-4"><a href="" aria-label="4"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)</span>
-<span id="cb25-5"><a href="" aria-label="5"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a>my_std <span class="ot">&lt;-</span> <span class="cf">function</span>(column, na.rm) {</span>
+<span id="cb27-2"><a href="" aria-label="2"></a>  <span class="co"># [parameter checks]</span></span>
+<span id="cb27-3"><a href="" aria-label="3"></a></span>
+<span id="cb27-4"><a href="" aria-label="4"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)</span>
+<span id="cb27-5"><a href="" aria-label="5"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><br></p>
-<p><small>For conciseness, I hid the parameter checks we wrote before.</small></p>
 </div>
 </section>
 <section id="set-default-value-for-parameters-1" class="slide level2">
@@ -620,19 +608,19 @@ or logical: returning NA</code></pre>
 <p><br></p>
 <p>This works but forces the user to write <code>na.rm = TRUE</code> (or <code>FALSE</code>):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-label="1"></a><span class="fu">head</span>(<span class="fu">my_std</span>(<span class="st">"Sepal.Length"</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-label="1"></a><span class="fu">head</span>(<span class="fu">my_std</span>(<span class="st">"Sepal.Length"</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
-<p>We could set a default value instead (like in <code>mean()</code> for instance):</p>
+<p>We could set a default value instead:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a>my_std <span class="ot">&lt;-</span> <span class="cf">function</span>(column, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
-<span id="cb27-2"><a href="" aria-label="2"></a>  <span class="co"># [parameter checks]</span></span>
-<span id="cb27-3"><a href="" aria-label="3"></a></span>
-<span id="cb27-4"><a href="" aria-label="4"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)</span>
-<span id="cb27-5"><a href="" aria-label="5"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-label="1"></a>my_std <span class="ot">&lt;-</span> <span class="cf">function</span>(column, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb29-2"><a href="" aria-label="2"></a>  <span class="co"># [parameter checks]</span></span>
+<span id="cb29-3"><a href="" aria-label="3"></a></span>
+<span id="cb29-4"><a href="" aria-label="4"></a>  (iris[[column]] <span class="sc">-</span> <span class="fu">mean</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)) <span class="sc">/</span> <span class="fu">sd</span>(iris[[column]], <span class="at">na.rm =</span> na.rm)</span>
+<span id="cb29-5"><a href="" aria-label="5"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-label="1"></a><span class="fu">head</span>(<span class="fu">my_std</span>(<span class="st">"Sepal.Length"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-label="1"></a><span class="fu">head</span>(<span class="fu">my_std</span>(<span class="st">"Sepal.Length"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -644,14 +632,14 @@ or logical: returning NA</code></pre>
 <div class="fragment">
 <p>Example: return <code>NA</code> if the input contains at least one <code>NA</code> value:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-label="1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb29-2"><a href="" aria-label="2"></a></span>
-<span id="cb29-3"><a href="" aria-label="3"></a>  <span class="cf">if</span> (<span class="fu">anyNA</span>(x)) {</span>
-<span id="cb29-4"><a href="" aria-label="4"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)</span>
-<span id="cb29-5"><a href="" aria-label="5"></a>  }</span>
-<span id="cb29-6"><a href="" aria-label="6"></a></span>
-<span id="cb29-7"><a href="" aria-label="7"></a>  <span class="co"># if x doesn't contain NA, then we continue the function here...</span></span>
-<span id="cb29-8"><a href="" aria-label="8"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb31-2"><a href="" aria-label="2"></a></span>
+<span id="cb31-3"><a href="" aria-label="3"></a>  <span class="cf">if</span> (<span class="fu">anyNA</span>(x)) {</span>
+<span id="cb31-4"><a href="" aria-label="4"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)</span>
+<span id="cb31-5"><a href="" aria-label="5"></a>  }</span>
+<span id="cb31-6"><a href="" aria-label="6"></a></span>
+<span id="cb31-7"><a href="" aria-label="7"></a>  <span class="co"># if x doesn't contain NA, then we continue the function here...</span></span>
+<span id="cb31-8"><a href="" aria-label="8"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- ## Documenting functions
 
@@ -677,7 +665,7 @@ documentation. The documentation should include:
 <p><br></p>
 <p>Functions are just another type of objects: they can be updated by the user, assigned to variables, and passed over to other functions:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-label="1"></a>my_variable <span class="ot">&lt;-</span> mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-label="1"></a>my_variable <span class="ot">&lt;-</span> mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <p>The absence of parentheses after <code>mean</code> means we are not evaluating the function, just refering to it.</p>
@@ -687,8 +675,8 @@ documentation. The documentation should include:
 <p><br></p>
 <p>The family of <code>apply</code> functions can use these function objects:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">3</span>))</span>
-<span id="cb31-2"><a href="" aria-label="2"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> median)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-label="1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">3</span>))</span>
+<span id="cb33-2"><a href="" aria-label="2"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> median)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="anonymous-functions" class="slide level2">
@@ -706,8 +694,8 @@ documentation. The documentation should include:
 <p><br></p>
 <p>Once again, these can be very useful in <code>*apply()</code> functions (and in other places):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-label="1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="st">"b"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">3</span>))</span>
-<span id="cb32-2"><a href="" aria-label="2"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">abs</span>(x[<span class="dv">3</span>] <span class="sc">-</span> x[<span class="dv">5</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-label="1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="st">"b"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">3</span>))</span>
+<span id="cb34-2"><a href="" aria-label="2"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">abs</span>(x[<span class="dv">3</span>] <span class="sc">-</span> x[<span class="dv">5</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="inspect-the-source-code" class="slide level2">
@@ -716,7 +704,7 @@ documentation. The documentation should include:
 <p>It can be useful to see the inside of a function created by someone else.</p>
 <p>Running the function name (without parentheses) in the console shows the source code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-label="1"></a>my_std</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-label="1"></a>my_std</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="inspect-the-source-code-1" class="slide level2">
