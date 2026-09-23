@@ -80,7 +80,7 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
 
 <br>
 
-This works, but what if we want to ignore missing values? 
+This works, but what if we want to ignore missing values?
 
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
@@ -198,7 +198,7 @@ and its **"stable" components**.
 
 Parts in [red]{style="color:red;"} are the parts that change across lines (the column name that is used):
 
-::::: {.sourceCode .cell-code}
+::: {.sourceCode .cell-code}
 ```{=html}
 <pre class="sourceCode r code-with-copy">
 <p><span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span_std><span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]] - <span style="color: #795e26;"><br>  mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]])) / <br><span style="color: #795e26;">  sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #001080;"><span style="color: #ff0000;">"Petal.Length"</span><span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
@@ -207,7 +207,7 @@ Parts in [red]{style="color:red;"} are the parts that change across lines (the c
 <span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width_std"<span style="color: #000000;">]] &lt;- (<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]] - <span style="color: #795e26;"><br>  mean<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]])) / <br><span style="color: #795e26;">  sd<span style="color: #000000;">(<span style="color: #001080;">iris<span style="color: #000000;">[[<span style="color: #ff0000;">"Sepal.Width"<span style="color: #000000;">]])</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
 </pre>
 ```
-:::::
+:::
 
 ## Introduce function parameters
 
@@ -431,7 +431,6 @@ my_std <- function(column) {
 }
 my_std(c("Sepal.Length", "Petal.Width"))
 ```
-
 :::::
 :::
 
