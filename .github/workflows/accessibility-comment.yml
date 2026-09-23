@@ -1,0 +1,53 @@
+# This takes the results of "accessibility.yaml" and posts them as a comment on
+# the PR.
+#
+# See "accessibility.yaml" for more details on why this workflow split is needed.
+
+name: Accessibility comment
+
+on:
+  workflow_run:
+    workflows: [Accessibility]
+    types: [completed]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.event == 'pull_request'
+    permissions:
+      pull-requests: write
+      actions: read
+    steps:
+      # The artifact is missing when the PR doesn't modify any .qmd file, in
+      # which case there is nothing to comment and the steps below are skipped.
+      - name: Download Lighthouse results
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        continue-on-error: true
+        with:
+          name: lighthouse-results
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: /tmp/a11y
+
+      - name: Read PR number
+        id: results
+        run: echo "pr_number=$(cat /tmp/a11y/pr-number.txt 2>/dev/null)" >> "$GITHUB_OUTPUT"
+
+      # This is needed to know if we need to create or update a comment.
+      - name: Find existing comment
+        if: steps.results.outputs.pr_number != ''
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
+        id: find-comment
+        with:
+          issue-number: ${{ steps.results.outputs.pr_number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '<!-- lighthouse-a11y -->'
+
+      - name: Create or update comment
+        if: steps.results.outputs.pr_number != ''
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ steps.results.outputs.pr_number }}
+          body-path: /tmp/a11y/comment.md
+          edit-mode: replace
