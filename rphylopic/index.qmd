@@ -37,24 +37,53 @@ editor:
 
 ## Introduction
 
-::: {.narration}
-Prose goes in a `.narration` block: it reads as a paragraph on the website, and
-becomes the speaker notes you talk from on the slides. Press `s` in the deck to
-see the notes view.
+### What is PhyloPic
 
-Consecutive paragraphs can share one block; they stay separate paragraphs on
-the page and separate notes on the slide.
+[PhyloPic](https://www.phylopic.org) is an open database of free silhouette images of animals, plants, and other life forms, available for reuse under Creative Commons licenses. At time of writing, >13,000 silhouette images are available covering a broad array of biological groups from dinosaurs and corals to grasses and viruses. To date, the silhouettes have been created by over 500 volunteer contributors, and are increasingly used in data visualisation.
+
+### What is **rphylopic**
+
+::: {.narration}
+
+**rphylopic** is a package that allows users to easily fetch and visualize silhouettes of organisms from [PhyloPic](https://www.phylopic.org/). The package allows users to add silhouettes as layers or as data points to both base R and ggplot2 plots. Additional functionality allows users to pick between available silhouettes, transform them (e.g., rotate and recolor), and save image files. This module will give you an overview of the package and provide example usage.
+
 :::
 
 ::: {.slides-only}
+
 - a bullet summary for the slide
 - which would be redundant on the page
+
 :::
 
-::: {.html-only}
-Content that only makes sense in writing (e.g., a long aside, a table of options, a
-link dump) goes in an `.html-only` block and never reaches the deck.
+### Installation
+
+## Using rphylopic
+
+### Getting silhouettes
+
+::: {.narration}
+Every silhouette available via PhyloPic has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to 1) identify the silhouette you want and then 2) identify the UUID for that silhouette. rphylopic provides a couple different ways to do this:
 :::
+
+::: {.narration}
+The simplest way to do this is to use the `get_uuid()` function. You can use this function to search PhyloPic based on a taxonomic or phylogenetic name (e.g., Canis lupus or pan-Mollusca). However, multiple silhouettes (and hence UUIDs) can exist for a searched name. The n argument in `get_uuid()` allows you to fetch n matched UUIDs. Using a returned UUID, you can then fetch the respective silhouette using `get_phylopic()`.
+:::
+
+```{r}
+# Load rphylopic
+library(rphylopic)
+# Get a single image UUID for a species
+uuid <- get_uuid(name = "Canis lupus")
+# Get the image for that UUID
+img <- get_phylopic(uuid = uuid)
+plot(img)
+```
+
+```{r}
+# But multiple silhouettes can exist per species...
+uuid <- get_uuid(name = "Canis lupus", n = 5)
+```
 
 ## One plot per slide
 
@@ -62,6 +91,23 @@ link dump) goes in an `.html-only` block and never reaches the deck.
 Each `##` heading starts a slide, and the filter closes the slide after every
 figure, so two plots never share one slide. Prose after a figure introduces the next
 figure rather than trailing behind the old one.
+:::
+
+::: {.panel-tabset}
+
+### Tab A
+
+```{r}
+#| code-fold: true
+plot(mtcars$wt, mtcars$mpg)
+```
+
+### Tab B
+
+```{r}
+plot(mtcars$hp, mtcars$mpg)
+```
+
 :::
 
 ```{r}
