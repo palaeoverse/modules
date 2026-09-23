@@ -95,21 +95,21 @@
     "href": "training/modules/writing_functions/index-slides.html#demo-standardizing-values-2",
     "title": "Writing functions",
     "section": "Demo: standardizing values",
-    "text": "Demo: standardizing values\n\nOption 1: same code for several columns in our data:\n\n\niris[[\"Petal.Length_std\"]] &lt;- (iris[[\"Petal.Length\"]] - \n  mean(iris[[\"Petal.Length\"]])) /\n  sd(iris[[\"Petal.Length\"]])\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] - \n  mean(iris[[\"Sepal.Length\"]])) /\n  sd(iris[[\"Sepal.Length\"]])\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]])) /\n  sd(iris[[\"Petal.Width\"]])\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]])) /\n  sd(iris[[\"Sepal.Width\"]])"
+    "text": "Demo: standardizing values\n\nOption 1: same code for several columns in our data:\n\niris[[\"Petal.Length_std\"]] &lt;- (iris[[\"Petal.Length\"]] - \n  mean(iris[[\"Petal.Length\"]])) /\n  sd(iris[[\"Petal.Length\"]])\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] - \n  mean(iris[[\"Sepal.Length\"]])) /\n  sd(iris[[\"Sepal.Length\"]])\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]])) /\n  sd(iris[[\"Petal.Width\"]])\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]])) /\n  sd(iris[[\"Sepal.Width\"]])"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#demo-standardizing-values-3",
     "href": "training/modules/writing_functions/index-slides.html#demo-standardizing-values-3",
     "title": "Writing functions",
     "section": "Demo: standardizing values",
-    "text": "Demo: standardizing values\n\nThis works, but what if we want to ignore missing values? We have to add 8 parameters:\n\n\niris[[\"Petal.Length_std\"]] &lt;- (iris[[\"Petal.Length\"]] - \n  mean(iris[[\"Petal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Length\"]], na.rm = TRUE)\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] - \n  mean(iris[[\"Sepal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Length\"]], na.rm = TRUE)\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Width\"]], na.rm = TRUE)\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Width\"]], na.rm = TRUE)\n\n\n\nDo you notice anything weird about the code above?"
+    "text": "Demo: standardizing values\n\nThis works, but what if we want to ignore missing values?\n\niris[[\"Petal.Length_std\"]] &lt;- (iris[[\"Petal.Length\"]] - \n  mean(iris[[\"Petal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Length\"]], na.rm = TRUE)\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] - \n  mean(iris[[\"Sepal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Length\"]], na.rm = TRUE)\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Width\"]], na.rm = TRUE)\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Width\"]], na.rm = TRUE)\n\n\nDo you notice anything weird about the code above?"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#demo-standardizing-values-4",
     "href": "training/modules/writing_functions/index-slides.html#demo-standardizing-values-4",
     "title": "Writing functions",
     "section": "Demo: standardizing values",
-    "text": "Demo: standardizing values\n\nA small typo with big consequences!\n\niris[[\"Petal.Length_std\"]] &lt;- (iris[[\"Petal.Length\"]] - \n  mean(iris[[\"Petal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Length\"]], na.rm = TRUE)\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] - \n  mean(iris[[\"Sepal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Length\"]], na.rm = TRUE)\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Width\"]], na.rm = TRUE)\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Width\"]], na.rm = TRUE)"
+    "text": "Demo: standardizing values\n\nA small typo with big consequences!\niris[[\"Petal.Length_std\"]] &lt;- (iris[[\"Petal.Length\"]] - \n  mean(iris[[\"Petal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Length\"]], na.rm = TRUE)\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] - \n  mean(iris[[\"Sepal.Length\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Length\"]], na.rm = TRUE)\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Petal.Width\"]], na.rm = TRUE)\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] - \n  mean(iris[[\"Sepal.Width\"]], na.rm = TRUE)) /\n  sd(iris[[\"Sepal.Width\"]], na.rm = TRUE)"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#demo-standardizing-values-5",
@@ -144,7 +144,7 @@
     "href": "training/modules/writing_functions/index-slides.html#introduce-function-parameters-1",
     "title": "Writing functions",
     "section": "Introduce function parameters",
-    "text": "Introduce function parameters\n\nParts in red are the parts that change across lines (the column name that is used):\n\n\niris[[\"Petal.Length\"]] &lt;- (iris[[\"Petal.Length\"]] -   mean(iris[[\"Petal.Length\"]])) /   sd(iris[[\"Petal.Length\"]])\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] -   mean(iris[[\"Sepal.Length\"]])) /   sd(iris[[\"Sepal.Length\"]])\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] -   mean(iris[[\"Petal.Width\"]])) /   sd(iris[[\"Petal.Width\"]])\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] -   mean(iris[[\"Sepal.Width\"]])) /   sd(iris[[\"Sepal.Width\"]])"
+    "text": "Introduce function parameters\n\nParts in red are the parts that change across lines (the column name that is used):\n\niris[[\"Petal.Length\"]] &lt;- (iris[[\"Petal.Length\"]] -   mean(iris[[\"Petal.Length\"]])) /   sd(iris[[\"Petal.Length\"]])\niris[[\"Sepal.Length_std\"]] &lt;- (iris[[\"Sepal.Length\"]] -   mean(iris[[\"Sepal.Length\"]])) /   sd(iris[[\"Sepal.Length\"]])\niris[[\"Petal.Width_std\"]] &lt;- (iris[[\"Petal.Width\"]] -   mean(iris[[\"Petal.Width\"]])) /   sd(iris[[\"Petal.Width\"]])\niris[[\"Sepal.Width_std\"]] &lt;- (iris[[\"Sepal.Width\"]] -   mean(iris[[\"Sepal.Width\"]])) /   sd(iris[[\"Sepal.Width\"]])"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#introduce-function-parameters-2",
@@ -179,14 +179,14 @@
     "href": "training/modules/writing_functions/index-slides.html#use-our-new-function",
     "title": "Writing functions",
     "section": "Use our new function",
-    "text": "Use our new function\n \n\n\niris[[\"Petal.Length_std\"]] &lt;- my_std(\"Petal.Length\")\niris[[\"Sepal.Length_std\"]] &lt;- my_std(\"Sepal.Length\")\niris[[\"Petal.Width_std\"]] &lt;- my_std(\"Petal.Width\")\niris[[\"Sepal.Width_std\"]] &lt;- my_std(\"Sepal.Width\")\n\n\nNotice how it is much easier to check whether we made a typo in this code."
+    "text": "Use our new function\n \n\niris[[\"Petal.Length_std\"]] &lt;- my_std(\"Petal.Length\")\niris[[\"Sepal.Length_std\"]] &lt;- my_std(\"Sepal.Length\")\niris[[\"Petal.Width_std\"]] &lt;- my_std(\"Petal.Width\")\niris[[\"Sepal.Width_std\"]] &lt;- my_std(\"Sepal.Width\")\n\nNotice how it is much easier to check whether we made a typo in this code."
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#validate-function-parameters",
     "href": "training/modules/writing_functions/index-slides.html#validate-function-parameters",
     "title": "Writing functions",
     "section": "Validate function parameters",
-    "text": "Validate function parameters\n\nWe can pass wrong values to my_std()!\nIf we pass a column name that doesn’t exist in the data:\n\n\nmy_std(\"unknown_column\")\n\nWarning in mean.default(iris[[column]], na.rm = TRUE): argument is not numeric\nor logical: returning NA\n\n\nnumeric(0)\n\n\n\n\nNo error, just a warning and a useless result!\n\n   we need to check user inputs"
+    "text": "Validate function parameters\n\nWe can pass wrong values to my_std()!\nIf we pass a column name that doesn’t exist in the data:\n\nmy_std(\"unknown_column\")\n\nWarning in mean.default(iris[[column]], na.rm = TRUE): argument is not numeric\nor logical: returning NA\n\n\nnumeric(0)\n\n\n\nNo error, just a warning and a useless result!\n\n   we need to check user inputs"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#validate-function-parameters-1",
@@ -200,35 +200,35 @@
     "href": "training/modules/writing_functions/index-slides.html#validate-function-parameters-2",
     "title": "Writing functions",
     "section": "Validate function parameters",
-    "text": "Validate function parameters\n\nStep 2: check each of those.\n\nmy_std &lt;- function(column) {\n  if (length(column) != 1) {\n    stop(\"The `column` parameter must be of length 1.\")\n  }\n  if (!is.character(column)) {\n    stop(\"The `column` parameter must be a character.\")\n  }\n  if (!(column %in% names(iris))) {\n    stop(\"Column '\", column, \"' doesn't exist in the data.\")\n  }\n\n  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)\n}"
+    "text": "Validate function parameters\n\nStep 2: check each of those.\nmy_std &lt;- function(column) {\n  if (length(column) != 1) {\n    stop(\"The `column` parameter must be of length 1.\")\n  }\n  if (!is.character(column)) {\n    stop(\"The `column` parameter must be a character.\")\n  }\n  if (!(column %in% names(iris))) {\n    stop(\"Column '\", column, \"' doesn't exist in the data.\")\n  }\n\n  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)\n}"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#validate-function-parameters-3",
     "href": "training/modules/writing_functions/index-slides.html#validate-function-parameters-3",
     "title": "Writing functions",
     "section": "Validate function parameters",
-    "text": "Validate function parameters\n\nAnd now we have proper error messages!\n\n\nmy_std(c(\"Sepal.Length\", \"Petal.Width\"))\n\nError in `my_std()`:\n! The `column` parameter must be of length 1.\n\n\n\n\nmy_std(1)\n\nError in `my_std()`:\n! The `column` parameter must be a character.\n\n\n\n\nmy_std(\"column_1\")\n\nError in `my_std()`:\n! Column 'column_1' doesn't exist in the data."
+    "text": "Validate function parameters\n\nAnd now we have proper error messages!\n\nmy_std(c(\"Sepal.Length\", \"Petal.Width\"))\n\nError in `my_std()`:\n! The `column` parameter must be of length 1.\n\n\n\n\nmy_std(1)\n\nError in `my_std()`:\n! The `column` parameter must be a character.\n\n\n\n\nmy_std(\"column_1\")\n\nError in `my_std()`:\n! Column 'column_1' doesn't exist in the data."
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#validate-function-parameters-4",
     "href": "training/modules/writing_functions/index-slides.html#validate-function-parameters-4",
     "title": "Writing functions",
     "section": "Validate function parameters",
-    "text": "Validate function parameters\n\n\n\n\n\n\n\nPackages for input checking\n\n\nSeveral packages provide functions to check inputs and report useful error messages, e.g. rlang and checkmate (see also dreamerr, arg, chk, and more!).\n\nWith rlangWith checkmate\n\n\n\n### With rlang\nmy_std &lt;- function(column) {\n  rlang::check_string(column)\n  if (!(column %in% names(iris))) {\n    stop(\"Column '\", column, \"' doesn't exist in the data.\")\n  }\n\n  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)\n}\n\nmy_std(c(\"Sepal.Length\", \"Petal.Width\"))\nmy_std(1)\nmy_std(\"column_1\")\n\n\n\n\nmy_std &lt;- function(column) {\n  checkmate::assert_string(column)\n  checkmate::assert_subset(column, names(iris))\n\n  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)\n}\n\nmy_std(c(\"Sepal.Length\", \"Petal.Width\"))\nmy_std(1)\nmy_std(\"column_1\")"
+    "text": "Validate function parameters\n\n\n\n\n\n\n\nPackages for input checking\n\n\nSeveral packages provide functions to check inputs and report useful error messages, e.g. rlang and checkmate (see also dreamerr, arg, chk, and more!).\n\nWith rlangWith checkmate\n\n\n\n### With rlang\nmy_std &lt;- function(column) {\n  rlang::check_string(column)\n  if (!(column %in% names(iris))) {\n    stop(\"Column '\", column, \"' doesn't exist in the data.\")\n  }\n  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)\n}\nmy_std(c(\"Sepal.Length\", \"Petal.Width\"))\n\nError in `my_std()`:\n! `column` must be a single string, not a character vector.\n\n\n\n\n\nmy_std &lt;- function(column) {\n  checkmate::assert_string(column)\n  checkmate::assert_subset(column, names(iris))\n  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)\n}\nmy_std(c(\"Sepal.Length\", \"Petal.Width\"))\n\nError in `my_std()`:\n! Assertion on 'column' failed: Must have length 1."
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#set-default-value-for-parameters",
     "href": "training/modules/writing_functions/index-slides.html#set-default-value-for-parameters",
     "title": "Writing functions",
     "section": "Set default value for parameters",
-    "text": "Set default value for parameters\n\nInstead of setting na.rm = TRUE in the function body, we could let the user determine this option.\n\nWe can add a na.rm parameter and use its value in mean() and sd():\n\nmy_std &lt;- function(column, na.rm) {\n  # [parameter checks]\n\n  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)\n}\n\n\nFor conciseness, I hid the parameter checks we wrote before."
+    "text": "Set default value for parameters\n\nInstead of setting na.rm = TRUE in the function body, we could let the user determine this option.\n\nWe can add a na.rm parameter and use its value in mean() and sd():\n\nmy_std &lt;- function(column, na.rm) {\n  # [parameter checks]\n\n  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)\n}"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#set-default-value-for-parameters-1",
     "href": "training/modules/writing_functions/index-slides.html#set-default-value-for-parameters-1",
     "title": "Writing functions",
     "section": "Set default value for parameters",
-    "text": "Set default value for parameters\n\nThis works but forces the user to write na.rm = TRUE (or FALSE):\n\nhead(my_std(\"Sepal.Length\", na.rm = FALSE))\n\n\nWe could set a default value instead (like in mean() for instance):\n\nmy_std &lt;- function(column, na.rm = FALSE) {\n  # [parameter checks]\n\n  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)\n}\n\n\nhead(my_std(\"Sepal.Length\"))"
+    "text": "Set default value for parameters\n\nThis works but forces the user to write na.rm = TRUE (or FALSE):\n\nhead(my_std(\"Sepal.Length\", na.rm = FALSE))\n\n\nWe could set a default value instead:\n\nmy_std &lt;- function(column, na.rm = FALSE) {\n  # [parameter checks]\n\n  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)\n}\n\n\nhead(my_std(\"Sepal.Length\"))"
   },
   {
     "objectID": "training/modules/writing_functions/index-slides.html#exit-a-function-early",
@@ -515,14 +515,14 @@
     "href": "training/modules/writing_functions/index.html#functions-as-arguments",
     "title": "Writing functions",
     "section": "Functions as arguments",
-    "text": "Functions as arguments\nIn R, functions are just another type of objects, meaning that they can be updated by the user, assigned to variables, and passed over to other functions. at the built-in function for the mean as an example.\n\nmy_variable &lt;- mean\n\nNote that the parentheses are missing from mean here, which means we are not evaluating the function but just refering to it.\nPassing functions as arguments is a powerful programming technique, which can be best demonstrated by the family of apply functions. As an example, let’s assume we have data stored in a list:\n\ndata_list &lt;- list(\"a\" = rnorm(100),\n                 \"b\" = rnorm(100, mean = 3))\n\nWe’re looking for the median values of our data. We would loop through each of the list entries and apply the median function individually. However, the lapply functions provides a more elegant solution, where we can just pass the list and a function as argument to lapply, and the function will be applied to each list entry individually:\n\nlapply(X = data_list, FUN = median)\n\n$a\n[1] 0.002260981\n\n$b\n[1] 3.134726\n\n\nNote again that we pass median (the function) as an argument without parenthesis. Using median() instead equates to calling the median function without passing it any arguments and will result in an error. For the curious: lapply is what is called a “higher-order function”."
+    "text": "Functions as arguments\nIn R, functions are just another type of objects, meaning that they can be updated by the user, assigned to variables, and passed over to other functions. at the built-in function for the mean as an example.\n\nmy_variable &lt;- mean\n\nNote that the parentheses are missing from mean here, which means we are not evaluating the function but just refering to it.\nPassing functions as arguments is a powerful programming technique, which can be best demonstrated by the family of apply functions. As an example, let’s assume we have data stored in a list:\n\ndata_list &lt;- list(\"a\" = rnorm(100),\n                 \"b\" = rnorm(100, mean = 3))\n\nWe’re looking for the median values of our data. We would loop through each of the list entries and apply the median function individually. However, the lapply functions provides a more elegant solution, where we can just pass the list and a function as argument to lapply, and the function will be applied to each list entry individually:\n\nlapply(X = data_list, FUN = median)\n\n$a\n[1] -0.06950236\n\n$b\n[1] 3.101957\n\n\nNote again that we pass median (the function) as an argument without parenthesis. Using median() instead equates to calling the median function without passing it any arguments and will result in an error. For the curious: lapply is what is called a “higher-order function”."
   },
   {
     "objectID": "training/modules/writing_functions/index.html#anonymous-functions",
     "href": "training/modules/writing_functions/index.html#anonymous-functions",
     "title": "Writing functions",
     "section": "Anonymous functions",
-    "text": "Anonymous functions\nAll functions you have encountered so far have been named either by R, the package developer, or yourself (e.g., the my_std functions above). Generally, it is good practice to give your variables and functions informative names so others and your future self can understand their purpose.\nHowever, sometimes you will just need a quick, short throwaway function that serves one purpose without wanting to bother to write a full size function. For this, you can use anonymous functions. These are functions that are defined on the spot and immediately evaluated without being assigned to a variable. Their syntax is straightforward, as you just skip the variable assignment:\n\nfunction(x){ some code }\n\nA typical usecase is when you want to make some quick, on the spot data manipulation of a data frame or list. As an example, to get the absolute difference between the 3rd and 5th value of our list defined above, we can use\n\nlapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))\n\n$a\n[1] 1.527024\n\n$b\n[1] 0.5165156"
+    "text": "Anonymous functions\nAll functions you have encountered so far have been named either by R, the package developer, or yourself (e.g., the my_std functions above). Generally, it is good practice to give your variables and functions informative names so others and your future self can understand their purpose.\nHowever, sometimes you will just need a quick, short throwaway function that serves one purpose without wanting to bother to write a full size function. For this, you can use anonymous functions. These are functions that are defined on the spot and immediately evaluated without being assigned to a variable. Their syntax is straightforward, as you just skip the variable assignment:\n\nfunction(x){ some code }\n\nA typical usecase is when you want to make some quick, on the spot data manipulation of a data frame or list. As an example, to get the absolute difference between the 3rd and 5th value of our list defined above, we can use\n\nlapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))\n\n$a\n[1] 0.6012159\n\n$b\n[1] 0.4725302"
   },
   {
     "objectID": "training/modules/writing_functions/index.html#inspecting-source-code",
