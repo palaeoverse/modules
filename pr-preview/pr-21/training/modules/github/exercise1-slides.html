@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../../../_brand/logos/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
+
+  <meta name="author" content="William Gearty">
+  <meta name="author" content="Niklas Hohmann">
+  <meta name="dcterms.date" content="2026-10-06">
+  <title>1. Practice with GitHub Desktop on a local repository</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-e145cfcbf0ca25dcb75ad642aac8a0ea.css">
+  <link rel="stylesheet" href="style/template.css">
+  <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <style>
+  .reveal .slides section div.callout.callout-style-simple,
+  .reveal .slides section div.callout.callout-style-default { font-size: inherit; }
+  .reveal .slides section div.callout.callout-style-simple h1,
+  .reveal .slides section div.callout.callout-style-default h1 { font-size: var(--r-heading1-size); }
+  .reveal .slides section div.callout.callout-style-simple h2,
+  .reveal .slides section div.callout.callout-style-default h2 { font-size: var(--r-heading2-size); }
+  .reveal .slides section div.callout.callout-style-simple h3,
+  .reveal .slides section div.callout.callout-style-default h3 { font-size: var(--r-heading3-size); }
+  </style>
+<meta property="og:title" content="Palaeoverse">
+<meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
+<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-21/training/modules/github/_brand/logos/logo-opengraph.png">
+<meta property="og:locale" content="en_GB">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">1. Practice with GitHub Desktop on a local repository</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+William Gearty
+</div>
+</div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Niklas Hohmann
+</div>
+</div>
+</div>
+
+  <p class="date">2026-10-06</p>
+</section>
+<section class="slide level2">
+
+<p>To do this exercise you will need to install and setup GitHub Desktop. Follow the instructions <a href="../../../training/modules/github/index.html#prerequisites">here</a>.</p>
+<p>In this exercise you will initialize a git repository on your computer and explore various git commands with it.</p>
+</section>
+<section id="i.-initializing-and-adding-files" class="slide level2">
+<h2>I. Initializing and adding files</h2>
+<ol type="1">
+<li><p>If it’s not already open, open GitHub Desktop.</p></li>
+<li><p>If this is your first time using GitHub Desktop you should see a screen with “Let’s get started!” at the top:</p>
+<p><img data-src="figures/ghd-start.png"></p>
+<p>Click the button titled “Create a New Repository on your Local Drive…”</p></li>
+<li><p>In the Create a New Repository window, enter <code>test-git-repo</code> in the “Name” field, then click “Create Repository”. You do not need to fill out any of the other fields.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>By default this will create a local repository in your Documents/GitHub folder. You can change where the repo is located by clicking “Choose”. For this tutorial, let’s stick with the default.</p>
+</div>
+</div>
+</div></li>
+<li><p>You will see a window that has “No local changes” at the top:</p>
+<p><img data-src="figures/ghd-initial_commit.png"></p>
+<p>In the upper left you will see “Current repository” with “test-git-repo” underneath it, indicating that you are currently looking at your test-git-repo. This is how you will interact with your new repository!</p>
+<p>Note that your repository is a folder on your computer, just like any others. You can see this if you click on the button labelled “Show in Explorer” (on Windows) / “Show in Finder” (on a Mac). At the moment, there are no files in your repository, although there is a <em>hidden</em> folder called <code>.git</code> and a <em>hidden</em> file called <code>.gitattributes</code>. <strong>You never touch these files</strong>; they are what <code>git</code> use to keep track of the contents of this folder. These are what make this folder a repository.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>A local Git repository is a folder on your computer that you have told the application <code>git</code> to keep track of. Any folder can be made into a git repository!</p>
+</div>
+</div>
+</div></li>
+<li><p>Let’s add some files to your new repository for git to track. In the following steps, we’ll pretend that we’re a writer working on a script for a new movie. We’re going to use a simple text editor to create a file called <code>story.txt</code>. To do that:</p>
+<ul>
+<li><strong>If you’re on Windows:</strong>
+<ol type="a">
+<li>Open Notepad. This will open a new untitled file.</li>
+<li>Click File -&gt; Save As…</li>
+<li>Navigate to your repository’s directory. If you kept the default path when creating the repository, this should be <code>PC &gt; Documents &gt; GitHub &gt; test-git-repo</code>. If you’re not certain, you can verify by clicking on the “Show in Explorer” button in GitHub Desktop.</li>
+<li>In the “File name” field enter <code>story.txt</code> then click “Save”.</li>
+</ol></li>
+<li><strong>If you’re on MacOS:</strong>
+<ol type="a">
+<li>Open TextEdit and click “New Document”. This will open a new untitled file.</li>
+<li>Select Format -&gt; “Make Plain Text”. (We need to do this to get the desired file extension.)</li>
+<li>Click File -&gt; Save…</li>
+<li>In the “Save As” field type <code>story.txt</code>.</li>
+<li>In the “Where” field navigate to your repository’s directory. If you kept the default path when creating the repository, this should be <code>Documents/GitHub/test-git-repo</code>. If you’re not certain, you can verify by clicking on the “Show in Finder” button in GitHub Desktop.</li>
+<li>Click “Save”.</li>
+</ol></li>
+</ul></li>
+<li><p>Now let’s write our story! Use your text editor to add following to <code>story.txt</code>:</p>
+<pre><code>Once upon a time, in a land far,
+far away...</code></pre>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Type the lines in exactly as they appear above: add a new line after the first “far,”. For reasons that will become clear below, it’s important that the “far away…” is on a separate line.</p>
+</div>
+</div>
+</div></li>
+<li><p>Save your changes by clicking File -&gt; Save, or by using the keyboard shortcut <kbd>Ctrl</kbd>+<kbd>S</kbd> (on Windows) / <kbd>⌘</kbd>+<kbd>S</kbd> (on Mac).</p></li>
+<li><p>Now go back to GitHub Desktop. You’ll notice that it has changed from “No local changes” to showing a “Changes” tab with <code>story.txt</code> listed with its contents:</p>
+<p><img data-src="figures/ghd-first_change.png"></p>
+<p><code>git</code> knows you have a file in the directory called <code>story.txt</code>, but it isn’t tracking it yet!</p></li>
+<li><p>Let’s tell <code>git</code> to start tracking <code>story.txt</code> by making a <em>commit</em>. If it isn’t already, click the box next to “1 changed file”. When you do, you’ll notice that the “Summary (required)” box automatically changes to “Create story.txt”:</p>
+<p><img data-src="figures/ghd-first_commit_stage.png"></p>
+<p>The summary box and the optional “Description” box below constitute the <em>commit message</em>. This is text that will be added to the commit describing what was done. In this case, GitHub Desktop automatically provides a default message of “Create story.txt”. That’s a good description of what we’ve done, so let’s keep it.</p></li>
+<li><p>Now click the “Commit 1 file to main” button. When you do, the window will automatically change back to “No local changes”. Congratulations, you’ve made your first <code>git</code> commit!</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What happens when you commit changes?</strong></p>
+</div>
+<div class="callout-content">
+<p>A commit creates a snapshot of the files you committed. Every commit has a commit message, an author, and a unique hash identifying that change. Git keeps a <em>history</em> of all commits made in a repository. From now on, you can go back and view the previous state of a file at different commit points. This is known as <em>version control</em>.</p>
+</div>
+</div>
+</div></li>
+<li><p>You can view the history of your commits by clicking on the “History” tab:</p>
+<p><img data-src="figures/ghd-first_commit_history.png"></p>
+<p>In this case, there are two commits: an initial commit that was created by GitHub Desktop when the repository was created, and the commit you just made to create <code>story.txt</code>.</p></li>
+</ol>
+</section>
+<section id="ii.-making-changes-to-files" class="slide level2">
+<h2>II. Making changes to files</h2>
+<ol type="1">
+<li><p>You’re not happy with your story opening. You don’t want to write fairy tales, you want to write Sci-fi! Go back to your text editor <code>story.txt</code> and change the line <code>Once upon a time, in a land far,</code> to <code>A long time ago in a galaxy far,</code> so that your file now reads:</p>
+<pre><code>A long time ago in a galaxy far,
+far away...</code></pre>
+<p>Much better. Save the changes to the file.</p></li>
+<li><p>Go back to GitHub Desktop. Notice that a yellow box with a dot has appeared next to <code>story.txt</code>. If you click on story, you should now see a <em>diff</em> that shows what lines have changed in <code>story.txt</code>:</p>
+<p><img data-src="figures/ghd-story_uncommitted_change.png"></p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Those pesky .DS_Store files on MacOS</strong></p>
+</div>
+<div class="callout-content">
+<p>At some point Mac users will notice a file called <code>.DS_Store</code> appears in their repo, as it did for me in the screen shot above. This is a hidden file that MacOS automatically creates in every folder for indexing purposes. <strong>Do not commit this file to your repository!</strong> It’s not something you want to track. For now, just ignore it. Below we provide instructions on how to permanently ignore files like these in your repository.</p>
+<p>Windows users: carry on.</p>
+</div>
+</div>
+</div></li>
+<li><p>The yellow box next to <code>story.txt</code> means that git recognizes that <code>story.txt</code> has changed, <em>but your changes have not been committed yet.</em> If you go to the History tab, you’ll see that there are still only two commits. If you click on the “Create story.txt” commit, it will show the previous state of the file.</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Saving is not committing!</strong></p>
+</div>
+<div class="callout-content">
+<p>Simply saving changes to a file will not result in a new snapshot of it! To tell Git to create a snapshot for preservation <strong>you have to create a commit.</strong> If you make further changes to your file without committing in between, the intermediate changes will not be tracked.</p>
+</div>
+</div>
+</div></li>
+<li><p>Let’s commit your changes so you don’t lose them! Click the check box next to <code>story.txt</code>. When you do, GitHub Desktop will automatically change the summary to “Update story.txt”. That is a description of what we did, but it’s not very informative. Let’s give a more descriptive summary. Change the summary to “Change opening”, then click “Commit 1 file to main”:</p>
+<p><img data-src="figures/ghd-second_commit_staging.png"></p>
+<p>You’ll now see 2 commits in your history.</p></li>
+</ol>
+</section>
+<section id="adding-files-to-.gitignore" class="slide level2">
+<h2>Adding files to <code>.gitignore</code></h2>
+<p>It frequently happens that you can have files in your repository that you don’t want Git to track. This can be things like temporary build files, or system files like the <code>.DS_Store</code> on Macs. If you don’t explicitly commit a new file (by clicking the check mark next to it and hitting the commit button), then files won’t be tracked. However, trying to avoid clicking these files can be tedious and error prone. You’ll also get warnings about changes every time you switch branches (below).</p>
+<p>We can tell Git to ignore certain files. Here, we’ll tell it to ignore the <code>.DS_Store</code> file created by MacOS.</p>
+</section>
+<section class="slide level2">
+<h2>Windows users</h2>
+<p>Windows users will not have a <code>.DS_Store</code> file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called <code>.DS_Store</code> and save it:</p>
+<ol type="a">
+<li><p>Switch back to Notepad.</p></li>
+<li><p>Create a new file by typing <kbd>Ctrl</kbd>+<kbd>N</kbd>. This will open a new Untitled file that is empty.</p></li>
+<li><p>Click File -&gt; Save.</p></li>
+<li><p>In the “Save as type” field click the drop-down menu and select “All files”.</p></li>
+<li><p>In the File name field type <code>.DS_Store.</code>. <strong>Note the trailing period!</strong> That is, enter <code>.DS_Store.</code> not <code>.DS_Store</code> – if you don’t include the period at the end of the file name, Windows will automatically add <code>.txt</code> to the end.</p></li>
+<li><p>Click “Save”</p></li>
+</ol>
+<p>To tell Git to ignore a file:</p>
+<ol type="1">
+<li><p>Right-click the file you’d like it to ignore, in this case <code>.DS_Store</code>. On the drop-down menu, select “Ignore file (Add to .gitignore)”:</p>
+<p><img data-src="figures/ghd-ignore_menu.png"></p></li>
+<li><p>Adding the file will make the selected file disappear in the Changes menu. In it’s place, you’ll see a <code>.gitignore</code> file has been created. The <code>.gitignore</code> file is a simple text file that lists the names of any files in the repository that you want Git to ignore. Notice that GitHub Desktop has both created the file, and added <code>.DS_Store</code> to it:</p>
+<p><img data-src="figures/ghd-ignore_staging.png"></p></li>
+<li><p>As with any other file, we need to commit the changes to <code>.gitignore</code> for Git to keep track of it. Commit the change by clicking the “Commit 1 file to main” (note that the commit message automatically created by GitHub Desktop is “Create .gitignore”).</p></li>
+<li><p>From now on, any file named <code>.DS_Store</code> in this repository (meaning, in this folder and all sub-folders) file will not appear in your Changes menu, nor will you be able to commit changes to it to the repository.</p></li>
+</ol>
+</section>
+<section id="iii.-branches" class="slide level2">
+<h2>III. Branches</h2>
+<p>You want to start working on titles for your stories, but you want to do it independently of your work on the story itself. To do that, let’s create a <em>branch</em> to specifically work on titles.</p>
+<ol type="1">
+<li><p>In GitHub Desktop, click on the “Current Branch” tab. This will show a drop-down menu showing all of the branches on your repository:</p>
+<p><img data-src="figures/ghd-branch_menu.png"></p>
+<p>Currently, we only have one branch, which is called <code>main</code>. This is the Default branch, meaning it’s the branch you are placed in whenever you first create or <em>clone</em> a repository (more on cloning later). Think of it as the master copy of your repository. If this were a code repository, the <code>main</code> would be the branch that you (try to) keep a clean, working version of your code.</p></li>
+<li><p>Let’s create a new branch on which we will develop our title. Click the “New Branch” button in the upper right. You will be prompted to create a name. Call it <code>title-dev</code>, then click “Create Branch”:</p>
+<p><img data-src="figures/ghd-new_branch.png"></p>
+<p>You are now on a new branch called <code>title-dev</code>. You can see that by looking at the Current Branch at the top: it says title-dev:</p>
+<p><img data-src="figures/ghd-title_dev_branch.png"></p></li>
+<li><p>You can switch between branches by clicking the “Current Branch” drop-down menu, then selecting the branch you want:</p>
+<p><img data-src="figures/ghd-switch_branches.png"></p>
+<p>Going back and forth between <code>main</code> and <code>title-dev</code>, you’ll see that at the moment, the <code>title-dev</code> branch is identical to the <code>main</code> branch. You can verify that by viewing the contents of the repository in Explorer (Windows) / Finder (Mac). Click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button. You’ll see that <code>story.txt</code> is still there no matter if you’re on <code>title-dev</code> or <code>main</code>.</p>
+<p>Likewise, the commit history for <code>title-dev</code> is also the same as <code>main</code>: switch to the <code>title-dev</code> branch then click on the History tab. You’ll see the same 4 commits as you have on <code>main</code>.</p></li>
+<li><p>Let’s do some development on <code>title-dev</code>. Switch to the <code>title-dev</code> branch. Now let’s create a file called <code>title.txt</code> to store our title idea:</p>
+<ul>
+<li><strong>Windows users:</strong>
+<ol type="a">
+<li>Switch back to Notepad.</li>
+<li>Type <kbd>Ctrl</kbd>+<kbd>N</kbd> to create a new untitled file.</li>
+<li>Click File -&gt; Save</li>
+<li>In the “File name” field enter <code>title.txt</code> then click “Save”.</li>
+</ol></li>
+<li><strong>Mac users:</strong>
+<ol type="a">
+<li>Switch back to TextEdit.</li>
+<li>Type <kbd>⌘</kbd>+<kbd>N</kbd> to create a new untitled file.</li>
+<li>Select Format -&gt; “Make Plain Text”. (We need to do this to get the desired file extension.)</li>
+<li>Click File -&gt; Save…</li>
+<li>In the “Save As” field type <code>title.txt</code>.</li>
+<li>Click “Save”.</li>
+</ol></li>
+</ul></li>
+<li><p>Add a title to <code>title.txt</code>. Use your text editor to add:</p>
+<pre><code>STAR FIGHT!</code></pre>
+<p>Save the change by typing <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows) / <kbd>⌘</kbd>+<kbd>S</kbd> (Mac).</p></li>
+<li><p>Go back to GitHub Desktop. You should see <code>title.txt</code> in the Changes sidebar, with the new lines shown in the diff:</p>
+<p><img data-src="figures/ghd-title_initial_stage.png"></p></li>
+<li><p>Commit the new changes by clicking “Commit 1 file to title-dev”. Note the default commit message is “Create title.txt”.</p></li>
+<li><p>Satisfied with your title for now, go back to your main branch by clicking on the “Current branch” drop down and selecting <code>main</code>:</p>
+<p><img data-src="figures/ghd-switch_to_main.png"></p></li>
+<li><p>Let’s see what happened to your files when you switched back to <code>main</code>. If you still have the Explorer/Finder window open, look at it. If not, click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button to view the contents of the repository.</p>
+<p>The <code>title.txt</code> file is gone!</p>
+<p>Likewise, if you click on the “History” tab in GitHub Desktop, you’ll see that your last commit is no longer in your history; you just have the first four commits.</p>
+<p>This is because your last commit (and the file it created, <code>title.txt</code>) only exists on the <code>title-dev</code> branch. To verify that it’s still there, click the “Current Branch” drop-down menu and switch to the <code>title-dev</code> branch. You’ll see the “Create title.txt” commit reappear in your History. You’ll also see the <code>title.txt</code> file reappear in your directory in Explorer/Finder. Toggling back and forth between the branches will make it disappear and reappear.</p>
+<p>What’s going on? In graph form, your repository currently looks like this:</p>
+<p><img data-src="figures/git_graphs.001.png" height="300"></p>
+<p>Here, each dot represents a commit, and the different lines represent a different branch. Following a line illustrates the history as seen by that branch. Since the commits on <code>title-dev</code> live on their own branch, changes you make on <code>main</code> won’t affect <code>title-dev</code> and vice versa (at least not until we merge the branches; more on that below).</p></li>
+<li><p>Let’s make some more changes to <code>story.txt</code>, but let’s do it on the <code>main</code> branch. Switch to <code>main</code> using the “Current Branch” drop-down menu. Now use your text editor to add the following lines to <code>story.txt</code>:</p>
+<pre><code>
+It is period of civil war.
+Rebel spaceships, striking
+from a hidden base, have won
+their first victory against
+the evil Galactic Empire.</code></pre>
+<p>Save the changes by typing <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows) / <kbd>⌘</kbd>+<kbd>S</kbd></p></li>
+<li><p>Stage the commit by clicking the check mark next to <code>story.txt</code> in GitHub Desktop and change the commit message to “Add first pargraph”:</p>
+<p><img data-src="figures/ghd-stage_paragraph.png"></p>
+<p>Now commit the changes by clicking “Commit 1 file to main”.</p></li>
+<li><p>Click on the History tab. Note that you now have 5 commits on master, none of which include the commits to <code>title-dev</code> branch.</p></li>
+<li><p>In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your <code>title-dev</code> branch by clicking the Current Branch -&gt; title-dev.</p>
+<p>Now use your text editor to edit <code>title.txt</code> and change <code>STAR FIGHT!</code> to:</p>
+<pre><code>Star Wars
+A NEW HOPE
+
+by
+George Lucas</code></pre>
+<p>Nice work, George!</p></li>
+<li><p>Save your changes to <code>title.txt</code> and stage the changes in GitHub Desktop by clicking the check box next to <code>title.txt</code>. Commit the changes by clicking the “Commit 1 file to title-dev”:</p>
+<p><img data-src="figures/ghd-final_title_commit.png"></p>
+<p>Note that the commit message is “Update title.txt”.</p></li>
+<li><p>Click on the History tab. Note that there are 6 commits here: the first four from <code>main</code> (before you branched off), and the last two on <code>title-dev</code>:</p>
+<p><img data-src="figures/ghd-title_dev_status.png"></p>
+<p>In graph form, your repo looks like this:</p>
+<p><img data-src="figures/git_graphs.002.png" height="300"></p></li>
+</ol>
+</section>
+<section id="merging" class="slide level2">
+<h2>Merging</h2>
+<ol type="1">
+<li><p>Satisfied that your title is perfect, you no longer feel the need to keep the title development on a separate branch. It’s ready to be <em>merged</em> on to the <code>main</code> branch. To do that, first switch to the main branch by clicking Current Branch -&gt; main.</p></li>
+<li><p>Before merging <code>title-dev</code> on to <code>main</code>, we’re going to create a second copy of <code>main</code> that we’ll call <code>main-bkup</code>. We’ll do that here so we can demonstrate squash and merge below. But when you first start using Git, it’s good practice to create a backup of <code>main</code> before doing merges, as mistakes can happen that can be difficult to untangle. This way, you have the original state of <code>main</code> preserved in the backup branch that you can always go back to.</p>
+<p>To create the copy of <code>main</code>:</p>
+<ol type="a">
+<li><p>Click Current Branch. Make sure you’re on <code>main</code> (the checkmark is next to <code>main</code>), then click “New Branch”:</p>
+<p><img data-src="figures/ghd-main_bkup_create.png"></p></li>
+<li><p>This will open the “Create a Branch” window. Type <code>main-bkup</code> in the Name field, then click “Create Branch”. You will now be on the <code>main-bkup</code> branch.</p></li>
+<li><p>Now go back to the <code>main</code> branch by clicking “Current Branch -&gt; main”.</p></li>
+</ol></li>
+<li><p>Now click the Current Branch drop-down menu again, and this time click the “Choose a branch to merge into <em>main</em>” button:</p>
+<p><img data-src="figures/ghd-merge_branch_select.png"></p></li>
+<li><p>Select the <code>title-dev</code> branch. The button at the bottom will turn to blue and say “Create a merge commit”. Click that to merge the branch:</p>
+<p><img data-src="figures/ghd-merge_screen.png"></p></li>
+<li><p>Congratulations! You’ve made your first merge on to main. To see what happened, click on the History tab to see what the history on the main branch looks like now:</p>
+<p><img data-src="figures/ghd-merge_history.png"></p>
+<p>The commits you made on <code>title-dev</code> are now in <code>main</code>, along with a final “Merge” commit at the end. This final “merge” commit is to indicate that some of the commits in the history came from another branch (and what the name of the branch was).</p>
+<p>If you look at Explorer/Finder, you’ll see that <code>title.txt</code> is now in your directory when you’re on <code>main</code>. If you switch between <code>main</code> and <code>title-dev</code>, <code>title.txt</code> remains in both. Note that the history on <code>title-dev</code> is unaffected by the merge: merging only changes the branch you merged <em>into</em>, not the branch you merged <em>from</em>.</p>
+<p>In graphical form, you <code>main</code> branch now looks like this:</p>
+<p><img data-src="figures/git_graphs.003.png" height="300"></p></li>
+</ol>
+</section>
+<section id="squash-and-merge-the-cleaner-history" class="slide level2">
+<h2>Squash and merge: the cleaner history</h2>
+<p>When we were preparing to merge <code>title-dev</code>, you may have noticed there was a drop-down button next to the “Create a merge commit” button:</p>
+<p><img data-src="figures/ghd-merge_select_highlight.png"></p>
+<p>If you had clicked that, you are presented with three options – merge, squash and merge, and rebase:</p>
+<p><img data-src="figures/ghd-squash_merge_select.png"></p>
+<p>Let’s see would have happened if we selected <strong>squash and merge</strong> instead by doing a squash and merge on to <code>main-bkup</code>.</p>
+<ol type="1">
+<li><p>Switch to the <code>main-bkup</code> branch by clicking “Current branch -&gt; main-bkup”.</p></li>
+<li><p>Click “Current branch” again, and select “Choose a branch to merge into main-bkup”. Select “title-dev”, then click the drop down arrow next to the “Create a merge commit button”:</p></li>
+<li><p>Select “Squash and merge”. This will change the blue button to read “Squash and merge”. Click that to do the squash and merge.</p></li>
+<li><p>Click the History tab to see what the history on <code>main-bkup</code> looks like:</p>
+<p><img data-src="figures/ghd-squash_merge_history.png"></p>
+<p>The two commits that were done on <code>title-dev</code>, as well as the final merge commit, have all been “squashed” into a single large commit, which is placed at the end of the history on <code>main-bkup</code>. In graphical form, the history on <code>main-bkup</code> now looks like this:</p>
+<p><img data-src="figures/git_graphs.004.png" width="800"></p>
+<p>The contents of <code>main-bkup</code> are exactly the same as <code>main</code>, just the history is different. (You can verify this by switching between <code>main</code> and <code>main-bkup</code>.)</p></li>
+</ol>
+</section>
+<section id="when-do-you-use-squash-and-merge-vs-merge" class="slide level2">
+<h2>When do you use squash and merge vs merge?</h2>
+<p>It’s up to you, as each has its pros and cons:</p>
+<p><strong>Merge</strong></p>
+<ul>
+<li>Pros:
+<ul>
+<li>Preserves entire development history.</li>
+<li>If multiple authors contributed to a development branch, their contributions are attributed in the history. This makes it easier to tell who did what using <code>git blame</code>.</li>
+</ul></li>
+<li>Cons:
+<ul>
+<li>Makes for a complicated history.</li>
+<li>Development branches can consist of many small commits. You probably don’t want every little “fix typo” commit in your history on <code>main</code>.</li>
+</ul></li>
+</ul>
+<p><strong>Squash and merge</strong></p>
+<ul>
+<li>Pros:
+<ul>
+<li>Makes for a much cleaner history: all new developments are contained in a single commit.</li>
+<li>GitHub Desktop will formulate the merge commit message to include all the commit messages from the development branch for reference.</li>
+</ul></li>
+<li>Cons:
+<ul>
+<li>It will look as though one person wrote all the changes in the commit since all the commits on the development branch are condensed into a single commit. If multiple people contributed to the branch, their attribution is lost, making it difficult to know who did what using <code>git blame</code>. Their attribution can be worked out from looking at the commit message and referring to the development branch (if it’s not deleted), but this can be tedious.</li>
+</ul></li>
+</ul>
+<p>Personally, I use Squash and Merge most of the time to keep the history on <code>main</code> clean and straight forward (this is particularly nice on GitHub when using pull requests, as it will refer to the PR in the commit message; we will see this in exercise 3). But when working with someone else on a branch I will sometimes use Merge instead.</p>
+</section>
+<section class="slide level2">
+<h2>What about rebasing?</h2>
+<p>There is another way to merge branches called <em>rebasing</em>. Rebasing changes the history of the development branch to make it look like all the commits came after the last commit on main. This is mostly useful for keeping a development branch up to date with <code>main</code>. For more on rebasing, see this article by the Atlassian corporation: <a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">Merging vs.&nbsp;rebasing</a>.</p>
+</section>
+<section id="deleting-branches" class="slide level2">
+<h2>Deleting branches</h2>
+<p>Now that you’ve merged your <code>title-dev</code> branch, you can delete it to save space. To do that, click Current Branch, then <strong>right click</strong> <code>title-dev</code>. This will yield a drop-down menu. Select “Delete branch”:</p>
+
+<img data-src="figures/ghd-delete_branch.png" class="r-stretch"><p>You will be prompted with a warning. Click the “Delete” button. The <code>title-dev</code> branch will be gone! You can also delete <code>main-bkup</code> now if you like.</p>
+</section>
+<section id="challenge-questions-editing-the-same-file-on-different-branches" class="slide level2">
+<h2>Challenge Questions: Editing the same file on different branches</h2>
+<p>In the above example we only made changes to different files on our two branches: on <code>main</code> we only edited <code>story.txt</code>, while on <code>title-dev</code> we only edited <code>title.txt</code>. However, there is nothing stopping us from editing the <em>same</em> file concurrently on two different branches. The following questions will illustrate how that works.</p>
+</section>
+<section class="slide level2">
+<h2>Question 1: Setup</h2>
+<p>Create a file called <code>list.txt</code> that initially contains the following three lines:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a aria-label="1"></a>alpha</span>
+<span id="cb6-2"><a aria-label="2"></a>bravo</span>
+<span id="cb6-3"><a aria-label="3"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now use the what you learned above to do the following:</p>
+<ol type="1">
+<li><p>Add and commit <code>list.txt</code> to <code>main</code>.</p></li>
+<li><p>Create a branch called <code>dev1</code>.</p></li>
+<li><p>On <code>dev1</code> change the first line of <code>list.txt</code> to <code>delta</code> (i.e., replace <code>alpha</code>) then commit the change. Make the commit summary mesage be “add delta to list” when you do.</p></li>
+<li><p>Go back to <code>main</code> and change the third line to <code>foxtrot</code> (i.e., replace <code>charlie</code>), then commit it.</p></li>
+</ol>
+<div class="callout callout-caution no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<ol type="1">
+<li><p>Once you create <code>list.txt</code> (use your text editor to do this), you should see it appear in the Changes tab in GitHub Desktop. Make sure you’re on <code>main</code> (the Current Branch should say <code>main</code>; if not, click Current Branch -&gt; main). Then:</p>
+<ol type="a">
+<li>Click the check mark next to <code>list.txt</code>.</li>
+<li>Optionally add a summary, or just use the default “Create list.txt”.</li>
+<li>Click the “Commit 1 file to main”.</li>
+</ol></li>
+<li><p>Do the following:</p>
+<ol type="a">
+<li>Click Current Branch -&gt; New Branch.</li>
+<li>Type <code>dev1</code> in the Name field.</li>
+<li>Click Create Branch.</li>
+</ol></li>
+<li><p>Use your text editor to open <code>list.txt</code> and change the first line to <code>delta</code>. As soon as you save the file, you should the new line appear in the Changes tab on GitHub Desktop. Click the check mark next to <code>list.txt</code>, then type “add delta to list” in the summary field (this will replace the default “Update list.txt”), then click “Commit 1 file to dev1”.</p></li>
+<li><p>Do the following:</p>
+<ol type="a">
+<li>If list.txt is open in your text editor, close it. Then click “Current branch” -&gt; main to switch back to main.</li>
+<li>Open list.txt with your text editor and change third line to <code>foxtrot</code>, then save and exit.</li>
+<li>list.txt should appear in the Changes tab. Click the check mark next to it.</li>
+<li>Add “add foxtrot to list”, then click “Commit 1 file to main”.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>When you are done, <code>list.txt</code> should look like the following on <code>main</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a aria-label="1"></a>alpha</span>
+<span id="cb7-2"><a aria-label="2"></a>bravo</span>
+<span id="cb7-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>while on <code>dev1</code> it should look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a aria-label="1"></a>delta</span>
+<span id="cb8-2"><a aria-label="2"></a>bravo</span>
+<span id="cb8-3"><a aria-label="3"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+<h2>Question 2: Editing different lines</h2>
+<p>Now suppose you merge <code>dev1</code> into <code>main</code>. What happens to <code>list.txt</code>?</p>
+<p><strong>A.</strong> <code>main</code> takes precedence since it’s the branch being merged into; <code>list.txt</code> will look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a aria-label="1"></a>alpha</span>
+<span id="cb9-2"><a aria-label="2"></a>bravo</span>
+<span id="cb9-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>B.</strong> <code>dev1</code> takes precedence since it’s the branch being merged; <code>list.txt</code> will look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a aria-label="1"></a>delta</span>
+<span id="cb10-2"><a aria-label="2"></a>bravo</span>
+<span id="cb10-3"><a aria-label="3"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>C.</strong> The changes from both are adopted; <code>list.txt</code> will look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a aria-label="1"></a>delta</span>
+<span id="cb11-2"><a aria-label="2"></a>bravo</span>
+<span id="cb11-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>D.</strong> An error is raised because the same file was modified.</p>
+<p><em>If you’re not sure, try it yourself and see what happens!</em></p>
+<div class="callout callout-caution no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>The answer is <strong>C</strong>. Since different lines have been modified, <code>git</code> is able to merge the changes together without issue. To do it yourself:</p>
+<ol type="a">
+<li>Click Current Branch -&gt; main to switch to main.</li>
+<li>Click Current Branch -&gt; “Choose a branch to merge into main”</li>
+<li>Select dev1 then click “Create a merge commit”.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Question 3: Editing the same lines</h2>
+<p>After merging <code>dev1</code> on to <code>main</code>, suppose you create another branch called <code>dev2</code>. On <code>dev2</code> you change the second line of <code>list.txt</code> to be <code>echo</code> while on <code>main</code> you change the second line to <code>easy</code>; i.e.&nbsp;on <code>main</code> <code>list.txt</code> looks like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a aria-label="1"></a>delta</span>
+<span id="cb12-2"><a aria-label="2"></a>easy</span>
+<span id="cb12-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On <code>dev2</code> <code>list.txt</code> looks like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a aria-label="1"></a>delta</span>
+<span id="cb13-2"><a aria-label="2"></a>echo</span>
+<span id="cb13-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>What happens if you merge <code>dev2</code> into <code>main</code> in this case?</strong></p>
+<p><strong>A.</strong> <code>main</code> takes precedence since it’s the branch being merged into; <code>list.txt</code> will look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a aria-label="1"></a>delta</span>
+<span id="cb14-2"><a aria-label="2"></a>easy</span>
+<span id="cb14-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>B.</strong> <code>dev2</code> takes precedence since it’s the branch being merged; <code>list.txt</code> will look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a aria-label="1"></a>delta</span>
+<span id="cb15-2"><a aria-label="2"></a>echo</span>
+<span id="cb15-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>C.</strong> The changes from both branches are adopted; <code>list.txt</code> will look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a aria-label="1"></a>delta</span>
+<span id="cb16-2"><a aria-label="2"></a>easy</span>
+<span id="cb16-3"><a aria-label="3"></a>echo</span>
+<span id="cb16-4"><a aria-label="4"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>D.</strong> An error is raised because the same line is modified.</p>
+<div class="callout callout-caution no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>The answer is <strong>D</strong>, an error is raised. Since the same line has been modified in the same file, <code>git</code> cannot tell how to reconcile the differences. This is known as a <em>merge conflict</em>. In this case, <code>git</code> will leave it up to the user to reconcile the differences. How to do that is discussed in the next section.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="iv.-resolving-merge-conflicts" class="slide level2">
+<h2>IV. Resolving merge conflicts</h2>
+<p>As illustrated in the Challenge Questions, if the same lines in the same file are modified on two different branches, <code>git</code> will not know how to merge the changes. This is called a <strong>merge conflict</strong>. In this case, <code>git</code> will ask you to reconcile the differences. To illustrate, let’s try merging <code>dev2</code> into <code>main</code> after making the changes to <code>list.txt</code> discussed in Question 3 above:</p>
+<ol type="1">
+<li><p>If you have not done so, try to merge <code>dev2</code> into <code>main</code> after making the changes to the second line of <code>list.txt</code> discussed in Question 3:</p>
+<ol type="a">
+<li>Switch to <code>main</code>: Click Current Branch -&gt; main.</li>
+<li>Click Current Branch -&gt; Choose a branch to merge into “main”.</li>
+<li>Select dev2, then click “Create a merge commit” (note that a message pops up above the button that says there be 1 conflicted file).</li>
+</ol></li>
+<li><p>When you try to do the merge, you will get the Resolve conflicts box:</p>
+<p><img data-src="figures/ghd-resolve_conflicts.png"></p>
+<p>This tells you what files are conflicted (in this case <code>list.txt</code>).</p>
+<p>To fix this, we need to manually resolve the conflict. There are several options to deal with this. If you have VS Code or some other code editor installed, you will see an option to open the file in that program. Here, though, we’ll use our simple text editor to resolve the issue.</p></li>
+<li><p>Open list.txt with your text editor. You should see the following:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a aria-label="1"></a>delta</span>
+<span id="cb17-2"><a aria-label="2"></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+<span id="cb17-3"><a aria-label="3"></a>easy</span>
+<span id="cb17-4"><a aria-label="4"></a>=======</span>
+<span id="cb17-5"><a aria-label="5"></a>echo</span>
+<span id="cb17-6"><a aria-label="6"></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev2</span>
+<span id="cb17-7"><a aria-label="7"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git</code> has added the conflicting lines from both branches to the file, along with information about the two branches. The line as it appears on <code>main</code> is prefaced with <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>. This indicates that the following line(s) is (are) how it appears on the branch being merged into. The line(s) is (are) followed by a <code>=======</code>.</p>
+<p>After the <code>=======</code> the line(s) as it/they appear(s) on the branch being merged are shown. These are followed by <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; BRANCH_NAME</code> (here, <code>BRANCH_NAME</code> is <code>dev2</code>).</p></li>
+<li><p>We are free to edit the file anyway we like to resolve the conflict. You should remove the <code>&lt;&lt;&lt;&lt;</code>, <code>====</code>, and <code>&gt;&gt;&gt;&gt;</code> lines that <code>git</code> has added, along with the edit you want to make to resolve the conflict.</p>
+<p>In this case, let’s keep the edit as it appears on <code>dev2</code>, and remove the edit on <code>main</code>. Delete the appropriate lines so that the file looks like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a aria-label="1"></a>delta</span>
+<span id="cb18-2"><a aria-label="2"></a>echo</span>
+<span id="cb18-3"><a aria-label="3"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then save and exit the file.</p></li>
+<li><p>As soon as you save the changes to <code>list.txt</code>, the merge conflict window in GitHub Desktop will change to show that all conflicts have been resolved:</p>
+<p><img data-src="figures/ghd-resolved_conflicts.png"></p>
+<p>Click “Continue Merge”.</p></li>
+<li><p>The merge conflict is resolved! If you click on the History tab you will see the history with all the commits in it, as if you had a merged without any issue.</p></li>
+</ol>
+<p>Merge conflicts happen, but can be fixed fairly easy. If there were multiple areas in a file that caused a conflict, the conflicting areas would all be surrounded by the same <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>/<code>=======</code>/<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> lines that we saw above. You’ll want to search through the file for those to make sure you got all the conflicts. If multiple files had conflicts, <code>git</code> will make you resolve all of them before allowing the merge to complete.</p>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<p>That’s the basics of how to use <code>git</code>. In the following parts we’ll see how to use this with GitHub and how to collaborate with partners using <code>git</code> and GitHub.</p>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+      // Shared behaviour for every module (included via _metadata.yml):
+      //  1) a "back to the modules list" button at the top, and
+      //  2) turning each category badge into a link that opens the list filtered by
+      //     that tag. Modules live at training/modules/<name>/index.html, so the
+      //     listing page is always one level up.
+      
+      // (function () {
+      //   function ready(fn) {
+      //     if (document.readyState !== "loading") {
+      //       fn();
+      //     } else {
+      //       document.addEventListener("DOMContentLoaded", fn);
+      //     }
+      //   }
+
+      //   ready(function () {
+      //     // The metadata also applies to the listing page itself; skip it there.
+      //     if (document.querySelector(".modules-grid")) return;
+
+      //     var header = document.getElementById("title-block-header");
+      //     if (header) {
+      //       var back = document.createElement("a");
+      //       back.className = "back-to-modules";
+      //       back.href = "../index.html";
+      //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+      //       header.parentNode.insertBefore(back, header);
+      //     }
+
+      //     document.querySelectorAll(".quarto-category").forEach(function (el) {
+      //       var cat = el.textContent.trim();
+      //       var link = document.createElement("a");
+      //       link.className = "quarto-category module-category-link";
+      //       link.href =
+      //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+      //       link.textContent = cat;
+      //       el.replaceWith(link);
+      //     });
+      //   });
+      // })();
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/palaeoverse\.github\.io\/modules\/pr-preview\/pr-21");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
