@@ -7,6 +7,7 @@ Exercise 1 illustrated how to create a new git repository on your local computer
 
 ::: {.callout-important}
 ## ssh key setup
+
 In order to do this exercise you will need an `ssh` key uploaded to GitHub. If you have not done that yet, follow the [ssh setup instructions](ssh_setup.qmd) before starting this exercise.
 :::
 
@@ -83,6 +84,7 @@ You'll see a message telling you about the new branch `origin/dev1`. You still d
 git checkout -b dev1 origin/dev1
 ```
 Adding the extra `origin/dev1` instructs git to make your local `dev1` *track* the remote one. This means that when we `git push` from this branch it will by default push changes to the `dev1` branch on GitHub, not the `main` branch. You can verify which branch you will push to by typing:
+
 ```bash
 git branch -vv
 ```
@@ -95,6 +97,7 @@ subtract <- function(a, b) {
     }
 ```
 Commit your changes to your local repo:
+
 ```bash
 git add -u
 git commit -m "add subtraction"
@@ -117,10 +120,12 @@ Note that when you did this, it pushed to the `dev1` branch on git hub (you'll s
 git checkout main
 ```
 You can now bring it up to date with your remote repository by running `git pull`:
+
 ```bash
 git pull
 ```
 Once that's done, you can also delete your local copy of the `dev1` branch by typing:
+
 ```bash
 git branch -d dev1
 ```
