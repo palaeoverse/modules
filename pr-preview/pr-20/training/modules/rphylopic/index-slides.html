@@ -246,7 +246,7 @@ Lewis A. Jones
 <h2>Learning Objectives</h2>
 <p>By the end of this module, you will be able to:</p>
 <ol type="1">
-<li>Explain what <strong>PhyloPic</strong> is and how the <strong>rphylopic</strong> package uses the <strong>PhyloPic</strong> API to retrieve silhouettes and their metadata from within R.</li>
+<li>Explain what PhyloPic is and how the rphylopic package uses the PhyloPic Application Programming Interface (API) to retrieve silhouettes and their metadata from within R.</li>
 <li>Search for silhouettes by taxon name and choose between the available options for a given organism.</li>
 <li>Add silhouettes to plots as layers or as data points in both base R and ggplot2.</li>
 <li>Transform silhouettes by rotating, flipping, resizing, and recolouring them to suit your figure.</li>
@@ -258,7 +258,7 @@ Lewis A. Jones
 <section id="what-is-phylopic" class="slide level2">
 <h2>What is PhyloPic</h2>
 <aside class="notes">
-<p><a href="https://www.phylopic.org"><strong>PhyloPic</strong></a> is an open database of free silhouette images of animals, plants, and other life forms. It’s built to illustrate the tree of life. Each silhouette is linked to a node in a taxonomic or phylogenetic hierarchy, so images can be searched by taxon name rather than by keyword alone. Images are contributed by a community of &gt;500 artists and scientists, and each one is released under an open licence (e.g.&nbsp;CC0, CC BY, CC BY-NC). At time of writing, these volunteers have contributed &gt;13,000 silhouette images are available covering a broad array of biological groups from dinosaurs and corals to grasses and viruses.</p>
+<p><a href="https://www.phylopic.org"><strong>PhyloPic</strong></a> is an open database of free silhouette images of animals, plants, and other life forms. It’s built to illustrate the tree of life. Each silhouette is linked to a node in a taxonomic or phylogenetic hierarchy, so images can be searched by taxon name rather than by keyword alone. Images are contributed by a community of &gt;500 artists and scientists, and each one is released under an open licence (e.g.&nbsp;CC0, CC BY, CC BY-NC). At time of writing, &gt;13,000 silhouette images have been contributed and are available for a broad array of biological groups from dinosaurs and corals to grasses and viruses.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -281,7 +281,7 @@ Lewis A. Jones
 <section id="what-is-rphylopic" class="slide level2">
 <h2>What is rphylopic</h2>
 <aside class="notes">
-<p><a href="https://rphylopic.palaeoverse.org"><strong>rphylopic</strong></a> is an R package that allows users to easily fetch and visualise silhouettes of organisms from <strong>PhyloPic</strong>. Beyond the website, <strong>PhyloPic</strong> provides an application programming interface (API), which allows images and their metadata to be queried and retrieved programmatically, and this is what <strong>rphylopic</strong> builds on. Rather than manually searching the site, downloading files, and importing them into your plotting workflow, you can do all of this from within R. You can look up silhouettes by taxon name, choose between the available options, retrieve their attribution details, and add them to both base R and ggplot2 plots, either as layers or as data points. Silhouettes can also be transformed (e.g.&nbsp;rotated, flipped, resized, and recoloured), and saved as image files. This module will give you an overview of the package and provide example usage.</p>
+<p><a href="https://rphylopic.palaeoverse.org"><strong>rphylopic</strong></a> is an R package that allows users to easily fetch and visualise silhouettes of organisms from PhyloPic. Beyond the website, PhyloPic provides an Application Programming Interface (API), which allows images and their metadata to be queried and retrieved programmatically, and this is what rphylopic builds on. Rather than manually searching the site, downloading files, and importing them into your plotting workflow, you can do all of this from within R. You can look up silhouettes by taxon name, choose between the available options, retrieve their attribution details, and add them to both base R and ggplot2 plots, either as layers or as data points. Silhouettes can also be transformed (e.g.&nbsp;rotated, flipped, resized, and recoloured), and saved as image files. This module will give you an overview of the package and provide example usage.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -321,7 +321,7 @@ Lewis A. Jones
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb1-1" class="hljs-ln-code"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"rphylopic"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The <strong>rphylopic</strong> package can be installed via CRAN (recommended) or its dedicated <a href="https://github.com/palaeoverse/rphylopic">GitHub repository</a> if the development version is preferred. To install via CRAN, simply use:</p>
+<p>The <strong>rphylopic</strong> package can be installed from CRAN (recommended) or its dedicated <a href="https://github.com/palaeoverse/rphylopic">GitHub repository</a> if the development version is preferred. To install via CRAN, simply use:</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Installation</h2>
@@ -332,76 +332,49 @@ Lewis A. Jones
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span>
 <span id="cb3-2"><a aria-label="2"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"palaeoverse/rphylopic"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>To install the development version, first install the <a href="https://remotes.r-lib.org/">remotes</a> package, and then use <code>install_github()</code> to install <strong>rphylopic</strong> directly from GitHub.</p>
+<p>To install the development version, first install the <a href="https://remotes.r-lib.org/">remotes</a> package, and then use <code>install_github()</code> to install rphylopic directly from GitHub.</p>
 </section>
-<section class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Installation</h2>
+<section class="slide level2">
+<h2>Installation</h2>
+<p>Before we get to the good stuff, a quick note on behalf of all developers. Behind every open-source package is a group of people who build, maintain, and support it, often in their own time and often without much recognition. If you use rphylopic in your research, please cite the associated publication. Citations are one of the main ways this kind of work is acknowledged, and they help us keep maintaining and improving the package so that you can keep doing your research (<a href="https://doi.org/10.1038/s41559-023-02008-w">read more on this topic</a>). You can access the appropriate citation via:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"rphylopic"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">citation</span>(<span class="st">"rphylopic"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span>
-<span id="cb5-2"><a aria-label="2"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"palaeoverse/rphylopic"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">citation</span>(<span class="st">"rphylopic"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>To cite rphylopic in publications, use the following citation:
-
-  Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for
-  fetching, transforming, and visualising PhyloPic silhouettes. Methods
-  in Ecology and Evolution, 14(11), 2700-2708. doi:
-  10.1111/2041-210X.14221.
-
-A BibTeX entry for LaTeX users is
-
-  @Article{,
-    title = {rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes},
-    author = {William Gearty and Lewis A. Jones},
-    year = {2023},
-    volume = {14},
-    number = {11},
-    pages = {2700-2708},
-    journal = {Methods in Ecology and Evolution},
-    doi = {10.1111/2041-210X.14221},
-  }</code></pre>
-</div>
-</div>
-<p>Before we get to the good stuff, a quick note on behalf of the development team. Behind every open-source package is a group of people who build, maintain, and support it, often in their own time and often without much recognition. If you use <strong>rphylopic</strong> in your research, please cite the associated publication. Citations are one of the main ways this kind of work is acknowledged, and they help us keep maintaining and improving the package so that you can keep doing your research <a href="https://doi.org/10.1038/s41559-023-02008-w">further reading</a>. You can access the appropriate citation via:</p>
-<p>Also, don’t forget to acknowledge the contributors of the silhouettes that you use (see <a href="#/get-attribution">Get attribution</a>).</p>
+</section>
+<section class="slide level2">
+<h2>Installation</h2>
+<p>Don’t forget to also acknowledge the contributors of the silhouettes that you use (see <a href="#/get-attribution">Get attribution</a>). Depending on the license of the silhouette, this may be a legal obligation.</p>
 </section>
 <section id="how-does-rphylopic-work" class="slide level2">
 <h2>How does rphylopic work?</h2>
-<p>Every silhouette available via <a href="https://www.phylopic.org">PhyloPic</a> has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to get a UUID. To do so via <strong>rphylopic</strong> you can use the <code>get_uuid()</code> function to search <a href="https://www.phylopic.org">PhyloPic</a> based on a taxonomic or phylogenetic name (e.g.&nbsp;<em>Canis lupus</em>) and return the first matched UUID. Using the returned UUID, you can then fetch the respective silhouette using <code>get_phylopic()</code>. However, multiple silhouettes (and hence UUIDs) can exist for a searched name. The <code>n</code> argument in <code>get_uuid()</code> allows you to fetch <code>n</code> matched UUIDs.</p>
+<p>Every silhouette available via <a href="https://www.phylopic.org">PhyloPic</a> has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to get a UUID. To do so via rphylopic you can use the <code>get_uuid()</code> function to search PhyloPic based on a taxonomic or phylogenetic name (e.g.&nbsp;<em>Canis lupus</em>) and return the first matched UUID. Using the returned UUID, you can then fetch the respective silhouette using <code>get_phylopic()</code>. However, multiple silhouettes (and hence UUIDs) can exist for a searched name. The <code>n</code> argument in <code>get_uuid()</code> allows you to fetch <code>n</code> matched UUIDs.</p>
 </section>
 <section id="get-a-silhouette-uuid" class="slide level2">
 <h2>Get a silhouette uuid</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># Load rphylopic</span></span>
-<span id="cb8-2"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
-<span id="cb8-3"><a aria-label="3"></a><span class="co"># Get a single image UUID for a species</span></span>
-<span id="cb8-4"><a aria-label="4"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>)</span>
-<span id="cb8-5"><a aria-label="5"></a><span class="co"># Get the image for that UUID</span></span>
-<span id="cb8-6"><a aria-label="6"></a>img <span class="ot">&lt;-</span> <span class="fu">get_phylopic</span>(<span class="at">uuid =</span> uuid)</span>
-<span id="cb8-7"><a aria-label="7"></a><span class="co"># But multiple silhouettes can exist per species...</span></span>
-<span id="cb8-8"><a aria-label="8"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># Load rphylopic</span></span>
+<span id="cb5-2"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb5-3"><a aria-label="3"></a><span class="co"># Get a single image UUID for a species</span></span>
+<span id="cb5-4"><a aria-label="4"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>)</span>
+<span id="cb5-5"><a aria-label="5"></a><span class="co"># Get the image for that UUID</span></span>
+<span id="cb5-6"><a aria-label="6"></a>img <span class="ot">&lt;-</span> <span class="fu">get_phylopic</span>(<span class="at">uuid =</span> uuid)</span>
+<span id="cb5-7"><a aria-label="7"></a><span class="co"># Multiple silhouettes can exist for each species...</span></span>
+<span id="cb5-8"><a aria-label="8"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Pick a silhouette</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb9-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># How do I pick?!</span></span>
-<span id="cb9-2" class="hljs-ln-code"><a aria-label="2"></a><span class="co"># It's difficult without seeing the image itself, let's use:</span></span>
-<span id="cb9-3" class="hljs-ln-code"><a aria-label="3"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">view =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb6-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Visualise and pick a PhyloPic</span></span>
+<span id="cb6-2" class="hljs-ln-code"><a aria-label="2"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">view =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As multiple silhouettes can exist for a searched name, it can be difficult to pick the correct UUID, especially without visualising the images. The <code>pick_phylopic()</code> function plots all requested silhouettes and provides an interactive menu to allow you to select the right image for you.</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Pick a silhouette</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb10-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># How do I pick?!</span></span>
-<span id="cb10-2" class="hljs-ln-code"><a aria-label="2"></a><span class="co"># It's difficult without seeing the image itself, let's use:</span></span>
-<span id="cb10-3" class="hljs-ln-code"><a aria-label="3"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">view =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb7-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Visualise and pick a PhyloPic</span></span>
+<span id="cb7-2" class="hljs-ln-code"><a aria-label="2"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">view =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -419,7 +392,7 @@ A BibTeX entry for LaTeX users is
 <h2>Pick a silhouette</h2>
 <p>Now let’s inspect the returned object:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">print</span>(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">print</span>(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>PhyloPic silhouette object (vector format)
 Dimensions: 1767 pixels wide and 1479 pixels tall
@@ -427,7 +400,11 @@ uuid: 113d2520-9f92-456f-b305-52ee3986172d
 URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vector.svg</code></pre>
 </div>
 </div>
-<p>We have information about the format (vector), dimensions, the UUID, and the URL of the silhouette.</p>
+<p>We have information about the format (vector), dimensions, the UUID, and the URL of our silhouette.</p>
+</section>
+<section class="slide level2">
+<h2>Exercise 1: Get a silhouette UUID of your favourite species</h2>
+<p>Remember, there may be multiple silhouettes available!</p>
 </section>
 <section id="plot-a-silhouette" class="slide level2">
 <h2>Plot a silhouette</h2>
@@ -437,51 +414,53 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <h2>Base R</h2>
 <p>Let’s start with base R by using <code>add_phylopic_base()</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># OK, now that we've got the image we want... let's add it to a plot!</span></span>
-<span id="cb13-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">ann =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb13-3"><a aria-label="3"></a><span class="fu">add_phylopic_base</span>(<span class="at">img =</span> img, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb13-4"><a aria-label="4"></a>                  <span class="at">fill =</span> <span class="st">"red"</span>)</span>
-<span id="cb13-5"><a aria-label="5"></a></span>
-<span id="cb13-6"><a aria-label="6"></a><span class="co"># But can't we just add an image straight away using the UUID? Sure!</span></span>
-<span id="cb13-7"><a aria-label="7"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb13-8"><a aria-label="8"></a><span class="fu">add_phylopic_base</span>(<span class="at">uuid =</span> uuid, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb13-9"><a aria-label="9"></a>                  <span class="at">fill =</span> <span class="st">"blue"</span>)</span>
-<span id="cb13-10"><a aria-label="10"></a></span>
-<span id="cb13-11"><a aria-label="11"></a><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
-<span id="cb13-12"><a aria-label="12"></a><span class="fu">add_phylopic_base</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb13-13"><a aria-label="13"></a>                  <span class="at">fill =</span> <span class="st">"green"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a><span class="co"># OK, now that we've got the image we want... let's add it to a plot!</span></span>
+<span id="cb10-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">ann =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-3"><a aria-label="3"></a><span class="fu">add_phylopic_base</span>(<span class="at">img =</span> img, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span>
+<span id="cb10-4"><a aria-label="4"></a></span>
+<span id="cb10-5"><a aria-label="5"></a><span class="co"># But can't we just add an image straight away using the UUID? Sure!</span></span>
+<span id="cb10-6"><a aria-label="6"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb10-7"><a aria-label="7"></a><span class="fu">add_phylopic_base</span>(<span class="at">uuid =</span> uuid, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span>
+<span id="cb10-8"><a aria-label="8"></a></span>
+<span id="cb10-9"><a aria-label="9"></a><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
+<span id="cb10-10"><a aria-label="10"></a><span class="fu">add_phylopic_base</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="index_files/figure-html/plot-base-r-1.png" width="672" class="r-stretch"><p>Ah, you’ve found out our little secret! You can actually skip the steps of getting the UUID altogether by just searching for the desired taxon in <code>add_phylopic_base()</code>. However, this will always return the first matched silhouette meaning you might be missing out on all the other options! It’s always worth checking out your options with <code>pick_phylopic()</code> first.</p>
+</section>
+<section class="slide level2">
+<h2>Exercise 2: Plot PhyloPics with base R</h2>
+<p>Using your favourite species, plot silhouettes using the three different input argument options: <code>img</code>, <code>uuid</code>, and <code>name</code>.</p>
 </section>
 <section id="ggplot2" class="slide level2">
 <h2>ggplot2</h2>
 <p>You can also accomplish the same plot with the <strong>ggplot2</strong> package. Here, we’ll use the <code>add_phylopic()</code> function, but the functionality and all of the arguments are equivalent:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
-<span id="cb14-2"><a aria-label="2"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb14-3"><a aria-label="3"></a><span class="co"># Create plot and add phylopic</span></span>
-<span id="cb14-4"><a aria-label="4"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb14-5"><a aria-label="5"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>)) <span class="sc">+</span></span>
-<span id="cb14-6"><a aria-label="6"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-7"><a aria-label="7"></a>               <span class="at">fill =</span> <span class="st">"red"</span>)</span>
-<span id="cb14-8"><a aria-label="8"></a></span>
-<span id="cb14-9"><a aria-label="9"></a><span class="co"># But can't we just add an image straight away using the UUID? Sure!</span></span>
-<span id="cb14-10"><a aria-label="10"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb14-11"><a aria-label="11"></a>p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">add_phylopic</span>(<span class="at">uuid =</span> uuid, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-12"><a aria-label="12"></a>                      <span class="at">fill =</span> <span class="st">"blue"</span>)</span>
-<span id="cb14-13"><a aria-label="13"></a></span>
-<span id="cb14-14"><a aria-label="14"></a><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
-<span id="cb14-15"><a aria-label="15"></a>p <span class="sc">+</span> <span class="fu">add_phylopic</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-16"><a aria-label="16"></a>                 <span class="at">fill =</span> <span class="st">"green"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
+<span id="cb11-2"><a aria-label="2"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-3"><a aria-label="3"></a><span class="co"># Create plot and add phylopic</span></span>
+<span id="cb11-4"><a aria-label="4"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-5"><a aria-label="5"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>)) <span class="sc">+</span></span>
+<span id="cb11-6"><a aria-label="6"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span>
+<span id="cb11-7"><a aria-label="7"></a></span>
+<span id="cb11-8"><a aria-label="8"></a><span class="co"># But can't we just add an image straight away using the UUID? Sure!</span></span>
+<span id="cb11-9"><a aria-label="9"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb11-10"><a aria-label="10"></a>p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">add_phylopic</span>(<span class="at">uuid =</span> uuid, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span>
+<span id="cb11-11"><a aria-label="11"></a></span>
+<span id="cb11-12"><a aria-label="12"></a><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
+<span id="cb11-13"><a aria-label="13"></a>p <span class="sc">+</span> <span class="fu">add_phylopic</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="index_files/figure-html/plot-ggplot2-1.png" width="672" class="r-stretch"></section>
+<section class="slide level2">
+<h2>Exercise 3: Plot PhyloPics with ggplot2</h2>
+<p>Using your favourite species, plot silhouettes using the three different input argument options: <code>img</code>, <code>uuid</code>, and <code>name</code>.</p>
+</section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Transforming silhouettes</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb15-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Flip silhouette horizontally</span></span>
-<span id="cb15-2" class="hljs-ln-code"><a aria-label="2"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb12-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Flip silhouette horizontally</span></span>
+<span id="cb12-2" class="hljs-ln-code"><a aria-label="2"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Once a silhouette is picked and saved in the your R environment, it may be useful to transform the image to better suit the particular visualisation of interest. Three user-friendly functions are available to accommodate transformations that might be desired: flipping, rotating, and recolouring.</p>
 <p>The <code>flip_phylopic()</code> function can be used to flip a silhouette horizontally and/or vertically. This may be useful if, for example, you want all of the silhouettes to face the same direction.</p>
@@ -489,14 +468,30 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Transforming silhouettes</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># Flip silhouette horizontally</span></span>
-<span id="cb16-2"><a aria-label="2"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># Flip silhouette horizontally</span></span>
+<span id="cb13-2"><a aria-label="2"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="co"># Rotate silhouette by 45 degrees</span></span>
-<span id="cb17-2"><a aria-label="2"></a>img_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> img, <span class="at">angle =</span> <span class="dv">45</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># Rotate silhouette by 45 degrees</span></span>
+<span id="cb14-2"><a aria-label="2"></a>img_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> img, <span class="at">angle =</span> <span class="dv">45</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>rotate_phylopic()</code> function can be used to rotate a silhouette an arbitrary number of degrees. This may be useful when trying to align a silhouette with text or other objects within a figure.</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Transforming silhouettes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="co"># Flip silhouette horizontally</span></span>
+<span id="cb15-2"><a aria-label="2"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># Rotate silhouette by 45 degrees</span></span>
+<span id="cb16-2"><a aria-label="2"></a>img_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> img, <span class="at">angle =</span> <span class="dv">45</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="co"># Change fill color to blue and transparency to 50%</span></span>
+<span id="cb17-2"><a aria-label="2"></a>img_col <span class="ot">&lt;-</span> <span class="fu">recolor_phylopic</span>(<span class="at">img =</span> img, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Finally, the <code>recolor_phylopic()</code> function can be used to modify the fill color, outline color, and/or transparency of a silhouette. The vast majority of PhyloPic silhouettes are solid black, are fully opaque, and have a transparent outline by default. However, it may be useful to change this when the you are trying to either match an existing visualization color palette or trying to convey extra information, such as categorical data, through color.</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Transforming silhouettes</h2>
@@ -512,42 +507,35 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="co"># Change fill color to blue and transparency to 50%</span></span>
 <span id="cb20-2"><a aria-label="2"></a>img_col <span class="ot">&lt;-</span> <span class="fu">recolor_phylopic</span>(<span class="at">img =</span> img, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Finally, the <code>recolor_phylopic()</code> function can be used to modify the fill color, outline color, and/or transparency of a silhouette. The vast majority of PhyloPic silhouettes are solid black, are fully opaque, and have a transparent outline by default. However, it may be useful to change this when the you are trying to either match an existing visualization color palette or trying to convey extra information, such as categorical data, through color.</p>
-</section>
-<section class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Transforming silhouettes</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="co"># Flip silhouette horizontally</span></span>
-<span id="cb21-2"><a aria-label="2"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="co"># Rotate silhouette by 45 degrees</span></span>
-<span id="cb22-2"><a aria-label="2"></a>img_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> img, <span class="at">angle =</span> <span class="dv">45</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="co"># Change fill color to blue and transparency to 50%</span></span>
-<span id="cb23-2"><a aria-label="2"></a>img_col <span class="ot">&lt;-</span> <span class="fu">recolor_phylopic</span>(<span class="at">img =</span> img, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb24-2"><a aria-label="2"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>)) <span class="sc">+</span></span>
-<span id="cb24-3"><a aria-label="3"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_flip, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a aria-label="4"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_rot, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a aria-label="5"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_col, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb24-6"><a aria-label="6"></a>               <span class="at">fill =</span> <span class="st">"original"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-2"><a aria-label="2"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>)) <span class="sc">+</span></span>
+<span id="cb21-3"><a aria-label="3"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_flip, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a aria-label="4"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_rot, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a aria-label="5"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_col, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
+<span id="cb21-6"><a aria-label="6"></a>               <span class="at">fill =</span> <span class="st">"original"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="index_files/figure-html/trans-all-1.png" width="672" class="r-stretch"><p>Let’s see what those look like in the same plot:</p>
 <p>You’ll notice that the rotated silhouette is smaller than the other two silhouettes. This is because we’ve specifed the <code>height</code> of our silhouettes. The width is then automatically set to maintain the original aspect ratio of the silhouette. In this case, the aspect ratio of the rotated silhouette has changed, so the same <code>height</code> results in a smaller silhouette overall. If you’d prefer, you could also specify the <code>width</code> of the silhouettes.</p>
 <p>For convenience, we have also included these transformation options within all of the visualization functions. The default fill is “black”, hence why we needed to specify <code>fill = "original"</code> above. However, when the same transformed silhouette will be used for multiple visualizations, we suggest transforming the silhouette first, saving it as a new object, then using this new object for visualization purposes.</p>
 </section>
+<section class="slide level2">
+<h2>Exercise 4: Transform your silhouette</h2>
+<p>It’s your turn! After fetching your favourite silhouette, try transforming it by:</p>
+<ul>
+<li>Flipping</li>
+<li>Rotating</li>
+<li>Recolouring</li>
+</ul>
+</section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Get attribution</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb25-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Get valid uuid</span></span>
-<span id="cb25-2" class="hljs-ln-code"><a aria-label="2"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
-<span id="cb25-3" class="hljs-ln-code"><a aria-label="3"></a><span class="co"># Get attribution data for uuid</span></span>
-<span id="cb25-4" class="hljs-ln-code"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb22-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Get valid uuid</span></span>
+<span id="cb22-2" class="hljs-ln-code"><a aria-label="2"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
+<span id="cb22-3" class="hljs-ln-code"><a aria-label="3"></a><span class="co"># Get attribution data for uuid</span></span>
+<span id="cb22-4" class="hljs-ln-code"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$images
 $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`
@@ -581,10 +569,10 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Get attribution</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="co"># Get valid uuid</span></span>
-<span id="cb27-2"><a aria-label="2"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
-<span id="cb27-3"><a aria-label="3"></a><span class="co"># Get attribution data for uuid</span></span>
-<span id="cb27-4"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="co"># Get valid uuid</span></span>
+<span id="cb24-2"><a aria-label="2"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
+<span id="cb24-3"><a aria-label="3"></a><span class="co"># Get attribution data for uuid</span></span>
+<span id="cb24-4"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$images
 $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`
@@ -614,10 +602,10 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="co"># Get valid uuid</span></span>
-<span id="cb29-2"><a aria-label="2"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
-<span id="cb29-3"><a aria-label="3"></a><span class="co"># Get attribution data for uuid</span></span>
-<span id="cb29-4"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid, <span class="at">text =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="co"># Get valid uuid</span></span>
+<span id="cb26-2"><a aria-label="2"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
+<span id="cb26-3"><a aria-label="3"></a><span class="co"># Get attribution data for uuid</span></span>
+<span id="cb26-4"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid, <span class="at">text =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This function can even write a little blurb for you to include in your publications:</p>
 </section>
@@ -625,11 +613,11 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <h2>Save an image</h2>
 <p>You should be able to accomplish all of your visualization needs within R, but in the rare case that need to use a silhouette outside of R, we’ve also got you covered with the <code>save_phylopic()</code> function. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="co"># How do I save an image?</span></span>
-<span id="cb30-2"><a aria-label="2"></a><span class="co"># Get image</span></span>
-<span id="cb30-3"><a aria-label="3"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Phascolarctos cinereus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb30-4"><a aria-label="4"></a><span class="co"># Save image</span></span>
-<span id="cb30-5"><a aria-label="5"></a><span class="fu">save_phylopic</span>(<span class="at">img =</span> img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="co"># How do I save an image?</span></span>
+<span id="cb27-2"><a aria-label="2"></a><span class="co"># Get image</span></span>
+<span id="cb27-3"><a aria-label="3"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Phascolarctos cinereus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb27-4"><a aria-label="4"></a><span class="co"># Save image</span></span>
+<span id="cb27-5"><a aria-label="5"></a><span class="fu">save_phylopic</span>(<span class="at">img =</span> img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section class="slide level2">
@@ -641,7 +629,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -654,7 +642,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -667,7 +655,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -707,6 +695,18 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
+</section>
+<section class="slide level2">
+<h2>Callouts</h2>
+<p>note</p>
+</section>
+<section class="slide level2">
+<h2>Callouts</h2>
+<p>important</p>
+</section>
+<section class="slide level2">
+<h2>Callouts</h2>
+<p>warning</p>
 
 
 </section>
