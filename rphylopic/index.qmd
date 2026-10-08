@@ -165,7 +165,7 @@ img <- pick_phylopic(name = "Canis lupus", n = 4, view = 4)
 
 ![](img/rphylopic-menu-choice.png)
 
-Let's go with option 1! 
+Let's go with option 1!
 
 ```{r}
 #| label: auto-pick-silhouette
@@ -226,6 +226,7 @@ You can also accomplish the same plot with the **ggplot2** package. Here, we'll 
 ```{r}
 #| label: plot-ggplot2
 #| eval: true
+
 # Load library
 library(ggplot2)
 # Create plot and add phylopic
@@ -260,6 +261,7 @@ The `rotate_phylopic()` function can be used to rotate a silhouette an arbitrary
 ```{r}
 #| label: trans-rotate
 #| eval: true
+
 # Rotate silhouette by 45 degrees
 img_rot <- rotate_phylopic(img = img, angle = 45)
 ```
@@ -269,6 +271,7 @@ Finally, the `recolor_phylopic()` function can be used to modify the fill color,
 ```{r}
 #| label: trans-recolour
 #| eval: true
+
 # Change fill color to blue and transparency to 50%
 img_col <- recolor_phylopic(img = img, alpha = 0.5, fill = "blue")
 ```
@@ -278,6 +281,7 @@ Let's see what those look like in the same plot:
 ```{r}
 #| label: trans-all
 #| eval: true
+
 ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
   add_phylopic(img = img_flip, x = 1.25, y = 1.25, height = 0.25) +
@@ -297,6 +301,7 @@ Now that you've made a plot and used some silhouettes, you should acknowledge th
 ```{r}
 #| label: get-attribution
 #| eval: true
+
 # Get valid uuid
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
@@ -308,6 +313,7 @@ This function can even write a little blurb for you to include in your publicati
 ```{r}
 #| label: get-attribution-text
 #| eval: true
+
 # Get valid uuid
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
@@ -321,6 +327,7 @@ You should be able to accomplish all of your visualization needs within R, but i
 ```{r}
 #| label: save-image
 #| eval: false
+
 # How do I save an image?
 # Get image
 img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)
@@ -328,7 +335,7 @@ img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)
 save_phylopic(img = img)
 ```
 
----
+--------------------------------------------------------------------------------
 
 ::: {.panel-tabset}
 ### Tab A
@@ -363,4 +370,3 @@ A *collapsed* callout is the exception: it keeps its box. Since clicking on
 slides can be awkward, the collapsed content is held back as a fragment and
 revealed when you advance. On the website it stays a click-to-open box.
 :::
-
