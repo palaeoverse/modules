@@ -1,6 +1,7 @@
 ---
-title: "Introduction to rphylopic"
-description: "An R package that allows users to easily fetch and visualize silhouettes of organisms from PhyloPic."
+title: "Getting started with **rphylopic**"
+subtitle: "An Introduction to the **rphylopic** R package"
+description: "Why plot dots when you can plot dinosaurs? [**rphylopic**](https://rphylopic.palaeoverse.org) lets you fetch and add silhouettes from [**PhyloPic**](https://www.phylopic.org) to your base R and ggplot2 figures, from simple x-y plots to maps, phylogenies, networks, and beyond."
 author:
   - William Gearty
   - Lewis A. Jones
@@ -35,35 +36,177 @@ editor:
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 
-## Introduction
+::: {.callout}
 
-### What is PhyloPic
+## Learning Objectives
 
-[PhyloPic](https://www.phylopic.org) is an open database of free silhouette images of animals, plants, and other life forms, available for reuse under Creative Commons licenses. At time of writing, >13,000 silhouette images are available covering a broad array of biological groups from dinosaurs and corals to grasses and viruses. To date, the silhouettes have been created by over 500 volunteer contributors, and are increasingly used in data visualisation.
+By the end of this module, you will be able to:
 
-### What is **rphylopic**
+1. Explain what **PhyloPic** is and how the **rphylopic** package uses the **PhyloPic** API to retrieve silhouettes and their metadata from within R.
+2. Search for silhouettes by taxon name and choose between the available options for a given organism.
+3. Add silhouettes to plots as layers or as data points in both base R and ggplot2.
+4. Transform silhouettes by rotating, flipping, resizing, and recolouring them to suit your figure.
+5. Visualise data with silhouettes across a range of plot types, such as x-y plots, maps, phylogenies, and networks.
+6. Retrieve attribution and licence information for the silhouettes you use, so that creators are credited appropriately.
+7. Save figures containing silhouettes, and export silhouettes as image files.
+
+:::
+
+::: {.html-only}
+
+## Introduction 
+
+:::
+
+### What is **PhyloPic**
 
 ::: {.narration}
 
-**rphylopic** is a package that allows users to easily fetch and visualize silhouettes of organisms from [PhyloPic](https://www.phylopic.org/). The package allows users to add silhouettes as layers or as data points to both base R and ggplot2 plots. Additional functionality allows users to pick between available silhouettes, transform them (e.g., rotate and recolor), and save image files. This module will give you an overview of the package and provide example usage.
+[**PhyloPic**](https://www.phylopic.org) is an open database of free silhouette images of animals, plants, and other life forms. It's built to illustrate the tree of life. Each silhouette is linked to a node in a taxonomic or phylogenetic hierarchy, so images can be searched by taxon name rather than by keyword alone. Images are contributed by a community of >500 artists and scientists, and each one is released under an open licence (e.g. CC0, CC BY, CC BY-NC). At time of writing, these volunteers have contributed >13,000 silhouette images are available covering a broad array of biological groups from dinosaurs and corals to grasses and viruses.
 
 :::
 
 ::: {.slides-only}
 
-- a bullet summary for the slide
-- which would be redundant on the page
+- **PhyloPic** ([https://www.phylopic.org](https://www.phylopic.org))
+- Database of free silhouette images of animals, plants, and other life forms
+- +500 contributors
+- +13,000 silhouettes
+- Open licensing: CC0, CC BY, CC BY-NC, ...
 
 :::
 
-### Installation
+### What is **rphylopic**
 
-## Using rphylopic
+::: {.narration}
+
+[**rphylopic**](https://rphylopic.palaeoverse.org) is an R package that allows users to easily fetch and visualise silhouettes of organisms from **PhyloPic**. Beyond the website, **PhyloPic** provides an application programming interface (API), which allows images and their metadata to be queried and retrieved programmatically, and this is what **rphylopic** builds on. Rather than manually searching the site, downloading files, and importing them into your plotting workflow, you can do all of this from within R. You can look up silhouettes by taxon name, choose between the available options, retrieve their attribution details, and add them to both base R and ggplot2 plots, either as layers or as data points. Silhouettes can also be transformed (e.g. rotated, flipped, resized, and recoloured), and saved as image files. This module will give you an overview of the package and provide example usage.
+
+:::
+
+::: {.slides-only}
+
+**What is it**
+
+- An R package to fetch and visualise organism silhouettes from **PhyloPic**
+- Works with both base R and ggplot2
+
+**How it works**
+
+- Builds on the **PhyloPic** API, which lets images and metadata be queried programmatically
+- No more manual searching, downloading, and importing: do it all from within R
+
+**Key features**
+
+- Look up silhouettes by taxon name and choose between options
+- Retrieve attribution details
+- Add silhouettes as layers or data points
+- Transform them: rotate, flip, resize, recolour
+- Save as image files
+
+:::
+
+### Why use silhouettes
+
+Data visualisation is a key component of any scientific data analysis workflow and is vital for the summarisation and dissemination of complex ideas and results. In ecology and evolutionary biology, data are often associated with taxonomic entities. However, taxonomic nomenclature, which is fundamental to the biological sciences, is often unfamiliar to nonspecialists. Silhouettes act as a compact visual shorthand. In a phylogeny, a diversity-through-time plot, or a multi-panel figure comparing groups, they help readers identify taxa at a glance and reduce the need for long labels. They are also valuable in teaching and outreach materials, where they make otherwise abstract plots more engaging and accessible.
+
+## Installation
+
+The **rphylopic** package can be installed via CRAN (recommended) or its dedicated [GitHub repository](https://github.com/palaeoverse/rphylopic) if the development version is preferred. To install via CRAN, simply use:
+
+```{r}
+#| label: install-rphylopic
+#| eval: false
+install.packages("rphylopic")
+```
+
+To install the development version, first install the [remotes](https://remotes.r-lib.org/) package, and then use `install_github()` to install **rphylopic** directly from GitHub.
+
+```{r}
+#| label: install-remotes
+#| eval: false
+install.packages("remotes")
+remotes::install_github("palaeoverse/rphylopic")
+```
+
+Before we get to the good stuff, a quick note on behalf of the development team. Behind every open-source package is a group of people who build, maintain, and support it, often in their own time and often without much recognition. If you use **rphylopic** in your research, please cite the associated publication. Citations are one of the main ways this kind of work is acknowledged, and they help us keep maintaining and improving the package so that you can keep doing your research [further reading](https://doi.org/10.1038/s41559-023-02008-w). You can access the appropriate citation via:
+
+```{r}
+#| label: cite-rphylopic
+#| eval: true
+citation("rphylopic")
+```
+
+Also, don’t forget to acknowledge the contributors of the silhouettes that you use (see [Get attribution](#get-attribution)).
+
+## How does it work?
+
+Every silhouette available via [PhyloPic](https://www.phylopic.org) has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to get a UUID. To do so via **rphylopic** you can use the `get_uuid()` function to search [PhyloPic](https://www.phylopic.org) based on a taxonomic or phylogenetic name (e.g. *Canis lupus*) and return the first matched UUID. Using the returned UUID, you can then fetch the respective silhouette using `get_phylopic()`. However, multiple silhouettes (and hence UUIDs) can exist for a searched name. The `n` argument in `get_uuid()` allows you to fetch `n` matched UUIDs.
+
+### Get an image uuid
+
+```{r}
+#| label: get-uuid
+#| eval: true
+# Load rphylopic
+library(rphylopic)
+# Get a single image UUID for a species
+uuid <- get_uuid(name = "Canis lupus")
+# Get the image for that UUID
+img <- get_phylopic(uuid = uuid)
+# But multiple silhouettes can exist per species...
+uuid <- get_uuid(name = "Canis lupus", n = 5)
+```
+
+### Pick an image
+
+As multiple silhouettes can exist for a searched name, it can be difficult to pick the correct UUID, especially without visualising the images. The `pick_phylopic()` function plots all requested silhouettes and provides an interactive menu to allow you to select the right image for you. Let's go with option 1!
+
+```{r}
+#| label: pick-silhouette
+#| eval: false
+# How do I pick?!
+# It's difficult without seeing the image itself, let's use:
+img <- pick_phylopic(name = "Canis lupus", n = 4, view = 4)
+```
+
+We decided we liked #1 the most!
+
+```{r}
+#| label: auto-pick-silhouette
+#| echo: false
+#| eval: true
+# DO NOT EXPOSE TO USER THIS IS FOR AUTO-PICKING THE SILHOUETTE
+# FROM THE INTERACTIVE MENU
+img <- pick_phylopic(name = "Canis lupus", n = 4, view = 4, auto = 1)
+```
+
+### Plot an image
+
+Now we have selected our silhouette, we can make some plots!
+
+#### Base R
+Let's start with base R by using `add_phylopic_base()`:
+
+```{r}
+#| label: plot-base-r
+#| eval: false
+# OK, now we've got the image we want... let's add it to a plot!
+plot(x = 1, y = 1, type = "n", ann = FALSE)
+add_phylopic_base(img = img, x = 1.25, y = 1.25, height = 0.25)
+
+# But can't we just add an image straight away using the UUID? Sure!
+uuid <- get_uuid(name = "Canis lupus", n = 1)
+add_phylopic_base(uuid = uuid, x = 1, y = 1, height = 0.25)
+
+# What about just using the first image linked to the name? Definitely!
+add_phylopic_base(name = "Canis lupus", x = 0.75, y = 0.75, height = 0.25)
+```
 
 ### Getting silhouettes
 
 ::: {.narration}
-Every silhouette available via PhyloPic has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to 1) identify the silhouette you want and then 2) identify the UUID for that silhouette. rphylopic provides a couple different ways to do this:
+Every silhouette available via PhyloPic has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to 1) identify the silhouette you want and then 2) identify the UUID for that silhouette. **rphylopic** provides a couple different ways to do this:
 :::
 
 ::: {.narration}
@@ -122,6 +265,8 @@ This narration belongs to the plot below, and lands on its slide as speaker note
 plot(mtcars$hp, mtcars$mpg)
 ```
 
+## Get attribution
+
 ## Deeper headings
 
 ::: {.narration}
@@ -161,12 +306,6 @@ round(sd(x), 3)
 
 ::: {.narration}
 A callout gets a slide of its own. The content is un-boxed and the slide is titled by its own heading.
-:::
-
-::: {.callout-note}
-## A note
-
-This box is dropped on the slide, which lets a figure inside it stretch to fit.
 :::
 
 ::: {.callout-caution collapse="true"}
