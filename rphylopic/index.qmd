@@ -50,9 +50,7 @@ By the end of this module, you will be able to:
 7. Save figures containing silhouettes, and export silhouettes as image files.
 :::
 
-::: {.html-only}
 ## Introduction
-:::
 
 ### What is PhyloPic
 
@@ -98,7 +96,9 @@ By the end of this module, you will be able to:
 
 Data visualisation is a key component of any scientific data analysis workflow and is vital for the summarisation and dissemination of complex ideas and results. In ecology and evolutionary biology, data are often associated with taxonomic entities. However, taxonomic nomenclature, which is fundamental to the biological sciences, is often unfamiliar to nonspecialists. Silhouettes act as a compact visual shorthand. In a phylogeny, a diversity-through-time plot, or a multi-panel figure comparing groups, they help readers identify taxa at a glance and reduce the need for long labels. They are also valuable in teaching and outreach materials, where they make otherwise abstract plots more engaging and accessible.
 
-## Installation
+## Getting started
+
+### Installation
 
 The **rphylopic** package can be installed from CRAN (recommended) or its dedicated [GitHub repository](https://github.com/palaeoverse/rphylopic) if the development version is preferred. To install via CRAN, simply use:
 
@@ -131,14 +131,14 @@ citation("rphylopic")
 :::
 
 ::: {.callout-important}
-Don't forget to also acknowledge the contributors of the silhouettes that you use (see [Get attribution](#get-attribution)). Depending on the license of the silhouette, this may be a legal obligation.
+Depending on the license, you may be required, by law, to acknowledge the creators of the silhouettes that you use (see [Get attribution](#get-attribution)). Regardless of license, it's generally a good thing to acknowledge people for their contributions.
 :::
 
-## How does rphylopic work?
+### How does rphylopic work?
 
 Every silhouette available via [PhyloPic](https://www.phylopic.org) has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to get a UUID. To do so via rphylopic you can use the `get_uuid()` function to search PhyloPic based on a taxonomic or phylogenetic name (e.g. *Canis lupus*) and return the first matched UUID. Using the returned UUID, you can then fetch the respective silhouette using `get_phylopic()`. However, multiple silhouettes (and hence UUIDs) can exist for a searched name. The `n` argument in `get_uuid()` allows you to fetch `n` matched UUIDs.
 
-### Get a silhouette uuid
+### Get a silhouette UUID
 
 ```{r}
 #| label: get-uuid
@@ -166,7 +166,13 @@ As multiple silhouettes can exist for a searched name, it can be difficult to pi
 img <- pick_phylopic(name = "Canis lupus", n = 4, view = 4)
 ```
 
-![](img/rphylopic-menu-choice.png)
+```{r}
+#| echo: false
+#| label: wolf-menu
+#| out-width: "100%"
+
+knitr::include_graphics("img/rphylopic-menu-choice.png")
+```
 
 Let's go with option 1!
 
@@ -194,9 +200,13 @@ print(img)
 We have information about the format (vector), dimensions, the UUID, and the URL of our silhouette.
 
 ::: {.callout-caution}
-## Exercise 1: Get a silhouette UUID of your favourite species
+## Exercise 1: Get the UUID of a silhouette for your favourite species
 
 Remember, there may be multiple silhouettes available!
+
+- What is the UUID of your chosen silhouette?
+- What is the format of the silhouette?
+- What are the dimensions of the silhouette?
 :::
 
 ### Plot a silhouette
@@ -226,9 +236,11 @@ add_phylopic_base(name = "Canis lupus", x = 1.25, y = 1.25, height = 0.25)
 Ah, you've found out our little secret! You can actually skip the steps of getting the UUID altogether by just searching for the desired taxon in `add_phylopic_base()`. However, this will always return the first matched silhouette meaning you might be missing out on all the other options! It's always worth checking out your options with `pick_phylopic()` first.
 
 ::: {.callout-caution}
-## Exercise 2: Plot PhyloPics with base R
+## Exercise 2: Plot with base R
 
-Using your favourite species, plot silhouettes using the three different input argument options: `img`, `uuid`, and `name`.
+Using your favourite species, plot a silhouette of it using the three different input argument options (`img`, `uuid`, and `name`) within the same plot.
+
+Are they all the same silhouette? If not, why might that be?
 :::
 
 #### ggplot2
@@ -255,9 +267,11 @@ p + add_phylopic(name = "Canis lupus", x = 1.25, y = 1.25, height = 0.25)
 ```
 
 ::: {.callout-caution}
-## Exercise 3: Plot PhyloPics with ggplot2
+## Exercise 3: Plot with ggplot2
 
-Using your favourite species, plot silhouettes using the three different input argument options: `img`, `uuid`, and `name`.
+Using your favourite species, plot a silhouette of it using the three different input argument options (`img`, `uuid`, and `name`) within the same plot.
+
+Are they all the same silhouette? If not, why might that be?
 :::
 
 ### Transforming silhouettes
@@ -312,16 +326,18 @@ For convenience, we have also included these transformation options within all o
 ::: {.callout-caution}
 ## Exercise 4: Transform your silhouette
 
-It's your turn! After fetching your favourite silhouette, try transforming it by:
+It's your turn! After fetching your favourite silhouette (recall: [pick a silhouette](#pick-a-silhouette)), try transforming it by:
 
-- Flipping
-- Rotating
-- Recolouring
+- Flipping the silhouette
+- Rotating the silhouette
+- Recolouring the silhouette
+
+Once you have done that, try visualising them altogether.
 :::
 
 ### Get attribution
 
-Now that you've made a plot and used some silhouettes, you should acknowledge the contributors that made those silhouettes. Fortunately, **rphylopic** includes the `get_attribution()` function to get contributor data about specific images:
+Now that you've made a plot and used some silhouettes, you should acknowledge the contributors that made those silhouettes. To make this easy, rphylopic includes the `get_attribution()` function to get contributor data about specific images:
 
 ```{r}
 #| label: get-attribution
@@ -333,7 +349,7 @@ uuid <- get_uuid(name = "Nycticebus")
 get_attribution(uuid = uuid)
 ```
 
-This function can even write a little blurb for you to include in your publications:
+However, that's a lot of raw information to handle. With `get_attribution()`, you can also get this output automatically parsed to include in your publications with the `text` argument:
 
 ```{r}
 #| label: get-attribution-text
@@ -342,12 +358,18 @@ This function can even write a little blurb for you to include in your publicati
 # Get valid uuid
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
-get_attribution(uuid = uuid, text = TRUE)
+get_attribution(uuid = uuid, text = TRUE)$text
 ```
 
-## Save an image
+::: {.callout-caution}
+## Exercise 5: Get the attribution information
 
-You should be able to accomplish all of your visualization needs within R, but in the rare case that need to use a silhouette outside of R, we've also got you covered with the `save_phylopic()` function. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP).
+In previous exercises, you selected a silhouette you like. Now, try and get the attribution information for that silhouette.
+:::
+
+### Save an image
+
+You should be able to accomplish all of your visualisation needs within R, but in the rare case that you need to use a silhouette outside of R, the `save_phylopic()` function lets you export silhouettes. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP).
 
 ```{r}
 #| label: save-image
@@ -360,10 +382,268 @@ img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)
 save_phylopic(img = img)
 ```
 
---------------------------------------------------------------------------------
+## Example usage
+
+Herein, three example use cases of the rphylopic package are presented for both ggplot2 and base R, along with independent exercises.
+
+### Basic accession, transformation, and plotting
+
+The rphylopic package provides robust, flexible tools for accessing and transforming PhyloPic silhouettes. To demonstrate them, we'll use the Antarctic penguin dataset from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) R package.
+
+First, let's load the libraries and the data:
+
+```{r}
+#| label: get-penguins
+
+# Load libraries
+library(rphylopic)
+library(palmerpenguins)
+# Get penguin data
+data(penguins)
+# Subset the data to remove rows with missing sex values
+penguins_subset <- subset(penguins, !is.na(sex))
+```
+
+Now, let's pick a silhouette to use for the penguins.
+
+```{r}
+#| label: pick-penguin
+#| eval: false
+
+# Pick a silhouette for Pygoscelis (here we pick #1)
+penguin <- pick_phylopic("Pygoscelis", n = 3, view = 3)
+```
+
+```{r}
+#| echo: false
+#| label: penguin-menu
+#| out-width: "100%"
+
+knitr::include_graphics("img/rphylopic-menu-choice-penguin.png")
+```
+
+ Let's pick #2:
+
+```{r}
+#| label: auto-pick-penguin-silhouette
+#| echo: false
+#| eval: true
+#| results: false
+
+# DO NOT EXPOSE TO USER THIS IS FOR AUTO-PICKING THE SILHOUETTE
+# FROM THE INTERACTIVE MENU
+penguin <- get_phylopic(uuid = "86334821-42ec-4da1-bb9d-53f3d6941c77")
+```
+
+You may have noticed in the preview that the silhouette was a little slanted. Let's rotate it clockwise just a smidgen:
+
+```{r}
+#| label: trans-penguin
+
+penguin_rot <- rotate_phylopic(img = penguin, angle = 15)
+```
+
+Now, let's draft the plot that we want to make. In this case, let's plot the penguins' bill lengths vs. their flipper lengths:
 
 ::: {.panel-tabset}
-### Tab A
+### ggplot2
+
+```{r}
+#| label: plot-data-ggplot2
+
+ggplot(penguins_subset) +
+  geom_point(aes(x = bill_length_mm, y = flipper_length_mm)) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15)
+```
+
+### Base R
+
+```{r}
+#| label: plot-data-base
+
+# Calculate shared axis limits so all panels are comparable
+xlim <- range(penguins_subset$bill_length_mm)
+ylim <- range(penguins_subset$flipper_length_mm)
+
+# Set up the plot area (3 rows, 1 column)
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+
+# Loop over the species and create a plot for each one
+for (sp in levels(penguins_subset$species)) {
+  # Subset the data to the current species and plot it
+  with(
+    subset(penguins_subset, species == sp),
+    plot(bill_length_mm, flipper_length_mm,
+         xlim = xlim, ylim = ylim,
+         xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
+         main = sp)
+  )
+}
+```
+:::
+
+That's a nice basic plot, but we can make it nicer by adding a penguin silhouette. Sadly, we don't have a separate silhouette for each species ([although we could make one...](https://contribute.phylopic.org)), so we'll place a single silhouette in the top panel using the add_phylopic_base() function. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| label: plot-penguin-ggplot2
+
+# Create input dataframe
+silhouette_df <- data.frame(x = 59, y = 215, species = "Adelie")
+
+ggplot(penguins_subset) +
+  geom_point(aes(x = bill_length_mm, y = flipper_length_mm)) +
+  geom_phylopic(data = silhouette_df, aes(x = x, y = y), height = 30,
+                img = penguin_rot) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15)
+```
+
+### Base R
+
+```{r}
+#| label: plot-penguin-base
+
+# Calculate shared axis limits so all panels are comparable
+xlim <- range(penguins_subset$bill_length_mm)
+ylim <- range(penguins_subset$flipper_length_mm)
+
+# Set up the plot area (3 rows, 1 column)
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+
+# Loop over the species and create a plot for each one
+for (sp in levels(penguins_subset$species)) {
+  # Subset the data to the current species and plot it
+  with(
+    subset(penguins_subset, species == sp),
+    plot(bill_length_mm, flipper_length_mm,
+         xlim = xlim, ylim = ylim,
+         xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
+         main = sp)
+  )
+
+  # Add the silhouette to the top panel only
+  if (sp == levels(penguins_subset$species)[1]) {
+    add_phylopic_base(img = penguin_rot, x = 59, y = 215, height = 30)
+  }
+}
+```
+:::
+
+Isn't that nifty! But we can go a step further: what if we used little penguins instead of points? We can do this with `geom_phylopic()` (ggplot2) and `add_phylopic_base()` (base R). Since we want the same image for every x-y pair, we can specify `img = penguin_rot` once more:
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| label: plot-penguin-points-ggplot2
+
+ggplot(penguins_subset) +
+  geom_phylopic(img = penguin_rot,
+                aes(x = bill_length_mm, y = flipper_length_mm)) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15)
+```
+
+### Base R
+
+```{r}
+#| label: plot-penguin-points-base
+
+# Calculate shared axis limits so all panels are comparable
+xlim <- range(penguins_subset$bill_length_mm)
+ylim <- range(penguins_subset$flipper_length_mm)
+
+# Set up the plot area (3 rows, 1 column)
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+
+# Loop over the species and create a plot for each one
+for (sp in levels(penguins_subset$species)) {
+  # Subset the data to the current species
+  species_data <- subset(penguins_subset, species == sp)
+
+  # Create an empty plot with the shared axis limits
+  plot(NA, xlim = xlim, ylim = ylim,
+       xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
+       main = sp)
+
+  # Add a penguin silhouette at each x-y pair instead of a point
+  add_phylopic_base(img = penguin_rot,
+                    x = species_data$bill_length_mm,
+                    y = species_data$flipper_length_mm)
+}
+```
+:::
+
+Oh no, the silhouettes are way too big! By default, `geom_phylopic()` and `add_phylopic_base()` makes each silhouette as tall as the plot, which is far too large here. Instead, we can specify a height or width to use (in y-axis or x-axis units, respectively):
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| label: plot-penguin-height-ggplot2
+
+ggplot(penguins_subset) +
+  geom_phylopic(img = penguin_rot,
+                aes(x = bill_length_mm, y = flipper_length_mm), height = 5) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15)
+```
+
+### Base R
+
+```{r}
+#| label: plot-penguin-height-base
+
+# Calculate shared axis limits so all panels are comparable
+xlim <- range(penguins_subset$bill_length_mm)
+ylim <- range(penguins_subset$flipper_length_mm)
+
+# Set up the plot area (3 rows, 1 column)
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+
+# Loop over the species and create a plot for each one
+for (sp in levels(penguins_subset$species)) {
+  # Subset the data to the current species
+  species_data <- subset(penguins_subset, species == sp)
+
+  # Create an empty plot with the shared axis limits
+  plot(NA, xlim = xlim, ylim = ylim,
+       xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
+       main = sp)
+
+  # Add a penguin silhouette at each x-y pair instead of a point
+  add_phylopic_base(img = penguin_rot,
+                    x = species_data$bill_length_mm,
+                    y = species_data$flipper_length_mm,
+                    height = 5)
+}
+```
+:::
+
+::: {.callout-caution}
+## Exercise 6: Vary silhouette height with data
+
+So far we have set the silhouette size by hand. Instead, we can map the height to another variable in our data, and rphylopic will scale the values for us automatically.
+
+**Your task:** Make the size of the silhouettes relative to the penguins' body masses (`body_mass_g`).
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 6: Solution
+:::
+
+### Geographic distribution
+
+::: {.panel-tabset}
+### ggplot2
 
 ```{r}
 #| code-fold: true
@@ -371,16 +651,54 @@ save_phylopic(img = img)
 plot(mtcars$wt, mtcars$mpg)
 ```
 
-### Tab B
+### Base R
 
 ```{r}
+#| code-fold: true
+
 plot(mtcars$hp, mtcars$mpg)
 ```
 :::
 
+### Phylogenetics
+
+::: {.panel-tabset}
+### ggplot2
+
 ```{r}
+#| code-fold: true
+
 plot(mtcars$wt, mtcars$mpg)
 ```
+
+### Base R
+
+```{r}
+#| code-fold: true
+
+plot(mtcars$hp, mtcars$mpg)
+```
+:::
+
+### Network plots
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| code-fold: true
+
+plot(mtcars$wt, mtcars$mpg)
+```
+
+### Base R
+
+```{r}
+#| code-fold: true
+
+plot(mtcars$hp, mtcars$mpg)
+```
+:::
 
 ## Callouts
 
