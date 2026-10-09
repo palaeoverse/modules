@@ -24,6 +24,10 @@ execute:
   echo: true
   warning: false
   message: false
+  fig-width: 7
+  fig-height: 5
+  fig-dpi: 300
+  fig-align: center
   freeze: auto
 filters:
   - at: pre-ast
@@ -381,13 +385,13 @@ img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)
 save_phylopic(img = img)
 ```
 
-## Example usage
+## Advanced Examples
 
-Herein, three example use cases of the rphylopic package are presented for both ggplot2 and base R, along with independent exercises.
+Herein, we show how rphylopic can be used in more advanced use cases with ggplot2 and base R, including for maps, phylogenies, and network plots. Independent exercises are included along the way so you can get some hands-on practice.
 
 ### Basic accession, transformation, and plotting
 
-The rphylopic package provides robust, flexible tools for accessing and transforming PhyloPic silhouettes. To demonstrate them, we'll use the Antarctic penguin dataset from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) R package.
+rphylopic provides robust and flexible tools for accessing and transforming PhyloPic silhouettes. To demonstrate them, we'll use the Antarctic penguin dataset from the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) R package.
 
 First, let's load the libraries and the data:
 
@@ -409,7 +413,6 @@ Now, let's pick a silhouette to use for the penguins.
 #| label: pick-penguin
 #| eval: false
 
-# Pick a silhouette for Pygoscelis (here we pick #1)
 penguin <- pick_phylopic("Pygoscelis", n = 3, view = 3)
 ```
 
@@ -430,7 +433,7 @@ knitr::include_graphics("img/rphylopic-menu-choice-penguin.png")
 
 # DO NOT EXPOSE TO USER THIS IS FOR AUTO-PICKING THE SILHOUETTE
 # FROM THE INTERACTIVE MENU
-penguin <- get_phylopic(uuid = "86334821-42ec-4da1-bb9d-53f3d6941c77")
+penguin <- pick_phylopic("Pygoscelis", n = 2, view = 2, auto = 2)
 ```
 
 You may have noticed in the preview that the silhouette was a little slanted. Let's rotate it clockwise just a smidgen:
@@ -441,10 +444,12 @@ You may have noticed in the preview that the silhouette was a little slanted. Le
 penguin_rot <- rotate_phylopic(img = penguin, angle = 15)
 ```
 
-Now, let's draft the plot that we want to make. In this case, let's plot the penguins' bill lengths vs. their flipper lengths:
+Now, let's draft the plot that we want to make. In this case, let's plot the penguins' bill lengths vs. their flipper lengths, split by species:
 
 ::: {.panel-tabset}
 ### ggplot2
+
+**Tip:** ggplot2's `facet_wrap()` function splits a dataset into multiple panels based on a categorical variable and arranges them in a compact 2D grid.
 
 ```{r}
 #| label: plot-data-ggplot2
@@ -457,6 +462,8 @@ ggplot(penguins_subset) +
 ```
 
 ### Base R
+
+**Tip::** In base R, generating multiple plots means making a separate call to `plot()` for each species. We can avoid repeating ourselves by using a for loop to draw one panel per species, after setting up a three-row layout with `par()`.
 
 ```{r}
 #| label: plot-data-base
@@ -482,7 +489,7 @@ for (sp in levels(penguins_subset$species)) {
 ```
 :::
 
-That's a nice basic plot, but we can make it nicer by adding a penguin silhouette. Sadly, we don't have a separate silhouette for each species ([although we could make one...](https://contribute.phylopic.org)), so we'll place a single silhouette in the top panel using the add_phylopic_base() function. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.
+That's not a bad basic plot, but we can make it nicer by adding a penguin silhouette. Sadly, we don't have a separate silhouette for each species ([although we could make one...](https://contribute.phylopic.org)), so we'll place a single silhouette in the top panel using the `geom_phylopic` (ggplot2) and `add_phylopic_base()` (base R) functions. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.
 
 ::: {.panel-tabset}
 ### ggplot2
@@ -490,7 +497,7 @@ That's a nice basic plot, but we can make it nicer by adding a penguin silhouett
 ```{r}
 #| label: plot-penguin-ggplot2
 
-# Create input dataframe
+# Create object for plotting penguin
 silhouette_df <- data.frame(x = 59, y = 215, species = "Adelie")
 
 ggplot(penguins_subset) +
@@ -506,10 +513,6 @@ ggplot(penguins_subset) +
 
 ```{r}
 #| label: plot-penguin-base
-
-# Calculate shared axis limits so all panels are comparable
-xlim <- range(penguins_subset$bill_length_mm)
-ylim <- range(penguins_subset$flipper_length_mm)
 
 # Set up the plot area (3 rows, 1 column)
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
@@ -554,10 +557,6 @@ ggplot(penguins_subset) +
 ```{r}
 #| label: plot-penguin-points-base
 
-# Calculate shared axis limits so all panels are comparable
-xlim <- range(penguins_subset$bill_length_mm)
-ylim <- range(penguins_subset$flipper_length_mm)
-
 # Set up the plot area (3 rows, 1 column)
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 
@@ -589,7 +588,8 @@ Oh no, the silhouettes are way too big! By default, `geom_phylopic()` and `add_p
 
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
-                aes(x = bill_length_mm, y = flipper_length_mm), height = 5) +
+                aes(x = bill_length_mm, y = flipper_length_mm), 
+                height = 5) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15)
@@ -599,10 +599,6 @@ ggplot(penguins_subset) +
 
 ```{r}
 #| label: plot-penguin-height-base
-
-# Calculate shared axis limits so all panels are comparable
-xlim <- range(penguins_subset$bill_length_mm)
-ylim <- range(penguins_subset$flipper_length_mm)
 
 # Set up the plot area (3 rows, 1 column)
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
@@ -631,95 +627,132 @@ for (sp in levels(penguins_subset$species)) {
 
 So far we have set the silhouette size by hand. Instead, we can map the height to another variable in our data, and rphylopic will scale the values for us automatically.
 
-**Your task:** Make the size of the silhouettes relative to the penguins' body masses (`body_mass_g`).
+**Your task:** Make a plot with the size of the silhouettes relative to the penguins' body masses (`body_mass_g`).
 :::
 
 ::: {.callout-tip collapse="true"}
 ## Exercise 6: Solution
+
+::::: {.panel-tabset}
+### ggplot2
+
+With `geom_phylopic()`, rphylopic automatically rescales values between 1 and 6. So, we can just pass `height = body_mass_g`.
+
+**Hint:** If the defaults don't suit your data, you can also adjust the scaling with `scale_height_continuous()` (or `scale_width_continuous()` for the width aesthetic), used just like `scale_size_continuous()`. We'll use the defaults here:
+
+```{r}
+#| label: plot-penguin-scale-ggplot2
+
+ggplot(penguins_subset) +
+  geom_phylopic(img = penguin_rot, 
+                aes(x = bill_length_mm, y = flipper_length_mm, height = body_mass_g)) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15)
+```
+
+### Base R
+
+With `add_phylopic_base()`, rphylopic does not automatically rescale values. So, we have to manually adjust our scaling. Here, we use `height = log10(body_mass_g)`.
+
+```{r}
+#| label: plot-penguin-scale-base
+
+# Set up the plot area (3 rows, 1 column)
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+
+# Loop over the species and create a plot for each one
+for (sp in levels(penguins_subset$species)) {
+  # Subset the data to the current species
+  species_data <- subset(penguins_subset, species == sp)
+
+  # Create an empty plot with the shared axis limits
+  plot(NA, xlim = xlim, ylim = ylim,
+       xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
+       main = sp)
+
+  # Add a penguin silhouette at each x-y pair instead of a point
+  add_phylopic_base(img = penguin_rot,
+                    x = species_data$bill_length_mm,
+                    y = species_data$flipper_length_mm,
+                    # Manually scale with log10
+                    height = log10(species_data$body_mass_g))
+}
+```
+:::::
+:::
+
+::: {.callout-caution}
+## Exercise 7: Define fill colours with data
+
+**Your task:** Now that you've varied the size of the penguins based on their body mass, make a plot where you also vary the colour fill of penguins based on their `sex`.
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 7: Solution
+
+::::: {.panel-tabset}
+### ggplot2
+
+**Tip:** the default for `geom_phylopic()` is to not display a legend, so we need to set `show.legend = TRUE`. However, we only want a legend for the fill colours, so we use `guide = "none"` for the size scale. We also want to show the fill color in the legend, so we need to override the shape:
+
+```{r}
+#| label: plot-penguin-colour-ggplot2
+
+ggplot(penguins_subset) +
+  geom_phylopic(img = penguin_rot,
+                aes(x = bill_length_mm, y = flipper_length_mm,
+                    height = body_mass_g, fill = sex),
+                show.legend = TRUE) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  scale_size_continuous(guide = "none") +
+  scale_fill_manual("Sex", values = c("orange", "blue"),
+                    labels = c("Female", "Male"),
+                    guide = guide_legend(override.aes = list(shape = 21))) +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15) +
+  theme(legend.position = "inside", legend.position.inside = c(0.9, 0.9))
+```
+
+### Base R
+
+**Tip:** By default base `plot()` does not add a legend to a plot. We need to define it using `legend()`.
+
+```{r}
+#| label: plot-penguin-colour-base
+
+# Set up the plot area (3 rows, 1 column)
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+
+# Loop over the species and create a plot for each one
+for (sp in levels(penguins_subset$species)) {
+  # Subset the data to the current species
+  species_data <- subset(penguins_subset, species == sp)
+
+  # Create an empty plot with the shared axis limits
+  plot(NA, xlim = xlim, ylim = ylim,
+       xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
+       main = sp)
+
+  # Add a penguin silhouette at each x-y pair instead of a point
+  add_phylopic_base(img = penguin_rot,
+                    x = species_data$bill_length_mm,
+                    y = species_data$flipper_length_mm,
+                    # Manually scale with log10
+                    height = log10(species_data$body_mass_g),
+                    # Set fill colour
+                    fill = ifelse(species_data$sex == "male", "blue", "orange"))
+}
+
+# Add a legend
+legend("bottomright", legend = c("Female", "Male"), pch = 20,
+       col = c("orange", "blue"), bty = "n")
+```
+:::::
 :::
 
 ### Geographic distribution
 
-::: {.panel-tabset}
-### ggplot2
-
-```{r}
-#| code-fold: true
-
-plot(mtcars$wt, mtcars$mpg)
-```
-
-### Base R
-
-```{r}
-#| code-fold: true
-
-plot(mtcars$hp, mtcars$mpg)
-```
-:::
-
 ### Phylogenetics
 
-::: {.panel-tabset}
-### ggplot2
-
-```{r}
-#| code-fold: true
-
-plot(mtcars$wt, mtcars$mpg)
-```
-
-### Base R
-
-```{r}
-#| code-fold: true
-
-plot(mtcars$hp, mtcars$mpg)
-```
-:::
-
 ### Network plots
-
-::: {.panel-tabset}
-### ggplot2
-
-```{r}
-#| code-fold: true
-
-plot(mtcars$wt, mtcars$mpg)
-```
-
-### Base R
-
-```{r}
-#| code-fold: true
-
-plot(mtcars$hp, mtcars$mpg)
-```
-:::
-
-## Callouts
-
-::: {.narration}
-A callout gets a slide of its own. The content is un-boxed and the slide is titled by its own heading.
-:::
-
-::: {.callout-caution collapse="true"}
-## An exercise solution
-
-A *collapsed* callout is the exception: it keeps its box. Since clicking on
-slides can be awkward, the collapsed content is held back as a fragment and
-revealed when you advance. On the website it stays a click-to-open box.
-:::
-
-::: {.callout-note}
-note
-:::
-
-::: {.callout-important}
-important
-:::
-
-::: {.callout-warning}
-warning
-:::
