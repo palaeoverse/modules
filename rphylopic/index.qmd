@@ -3,8 +3,8 @@ title: "Getting started with **rphylopic**"
 subtitle: "An Introduction to the **rphylopic** R package"
 description: "Why plot dots when you can plot dinosaurs? [**rphylopic**](https://rphylopic.palaeoverse.org) lets you fetch and add silhouettes from [**PhyloPic**](https://www.phylopic.org) to your base R and ggplot2 figures, from simple x-y plots to maps, phylogenies, networks, and beyond."
 author:
-  - William Gearty
   - Lewis A. Jones
+  - William Gearty
 date: "`r Sys.Date()`"
 categories: [r, ggplot2, dataviz]
 difficulty: Beginner
@@ -752,6 +752,185 @@ legend("bottomright", legend = c("Female", "Male"), pch = 20,
 :::
 
 ### Geographic distribution
+
+In much the same way as generic x-y plotting, the rphylopic package can be used in combination with ggplot2 to plot organism silhouettes on a map. That is, to plot data points (e.g. species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the palaeoverse R package to visualize the geographic distribution of Diplocaulus fossils.
+
+First, let’s load our libraries and the tetrapod data:
+
+```{r}
+#| label: load-library-geo
+
+# Load libraries
+library(rphylopic)
+library(ggplot2)
+library(palaeoverse)
+library(sf)
+library(rnaturalearth)
+# Get occurrence data
+data(tetrapods)
+```
+
+Then we’ll subset our occurrences to only those for Diplocaulus:
+
+```{r}
+#| label: subset-tetrapods
+
+diplocaulus <- subset(tetrapods, genus == "Diplocaulus")
+```
+
+**TODO: WALKTHROUGH ON GEOGRAPHIC PLOTTING** 
+
+```{r}
+#| label: map-setup
+
+# Get map data
+world <- ne_countries(returnclass = "sf")
+
+# Convert tetrapods to sf object
+diplocaulus <- diplocaulus |>
+  st_as_sf(coords = c("lng", "lat"), crs = 4326)
+```
+
+Now, let’s plot those occurrences on a world map. ggplot2 and it’s built-in function map_data() make this a breeze. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill color, the more occurrences in that geographic location.
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| label: plot-map-ggplot2
+
+# Plot
+ggplot(world) +
+  geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
+  geom_sf(data = diplocaulus, size = 0.75, alpha = 0.75, colour = "blue") +
+  theme_void() +
+  coord_sf()
+```
+
+### Base R
+
+```{r}
+#| label: plot-map-base
+
+# Define margins
+par(mar = c(1, 1, 1, 1))
+# Plot
+plot(st_geometry(world), col = "lightgrey", border = "darkgrey", lwd = 0.1)
+plot(st_geometry(diplocaulus), cex = 0.75, pch = 16, 
+     col = rgb(red = 0, green = 0, blue = 1, alpha = 0.75),
+     add = TRUE)
+```
+
+:::
+
+Now, as with the penguin figure above, we can easily replace those points with silhouettes.
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| label: plot-map-silhouettes-ggplot2
+
+ggplot(world) +
+  geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
+  geom_phylopic(data = diplocaulus, 
+                aes(x = st_coordinates(diplocaulus)[ ,1], 
+                    y = st_coordinates(diplocaulus)[ ,2], 
+                    name = genus),
+                height = 4, alpha = 0.75, fill = "blue") +
+  theme_void() +
+  coord_sf()
+```
+
+### Base R
+
+```{r}
+#| label: plot-map-silhouettes-base
+
+# Plot map
+plot(world, col = "lightgrey", border = "darkgrey", lwd = 0.1, main = NA)
+# Plot silhouettes
+add_phylopic_base(name = diplocaulus$genus,
+                  x = st_coordinates(diplocaulus)[ ,1], 
+                  y = st_coordinates(diplocaulus)[ ,2],
+                  height = 4, fill = "blue", alpha = 0.75)
+```
+
+:::
+
+Snazzy!
+
+Note that while we used the genus name as the name aesthetic here, we easily could have done name = "Diplocaulus" outside of the aes() call instead. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using name = genus within the aes() call.
+
+Also, note that we could change the projection of the map and data using the crs and default_crs arguments in coord_sf(). When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| label: plot-map-coord-ggplot2
+
+# Target projection (Robinson)
+crs_rob <- st_crs("ESRI:54030")
+
+# Set up a bounding box
+bbox <- st_graticule(crs = 4326, 
+                     lat = c(-89.9, 89.9), 
+                     lon = c(-179.9, 179.9)) |>
+          st_transform(crs_rob)
+
+# Project world
+proj_world <- world |>
+  st_transform(crs_rob)
+
+# Project lng/lat (WGS84) to Robinson
+proj_diplocaulus <- diplocaulus |>
+  st_transform(crs_rob)
+
+ggplot(proj_world) +
+  geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
+  geom_phylopic(data = proj_diplocaulus,
+                aes(x = st_coordinates(proj_diplocaulus)[ ,1], 
+                    y = st_coordinates(proj_diplocaulus)[ ,2], 
+                    name = genus),
+                height = 8E5, alpha = 0.75, fill = "blue") +
+  geom_sf(data = bbox) +
+  theme_void() +
+  coord_sf()
+```
+
+### Base R
+
+```{r}
+#| label: plot-map-coord-base
+
+# Target projection (Robinson)
+crs_rob <- st_crs("ESRI:54030")
+# Set up a bounding box
+bbox <- st_graticule(crs = 4326, 
+                     lat = c(-89.9, 89.9), 
+                     lon = c(-179.9, 179.9)) |>
+          st_transform(crs_rob)
+# Project world
+proj_world <- world |>
+  st_transform(crs_rob)
+# Project lng/lat (WGS84) to Robinson
+proj_diplocaulus <- diplocaulus |>
+  st_transform(crs_rob)
+# Plotting
+par(mar = c(0, 0, 0, 0))
+# Map
+plot(st_geometry(proj_world), col = "lightgrey", border = "darkgrey", lwd = 0.1)
+# Bounding box
+plot(st_geometry(bbox), col = "black", add = TRUE)
+# Draw silhouettes (height is in projected units, i.e. metres)
+add_phylopic_base(name = proj_diplocaulus$genus,
+                  x = st_coordinates(proj_diplocaulus)[ ,1], 
+                  y = st_coordinates(proj_diplocaulus)[ ,2], 
+                  height = 8E5, fill = "blue", alpha = 0.75)
+```
+
+:::
 
 ### Phylogenetics
 
