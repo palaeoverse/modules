@@ -12,7 +12,7 @@
 
   <meta name="author" content="William Gearty">
   <meta name="author" content="Lewis A. Jones">
-  <meta name="dcterms.date" content="2026-10-08">
+  <meta name="dcterms.date" content="2026-10-09">
   <title>Getting started with rphylopic</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -235,7 +235,7 @@ Lewis A. Jones
 </div>
 </div>
 
-  <p class="date">2026-10-08</p>
+  <p class="date">2026-10-09</p>
 </section>
 <section class="slide level2">
 
@@ -254,6 +254,9 @@ Lewis A. Jones
 <li>Retrieve attribution and licence information for the silhouettes you use, so that creators are credited appropriately.</li>
 <li>Save figures containing silhouettes, and export silhouettes as image files.</li>
 </ol>
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
 </section>
 <section id="what-is-phylopic" class="slide level2">
 <h2>What is PhyloPic</h2>
@@ -316,6 +319,9 @@ Lewis A. Jones
 <h2>Why use silhouettes</h2>
 <p>Data visualisation is a key component of any scientific data analysis workflow and is vital for the summarisation and dissemination of complex ideas and results. In ecology and evolutionary biology, data are often associated with taxonomic entities. However, taxonomic nomenclature, which is fundamental to the biological sciences, is often unfamiliar to nonspecialists. Silhouettes act as a compact visual shorthand. In a phylogeny, a diversity-through-time plot, or a multi-panel figure comparing groups, they help readers identify taxa at a glance and reduce the need for long labels. They are also valuable in teaching and outreach materials, where they make otherwise abstract plots more engaging and accessible.</p>
 </section>
+<section id="getting-started" class="slide level2">
+<h2>Getting started</h2>
+</section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Installation</h2>
 <div class="cell">
@@ -343,14 +349,14 @@ Lewis A. Jones
 </section>
 <section class="slide level2">
 <h2>Installation</h2>
-<p>Don’t forget to also acknowledge the contributors of the silhouettes that you use (see <a href="#/get-attribution">Get attribution</a>). Depending on the license of the silhouette, this may be a legal obligation.</p>
+<p>Depending on the license, you may be required, by law, to acknowledge the creators of the silhouettes that you use (see <a href="#/get-attribution">Get attribution</a>). Regardless of license, it’s generally a good thing to acknowledge people for their contributions.</p>
 </section>
 <section id="how-does-rphylopic-work" class="slide level2">
 <h2>How does rphylopic work?</h2>
 <p>Every silhouette available via <a href="https://www.phylopic.org">PhyloPic</a> has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to get a UUID. To do so via rphylopic you can use the <code>get_uuid()</code> function to search PhyloPic based on a taxonomic or phylogenetic name (e.g.&nbsp;<em>Canis lupus</em>) and return the first matched UUID. Using the returned UUID, you can then fetch the respective silhouette using <code>get_phylopic()</code>. However, multiple silhouettes (and hence UUIDs) can exist for a searched name. The <code>n</code> argument in <code>get_uuid()</code> allows you to fetch <code>n</code> matched UUIDs.</p>
 </section>
 <section id="get-a-silhouette-uuid" class="slide level2">
-<h2>Get a silhouette uuid</h2>
+<h2>Get a silhouette UUID</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># Load rphylopic</span></span>
 <span id="cb5-2"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
@@ -376,18 +382,13 @@ Lewis A. Jones
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb7-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Visualise and pick a PhyloPic</span></span>
 <span id="cb7-2" class="hljs-ln-code"><a aria-label="2"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Canis lupus"</span>, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">view =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-html/auto-pick-silhouette-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><img data-src="img/rphylopic-menu-choice.png"></p>
+
+<img data-src="img/rphylopic-menu-choice.png" style="width:100.0%" class="r-stretch"></section>
+<section class="slide level2">
+<h2>Pick a silhouette</h2>
 <p>Let’s go with option 1!</p>
-</section>
+
+<img data-src="index_files/figure-html/auto-pick-silhouette-1.png" width="672" class="r-stretch"></section>
 <section class="slide level2">
 <h2>Pick a silhouette</h2>
 <p>Now let’s inspect the returned object:</p>
@@ -403,8 +404,13 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <p>We have information about the format (vector), dimensions, the UUID, and the URL of our silhouette.</p>
 </section>
 <section class="slide level2">
-<h2>Exercise 1: Get a silhouette UUID of your favourite species</h2>
+<h2>Exercise 1: Get the UUID of a silhouette for your favourite species</h2>
 <p>Remember, there may be multiple silhouettes available!</p>
+<ul>
+<li>What is the UUID of your chosen silhouette?</li>
+<li>What is the format of the silhouette?</li>
+<li>What are the dimensions of the silhouette?</li>
+</ul>
 </section>
 <section id="plot-a-silhouette" class="slide level2">
 <h2>Plot a silhouette</h2>
@@ -429,8 +435,9 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <img data-src="index_files/figure-html/plot-base-r-1.png" width="672" class="r-stretch"><p>Ah, you’ve found out our little secret! You can actually skip the steps of getting the UUID altogether by just searching for the desired taxon in <code>add_phylopic_base()</code>. However, this will always return the first matched silhouette meaning you might be missing out on all the other options! It’s always worth checking out your options with <code>pick_phylopic()</code> first.</p>
 </section>
 <section class="slide level2">
-<h2>Exercise 2: Plot PhyloPics with base R</h2>
-<p>Using your favourite species, plot silhouettes using the three different input argument options: <code>img</code>, <code>uuid</code>, and <code>name</code>.</p>
+<h2>Exercise 2: Plot with base R</h2>
+<p>Using your favourite species, plot a silhouette of it using the three different input argument options (<code>img</code>, <code>uuid</code>, and <code>name</code>) within the same plot.</p>
+<p>Are they all the same silhouette? If not, why might that be?</p>
 </section>
 <section id="ggplot2" class="slide level2">
 <h2>ggplot2</h2>
@@ -453,8 +460,9 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 </div>
 <img data-src="index_files/figure-html/plot-ggplot2-1.png" width="672" class="r-stretch"></section>
 <section class="slide level2">
-<h2>Exercise 3: Plot PhyloPics with ggplot2</h2>
-<p>Using your favourite species, plot silhouettes using the three different input argument options: <code>img</code>, <code>uuid</code>, and <code>name</code>.</p>
+<h2>Exercise 3: Plot with ggplot2</h2>
+<p>Using your favourite species, plot a silhouette of it using the three different input argument options (<code>img</code>, <code>uuid</code>, and <code>name</code>) within the same plot.</p>
+<p>Are they all the same silhouette? If not, why might that be?</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Transforming silhouettes</h2>
@@ -522,12 +530,13 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 </section>
 <section class="slide level2">
 <h2>Exercise 4: Transform your silhouette</h2>
-<p>It’s your turn! After fetching your favourite silhouette, try transforming it by:</p>
+<p>It’s your turn! After fetching your favourite silhouette (recall: <a href="#/pick-a-silhouette">pick a silhouette</a>), try transforming it by:</p>
 <ul>
-<li>Flipping</li>
-<li>Rotating</li>
-<li>Recolouring</li>
+<li>Flipping the silhouette</li>
+<li>Rotating the silhouette</li>
+<li>Recolouring the silhouette</li>
 </ul>
+<p>Once you have done that, try visualising them altogether.</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Get attribution</h2>
@@ -564,7 +573,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 [1] "Public Domain Mark 1.0"</code></pre>
 </div>
 </div>
-<p>Now that you’ve made a plot and used some silhouettes, you should acknowledge the contributors that made those silhouettes. Fortunately, <strong>rphylopic</strong> includes the <code>get_attribution()</code> function to get contributor data about specific images:</p>
+<p>Now that you’ve made a plot and used some silhouettes, you should acknowledge the contributors that made those silhouettes. To make this easy, rphylopic includes the <code>get_attribution()</code> function to get contributor data about specific images:</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Get attribution</h2>
@@ -605,31 +614,347 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="co"># Get valid uuid</span></span>
 <span id="cb26-2"><a aria-label="2"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
 <span id="cb26-3"><a aria-label="3"></a><span class="co"># Get attribution data for uuid</span></span>
-<span id="cb26-4"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid, <span class="at">text =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb26-4"><a aria-label="4"></a><span class="fu">get_attribution</span>(<span class="at">uuid =</span> uuid, <span class="at">text =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>text</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.7.0 (Gearty &amp; Jones, 2023). Silhouette was made by Mareike C. Janiak, 2020 (Public Domain Mark 1.0). Silhouette was contributed by Mareike Janiak."</code></pre>
 </div>
-<p>This function can even write a little blurb for you to include in your publications:</p>
+</div>
+<p>However, that’s a lot of raw information to handle. With <code>get_attribution()</code>, you can also get this output automatically parsed to include in your publications with the <code>text</code> argument:</p>
+</section>
+<section class="slide level2">
+<h2>Exercise 5: Get the attribution information</h2>
+<p>In previous exercises, you selected a silhouette you like. Now, try and get the attribution information for that silhouette.</p>
 </section>
 <section id="save-an-image" class="slide level2">
 <h2>Save an image</h2>
-<p>You should be able to accomplish all of your visualization needs within R, but in the rare case that need to use a silhouette outside of R, we’ve also got you covered with the <code>save_phylopic()</code> function. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP).</p>
+<p>You should be able to accomplish all of your visualisation needs within R, but in the rare case that you need to use a silhouette outside of R, the <code>save_phylopic()</code> function lets you export silhouettes. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="co"># How do I save an image?</span></span>
-<span id="cb27-2"><a aria-label="2"></a><span class="co"># Get image</span></span>
-<span id="cb27-3"><a aria-label="3"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Phascolarctos cinereus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb27-4"><a aria-label="4"></a><span class="co"># Save image</span></span>
-<span id="cb27-5"><a aria-label="5"></a><span class="fu">save_phylopic</span>(<span class="at">img =</span> img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="co"># How do I save an image?</span></span>
+<span id="cb28-2"><a aria-label="2"></a><span class="co"># Get image</span></span>
+<span id="cb28-3"><a aria-label="3"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Phascolarctos cinereus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb28-4"><a aria-label="4"></a><span class="co"># Save image</span></span>
+<span id="cb28-5"><a aria-label="5"></a><span class="fu">save_phylopic</span>(<span class="at">img =</span> img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section class="slide level2">
+<section id="example-usage" class="slide level2">
+<h2>Example usage</h2>
+<p>Herein, three example use cases of the rphylopic package are presented for both ggplot2 and base R, along with independent exercises.</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Basic accession, transformation, and plotting</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb29-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load libraries</span></span>
+<span id="cb29-2" class="hljs-ln-code"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb29-3" class="hljs-ln-code"><a aria-label="3"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb29-4" class="hljs-ln-code"><a aria-label="4"></a><span class="co"># Get penguin data</span></span>
+<span id="cb29-5" class="hljs-ln-code"><a aria-label="5"></a><span class="fu">data</span>(penguins)</span>
+<span id="cb29-6" class="hljs-ln-code"><a aria-label="6"></a><span class="co"># Subset the data to remove rows with missing sex values</span></span>
+<span id="cb29-7" class="hljs-ln-code"><a aria-label="7"></a>penguins_subset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The rphylopic package provides robust, flexible tools for accessing and transforming PhyloPic silhouettes. To demonstrate them, we’ll use the Antarctic penguin dataset from the <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a> R package.</p>
+<p>First, let’s load the libraries and the data:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Basic accession, transformation, and plotting</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="co"># Load libraries</span></span>
+<span id="cb30-2"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb30-3"><a aria-label="3"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb30-4"><a aria-label="4"></a><span class="co"># Get penguin data</span></span>
+<span id="cb30-5"><a aria-label="5"></a><span class="fu">data</span>(penguins)</span>
+<span id="cb30-6"><a aria-label="6"></a><span class="co"># Subset the data to remove rows with missing sex values</span></span>
+<span id="cb30-7"><a aria-label="7"></a>penguins_subset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="co"># Pick a silhouette for Pygoscelis (here we pick #1)</span></span>
+<span id="cb31-2"><a aria-label="2"></a>penguin <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="st">"Pygoscelis"</span>, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">view =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now, let’s pick a silhouette to use for the penguins.</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Basic accession, transformation, and plotting</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="co"># Load libraries</span></span>
+<span id="cb32-2"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb32-3"><a aria-label="3"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb32-4"><a aria-label="4"></a><span class="co"># Get penguin data</span></span>
+<span id="cb32-5"><a aria-label="5"></a><span class="fu">data</span>(penguins)</span>
+<span id="cb32-6"><a aria-label="6"></a><span class="co"># Subset the data to remove rows with missing sex values</span></span>
+<span id="cb32-7"><a aria-label="7"></a>penguins_subset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a><span class="co"># Pick a silhouette for Pygoscelis (here we pick #1)</span></span>
+<span id="cb33-2"><a aria-label="2"></a>penguin <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="st">"Pygoscelis"</span>, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">view =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
+<img data-src="img/rphylopic-menu-choice-penguin.png" style="width:100.0%" class="r-stretch"></section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Basic accession, transformation, and plotting</h2>
+<p>Let’s pick #2:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Basic accession, transformation, and plotting</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a>penguin_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> penguin, <span class="at">angle =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You may have noticed in the preview that the silhouette was a little slanted. Let’s rotate it clockwise just a smidgen:</p>
+<p>Now, let’s draft the plot that we want to make. In this case, let’s plot the penguins’ bill lengths vs.&nbsp;their flipper lengths:</p>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Tab A</a></li><li><a href="#tabset-1-2">Tab B</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">ggplot2</a></li><li><a href="#tabset-1-2">Base R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
+<span id="cb35-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb35-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">y =</span> <span class="st">"Flipper length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a aria-label="4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb35-5"><a aria-label="5"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-data-ggplot2-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-label="1"></a><span class="co"># Calculate shared axis limits so all panels are comparable</span></span>
+<span id="cb36-2"><a aria-label="2"></a>xlim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>bill_length_mm)</span>
+<span id="cb36-3"><a aria-label="3"></a>ylim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>flipper_length_mm)</span>
+<span id="cb36-4"><a aria-label="4"></a></span>
+<span id="cb36-5"><a aria-label="5"></a><span class="co"># Set up the plot area (3 rows, 1 column)</span></span>
+<span id="cb36-6"><a aria-label="6"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb36-7"><a aria-label="7"></a></span>
+<span id="cb36-8"><a aria-label="8"></a><span class="co"># Loop over the species and create a plot for each one</span></span>
+<span id="cb36-9"><a aria-label="9"></a><span class="cf">for</span> (sp <span class="cf">in</span> <span class="fu">levels</span>(penguins_subset<span class="sc">$</span>species)) {</span>
+<span id="cb36-10"><a aria-label="10"></a>  <span class="co"># Subset the data to the current species and plot it</span></span>
+<span id="cb36-11"><a aria-label="11"></a>  <span class="fu">with</span>(</span>
+<span id="cb36-12"><a aria-label="12"></a>    <span class="fu">subset</span>(penguins_subset, species <span class="sc">==</span> sp),</span>
+<span id="cb36-13"><a aria-label="13"></a>    <span class="fu">plot</span>(bill_length_mm, flipper_length_mm,</span>
+<span id="cb36-14"><a aria-label="14"></a>         <span class="at">xlim =</span> xlim, <span class="at">ylim =</span> ylim,</span>
+<span id="cb36-15"><a aria-label="15"></a>         <span class="at">xlab =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">ylab =</span> <span class="st">"Flipper length (mm)"</span>,</span>
+<span id="cb36-16"><a aria-label="16"></a>         <span class="at">main =</span> sp)</span>
+<span id="cb36-17"><a aria-label="17"></a>  )</span>
+<span id="cb36-18"><a aria-label="18"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-data-base-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>That’s a nice basic plot, but we can make it nicer by adding a penguin silhouette. Sadly, we don’t have a separate silhouette for each species (<a href="https://contribute.phylopic.org">although we could make one…</a>), so we’ll place a single silhouette in the top panel using the add_phylopic_base() function. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">ggplot2</a></li><li><a href="#tabset-2-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-label="1"></a><span class="co"># Create input dataframe</span></span>
+<span id="cb37-2"><a aria-label="2"></a>silhouette_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">59</span>, <span class="at">y =</span> <span class="dv">215</span>, <span class="at">species =</span> <span class="st">"Adelie"</span>)</span>
+<span id="cb37-3"><a aria-label="3"></a></span>
+<span id="cb37-4"><a aria-label="4"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
+<span id="cb37-5"><a aria-label="5"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb37-6"><a aria-label="6"></a>  <span class="fu">geom_phylopic</span>(<span class="at">data =</span> silhouette_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">height =</span> <span class="dv">30</span>,</span>
+<span id="cb37-7"><a aria-label="7"></a>                <span class="at">img =</span> penguin_rot) <span class="sc">+</span></span>
+<span id="cb37-8"><a aria-label="8"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">y =</span> <span class="st">"Flipper length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb37-9"><a aria-label="9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb37-10"><a aria-label="10"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-penguin-ggplot2-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-label="1"></a><span class="co"># Calculate shared axis limits so all panels are comparable</span></span>
+<span id="cb38-2"><a aria-label="2"></a>xlim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>bill_length_mm)</span>
+<span id="cb38-3"><a aria-label="3"></a>ylim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>flipper_length_mm)</span>
+<span id="cb38-4"><a aria-label="4"></a></span>
+<span id="cb38-5"><a aria-label="5"></a><span class="co"># Set up the plot area (3 rows, 1 column)</span></span>
+<span id="cb38-6"><a aria-label="6"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb38-7"><a aria-label="7"></a></span>
+<span id="cb38-8"><a aria-label="8"></a><span class="co"># Loop over the species and create a plot for each one</span></span>
+<span id="cb38-9"><a aria-label="9"></a><span class="cf">for</span> (sp <span class="cf">in</span> <span class="fu">levels</span>(penguins_subset<span class="sc">$</span>species)) {</span>
+<span id="cb38-10"><a aria-label="10"></a>  <span class="co"># Subset the data to the current species and plot it</span></span>
+<span id="cb38-11"><a aria-label="11"></a>  <span class="fu">with</span>(</span>
+<span id="cb38-12"><a aria-label="12"></a>    <span class="fu">subset</span>(penguins_subset, species <span class="sc">==</span> sp),</span>
+<span id="cb38-13"><a aria-label="13"></a>    <span class="fu">plot</span>(bill_length_mm, flipper_length_mm,</span>
+<span id="cb38-14"><a aria-label="14"></a>         <span class="at">xlim =</span> xlim, <span class="at">ylim =</span> ylim,</span>
+<span id="cb38-15"><a aria-label="15"></a>         <span class="at">xlab =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">ylab =</span> <span class="st">"Flipper length (mm)"</span>,</span>
+<span id="cb38-16"><a aria-label="16"></a>         <span class="at">main =</span> sp)</span>
+<span id="cb38-17"><a aria-label="17"></a>  )</span>
+<span id="cb38-18"><a aria-label="18"></a></span>
+<span id="cb38-19"><a aria-label="19"></a>  <span class="co"># Add the silhouette to the top panel only</span></span>
+<span id="cb38-20"><a aria-label="20"></a>  <span class="cf">if</span> (sp <span class="sc">==</span> <span class="fu">levels</span>(penguins_subset<span class="sc">$</span>species)[<span class="dv">1</span>]) {</span>
+<span id="cb38-21"><a aria-label="21"></a>    <span class="fu">add_phylopic_base</span>(<span class="at">img =</span> penguin_rot, <span class="at">x =</span> <span class="dv">59</span>, <span class="at">y =</span> <span class="dv">215</span>, <span class="at">height =</span> <span class="dv">30</span>)</span>
+<span id="cb38-22"><a aria-label="22"></a>  }</span>
+<span id="cb38-23"><a aria-label="23"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-penguin-base-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Isn’t that nifty! But we can go a step further: what if we used little penguins instead of points? We can do this with <code>geom_phylopic()</code> (ggplot2) and <code>add_phylopic_base()</code> (base R). Since we want the same image for every x-y pair, we can specify <code>img = penguin_rot</code> once more:</p>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">ggplot2</a></li><li><a href="#tabset-3-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
+<span id="cb39-2"><a aria-label="2"></a>  <span class="fu">geom_phylopic</span>(<span class="at">img =</span> penguin_rot,</span>
+<span id="cb39-3"><a aria-label="3"></a>                <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb39-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">y =</span> <span class="st">"Flipper length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb39-5"><a aria-label="5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb39-6"><a aria-label="6"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-penguin-points-ggplot2-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-label="1"></a><span class="co"># Calculate shared axis limits so all panels are comparable</span></span>
+<span id="cb40-2"><a aria-label="2"></a>xlim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>bill_length_mm)</span>
+<span id="cb40-3"><a aria-label="3"></a>ylim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>flipper_length_mm)</span>
+<span id="cb40-4"><a aria-label="4"></a></span>
+<span id="cb40-5"><a aria-label="5"></a><span class="co"># Set up the plot area (3 rows, 1 column)</span></span>
+<span id="cb40-6"><a aria-label="6"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb40-7"><a aria-label="7"></a></span>
+<span id="cb40-8"><a aria-label="8"></a><span class="co"># Loop over the species and create a plot for each one</span></span>
+<span id="cb40-9"><a aria-label="9"></a><span class="cf">for</span> (sp <span class="cf">in</span> <span class="fu">levels</span>(penguins_subset<span class="sc">$</span>species)) {</span>
+<span id="cb40-10"><a aria-label="10"></a>  <span class="co"># Subset the data to the current species</span></span>
+<span id="cb40-11"><a aria-label="11"></a>  species_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins_subset, species <span class="sc">==</span> sp)</span>
+<span id="cb40-12"><a aria-label="12"></a></span>
+<span id="cb40-13"><a aria-label="13"></a>  <span class="co"># Create an empty plot with the shared axis limits</span></span>
+<span id="cb40-14"><a aria-label="14"></a>  <span class="fu">plot</span>(<span class="cn">NA</span>, <span class="at">xlim =</span> xlim, <span class="at">ylim =</span> ylim,</span>
+<span id="cb40-15"><a aria-label="15"></a>       <span class="at">xlab =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">ylab =</span> <span class="st">"Flipper length (mm)"</span>,</span>
+<span id="cb40-16"><a aria-label="16"></a>       <span class="at">main =</span> sp)</span>
+<span id="cb40-17"><a aria-label="17"></a></span>
+<span id="cb40-18"><a aria-label="18"></a>  <span class="co"># Add a penguin silhouette at each x-y pair instead of a point</span></span>
+<span id="cb40-19"><a aria-label="19"></a>  <span class="fu">add_phylopic_base</span>(<span class="at">img =</span> penguin_rot,</span>
+<span id="cb40-20"><a aria-label="20"></a>                    <span class="at">x =</span> species_data<span class="sc">$</span>bill_length_mm,</span>
+<span id="cb40-21"><a aria-label="21"></a>                    <span class="at">y =</span> species_data<span class="sc">$</span>flipper_length_mm)</span>
+<span id="cb40-22"><a aria-label="22"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-penguin-points-base-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Oh no, the silhouettes are way too big! By default, <code>geom_phylopic()</code> and <code>add_phylopic_base()</code> makes each silhouette as tall as the plot, which is far too large here. Instead, we can specify a height or width to use (in y-axis or x-axis units, respectively):</p>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">ggplot2</a></li><li><a href="#tabset-4-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
+<span id="cb41-2"><a aria-label="2"></a>  <span class="fu">geom_phylopic</span>(<span class="at">img =</span> penguin_rot,</span>
+<span id="cb41-3"><a aria-label="3"></a>                <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm), <span class="at">height =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb41-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">y =</span> <span class="st">"Flipper length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb41-5"><a aria-label="5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb41-6"><a aria-label="6"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-penguin-height-ggplot2-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a><span class="co"># Calculate shared axis limits so all panels are comparable</span></span>
+<span id="cb42-2"><a aria-label="2"></a>xlim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>bill_length_mm)</span>
+<span id="cb42-3"><a aria-label="3"></a>ylim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>flipper_length_mm)</span>
+<span id="cb42-4"><a aria-label="4"></a></span>
+<span id="cb42-5"><a aria-label="5"></a><span class="co"># Set up the plot area (3 rows, 1 column)</span></span>
+<span id="cb42-6"><a aria-label="6"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb42-7"><a aria-label="7"></a></span>
+<span id="cb42-8"><a aria-label="8"></a><span class="co"># Loop over the species and create a plot for each one</span></span>
+<span id="cb42-9"><a aria-label="9"></a><span class="cf">for</span> (sp <span class="cf">in</span> <span class="fu">levels</span>(penguins_subset<span class="sc">$</span>species)) {</span>
+<span id="cb42-10"><a aria-label="10"></a>  <span class="co"># Subset the data to the current species</span></span>
+<span id="cb42-11"><a aria-label="11"></a>  species_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins_subset, species <span class="sc">==</span> sp)</span>
+<span id="cb42-12"><a aria-label="12"></a></span>
+<span id="cb42-13"><a aria-label="13"></a>  <span class="co"># Create an empty plot with the shared axis limits</span></span>
+<span id="cb42-14"><a aria-label="14"></a>  <span class="fu">plot</span>(<span class="cn">NA</span>, <span class="at">xlim =</span> xlim, <span class="at">ylim =</span> ylim,</span>
+<span id="cb42-15"><a aria-label="15"></a>       <span class="at">xlab =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">ylab =</span> <span class="st">"Flipper length (mm)"</span>,</span>
+<span id="cb42-16"><a aria-label="16"></a>       <span class="at">main =</span> sp)</span>
+<span id="cb42-17"><a aria-label="17"></a></span>
+<span id="cb42-18"><a aria-label="18"></a>  <span class="co"># Add a penguin silhouette at each x-y pair instead of a point</span></span>
+<span id="cb42-19"><a aria-label="19"></a>  <span class="fu">add_phylopic_base</span>(<span class="at">img =</span> penguin_rot,</span>
+<span id="cb42-20"><a aria-label="20"></a>                    <span class="at">x =</span> species_data<span class="sc">$</span>bill_length_mm,</span>
+<span id="cb42-21"><a aria-label="21"></a>                    <span class="at">y =</span> species_data<span class="sc">$</span>flipper_length_mm,</span>
+<span id="cb42-22"><a aria-label="22"></a>                    <span class="at">height =</span> <span class="dv">5</span>)</span>
+<span id="cb42-23"><a aria-label="23"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-penguin-height-base-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Exercise 6: Vary silhouette height with data</h2>
+<p>So far we have set the silhouette size by hand. Instead, we can map the height to another variable in our data, and rphylopic will scale the values for us automatically.</p>
+<p><strong>Your task:</strong> Make the size of the silhouettes relative to the penguins’ body masses (<code>body_mass_g</code>).</p>
+</section>
+<section class="slide level2">
+<h2>Basic accession, transformation, and plotting</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Exercise 6: Solution</strong></p>
+</div>
+<div class="callout-content">
+
+</div>
+</div>
+</div>
+</section>
+<section id="geographic-distribution" class="slide level2">
+<h2>Geographic distribution</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">ggplot2</a></li><li><a href="#tabset-5-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -640,9 +965,12 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
-<div id="tabset-1-2">
+<div id="tabset-5-2">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -654,13 +982,79 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
+</section>
+<section id="phylogenetics" class="slide level2">
+<h2>Phylogenetics</h2>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">ggplot2</a></li><li><a href="#tabset-6-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="network-plots" class="slide level2">
+<h2>Network plots</h2>
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">ggplot2</a></li><li><a href="#tabset-7-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-7-2">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-label="1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
