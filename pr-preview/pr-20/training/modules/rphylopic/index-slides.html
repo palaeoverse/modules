@@ -10,8 +10,8 @@
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.19">
 
-  <meta name="author" content="William Gearty">
   <meta name="author" content="Lewis A. Jones">
+  <meta name="author" content="William Gearty">
   <meta name="dcterms.date" content="2026-10-09">
   <title>Getting started with rphylopic</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -225,12 +225,12 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-William Gearty
+Lewis A. Jones
 </div>
 </div>
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Lewis A. Jones
+William Gearty
 </div>
 </div>
 </div>
@@ -1081,8 +1081,228 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </section>
-<section id="geographic-distribution" class="slide level2">
-<h2>Geographic distribution</h2>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Geographic distribution</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb47-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load libraries</span></span>
+<span id="cb47-2" class="hljs-ln-code"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb47-3" class="hljs-ln-code"><a aria-label="3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb47-4" class="hljs-ln-code"><a aria-label="4"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb47-5" class="hljs-ln-code"><a aria-label="5"></a><span class="fu">library</span>(sf)</span>
+<span id="cb47-6" class="hljs-ln-code"><a aria-label="6"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb47-7" class="hljs-ln-code"><a aria-label="7"></a><span class="co"># Get occurrence data</span></span>
+<span id="cb47-8" class="hljs-ln-code"><a aria-label="8"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In much the same way as generic x-y plotting, the rphylopic package can be used in combination with ggplot2 to plot organism silhouettes on a map. That is, to plot data points (e.g.&nbsp;species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the palaeoverse R package to visualize the geographic distribution of Diplocaulus fossils.</p>
+<p>First, let’s load our libraries and the tetrapod data:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Geographic distribution</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-label="1"></a><span class="co"># Load libraries</span></span>
+<span id="cb48-2"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb48-3"><a aria-label="3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb48-4"><a aria-label="4"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb48-5"><a aria-label="5"></a><span class="fu">library</span>(sf)</span>
+<span id="cb48-6"><a aria-label="6"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb48-7"><a aria-label="7"></a><span class="co"># Get occurrence data</span></span>
+<span id="cb48-8"><a aria-label="8"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-label="1"></a>diplocaulus <span class="ot">&lt;-</span> <span class="fu">subset</span>(tetrapods, genus <span class="sc">==</span> <span class="st">"Diplocaulus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then we’ll subset our occurrences to only those for Diplocaulus:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Geographic distribution</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-label="1"></a><span class="co"># Load libraries</span></span>
+<span id="cb50-2"><a aria-label="2"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb50-3"><a aria-label="3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb50-4"><a aria-label="4"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb50-5"><a aria-label="5"></a><span class="fu">library</span>(sf)</span>
+<span id="cb50-6"><a aria-label="6"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb50-7"><a aria-label="7"></a><span class="co"># Get occurrence data</span></span>
+<span id="cb50-8"><a aria-label="8"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-label="1"></a>diplocaulus <span class="ot">&lt;-</span> <span class="fu">subset</span>(tetrapods, genus <span class="sc">==</span> <span class="st">"Diplocaulus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-label="1"></a><span class="co"># Get map data</span></span>
+<span id="cb52-2"><a aria-label="2"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb52-3"><a aria-label="3"></a></span>
+<span id="cb52-4"><a aria-label="4"></a><span class="co"># Convert tetrapods to sf object</span></span>
+<span id="cb52-5"><a aria-label="5"></a>diplocaulus <span class="ot">&lt;-</span> diplocaulus <span class="sc">|&gt;</span></span>
+<span id="cb52-6"><a aria-label="6"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lng"</span>, <span class="st">"lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>TODO: WALKTHROUGH ON GEOGRAPHIC PLOTTING</strong></p>
+<p>Now, let’s plot those occurrences on a world map. ggplot2 and it’s built-in function map_data() make this a breeze. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill color, the more occurrences in that geographic location.</p>
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">ggplot2</a></li><li><a href="#tabset-7-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a><span class="co"># Plot</span></span>
+<span id="cb53-2"><a aria-label="2"></a><span class="fu">ggplot</span>(world) <span class="sc">+</span></span>
+<span id="cb53-3"><a aria-label="3"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>, <span class="at">color =</span> <span class="st">"darkgrey"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb53-4"><a aria-label="4"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> diplocaulus, <span class="at">size =</span> <span class="fl">0.75</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">colour =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb53-5"><a aria-label="5"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb53-6"><a aria-label="6"></a>  <span class="fu">coord_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-map-ggplot2-1.png" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-7-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-label="1"></a><span class="co"># Define margins</span></span>
+<span id="cb54-2"><a aria-label="2"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb54-3"><a aria-label="3"></a><span class="co"># Plot</span></span>
+<span id="cb54-4"><a aria-label="4"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">border =</span> <span class="st">"darkgrey"</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>)</span>
+<span id="cb54-5"><a aria-label="5"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(diplocaulus), <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">pch =</span> <span class="dv">16</span>, </span>
+<span id="cb54-6"><a aria-label="6"></a>     <span class="at">col =</span> <span class="fu">rgb</span>(<span class="at">red =</span> <span class="dv">0</span>, <span class="at">green =</span> <span class="dv">0</span>, <span class="at">blue =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>),</span>
+<span id="cb54-7"><a aria-label="7"></a>     <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-map-base-1.png" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Now, as with the penguin figure above, we can easily replace those points with silhouettes.</p>
+<div class="panel-tabset">
+<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">ggplot2</a></li><li><a href="#tabset-8-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-label="1"></a><span class="fu">ggplot</span>(world) <span class="sc">+</span></span>
+<span id="cb55-2"><a aria-label="2"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>, <span class="at">color =</span> <span class="st">"darkgrey"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb55-3"><a aria-label="3"></a>  <span class="fu">geom_phylopic</span>(<span class="at">data =</span> diplocaulus, </span>
+<span id="cb55-4"><a aria-label="4"></a>                <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(diplocaulus)[ ,<span class="dv">1</span>], </span>
+<span id="cb55-5"><a aria-label="5"></a>                    <span class="at">y =</span> <span class="fu">st_coordinates</span>(diplocaulus)[ ,<span class="dv">2</span>], </span>
+<span id="cb55-6"><a aria-label="6"></a>                    <span class="at">name =</span> genus),</span>
+<span id="cb55-7"><a aria-label="7"></a>                <span class="at">height =</span> <span class="dv">4</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb55-8"><a aria-label="8"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb55-9"><a aria-label="9"></a>  <span class="fu">coord_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-map-silhouettes-ggplot2-1.png" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-8-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-label="1"></a><span class="co"># Plot map</span></span>
+<span id="cb56-2"><a aria-label="2"></a><span class="fu">plot</span>(world, <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">border =</span> <span class="st">"darkgrey"</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>, <span class="at">main =</span> <span class="cn">NA</span>)</span>
+<span id="cb56-3"><a aria-label="3"></a><span class="co"># Plot silhouettes</span></span>
+<span id="cb56-4"><a aria-label="4"></a><span class="fu">add_phylopic_base</span>(<span class="at">name =</span> diplocaulus<span class="sc">$</span>genus,</span>
+<span id="cb56-5"><a aria-label="5"></a>                  <span class="at">x =</span> <span class="fu">st_coordinates</span>(diplocaulus)[ ,<span class="dv">1</span>], </span>
+<span id="cb56-6"><a aria-label="6"></a>                  <span class="at">y =</span> <span class="fu">st_coordinates</span>(diplocaulus)[ ,<span class="dv">2</span>],</span>
+<span id="cb56-7"><a aria-label="7"></a>                  <span class="at">height =</span> <span class="dv">4</span>, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-map-silhouettes-base-1.png" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Snazzy!</p>
+<p>Note that while we used the genus name as the name aesthetic here, we easily could have done name = “Diplocaulus” outside of the aes() call instead. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using name = genus within the aes() call.</p>
+<p>Also, note that we could change the projection of the map and data using the crs and default_crs arguments in coord_sf(). When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.</p>
+<div class="panel-tabset">
+<ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">ggplot2</a></li><li><a href="#tabset-9-2">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-label="1"></a><span class="co"># Target projection (Robinson)</span></span>
+<span id="cb57-2"><a aria-label="2"></a>crs_rob <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(<span class="st">"ESRI:54030"</span>)</span>
+<span id="cb57-3"><a aria-label="3"></a></span>
+<span id="cb57-4"><a aria-label="4"></a><span class="co"># Set up a bounding box</span></span>
+<span id="cb57-5"><a aria-label="5"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">crs =</span> <span class="dv">4326</span>, </span>
+<span id="cb57-6"><a aria-label="6"></a>                     <span class="at">lat =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">89.9</span>, <span class="fl">89.9</span>), </span>
+<span id="cb57-7"><a aria-label="7"></a>                     <span class="at">lon =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">179.9</span>, <span class="fl">179.9</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb57-8"><a aria-label="8"></a>          <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb57-9"><a aria-label="9"></a></span>
+<span id="cb57-10"><a aria-label="10"></a><span class="co"># Project world</span></span>
+<span id="cb57-11"><a aria-label="11"></a>proj_world <span class="ot">&lt;-</span> world <span class="sc">|&gt;</span></span>
+<span id="cb57-12"><a aria-label="12"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb57-13"><a aria-label="13"></a></span>
+<span id="cb57-14"><a aria-label="14"></a><span class="co"># Project lng/lat (WGS84) to Robinson</span></span>
+<span id="cb57-15"><a aria-label="15"></a>proj_diplocaulus <span class="ot">&lt;-</span> diplocaulus <span class="sc">|&gt;</span></span>
+<span id="cb57-16"><a aria-label="16"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb57-17"><a aria-label="17"></a></span>
+<span id="cb57-18"><a aria-label="18"></a><span class="fu">ggplot</span>(proj_world) <span class="sc">+</span></span>
+<span id="cb57-19"><a aria-label="19"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>, <span class="at">color =</span> <span class="st">"darkgrey"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb57-20"><a aria-label="20"></a>  <span class="fu">geom_phylopic</span>(<span class="at">data =</span> proj_diplocaulus,</span>
+<span id="cb57-21"><a aria-label="21"></a>                <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">1</span>], </span>
+<span id="cb57-22"><a aria-label="22"></a>                    <span class="at">y =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">2</span>], </span>
+<span id="cb57-23"><a aria-label="23"></a>                    <span class="at">name =</span> genus),</span>
+<span id="cb57-24"><a aria-label="24"></a>                <span class="at">height =</span> <span class="fl">8E5</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb57-25"><a aria-label="25"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> bbox) <span class="sc">+</span></span>
+<span id="cb57-26"><a aria-label="26"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb57-27"><a aria-label="27"></a>  <span class="fu">coord_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-map-coord-ggplot2-1.png" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-9-2">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-label="1"></a><span class="co"># Target projection (Robinson)</span></span>
+<span id="cb58-2"><a aria-label="2"></a>crs_rob <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(<span class="st">"ESRI:54030"</span>)</span>
+<span id="cb58-3"><a aria-label="3"></a><span class="co"># Set up a bounding box</span></span>
+<span id="cb58-4"><a aria-label="4"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">crs =</span> <span class="dv">4326</span>, </span>
+<span id="cb58-5"><a aria-label="5"></a>                     <span class="at">lat =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">89.9</span>, <span class="fl">89.9</span>), </span>
+<span id="cb58-6"><a aria-label="6"></a>                     <span class="at">lon =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">179.9</span>, <span class="fl">179.9</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb58-7"><a aria-label="7"></a>          <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb58-8"><a aria-label="8"></a><span class="co"># Project world</span></span>
+<span id="cb58-9"><a aria-label="9"></a>proj_world <span class="ot">&lt;-</span> world <span class="sc">|&gt;</span></span>
+<span id="cb58-10"><a aria-label="10"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb58-11"><a aria-label="11"></a><span class="co"># Project lng/lat (WGS84) to Robinson</span></span>
+<span id="cb58-12"><a aria-label="12"></a>proj_diplocaulus <span class="ot">&lt;-</span> diplocaulus <span class="sc">|&gt;</span></span>
+<span id="cb58-13"><a aria-label="13"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb58-14"><a aria-label="14"></a><span class="co"># Plotting</span></span>
+<span id="cb58-15"><a aria-label="15"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb58-16"><a aria-label="16"></a><span class="co"># Map</span></span>
+<span id="cb58-17"><a aria-label="17"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(proj_world), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">border =</span> <span class="st">"darkgrey"</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>)</span>
+<span id="cb58-18"><a aria-label="18"></a><span class="co"># Bounding box</span></span>
+<span id="cb58-19"><a aria-label="19"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bbox), <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb58-20"><a aria-label="20"></a><span class="co"># Draw silhouettes (height is in projected units, i.e. metres)</span></span>
+<span id="cb58-21"><a aria-label="21"></a><span class="fu">add_phylopic_base</span>(<span class="at">name =</span> proj_diplocaulus<span class="sc">$</span>genus,</span>
+<span id="cb58-22"><a aria-label="22"></a>                  <span class="at">x =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">1</span>], </span>
+<span id="cb58-23"><a aria-label="23"></a>                  <span class="at">y =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">2</span>], </span>
+<span id="cb58-24"><a aria-label="24"></a>                  <span class="at">height =</span> <span class="fl">8E5</span>, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-html/plot-map-coord-base-1.png" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="phylogenetics" class="slide level2">
 <h2>Phylogenetics</h2>
