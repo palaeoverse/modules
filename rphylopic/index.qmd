@@ -487,6 +487,7 @@ for (sp in levels(penguins_subset$species)) {
   )
 }
 ```
+
 :::
 
 That's not a bad basic plot, but we can make it nicer by adding a penguin silhouette. Sadly, we don't have a separate silhouette for each species ([although we could make one...](https://contribute.phylopic.org)), so we'll place a single silhouette in the top panel using the `geom_phylopic` (ggplot2) and `add_phylopic_base()` (base R) functions. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.
@@ -753,7 +754,7 @@ legend("bottomright", legend = c("Female", "Male"), pch = 20,
 
 ### Geographic distribution
 
-In much the same way as generic x-y plotting, the rphylopic package can be used in combination with ggplot2 to plot organism silhouettes on a map. That is, to plot data points (e.g. species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the palaeoverse R package to visualize the geographic distribution of Diplocaulus fossils.
+In much the same way as generic x-y plotting, the rphylopic package can be used to plot organism silhouettes on a map. That is, to plot data points (e.g. species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the [palaeoverse](https://palaeoverse.palaeoverse.org) R package to visualise the geographic distribution of Diplocaulus fossils.
 
 First, let’s load our libraries and the tetrapod data:
 
@@ -778,7 +779,7 @@ Then we’ll subset our occurrences to only those for Diplocaulus:
 diplocaulus <- subset(tetrapods, genus == "Diplocaulus")
 ```
 
-**TODO: WALKTHROUGH ON GEOGRAPHIC PLOTTING** 
+Before we can plot our fossil occurrences on a map, we need to prepare two spatial datasets. First, we use `ne_countries()` from the [rnaturalearth](http://ropensci.github.io/rnaturalearth/) package to download a world map of country boundaries from Natural Earth, returned as an sf (simple features) object. Second, we convert our Diplocaulus occurrence data from a standard data frame into an sf object using `st_as_sf()`. This tells R which columns hold the coordinates and which coordinate reference system they use; `crs = 4326` specifies WGS84, the standard longitude/latitude system. Doing this means R treats our occurrences as true spatial points rather than just numbers, ensuring they overlay correctly on the world map. With both layers in the same format and coordinate system, we can then plot them together.
 
 ```{r}
 #| label: map-setup
@@ -791,7 +792,7 @@ diplocaulus <- diplocaulus |>
   st_as_sf(coords = c("lng", "lat"), crs = 4326)
 ```
 
-Now, let’s plot those occurrences on a world map. ggplot2 and it’s built-in function map_data() make this a breeze. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill color, the more occurrences in that geographic location.
+Now, let’s plot those occurrences on a world map. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill colour, the more occurrences in that geographic location.
 
 ::: {.panel-tabset}
 ### ggplot2
@@ -823,10 +824,12 @@ plot(st_geometry(diplocaulus), cex = 0.75, pch = 16,
 
 :::
 
-Now, as with the penguin figure above, we can easily replace those points with silhouettes.
+Now let's replace those points with silhouettes.
 
 ::: {.panel-tabset}
 ### ggplot2
+
+Note that while we use the genus name as the `name` aesthetic here, we easily could have done `name = "Diplocaulus"` outside of the `aes()` call instead. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using `name = genus` within the `aes()` call.
 
 ```{r}
 #| label: plot-map-silhouettes-ggplot2
@@ -844,6 +847,8 @@ ggplot(world) +
 
 ### Base R
 
+Note that we use `name = diplocaulus$genus` here. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using `name = diplocaulus$genus`.
+
 ```{r}
 #| label: plot-map-silhouettes-base
 
@@ -857,10 +862,6 @@ add_phylopic_base(name = diplocaulus$genus,
 ```
 
 :::
-
-Snazzy!
-
-Note that while we used the genus name as the name aesthetic here, we easily could have done name = "Diplocaulus" outside of the aes() call instead. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using name = genus within the aes() call.
 
 Also, note that we could change the projection of the map and data using the crs and default_crs arguments in coord_sf(). When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.
 
