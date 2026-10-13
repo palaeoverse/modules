@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="William Gearty">
-<meta name="dcterms.date" content="2026-10-09">
+<meta name="dcterms.date" content="2026-10-13">
 <meta name="description" content="Why plot dots when you can plot dinosaurs? rphylopic lets you fetch and add silhouettes from PhyloPic to your base R and ggplot2 figures, from simple x-y plots to maps, phylogenies, networks, and beyond.">
 
 <title>Getting started with rphylopic</title>
@@ -318,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 9, 2026</p>
+      <p class="date">October 13, 2026</p>
     </div>
   </div>
   
@@ -1138,7 +1138,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </section>
 <section id="geographic-distribution" class="level3">
 <h3 data-anchor-id="geographic-distribution">Geographic distribution</h3>
-<p>In much the same way as generic x-y plotting, the rphylopic package can be used in combination with ggplot2 to plot organism silhouettes on a map. That is, to plot data points (e.g.&nbsp;species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the palaeoverse R package to visualize the geographic distribution of Diplocaulus fossils.</p>
+<p>In much the same way as generic x-y plotting, the rphylopic package can be used to plot organism silhouettes on a map. That is, to plot data points (e.g.&nbsp;species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the <a href="https://palaeoverse.palaeoverse.org">palaeoverse</a> R package to visualise the geographic distribution of Diplocaulus fossils.</p>
 <p>First, let’s load our libraries and the tetrapod data:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
@@ -1154,7 +1154,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>diplocaulus <span class="ot">&lt;-</span> <span class="fu">subset</span>(tetrapods, genus <span class="sc">==</span> <span class="st">"Diplocaulus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>TODO: WALKTHROUGH ON GEOGRAPHIC PLOTTING</strong></p>
+<p>Before we can plot our fossil occurrences on a map, we need to prepare two spatial datasets. First, we use <code>ne_countries()</code> from the <a href="http://ropensci.github.io/rnaturalearth/">rnaturalearth</a> package to download a world map of country boundaries from Natural Earth, returned as an sf (simple features) object. Second, we convert our Diplocaulus occurrence data from a standard data frame into an sf object using <code>st_as_sf()</code>. This tells R which columns hold the coordinates and which coordinate reference system they use; <code>crs = 4326</code> specifies WGS84, the standard longitude/latitude system. Doing this means R treats our occurrences as true spatial points rather than just numbers, ensuring they overlay correctly on the world map. With both layers in the same format and coordinate system, we can then plot them together.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get map data</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
@@ -1163,7 +1163,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>diplocaulus <span class="ot">&lt;-</span> diplocaulus <span class="sc">|&gt;</span></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lng"</span>, <span class="st">"lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now, let’s plot those occurrences on a world map. ggplot2 and it’s built-in function map_data() make this a breeze. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill color, the more occurrences in that geographic location.</p>
+<p>Now, let’s plot those occurrences on a world map. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill colour, the more occurrences in that geographic location.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
@@ -1204,11 +1204,12 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
-<p>Now, as with the penguin figure above, we can easily replace those points with silhouettes.</p>
+<p>Now let’s replace those points with silhouettes.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<p>Note that while we use the genus name as the <code>name</code> aesthetic here, we easily could have done <code>name = "Diplocaulus"</code> outside of the <code>aes()</code> call instead. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using <code>name = genus</code> within the <code>aes()</code> call.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(world) <span class="sc">+</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>, <span class="at">color =</span> <span class="st">"darkgrey"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
@@ -1229,6 +1230,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<p>Note that we use <code>name = diplocaulus$genus</code> here. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using <code>name = diplocaulus$genus</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot map</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(world, <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">border =</span> <span class="st">"darkgrey"</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>, <span class="at">main =</span> <span class="cn">NA</span>)</span>
@@ -1248,8 +1250,6 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
-<p>Snazzy!</p>
-<p>Note that while we used the genus name as the name aesthetic here, we easily could have done name = “Diplocaulus” outside of the aes() call instead. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using name = genus within the aes() call.</p>
 <p>Also, note that we could change the projection of the map and data using the crs and default_crs arguments in coord_sf(). When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Base R</a></li></ul>
@@ -1332,9 +1332,387 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </section>
 <section id="phylogenetics" class="level3">
 <h3 data-anchor-id="phylogenetics">Phylogenetics</h3>
+<p>PhyloPic silhouettes are also a handy way to label taxonomic information. In this example, we’ll use them within a phylogenetic framework. The tree comes from the <a href="https://github.com/liamrevell/phytools">phytools</a> package and spans the vertebrates, with 11 distantly related taxa at its tips. Unless you’re a vertebrate specialist, you probably won’t recognise all of their scientific names, so we’ll replace the tip labels with silhouettes. That makes the tree easier to read at a glance, which is a big advantage for teaching, presentations, and figures aimed at a broad audience.</p>
+<p>To begin, load the required libraries and data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phytools)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get vertebrate phylogeny and data</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(vertebrate.tree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can use a vectorized version of the <code>get_uuid()</code> function to retrieve UUID values for all of the species at once. However, just in case we get an error, we wrap the <code>get_uuid()</code> call in a <code>tryCatch()</code> call. This way, we should get either a UUID or <code>NA</code> for each species:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a data.frame for the PhyloPic names</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>vertebrate_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> vertebrate.tree<span class="sc">$</span>tip.label, <span class="at">uuid =</span> <span class="cn">NA</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Try to get PhyloPic UUIDs for the species names</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>vertebrate_data<span class="sc">$</span>uuid <span class="ot">&lt;-</span> <span class="fu">sapply</span>(vertebrate.tree<span class="sc">$</span>tip.label,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                               <span class="cf">function</span>(x) {</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">tryCatch</span>(<span class="fu">get_uuid</span>(x), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NA</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>                               })</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>vertebrate_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  species                                 uuid
+1  Carcharodon_carcharias 00f208a3-887d-4ae8-838c-2124f53b9fc1
+2       Carassius_auratus abcb9d2c-db21-4b63-b8e7-b770b11ad288
+3     Latimeria_chalumnae 12c38a8a-6d68-4af3-ada3-05cafdfc25c2
+4            Homo_sapiens 9c6af553-390c-4bdd-baeb-6992cbc540b1
+5             Lemur_catta 8a187391-82a3-4d9b-a402-3a310bf7dc38
+6        Myotis_lucifugus                                 &lt;NA&gt;
+7              Sus_scrofa 14a64a2f-166e-4bb4-b108-adc085cbcb7a
+8  Megaptera_novaeangliae 012afb33-55c3-4fc6-9ae3-3a91fda32fd5
+9              Bos_taurus dc5c561e-e030-444d-ba22-3d427b60e58a
+10          Iguana_iguana 5dec03d9-66a2-4033-b1a9-6dbb3485199f
+11     Turdus_migratorius 83b29bf0-f4f9-412d-8b3b-7faf4febd69d</code></pre>
+</div>
+</div>
+<p>Uh-oh, PhyloPic doesn’t currently have a silhouette for <em>Myotis lucifugus</em> (the little brown bat). Luckily, we wrapped the lookup in <code>tryCatch()</code>, so the code returned <code>NA</code> for this species instead of stopping. Given the coarse resolution of this phylogeny, we probably don’t need a silhouette for that exact species. A silhouette of a close relative will do, so we’ll use one for its subfamily, Vespertilioninae:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which species row is equal to "Myotis_lucifugus"</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>bat_row <span class="ot">&lt;-</span> vertebrate_data<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Myotis_lucifugus"</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Update value for `bat_row`</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>vertebrate_data<span class="sc">$</span>uuid[bat_row] <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="st">"Vespertilioninae"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We’re not keen on the default boar silhouette either, so let’s pick a different one. The <code>pick_phylopic()</code> function lets us browse the available silhouettes and choose the one we like best. We can then extract the UUID from the object’s attributes:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a different boar image; we'll pick #4</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>boar_svg <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="st">"Sus scrofa"</span>, <span class="at">view =</span> <span class="dv">5</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the UUID</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>vertebrate_data<span class="sc">$</span>uuid[vertebrate_data<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Sus_scrofa"</span>] <span class="ot">&lt;-</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(boar_svg, <span class="st">"uuid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="img/rphylopic-menu-choice-boar.png" class="img-fluid figure-img" width="336"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/pick-boar-silhouette-auto-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We now have our phylogeny and our UUIDs, so we could create the figure straight away. First, though, a quick aside about speed.</p>
+<p>The time that <code>geom_phylopic()</code> and the other rphylopic visualisation functions take depends on the number of unique names or UUIDs, not on the number of silhouettes you plot. For each unique name, the function has to contact <a href="https://www.phylopic.org">PhyloPic</a>, download the silhouette, and convert it so it can be added to the plot. If you’re plotting many different silhouettes, this can take a while.</p>
+<p>If you’ll reuse the same silhouettes across several figures, we strongly recommend fetching them yourself with <code>get_phylopic()</code> or <code>pick_phylopic()</code> and saving them as image objects in your R environment. You can then pass these objects to the visualisation functions using the <code>img</code> argument (or aesthetic), so PhyloPic doesn’t need to be contacted each time you make a plot.</p>
+<p>Let’s follow this advice and get image objects for our 11 species before making the figure. As we found these UUIDs with <code>get_uuid()</code>, we know they are valid, so we don’t need to catch errors this time.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>vertebrate_data<span class="sc">$</span>svg <span class="ot">&lt;-</span> <span class="fu">lapply</span>(vertebrate_data<span class="sc">$</span>uuid, get_phylopic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<p>Now let’s go ahead and plot our phylogeny with the <a href="https://www.bioconductor.org/packages/ggtree">ggtree</a> package:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtree)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the tree</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(vertebrate.tree, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">layout =</span> <span class="st">"circular"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-ggtree-axis-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<p>Now let’s go ahead and plot our phylogeny with the <a href="https://github.com/emmanuelparadis/ape">ape</a> package:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the tree</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(vertebrate.tree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-ape-axis-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Hmm… that’s a bit boring. Let’s add a geological timescale!</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<p>Using the <a href="https://williamgearty.com/deeptime/">deeptime</a> R package, we can add the geological timescale to the background of our plot with <code>coord_geo_polar()</code>. Note that the time axis must be reversed with <code>revts()</code> for this to work, as <code>coord_geo_polar()</code> expects time to run in the opposite direction to how it’s usually plotted. Geologists and palaeontologists, after all, tend to root themselves in the past!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deeptime)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the tree with a geological timescale in the background</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">revts</span>(<span class="fu">ggtree</span>(vertebrate.tree, <span class="at">linewidth =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">500</span>, <span class="dv">0</span>, <span class="dv">100</span>),</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">seq</span>(<span class="dv">500</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">100</span>),</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span>, <span class="dv">0</span>),</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">guide =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_geo_radial</span>(<span class="at">dat =</span> <span class="st">"periods"</span>) <span class="sc">+</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-geoaxis-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<p>Using the <a href="https://palaeoverse.palaeoverse.org">palaeoverse</a> R package, we can add the geological timescale as an axis with <code>axis_geo_phylo()</code>. Note that time runs from left-to-right (from past to present) here. Geologists and palaeontologists, after all, tend to root themselves in the past!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the tree with a geological timescale on the bottom</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(vertebrate.tree)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo_phylo</span>(<span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-ape-geoaxis-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>That’s looking a lot prettier! Let’s go ahead and add our silhouettes now.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false" href="">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<p>When using <code>ggplot2</code>, we first attach the <code>vertebrate_data</code> object with the <code>%&lt;+%</code> operator from <a href="https://bioconductor.org/packages/release/bioc/html/ggtree.html">ggtree</a>. We can then use <code>geom_phylopic()</code> to plot our silhouettes from the <code>svg</code> column.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">revts</span>(<span class="fu">ggtree</span>(vertebrate.tree, <span class="at">linewidth =</span> <span class="dv">1</span>)) <span class="sc">%&lt;+%</span> vertebrate_data <span class="sc">+</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_phylopic</span>(<span class="fu">aes</span>(<span class="at">img =</span> svg), <span class="at">height =</span> <span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">500</span>, <span class="dv">0</span>, <span class="dv">100</span>),</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">seq</span>(<span class="dv">500</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">100</span>),</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span>, <span class="dv">0</span>),</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">guide =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_geo_radial</span>(<span class="at">dat =</span> <span class="st">"periods"</span>) <span class="sc">+</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-ggtree-silhouettes-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<p>When using base R, we can add silhouettes to our tree with <code>add_phylopic_tree()</code>, a wrapper of <code>add_phylopic_base()</code> designed for phylogenetic trees. Note that although all of the tips may appear to sit at an x-axis value of 0, this is a quirk of <code>axis_geo_phylo()</code>. In reality, the left end of the x-axis is 0 and the right end is the total height of the tree. Fortunately, <code>add_phylopic_tree()</code> works out the x and y coordinates of the silhouettes for us, so there’s no need for any funny maths.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(vertebrate.tree, <span class="at">show.tip.label =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo_phylo</span>(<span class="at">intervals =</span> <span class="st">"periods"</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">add_phylopic_tree</span>(vertebrate.tree, <span class="at">tip =</span> vertebrate_data<span class="sc">$</span>species,</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">img =</span> vertebrate_data<span class="sc">$</span>svg, <span class="at">height =</span> <span class="fl">0.5</span>, <span class="at">width =</span> <span class="cn">NULL</span>,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">padding =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-ape-silhouettes-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Note that only a single height is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let’s fix some of the silhouettes by rotating them 90 degrees:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>vertebrate_data<span class="sc">$</span>svg[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> vertebrate_data<span class="sc">$</span>svg[[<span class="dv">1</span>]])</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>vertebrate_data<span class="sc">$</span>svg[[<span class="dv">8</span>]] <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> vertebrate_data<span class="sc">$</span>svg[[<span class="dv">8</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And now the finished product:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false" href="">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">revts</span>(<span class="fu">ggtree</span>(vertebrate.tree, <span class="at">linewidth =</span> <span class="dv">1</span>)) <span class="sc">%&lt;+%</span> vertebrate_data <span class="sc">+</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_phylopic</span>(<span class="fu">aes</span>(<span class="at">img =</span> svg), <span class="at">height =</span> <span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">500</span>, <span class="dv">0</span>, <span class="dv">100</span>),</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">seq</span>(<span class="dv">500</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">100</span>),</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span>, <span class="dv">0</span>),</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">guide =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_geo_radial</span>(<span class="at">dat =</span> <span class="st">"periods"</span>) <span class="sc">+</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-ggtree-silhouettes-final-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(vertebrate.tree, <span class="at">show.tip.label =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo_phylo</span>(<span class="at">intervals =</span> <span class="st">"periods"</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">add_phylopic_tree</span>(vertebrate.tree, <span class="at">tip =</span> vertebrate_data<span class="sc">$</span>species,</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">img =</span> vertebrate_data<span class="sc">$</span>svg, <span class="at">height =</span> <span class="fl">0.5</span>, <span class="at">width =</span> <span class="cn">NULL</span>,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">padding =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-phylogeny-ape-silhouettes-final-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Not bad, not bad at all!</p>
 </section>
 <section id="network-plots" class="level3">
 <h3 data-anchor-id="network-plots">Network plots</h3>
+<p>The ggraph package extends ggplot2 to network graphs and geom_phylopic() can be dropped into a ggraph() plot to render nodes as PhyloPic silhouettes. This is particularly useful for visualizing food webs, taxonomic networks, or other graph-structured data where the nodes represent organisms.</p>
+<p>Let’s demonstrate with a simple Permian food web. First, we set up the network:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false" href="">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a simple food web among Permian tetrapods and a Permian fish</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>food_web <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">from =</span> <span class="fu">c</span>(<span class="st">"Eryops"</span>, <span class="st">"Diplocaulus"</span>, <span class="st">"Diplocaulus"</span>, <span class="st">"Eryops"</span>),</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">to   =</span> <span class="fu">c</span>(<span class="st">"Dimetrodon"</span>, <span class="st">"Dimetrodon"</span>,</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Xenacanthus decheni"</span>, <span class="st">"Xenacanthus decheni"</span>)</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(food_web, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the same Permian tetrapod food web</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>food_web <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">from =</span> <span class="fu">c</span>(<span class="st">"Eryops"</span>, <span class="st">"Diplocaulus"</span>, <span class="st">"Diplocaulus"</span>, <span class="st">"Eryops"</span>),</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">to   =</span> <span class="fu">c</span>(<span class="st">"Dimetrodon"</span>, <span class="st">"Dimetrodon"</span>,</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Xenacanthus decheni"</span>, <span class="st">"Xenacanthus decheni"</span>)</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(food_web, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="fu">layout_with_fr</span>(g)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false" href="">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
+<p>Each vertex name in g corresponds to a taxonomic name we can pass to PhyloPic. Because geom_phylopic() accepts the name aesthetic, we can map vertex names directly to silhouettes. The x and y aesthetics are also inherited from the ggraph initialization, but still need to be defined explicitly.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(g, <span class="at">layout =</span> <span class="st">"stress"</span>) <span class="sc">+</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">5</span>, <span class="st">"mm"</span>), <span class="at">type =</span> <span class="st">"closed"</span>),</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">15</span>, <span class="st">"mm"</span>),</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_phylopic</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">name =</span> name), <span class="at">height =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-network-ggplot2-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<p>We can now render the graph with PhyloPic silhouettes as the nodes. The vertex names from V(g)$name are passed to the vertex.name argument, which rphylopic uses to look up silhouettes:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g, <span class="at">layout =</span> layout,</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="st">"phylopic"</span>,</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.name =</span> <span class="fu">V</span>(g)<span class="sc">$</span>name,         <span class="co"># taxonomic names from the graph</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">100</span>,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,               <span class="co"># silhouettes replace text labels</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">asp =</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot-network-base-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false" href="">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
+<p>Many customisation options for your silhouettes are also available via <code>geom_phylopic()</code>, either as aesthetics (e.g.&nbsp;colour, angle) or as fixed arguments. For example, here we give each silhouette a different colour and apply a small fixed angle rotation:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(g, <span class="at">layout =</span> <span class="st">"stress"</span>) <span class="sc">+</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">5</span>, <span class="st">"mm"</span>), <span class="at">type =</span> <span class="st">"closed"</span>),</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">15</span>, <span class="st">"mm"</span>),</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_phylopic</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">name =</span> name, <span class="at">colour =</span> name), <span class="at">angle =</span> <span class="fl">0.15</span>, <span class="at">height =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/customise-network-ggplot2-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
+<p>Many customisation options from <code>add_phylopic_base()</code> are also available through the vertex.* arguments. For example, here we give each silhouette a different colour and apply a small rotation:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g, <span class="at">layout =</span> layout,</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="st">"phylopic"</span>,</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.name =</span> <span class="fu">V</span>(g)<span class="sc">$</span>name,</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">100</span>,</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">rainbow</span>(<span class="fu">vcount</span>(g)),  <span class="co"># per-vertex fill color</span></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.angle =</span> <span class="dv">15</span>,                  <span class="co"># rotate all silhouettes 15 degrees</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">asp =</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/customise-network-base-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
