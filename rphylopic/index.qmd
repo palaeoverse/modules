@@ -487,7 +487,6 @@ for (sp in levels(penguins_subset$species)) {
   )
 }
 ```
-
 :::
 
 That's not a bad basic plot, but we can make it nicer by adding a penguin silhouette. Sadly, we don't have a separate silhouette for each species ([although we could make one...](https://contribute.phylopic.org)), so we'll place a single silhouette in the top panel using the `geom_phylopic` (ggplot2) and `add_phylopic_base()` (base R) functions. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.
@@ -821,7 +820,6 @@ plot(st_geometry(diplocaulus), cex = 0.75, pch = 16,
      col = rgb(red = 0, green = 0, blue = 1, alpha = 0.75),
      add = TRUE)
 ```
-
 :::
 
 Now let's replace those points with silhouettes.
@@ -860,7 +858,6 @@ add_phylopic_base(name = diplocaulus$genus,
                   y = st_coordinates(diplocaulus)[ ,2],
                   height = 4, fill = "blue", alpha = 0.75)
 ```
-
 :::
 
 Also, note that we could change the projection of the map and data using the crs and default_crs arguments in coord_sf(). When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.
@@ -930,7 +927,6 @@ add_phylopic_base(name = proj_diplocaulus$genus,
                   y = st_coordinates(proj_diplocaulus)[ ,2], 
                   height = 8E5, fill = "blue", alpha = 0.75)
 ```
-
 :::
 
 ### Phylogenetics
@@ -1025,7 +1021,6 @@ Let's follow this advice and get image objects for our 11 species before making 
 vertebrate_data$svg <- lapply(vertebrate_data$uuid, get_phylopic)
 ```
 
-
 ::: {.panel-tabset}
 ### ggplot2
 
@@ -1041,7 +1036,7 @@ ggtree(vertebrate.tree, linewidth = 1, layout = "circular")
 
 ### Base R
 
-Now let’s go ahead and plot our phylogeny with the [ape](https://github.com/emmanuelparadis/ape) package:
+Now let's go ahead and plot our phylogeny with the [ape](https://github.com/emmanuelparadis/ape) package:
 
 ```{r}
 #| label: plot-phylogeny-ape-axis
@@ -1050,7 +1045,6 @@ library(ape)
 # Plot the tree
 plot(vertebrate.tree)
 ```
-
 :::
 
 Hmm... that's a bit boring. Let's add a geological timescale!
@@ -1058,7 +1052,7 @@ Hmm... that's a bit boring. Let's add a geological timescale!
 ::: {.panel-tabset}
 ### ggplot2
 
-to the background using coord_geo_polar() from the deeptime package. Note that we need to use the revts() function to reverse the time axis to work with coord_geo_polar().
+Using the [deeptime](https://williamgearty.com/deeptime/) R package, we can add the geological timescale to the background of our plot with `coord_geo_polar()`. Note that the time axis must be reversed with `revts()` for this to work, as `coord_geo_polar()` expects time to run in the opposite direction to how it's usually plotted. Geologists and palaeontologists, after all, tend to root themselves in the past!
 
 ```{r}
 #| label: plot-phylogeny-geoaxis
@@ -1077,19 +1071,27 @@ revts(ggtree(vertebrate.tree, linewidth = 1)) +
 
 ### Base R
 
+Using the [palaeoverse](https://palaeoverse.palaeoverse.org) R package, we can add the geological timescale as an axis with `axis_geo_phylo()`. Note that time runs from left-to-right (from past to present) here. Geologists and palaeontologists, after all, tend to root themselves in the past!
 
 ```{r}
 #| label: plot-phylogeny-ape-geoaxis
 
-
+library(palaeoverse)
+# Plot the tree with a geological timescale on the bottom
+plot(vertebrate.tree)
+axis_geo_phylo(intervals = "periods")
 ```
-
 :::
 
-That's looking a lot prettier! Let's go ahead and add our silhouettes now. Note that we need to attach the vertebrate_data object with the %<+% operator from ggtree.
+That's looking a lot prettier! Let's go ahead and add our silhouettes now.
+
+::: {.panel-tabset}
+### ggplot2
+
+When using `ggplot2`, we first attach the `vertebrate_data` object with the `%<+%` operator from [ggtree](https://bioconductor.org/packages/release/bioc/html/ggtree.html). We can then use `geom_phylopic()` to plot our silhouettes from the `svg` column.
 
 ```{r}
-#| label: plot-phylogeny-deeptime-silhouettes
+#| label: plot-phylogeny-ggtree-silhouettes
 
 revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
@@ -1101,6 +1103,21 @@ revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   coord_geo_radial(dat = "periods") +
   theme_classic()
 ```
+
+### Base R
+
+When using base R, we can add silhouettes to our tree with `add_phylopic_tree()`, a wrapper of `add_phylopic_base()` designed for phylogenetic trees. Note that although all of the tips may appear to sit at an x-axis value of 0, this is a quirk of `axis_geo_phylo()`. In reality, the left end of the x-axis is 0 and the right end is the total height of the tree. Fortunately, `add_phylopic_tree()` works out the x and y coordinates of the silhouettes for us, so there's no need for any funny maths.
+
+```{r}
+#| label: plot-phylogeny-ape-silhouettes
+
+plot(vertebrate.tree, show.tip.label = FALSE)
+axis_geo_phylo(intervals = "periods")
+add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
+                  img = vertebrate_data$svg, height = 0.5, width = NULL,
+                  padding = 0, hjust = 0.5)
+```
+:::
 
 Note that only a single height is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
 
@@ -1113,8 +1130,11 @@ vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 
 And now the finished product:
 
+::: {.panel-tabset}
+### ggplot2
+
 ```{r}
-#| label: plot-phylogeny-deeptime-silhouettes-final
+#| label: plot-phylogeny-ggtree-silhouettes-final
 
 revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
@@ -1127,6 +1147,138 @@ revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   theme_classic()
 ```
 
+### Base R
+
+```{r}
+#| label: plot-phylogeny-ape-silhouettes-final
+
+plot(vertebrate.tree, show.tip.label = FALSE)
+axis_geo_phylo(intervals = "periods")
+add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
+                  img = vertebrate_data$svg, height = 0.5, width = NULL,
+                  padding = 0, hjust = 0.5)
+```
+:::
+
+Not bad, not bad at all!
+
 ### Network plots
 
+The ggraph package extends ggplot2 to network graphs and geom_phylopic() can be dropped into a ggraph() plot to render nodes as PhyloPic silhouettes. This is particularly useful for visualizing food webs, taxonomic networks, or other graph-structured data where the nodes represent organisms.
 
+Let's demonstrate with a simple Permian food web. First, we set up the network:
+
+::: {.panel-tabset}
+### ggplot2
+
+```{r}
+#| label: load-libraries-network-ggplot2
+
+# Load libraries
+library(rphylopic)
+library(ggplot2)
+library(igraph)
+library(ggraph)
+# Define a simple food web among Permian tetrapods and a Permian fish
+food_web <- data.frame(
+  from = c("Eryops", "Diplocaulus", "Diplocaulus", "Eryops"),
+  to   = c("Dimetrodon", "Dimetrodon",
+           "Xenacanthus decheni", "Xenacanthus decheni")
+)
+g <- graph_from_data_frame(food_web, directed = TRUE)
+```
+
+### Base R
+
+```{r}
+#| label: load-libraries-network-base
+
+# Load libraries
+library(rphylopic)
+library(igraph)
+# Define the same Permian tetrapod food web
+food_web <- data.frame(
+  from = c("Eryops", "Diplocaulus", "Diplocaulus", "Eryops"),
+  to   = c("Dimetrodon", "Dimetrodon",
+           "Xenacanthus decheni", "Xenacanthus decheni")
+)
+g <- graph_from_data_frame(food_web, directed = TRUE)
+layout <- layout_with_fr(g)
+```
+:::
+
+::: {.panel-tabset}
+### ggplot2
+
+Each vertex name in g corresponds to a taxonomic name we can pass to PhyloPic. Because geom_phylopic() accepts the name aesthetic, we can map vertex names directly to silhouettes. The x and y aesthetics are also inherited from the ggraph initialization, but still need to be defined explicitly.
+
+```{r}
+#| label: plot-network-ggplot2
+
+set.seed(42)
+ggraph(g, layout = "stress") +
+  geom_edge_link(arrow = arrow(length = unit(5, "mm"), type = "closed"),
+                 end_cap = circle(15, "mm"),
+                 color = "darkgrey") +
+  geom_phylopic(aes(x = x, y = y, name = name), height = 0.15) +
+  scale_x_continuous(expand = expansion(mult = 0.3)) +
+  scale_y_continuous(expand = expansion(mult = 0.3)) +
+  theme_void()
+```
+
+### Base R
+
+We can now render the graph with PhyloPic silhouettes as the nodes. The vertex names from V(g)$name are passed to the vertex.name argument, which rphylopic uses to look up silhouettes:
+
+```{r}
+#| label: plot-network-base
+
+plot(g, layout = layout,
+     vertex.shape = "phylopic",
+     vertex.name = V(g)$name,         # taxonomic names from the graph
+     vertex.size = 100,
+     vertex.label = NA,               # silhouettes replace text labels
+     edge.arrow.size = 0.5,
+     xlim = c(-0.5, 0.5), ylim = c(-0.5, 0.5),
+     asp = 0)
+```
+:::
+
+::: {.panel-tabset}
+### ggplot2
+
+Many customisation options for your silhouettes are also available via `geom_phylopic()`, either as aesthetics (e.g. colour, angle) or as fixed arguments. For example, here we give each silhouette a different colour and apply a small fixed angle rotation:
+
+```{r}
+#| label: customise-network-ggplot2
+
+set.seed(42)
+ggraph(g, layout = "stress") +
+  geom_edge_link(arrow = arrow(length = unit(5, "mm"), type = "closed"),
+                 end_cap = circle(15, "mm"),
+                 color = "darkgrey") +
+  geom_phylopic(aes(x = x, y = y, name = name, colour = name), angle = 0.15, height = 0.15) +
+  scale_x_continuous(expand = expansion(mult = 0.3)) +
+  scale_y_continuous(expand = expansion(mult = 0.3)) +
+  theme_void()
+```
+
+### Base R
+
+Many customisation options from `add_phylopic_base()` are also available through the vertex.* arguments. For example, here we give each silhouette a different colour and apply a small rotation:
+
+```{r}
+#| label: customise-network-base
+
+plot(g, layout = layout,
+     vertex.shape = "phylopic",
+     vertex.name = V(g)$name,
+     vertex.size = 100,
+     vertex.color = rainbow(vcount(g)),  # per-vertex fill color
+     vertex.angle = 15,                  # rotate all silhouettes 15 degrees
+     vertex.label = NA,
+     edge.arrow.size = 0.5,
+     xlim = c(-0.5, 0.5), ylim = c(-0.5, 0.5),
+     asp = 0)
+```
+:::
