@@ -129,8 +129,8 @@ for live teaching on unreliable wifi.
 
 ## Multi-page modules and sidebars
 
-_Optional, for modules with more than one web page (e.g., a main page plus
-separate exercise pages)._
+*Optional, for modules with more than one web page (e.g., a main page plus
+separate exercise pages).*
 
 A module with several pages can have a sidebar on the left listing them. To add
 one, put a `_sidebar.yml` in the module folder that lists the pages in the order
