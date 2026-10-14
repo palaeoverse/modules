@@ -29,7 +29,7 @@ Any of the three can also carry editable, runnable code cells; see
 
 ## 1. One file, slide layout by the Lua filter
 
-_Best when the page and the deck say the same things in the same order._
+*Best when the page and the deck say the same things in the same order.*
 
 Write `index.qmd` once, marking prose with `.narration` and the occasional
 divergence with `.slides-only` / `.html-only`; the filter does the rest (see
@@ -68,8 +68,8 @@ following automatic behavior:
 
 ## 2. One file, interleaved by hand
 
-_Best when you want the slides laid out exactly as you wrote it, with no filter in
-the way._
+*Best when you want the slides laid out exactly as you wrote it, with no filter in
+the way.*
 
 Same single-file idea, but using Quarto's own conditional content instead of our
 classes, so there is nothing to generate and nothing to register:
@@ -88,8 +88,8 @@ become their own slides, callouts keep their boxes, and long slides need
 
 ## 3. Two separate files
 
-_Best when the tutorial and the talk genuinely differ (e.g., different order,
-different examples, different depth)._
+*Best when the tutorial and the talk genuinely differ (e.g., different order,
+different examples, different depth).*
 
 Keep a long-form `index.qmd` and a separate slide deck whose `output-file:` is
 `index-slides.html`, and maintain them independently. Nothing links them
@@ -99,7 +99,7 @@ two share has to be kept in sync by hand.
 
 ## Interactive code cells
 
-_Optional, and works with any of the three strategies above._
+*Optional, and works with any of the three strategies above.*
 
 Cells can be made editable and runnable in the reader's browser with the [quarto-live](https://r-wasm.github.io/quarto-live/)
 extension. [`template_single_file_live.qmd`](_templates/template_single_file_live.qmd)
