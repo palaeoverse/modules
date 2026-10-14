@@ -7,7 +7,7 @@
 #| results: asis
 
 # Scan this document for packages loaded via library(), require(), pkg::fun(), etc.
-src <- knitr::current_input()
+src <- file.path(Sys.getenv("QUARTO_DOCUMENT_PATH"), Sys.getenv("QUARTO_DOCUMENT_FILE"))
 pkgs <- renv::dependencies(src, progress = FALSE)$Package
 
 # Drop base R packages and tooling used only for rendering/this chunk
