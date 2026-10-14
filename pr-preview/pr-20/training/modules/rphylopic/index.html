@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="William Gearty">
-<meta name="dcterms.date" content="2026-10-13">
+<meta name="dcterms.date" content="2026-10-14">
 <meta name="description" content="Why plot dots when you can plot dinosaurs? rphylopic lets you fetch and add silhouettes from PhyloPic to your base R and ggplot2 figures, from simple x-y plots to maps, phylogenies, networks, and beyond.">
 
 <title>Getting started with rphylopic</title>
@@ -333,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 13, 2026</p>
+      <p class="date">October 14, 2026</p>
     </div>
   </div>
   
@@ -585,19 +585,43 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <p>The <code>flip_phylopic()</code> function can be used to flip a silhouette horizontally and/or vertically. This may be useful if, for example, you want all of the silhouettes to face the same direction:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flip silhouette horizontally</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>img_flip <span class="ot">&lt;-</span> <span class="fu">flip_phylopic</span>(<span class="at">img =</span> img, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">vertical =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(img_flip)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>The <code>rotate_phylopic()</code> function can be used to rotate a silhouette an arbitrary number of degrees. This may be useful when trying to align a silhouette with text or other objects within a figure:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotate silhouette by 45 degrees</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>img_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> img, <span class="at">angle =</span> <span class="dv">45</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>img_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> img, <span class="at">angle =</span> <span class="dv">45</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(img_rot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/trans-rotate-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>Finally, the <code>recolor_phylopic()</code> function can be used to modify the fill colour, outline colour, and/or transparency of a silhouette. The vast majority of PhyloPic silhouettes are solid black, are fully opaque, and have a transparent outline by default. However, it may be useful to change this when the you are trying to either match an existing visualisation colour palette or trying to convey extra information, such as categorical data, through colour:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change fill colour to blue and transparency to 50%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>img_col <span class="ot">&lt;-</span> <span class="fu">recolor_phylopic</span>(<span class="at">img =</span> img, <span class="at">alpha =</span> <span class="fl">0.50</span>, <span class="at">fill =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>img_col <span class="ot">&lt;-</span> <span class="fu">recolor_phylopic</span>(<span class="at">img =</span> img, <span class="at">alpha =</span> <span class="fl">0.50</span>, <span class="at">fill =</span> <span class="st">"blue"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(img_col)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/trans-recolour-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
 </div>
-<p>Let’s see what those look like in the same plot:</p>
+</div>
+</div>
+<p>Let’s see what those look like altogether:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
@@ -608,7 +632,7 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_flip, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_rot, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(<span class="at">img =</span> img_col, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">"original"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">"original"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -624,7 +648,7 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">add_phylopic_base</span>(<span class="at">img =</span> img_flip, <span class="at">x =</span> <span class="fl">0.75</span>, <span class="at">y =</span> <span class="fl">0.75</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">add_phylopic_base</span>(<span class="at">img =</span> img_rot, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">height =</span> <span class="fl">0.25</span>)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">add_phylopic_base</span>(<span class="at">img =</span> img_col, <span class="at">x =</span> <span class="fl">1.25</span>, <span class="at">y =</span> <span class="fl">1.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> <span class="st">"original"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> <span class="st">"original"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -637,7 +661,7 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 </div>
 </div>
 <p>You’ll notice that the rotated silhouette is smaller than the other two silhouettes. This is because we’ve specifed the <code>height</code> of our silhouettes. The width is then automatically set to maintain the original aspect ratio of the silhouette. In this case, the aspect ratio of the rotated silhouette has changed, so the same <code>height</code> results in a smaller silhouette overall. If you’d prefer, you could also specify the <code>width</code> of the silhouettes.</p>
-<p>For convenience, we have also included these transformation options within all of the visualization functions. The default fill is “black”, hence why we needed to specify <code>fill = "original"</code> above. However, when the same transformed silhouette will be used for multiple visualizations, we suggest transforming the silhouette first, saving it as a new object, then using this new object for visualization purposes.</p>
+<p>For convenience, we have also included these transformation options within all of the visualization functions. The default <code>fill</code> is “black”, hence why we needed to specify <code>fill = "original"</code> above. Similarly, the default <code>alpha</code> value is 1, so we also need to specify our desired <code>alpha</code>. However, when the same transformed silhouette will be used for multiple visualisations, we suggest transforming the silhouette first, saving it as a new object, then using this new object for visualisation purposes.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -694,7 +718,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 [1] "Public Domain Mark 1.0"</code></pre>
 </div>
 </div>
-<p>However, that’s a lot of raw information to handle. With <code>get_attribution()</code>, you can also get this output automatically parsed to include in your publications with the <code>text</code> argument:</p>
+<p>That’s a lot of raw information to handle. With <code>get_attribution()</code>, you can also get this output automatically parsed to include in your publications with the <code>text</code> argument:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get valid uuid</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>uuid <span class="ot">&lt;-</span> <span class="fu">get_uuid</span>(<span class="at">name =</span> <span class="st">"Nycticebus"</span>)</span>
@@ -714,29 +738,29 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In previous exercises, you selected a silhouette you like. Now, try and get the attribution information for that silhouette.</p>
+<p>In previous exercises, you selected a silhouette you liked. Now, try and get the attribution information for that silhouette.</p>
 </div>
 </div>
 </section>
 <section id="save-an-image" class="level3">
 <h3 data-anchor-id="save-an-image">Save an image</h3>
-<p>You should be able to accomplish all of your visualisation needs within R, but in the rare case that you need to use a silhouette outside of R, the <code>save_phylopic()</code> function lets you export silhouettes. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP).</p>
+<p>You should be able to accomplish all of your visualisation needs within R, but in the rare case that you need to use a silhouette outside of R, the <code>save_phylopic()</code> function lets you export silhouettes. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How do I save an image?</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Get image</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>img <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="at">name =</span> <span class="st">"Phascolarctos cinereus"</span>, <span class="at">n =</span> <span class="dv">1</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save image</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save_phylopic</span>(<span class="at">img =</span> img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save_phylopic</span>(<span class="at">img =</span> img, <span class="at">path =</span> <span class="st">"phylopic.svg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="advanced-examples" class="level2">
 <h2 data-anchor-id="advanced-examples">Advanced Examples</h2>
-<p>Herein, we show how rphylopic can be used in more advanced use cases with ggplot2 and base R, including for maps, phylogenies, and network plots. Independent exercises are included along the way so you can get some hands-on practice.</p>
+<p>Herein, we show how <a href="https://rphylopic.palaeoverse.org"><strong>rphylopic</strong></a> can be used in more advanced use cases with <a href="https://ggplot2.tidyverse.org">ggplot2</a> and base R, including for maps, phylogenies, and network plots. Independent exercises are included along the way so you can get some hands-on practice.</p>
 <section id="basic-accession-transformation-and-plotting" class="level3">
 <h3 data-anchor-id="basic-accession-transformation-and-plotting">Basic accession, transformation, and plotting</h3>
 <p>rphylopic provides robust and flexible tools for accessing and transforming PhyloPic silhouettes. To demonstrate them, we’ll use the Antarctic penguin dataset from the <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a> R package.</p>
-<p>First, let’s load the libraries and the data:</p>
+<p>First, let’s load our required libraries and data:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
@@ -746,7 +770,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the data to remove rows with missing sex values</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>penguins_subset <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now, let’s pick a silhouette to use for the penguins.</p>
+<p>Now, let’s pick a silhouette to use for the penguins:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>penguin <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="st">"Pygoscelis"</span>, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">view =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -759,7 +783,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
-<p>Let’s pick #2:</p>
+<p>#2 looks like a happy chappy, let’s go with that silhouette:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -771,14 +795,23 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <p>You may have noticed in the preview that the silhouette was a little slanted. Let’s rotate it clockwise just a smidgen:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>penguin_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> penguin, <span class="at">angle =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>penguin_rot <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> penguin, <span class="at">angle =</span> <span class="dv">15</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(penguin_rot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/trans-penguin-1.png" class="img-fluid figure-img" width="2100"></p>
+</figure>
 </div>
-<p>Now, let’s draft the plot that we want to make. In this case, let’s plot the penguins’ bill lengths vs.&nbsp;their flipper lengths, split by species:</p>
+</div>
+</div>
+<p>That’s looking better.</p>
+<p>Now, let’s draft the plot that we want to make. In this case, we’re interested in whether penguins’ flipper length generally increases in line with bill length within each species:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<p><strong>Tip:</strong> ggplot2’s <code>facet_wrap()</code> function splits a dataset into multiple panels based on a categorical variable and arranges them in a compact 2D grid.</p>
+<p><strong>Tip:</strong> ggplot2’s <code>facet_wrap()</code> function splits a dataset into multiple panels based on a categorical variable and arranges them in a compact 2D grid. We can make use of this here for visualising each of our species, creating a plot panel for each.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
@@ -795,7 +828,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<p><strong>Tip::</strong> In base R, generating multiple plots means making a separate call to <code>plot()</code> for each species. We can avoid repeating ourselves by using a for loop to draw one panel per species, after setting up a three-row layout with <code>par()</code>.</p>
+<p><strong>Tip:</strong> In base R, generating multiple plots means making a separate call to <code>plot()</code> for each species. We can avoid repeating ourselves by using a for loop to draw one panel per species, after setting up a three-row layout with <code>par()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate shared axis limits so all panels are comparable</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>xlim <span class="ot">&lt;-</span> <span class="fu">range</span>(penguins_subset<span class="sc">$</span>bill_length_mm)</span>
@@ -826,7 +859,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
-<p>That’s not a bad basic plot, but we can make it nicer by adding a penguin silhouette. Sadly, we don’t have a separate silhouette for each species (<a href="https://contribute.phylopic.org">although we could make one…</a>), so we’ll place a single silhouette in the top panel using the <code>geom_phylopic</code> (ggplot2) and <code>add_phylopic_base()</code> (base R) functions. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.</p>
+<p>That’s not a bad basic plot and we can definitely see a general trend, but we can make it nicer by adding a penguin silhouette. Sadly, we don’t have a separate silhouette for each species (<a href="https://contribute.phylopic.org">although we could make one…</a>), so we’ll place a single silhouette in the top panel using the <code>geom_phylopic</code> (ggplot2) and <code>add_phylopic_base()</code> (base R) functions. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
@@ -935,7 +968,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
-<p>Oh no, the silhouettes are way too big! By default, <code>geom_phylopic()</code> and <code>add_phylopic_base()</code> makes each silhouette as tall as the plot, which is far too large here. Instead, we can specify a height or width to use (in y-axis or x-axis units, respectively):</p>
+<p>Well… those silhouettes are perhaps a little… big! By default, <code>geom_phylopic()</code> and <code>add_phylopic_base()</code> makes each silhouette as tall as the plot, which is far too large here. Instead, we can specify a height or width to use (in y-axis or x-axis units, respectively):</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
@@ -944,7 +977,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_phylopic</span>(<span class="at">img =</span> penguin_rot,</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm), </span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">height =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">height =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Bill length (mm)"</span>, <span class="at">y =</span> <span class="st">"Flipper length (mm)"</span>) <span class="sc">+</span></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -976,7 +1009,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic_base</span>(<span class="at">img =</span> penguin_rot,</span>
 <span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> species_data<span class="sc">$</span>bill_length_mm,</span>
 <span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> species_data<span class="sc">$</span>flipper_length_mm,</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">height =</span> <span class="dv">5</span>)</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">height =</span> <span class="dv">6</span>)</span>
 <span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -989,6 +1022,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
+<p>That’s more like it.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -999,7 +1033,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>So far we have set the silhouette size by hand. Instead, we can map the height to another variable in our data, and rphylopic will scale the values for us automatically.</p>
+<p>So far we have set the silhouette size by hand. Instead, we could map the height to another variable in our data, and rphylopic will scale the values for us automatically.</p>
 <p><strong>Your task:</strong> Make a plot with the size of the silhouettes relative to the penguins’ body masses (<code>body_mass_g</code>).</p>
 </div>
 </div>
@@ -1057,9 +1091,10 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic_base</span>(<span class="at">img =</span> penguin_rot,</span>
 <span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> species_data<span class="sc">$</span>bill_length_mm,</span>
 <span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> species_data<span class="sc">$</span>flipper_length_mm,</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Manually scale with log10</span></span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">height =</span> <span class="fu">log10</span>(species_data<span class="sc">$</span>body_mass_g))</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Manually scale by the maximum for all species data</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">height =</span> (species_data<span class="sc">$</span>body_mass_g <span class="sc">/</span> </span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">max</span>(penguins_subset<span class="sc">$</span>body_mass_g)) <span class="sc">*</span> <span class="dv">10</span>)</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1117,7 +1152,11 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="dv">21</span>))) <span class="sc">+</span></span>
 <span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.9</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"inside"</span>, </span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.9</span>),</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>),</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1147,15 +1186,16 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic_base</span>(<span class="at">img =</span> penguin_rot,</span>
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> species_data<span class="sc">$</span>bill_length_mm,</span>
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> species_data<span class="sc">$</span>flipper_length_mm,</span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Manually scale with log10</span></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">height =</span> <span class="fu">log10</span>(species_data<span class="sc">$</span>body_mass_g),</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Set fill colour</span></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fill =</span> <span class="fu">ifelse</span>(species_data<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span>, <span class="st">"blue"</span>, <span class="st">"orange"</span>))</span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a legend</span></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>), <span class="at">pch =</span> <span class="dv">20</span>,</span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"blue"</span>), <span class="at">bty =</span> <span class="st">"n"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Manually scale by the maximum for all species data</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">height =</span> (species_data<span class="sc">$</span>body_mass_g <span class="sc">/</span> </span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">max</span>(penguins_subset<span class="sc">$</span>body_mass_g)) <span class="sc">*</span> <span class="dv">10</span>,</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Set fill colour</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fill =</span> <span class="fu">ifelse</span>(species_data<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span>, <span class="st">"blue"</span>, <span class="st">"orange"</span>))</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a legend</span></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>), <span class="at">pch =</span> <span class="dv">20</span>,</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"blue"</span>), <span class="at">bty =</span> <span class="st">"n"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1174,7 +1214,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <section id="geographic-distribution" class="level3">
 <h3 data-anchor-id="geographic-distribution">Geographic distribution</h3>
 <p>In much the same way as generic x-y plotting, the rphylopic package can be used to plot organism silhouettes on a map. That is, to plot data points (e.g.&nbsp;species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the <a href="https://palaeoverse.palaeoverse.org">palaeoverse</a> R package to visualise the geographic distribution of Diplocaulus fossils.</p>
-<p>First, let’s load our libraries and the tetrapod data:</p>
+<p>First, let’s load the required libraries and data:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
@@ -1268,7 +1308,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <p>Note that we use <code>name = diplocaulus$genus</code> here. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using <code>name = diplocaulus$genus</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot map</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(world, <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">border =</span> <span class="st">"darkgrey"</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>, <span class="at">main =</span> <span class="cn">NA</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">border =</span> <span class="st">"darkgrey"</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>, <span class="at">main =</span> <span class="cn">NA</span>)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot silhouettes</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">add_phylopic_base</span>(<span class="at">name =</span> diplocaulus<span class="sc">$</span>genus,</span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">st_coordinates</span>(diplocaulus)[ ,<span class="dv">1</span>], </span>
@@ -1285,7 +1325,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
-<p>Also, note that we could change the projection of the map and data using the crs and default_crs arguments in coord_sf(). When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.</p>
+<p>When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
@@ -1293,31 +1333,28 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Target projection (Robinson)</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>crs_rob <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(<span class="st">"ESRI:54030"</span>)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a bounding box</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">crs =</span> <span class="dv">4326</span>, </span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">lat =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">89.9</span>, <span class="fl">89.9</span>), </span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">lon =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">179.9</span>, <span class="fl">179.9</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">st_transform</span>(crs_rob)</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Project world</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>proj_world <span class="ot">&lt;-</span> world <span class="sc">|&gt;</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Project lng/lat (WGS84) to Robinson</span></span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>proj_diplocaulus <span class="ot">&lt;-</span> diplocaulus <span class="sc">|&gt;</span></span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(proj_world) <span class="sc">+</span></span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>, <span class="at">color =</span> <span class="st">"darkgrey"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_phylopic</span>(<span class="at">data =</span> proj_diplocaulus,</span>
-<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">1</span>], </span>
-<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">2</span>], </span>
-<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>                    <span class="at">name =</span> genus),</span>
-<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">height =</span> <span class="fl">8E5</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> bbox) <span class="sc">+</span></span>
-<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a bounding box</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">crs =</span> <span class="dv">4326</span>, </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">lat =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">89.9</span>, <span class="fl">89.9</span>), </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">lon =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">179.9</span>, <span class="fl">179.9</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Project world</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>proj_world <span class="ot">&lt;-</span> world <span class="sc">|&gt;</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Project lng/lat (WGS84) to Robinson</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>proj_diplocaulus <span class="ot">&lt;-</span> diplocaulus <span class="sc">|&gt;</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(crs_rob)</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(proj_world) <span class="sc">+</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"lightgray"</span>, <span class="at">color =</span> <span class="st">"darkgrey"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_phylopic</span>(<span class="at">data =</span> proj_diplocaulus,</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">1</span>], </span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">st_coordinates</span>(proj_diplocaulus)[ ,<span class="dv">2</span>], </span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">name =</span> genus),</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">height =</span> <span class="fl">8E5</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> bbox) <span class="sc">+</span></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1326,6 +1363,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
+<p>Note, we could have also changed the projection of the map and data using the <code>crs</code> and <code>default_crs</code> arguments in <code>coord_sf()</code>.</p>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell">
@@ -1377,7 +1415,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get vertebrate phylogeny and data</span></span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(vertebrate.tree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We can use a vectorized version of the <code>get_uuid()</code> function to retrieve UUID values for all of the species at once. However, just in case we get an error, we wrap the <code>get_uuid()</code> call in a <code>tryCatch()</code> call. This way, we should get either a UUID or <code>NA</code> for each species:</p>
+<p>We can use a vectorised version of the <code>get_uuid()</code> function to retrieve UUID values for all of the species at once. However, just in case we get an error, we wrap the <code>get_uuid()</code> call in a <code>tryCatch()</code> call. This way, we should get either a UUID or <code>NA</code> for each species:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a data.frame for the PhyloPic names</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>vertebrate_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> vertebrate.tree<span class="sc">$</span>tip.label, <span class="at">uuid =</span> <span class="cn">NA</span>)</span>
@@ -1411,12 +1449,13 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <p>We’re not keen on the default boar silhouette either, so let’s pick a different one. The <code>pick_phylopic()</code> function lets us browse the available silhouettes and choose the one we like best. We can then extract the UUID from the object’s attributes:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a different boar image; we'll pick #4</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a different boar image</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>boar_svg <span class="ot">&lt;-</span> <span class="fu">pick_phylopic</span>(<span class="st">"Sus scrofa"</span>, <span class="at">view =</span> <span class="dv">5</span>)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the UUID</span></span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>vertebrate_data<span class="sc">$</span>uuid[vertebrate_data<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Sus_scrofa"</span>] <span class="ot">&lt;-</span></span>
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(boar_svg, <span class="st">"uuid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>We like the look of piggy #4:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1616,7 +1655,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </section>
 <section id="network-plots" class="level3">
 <h3 data-anchor-id="network-plots">Network plots</h3>
-<p>The ggraph package extends ggplot2 to network graphs and geom_phylopic() can be dropped into a ggraph() plot to render nodes as PhyloPic silhouettes. This is particularly useful for visualizing food webs, taxonomic networks, or other graph-structured data where the nodes represent organisms.</p>
+<p>The <a href="https://ggraph.data-imaginist.com">ggraph</a> package extends ggplot2 to network graphs, and <code>geom_phylopic()</code> can be dropped into a <code>ggraph()</code> plot to render nodes as PhyloPic silhouettes. This is especially useful for food webs, taxonomic networks, and other graph-structured data where nodes represent organisms.</p>
 <p>Let’s demonstrate with a simple Permian food web. First, we set up the network:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false" href="">Base R</a></li></ul>
@@ -1654,6 +1693,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
+<p>Let’s now visualise that simple network:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
@@ -1700,6 +1740,7 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 </div>
+<p>And add a little colour to our lives:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true" href="">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false" href="">Base R</a></li></ul>
 <div class="tab-content">
