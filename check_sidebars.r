@@ -23,9 +23,21 @@ library(yaml)
 
 errors   <- character(0)
 warnings <- character(0)
-report <- function(level, file, msg) {
-  line <- sprintf("::%s file=%s::%s", level, file, msg)
-  if (level == "error") errors <<- c(errors, line) else warnings <<- c(warnings, line)
+report <- function(level, file, msg, line = 1) {
+  out <- sprintf("::%s file=%s,line=%d::%s", level, file, line, msg)
+  if (level == "error") errors <<- c(errors, out) else warnings <<- c(warnings, out)
+}
+
+# first line of `file` matching `pattern`, or 1 if none does
+line_of <- function(file, pattern) {
+  i <- grep(pattern, readLines(file, warn = FALSE), perl = TRUE)
+  if (length(i)) i[[1]] else 1
+}
+
+# first line of a _sidebar.yml listing `path` as a whole entry, so "index.qmd"
+# doesn't match "appendix/index.qmd"
+line_of_path <- function(file, path) {
+  line_of(file, sprintf("(^|[\\s\"'])\\Q%s\\E([\\s\"'#]|$)", path))   # \Q..\E: literal
 }
 
 front_matter <- function(path) {
@@ -53,12 +65,13 @@ paths_in <- function(item, sb) {
     return(character(0))
   }
   if (!is.null(item$auto)) {
-    report("error", sb, "`auto` isn't supported in _sidebar.yml; list the pages by name")
+    report("error", sb, "`auto` isn't supported in _sidebar.yml; list the pages by name",
+           line_of(sb, "^[\\s-]*auto\\s*:"))
   }
   if (is.character(item$contents)) {
     report("error", sb, sprintf(
       "`contents: %s` isn't supported in _sidebar.yml; give contents as a list of pages",
-      item$contents[[1]]))
+      item$contents[[1]]), line_of(sb, "^[\\s-]*contents\\s*:\\s*[^\\s#]"))
     item$contents <- NULL
   }
   c(item$href, unlist(lapply(item$contents, paths_in, sb)))
@@ -97,7 +110,9 @@ for (m in modules) {
   # keep YAML lists as R lists: by default `contents: [a.qmd]` would come back
   # as the string "a.qmd", indistinguishable from the unsupported `contents: a.qmd`
   items <- tryCatch(read_yaml(sb, handlers = list(seq = as.list)), error = function(e) {
-    report("error", sb, paste("invalid YAML:", conditionMessage(e)))
+    msg  <- conditionMessage(e)
+    line <- regmatches(msg, regexec("line (\\d+)", msg))[[1]][2]   # the parser reports it
+    report("error", sb, paste("invalid YAML:", msg), if (is.na(line)) 1 else as.integer(line))
     NULL
   })
   if (is.null(items)) next
@@ -112,7 +127,8 @@ for (m in modules) {
 
   for (p in unique(listed)) {
     if (!listed_path_exists(p, m, qmds)) {
-      report("error", sb, sprintf("lists %s, which doesn't exist in %s", p, m))
+      report("error", sb, sprintf("lists %s, which doesn't exist in %s", p, m),
+             line_of_path(sb, p))
     }
   }
   for (p in setdiff(web, listed)) {
