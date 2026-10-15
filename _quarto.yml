@@ -1,10 +1,18 @@
 project:
-  type: default
+  type: website
   # modules only, so README.md / LICENSE.md aren't rendered
   render:
     - "*/*.qmd"
-  # refresh each module's copy of the Lua filter before rendering
-  pre-render: sync_filter.r
+  # before rendering, refresh each module's copy of the Lua filter and build a
+  # sidebar for each module with a _sidebar.yml (see sync_sidebars.r)
+  pre-render:
+    - sync_filter.r
+    - sync_sidebars.r
+
 # add the "Packages used in this module" callout to every module's long-form page
 filters:
   - required_packages.lua
+
+# the generated sidebars; Quarto reads this after pre-render runs
+metadata-files:
+  - _sidebars.yml
