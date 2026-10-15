@@ -4,7 +4,7 @@ Directory of teaching modules built by the Palaeoverse team.
 
 # Requirements
 
-Building modules requires Quarto >= 1.10.18 and Pandoc >= 3.10.0. See [this page](https://quarto.org/docs/get-started/) to install Quarto. You can check the Quarto and Pandoc versions by running `quarto check` in the terminal.
+Building modules requires Quarto >= 1.10.18 and Pandoc >= 3.10.0. See [this page](https://quarto.org/docs/get-started/) to install Quarto. You can check the Quarto and Pandoc versions by running `quarto check` in the terminal. Rendering also runs two small R scripts first (see [Multi-page modules and sidebars](#multi-page-modules-and-sidebars)), which need the `yaml` R package.
 
 # Building a module
 
@@ -126,6 +126,40 @@ share a slide rather than appearing one after the other.
 The cost is borne by the reader: the first run downloads a WebAssembly R build,
 and any package a cell uses is fetched at run time. This is worth keeping in mind
 for live teaching on unreliable wifi.
+
+## Multi-page modules and sidebars
+
+*Optional, for modules with more than one web page (e.g., a main page plus
+separate exercise pages).*
+
+A module with several pages can have a sidebar on the left listing them. To add
+one, put a `_sidebar.yml` in the module folder that lists the pages in the order
+they should appear. Paths are relative to the module folder:
+
+```yaml
+# mymodule/_sidebar.yml
+- index.qmd
+- exercise1.qmd
+- exercise2.qmd
+- text: Slides                # optional: a link to the slide deck
+  href: index-slides.html
+- section: "Appendix: extra material"
+  href: appendix/index.qmd    # the section title links to this page
+  contents:
+    - appendix/exercise1.qmd
+```
+
+Each entry can be:
+
+- **a page**, given by its `.qmd` path; the sidebar shows the page's `title`
+- **a link with your own label**, as `text:` and `href:`. The `href` can point
+  at a page, at rendered output such as `index-slides.html`, or at an external
+  URL.
+- **a section**, as `section:` (its title), an optional `href:`, and a
+  `contents:` list of more entries
+
+For modules with a `_sidebar.yml`, every page listed in `_sidebar.yml` gets the sidebar, and pages that are not listed do not get the sidebar. Each page must be listed explicitly by name; the `auto` and `contents: auto` options are not supported.
+If a `_sidebar.yml` is not present in a module, the module will not get sidebar, even if it has multiple pages.
 
 # Authoring a module with the Lua filter
 
