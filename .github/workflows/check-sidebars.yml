@@ -1,4 +1,4 @@
-# This workflow checks each module's _sidebar.yml with check_sidebars.r:
+# This workflow checks each module's _sidebar.yml with .github/check_sidebars.r:
 #
 #   - errors (fail): invalid YAML, `auto` entries, or listed pages that don't exist
 #   - warnings (annotations only): web pages a sidebar doesn't list, and
@@ -31,7 +31,7 @@ jobs:
         run: Rscript -e 'install.packages("yaml")'
 
       - name: Check each module's _sidebar.yml
-        run: Rscript check_sidebars.r
+        run: Rscript .github/check_sidebars.r
 
       - name: Show the generated sidebars
         run: |

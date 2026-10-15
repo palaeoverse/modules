@@ -17,7 +17,7 @@
 # (format: revealjs) don't count. Output is formatted as GitHub Actions
 # annotations.
 #
-# Usage: Rscript check_sidebars.r   (run from the repo root)
+# Usage: Rscript .github/check_sidebars.r   (run from the repo root)
 
 library(yaml)
 
