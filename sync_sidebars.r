@@ -41,6 +41,7 @@ sidebars <- lapply(Sys.glob(file.path(modules_dir, "*", "_sidebar.yml")), functi
     id        = gsub("/", "-", dir),
     style     = "floating",
     alignment = "left",
+    collapse-level = 1,
     contents  = lapply(read_yaml(f), prefix, dir)
   )
 })
