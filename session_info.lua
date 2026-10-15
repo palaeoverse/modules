@@ -21,7 +21,7 @@ if (length(pkgs) > 0) {
 ]=]
 
 function Pandoc(doc)
-  if quarto.doc.is_format("revealjs") then return nil end
+  if quarto.doc.is_format("revealjs") or quarto.doc.input_file == quarto.utils.resolve_path("index.qmd") then return nil end
 
   local ok, out = pcall(pandoc.pipe, quarto.paths.rscript(), { "-", quarto.doc.input_file }, detect)
   if not ok then
