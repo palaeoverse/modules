@@ -13,11 +13,15 @@ pkgs <- pak::scan_deps(dirname(f))$package
 base_pkgs <- rownames(installed.packages(priority = "base"))
 pkgs <- setdiff(unique(pkgs), c("R", base_pkgs, "knitr", "rmarkdown", "quarto"))
 options(width = 80)
-print(sessioninfo::session_info(pkgs = pkgs))
+if (length(pkgs) > 0) {
+  print(sessioninfo::session_info(pkgs = pkgs))
+} else {
+  print(sessioninfo::session_info(info = "platform"))
+}
 ]=]
 
 function Pandoc(doc)
-  if quarto.doc.is_format("revealjs") then return nil end
+  if quarto.doc.is_format("revealjs") or quarto.doc.input_file == quarto.utils.resolve_path("index.qmd") then return nil end
 
   local ok, out = pcall(pandoc.pipe, quarto.paths.rscript(), { "-", quarto.doc.input_file }, detect)
   if not ok then
