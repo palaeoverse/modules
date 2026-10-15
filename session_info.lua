@@ -26,7 +26,7 @@ function Pandoc(doc)
   end
 
   doc.blocks:extend({
-    pandoc.RawBlock("html", "---\n\n<details>\n<summary>Session info</summary>"),
+    pandoc.RawBlock("html", "<br><br><details>\n<summary>Session info</summary>"),
     pandoc.CodeBlock(out),
     pandoc.RawBlock("html", "</details>")
   })
