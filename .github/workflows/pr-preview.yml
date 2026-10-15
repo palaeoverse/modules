@@ -62,7 +62,7 @@ jobs:
           # upstream modules are the top-level directories of this repo (loose
           # files such as README.md / LICENSE.md and .git/.github are ignored).
           src_root <- "modules"
-          dest <- "site/training/modules"
+          dest <- "site/training/modules-dev"
 
           upstream <- setdiff(
             list.dirs(src_root, full.names = FALSE, recursive = FALSE),
@@ -130,7 +130,7 @@ jobs:
         with:
           script: |
             const pr = context.payload.pull_request.number;
-            const url = `https://palaeoverse.github.io/modules/pr-preview/pr-${pr}/training/modules`;
+            const url = `https://palaeoverse.github.io/modules/pr-preview/pr-${pr}/training/modules-dev`;
             const marker = '<!-- pr-preview -->';
             const body = `${marker}\nSee preview at ${url}`;
 
