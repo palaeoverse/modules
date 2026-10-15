@@ -13,7 +13,11 @@ pkgs <- pak::scan_deps(dirname(f))$package
 base_pkgs <- rownames(installed.packages(priority = "base"))
 pkgs <- setdiff(unique(pkgs), c("R", base_pkgs, "knitr", "rmarkdown", "quarto"))
 options(width = 80)
-print(sessioninfo::session_info(pkgs = pkgs))
+if (length(pkgs) > 0) {
+  print(sessioninfo::session_info(pkgs = pkgs))
+} else {
+  print(sessioninfo::session_info(info = "platform"))
+}
 ]=]
 
 function Pandoc(doc)
