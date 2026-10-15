@@ -734,10 +734,10 @@ or logical: returning NA</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> median)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] -0.1031273
+[1] -0.05945777
 
 $b
-[1] 3.179187</code></pre>
+[1] 2.981019</code></pre>
 </div>
 </div>
 <p>Note again that we pass <code>median</code> (the function) as an argument without parenthesis. Using <code>median()</code> instead equates to calling the median function without passing it any arguments and will result in an error. For the curious: <code>lapply</code> is what is called a <a href="https://en.wikipedia.org/wiki/Higher-order_function">“higher-order function”</a>.</p>
@@ -754,10 +754,10 @@ $b
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="at">X =</span> data_list, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">abs</span>(x[<span class="dv">3</span>] <span class="sc">-</span> x[<span class="dv">5</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-[1] 2.320651
+[1] 0.6811001
 
 $b
-[1] 0.5886342</code></pre>
+[1] 0.02286272</code></pre>
 </div>
 </div>
 </section>
@@ -808,6 +808,34 @@ $b
 <p>The best way to share functions with other people is to wrap them in an R package. This might sound intimidating but don’t worry, we have an <a href="">entire module dedicated to package development</a>!</p>
 
 
+<hr><br><details>
+<summary>Session info</summary>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.6.1 (2026-06-24)
+ os       Ubuntu 24.04.5 LTS
+ system   x86_64, linux-gnu
+ ui       X11
+ language (EN)
+ collate  C.UTF-8
+ ctype    C.UTF-8
+ tz       UTC
+ date     2026-10-15
+ pandoc   3.1.3 @ /usr/bin/pandoc
+ quarto   1.10.19 @ /usr/local/bin/quarto
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package   * version date (UTC) lib source
+ backports   1.5.1   2026-04-03 [1] RSPM
+ checkmate   2.3.4   2026-02-03 [1] RSPM
+ rlang       1.3.0   2026-07-05 [1] RSPM
+
+ [1] /home/runner/work/_temp/Library
+ [2] /opt/R/4.6.1/lib/R/library
+
+──────────────────────────────────────────────────────────────────────────────
+</code></pre>
+</details>
 </section>
 
 </main> <!-- /main -->
