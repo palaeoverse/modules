@@ -18,7 +18,7 @@ function Pandoc(doc)
 
   doc.blocks:insert(1, pandoc.Para(pandoc.Link(
     { pandoc.RawInline("html", '<i class="bi bi-github"></i> '), pandoc.Str("View source file") },
-    repo .. rel, "", { style = "color: #90989f;" }
+    repo .. rel, "", { style = "color: #90989f;", target = "_blank" }
   )))
   return doc
 end
