@@ -114,6 +114,9 @@ jobs:
 
       - name: Render the website
         uses: quarto-dev/quarto-actions/render@v2
+        env:
+          # make source_link.lua link to the PR's branch instead of main
+          SOURCE_LINK_REF: ${{ github.event.pull_request.head.ref }}
         with:
           path: site
 
