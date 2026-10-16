@@ -6,8 +6,12 @@
 --
 -- The source path is the input file relative to this filter's directory, which
 -- is the root of the modules (here and in the website repo alike).
+--
+-- The branch defaults to main and can be overridden with the SOURCE_LINK_REF
+-- environment variable (used by the PR preview workflow to link to the PR's
+-- branch).
 
-local repo = "https://github.com/palaeoverse/modules/blob/main/"
+local repo = "https://github.com/palaeoverse/modules/blob/" .. (os.getenv("SOURCE_LINK_REF") or "main") .. "/"
 
 function Pandoc(doc)
   if quarto.doc.is_format("revealjs") or quarto.doc.input_file == quarto.utils.resolve_path("index.qmd") then return nil end
