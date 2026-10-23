@@ -1,11 +1,13 @@
 ---
-title: "Introduction to the palaeoverse R package"
-description: "This is a description"
+title: "Getting started with palaeoverse"
+subtitle: "An introduction to the **palaeoverse** R package"
+description: |
+  Meet **palaeoverse**, the R package built by palaeobiologists to take the pain out of working with fossil data. Learn how to install it, prepare your records, and start building reproducible workflows, no prior experience with the package required.
 author:
   - Lewis A. Jones
   - Bethany J. Allen
 date: "`r Sys.Date()`"
-categories: [r]
+categories: [r, data, explore, prepare]
 difficulty: Beginner
 image: img/palaeoverse-logo.png
 format:
@@ -35,104 +37,74 @@ editor:
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 
+::: {.callout}
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+1. Install and load the palaeoverse R package and navigate its documentation and function families
+2. Describe the package's design principles and the kinds of palaeobiological tasks it supports
+3. Choose appropriate palaeoverse functions for common stages of an analysis, from data preparation to visualisation
+4. Work through a vignette from start to finish, applying palaeoverse functions to a real fossil dataset (case study 1)
+5. Adapt the same functions to a second dataset and research question (case study 2)
+6. Apply what you have learned to your own data
+:::
+
 ## Introduction
 
-::: {.narration}
-Prose goes in a `.narration` block: it reads as a paragraph on the website, and
-becomes the speaker notes you talk from on the slides. Press `s` in the deck to
-see the notes view.
+Computational tools are now at the heart of modern palaeontology. From cleaning datasets to running complex analyses, software underpins much of what we do.
 
-Consecutive paragraphs can share one block; they stay separate paragraphs on
-the page and separate notes on the slide.
-:::
+First released in 2022, [**palaeoverse**](https://palaeoverse.palaeoverse.org) was born from a frustration that will feel familiar to many researchers: across the palaeontological community, many of us were independently writing similar code to clean, standardise, and prepare palaeontological data for analyses. Without shared tools or common workflows, this meant a lot of duplicated effort and results that were not always easy for others to reproduce.
 
-::: {.slides-only}
-- a bullet summary for the slide
-- which would be redundant on the page
-:::
+Rather than continuing to work in parallel, a group of early-career researchers were brought together to tackle the problem collaboratively. The result was the [**palaeoverse**](https://palaeoverse.palaeoverse.org) R package.
 
-::: {.html-only}
-Content that only makes sense in writing (e.g., a long aside, a table of options, a
-link dump) goes in an `.html-only` block and never reaches the deck.
-:::
+### What is palaeoverse
 
-## One plot per slide
+[**palaeoverse**](https://palaeoverse.palaeoverse.org) is an R package developed by palaeobiologists, for palaeobiologists. Its aim is to provide a community-driven toolkit of generic functions that address the tasks palaeobiological researchers run into again and again, from preparing and cleaning occurrence data to binning records in time and space and summarising the results. Rather than reinventing these steps for every project, palaeoverse allows you to draw on well-documented, tested functions that the community has built and refined together.
 
-::: {.narration}
-Each `##` heading starts a slide, and the filter closes the slide after every
-figure, so two plots never share one slide. Prose after a figure introduces the next
-figure rather than trailing behind the old one.
-:::
+The package deliberately does not implement statistical analyses. Instead, it provides auxiliary functions that streamline the workflow around those analyses, helping you get your data into the right shape and keep your code clear. This design means palaeoverse slots neatly alongside the methods you already use, while improving the readability, transparency and reproducibility of your code. The package is open and collaborative, so researchers at any career stage are welcome to [suggest new functions](https://github.com/palaeoverse/palaeoverse/issues), report [issues](https://github.com/palaeoverse/palaeoverse/issues) and [contribute](https://palaeoverse.org/contribute/general-guide/#contributing-to-code-or-documentation) to its development.
 
-```{r}
-plot(mtcars$wt, mtcars$mpg)
-```
+### Why use palaeoverse
 
-::: {.narration}
-This narration belongs to the plot below, and lands on its slide as speaker notes.
-:::
+Palaeobiological analyses rarely go straight from raw data to results. Before you can run a single model, you usually need to check taxonomic names, assign occurrences to time bins, work out where your fossils sat on the ancient Earth, and summarise sampling. These steps are essential, but they are also repetitive, error-prone, and often rewritten from scratch for every project. The palaeoverse R package exists to change that.
+
+- **Save time on routine tasks**. Functions for common tasks such as checking taxonomy (`tax_check()`), binning occurrences in time (`bin_time()`) and reconstructing palaeocoordinates (`palaeorotate()`) replace long, bespoke scripts with a few clear lines of code.
+- **Write clearer, more readable code**. Consistent function names, arguments and outputs make your scripts easier to follow, whether you are returning to them in six months or sharing them with a collaborator.
+- **Make your research reproducible**. Documented, version-controlled, and tested functions mean that others can follow exactly what you did, and rerun it, without deciphering a one-off workflow.
+- **Keep full control of your analyses**. palaeoverse does not impose a statistical framework. It prepares and supports your data, so it works alongside the methods and packages you already use.
+- **Build on community expertise**. The package is shaped and peer-reviewed by palaeobiologists working across taxa, time periods and questions, so its functions reflect real research needs rather than abstract design.
+- **Join an open, welcoming project**. Anyone can suggest a function, report a [bug](https://github.com/palaeoverse/palaeoverse/issues) or [contribute](https://palaeoverse.org/contribute/general-guide/#contributing-to-code-or-documentation) code, and the more people use and shape the package, the more useful it becomes.
+
+## Getting started
+
+### Installation
+
+The [**palaeoverse**](https://palaeoverse.palaeoverse.org) package can be installed from CRAN (recommended) or its dedicated [GitHub repository](https://github.com/palaeoverse/palaeoverse) if the development version is preferred. To install via CRAN, simply use:
 
 ```{r}
-plot(mtcars$hp, mtcars$mpg)
+#| label: install-palaeoverse
+#| eval: false
+
+install.packages("palaeoverse")
 ```
 
-## Deeper headings
-
-::: {.narration}
-`###` and deeper headings are promoted to slide level, so each becomes its own
-slide instead of piling onto the previous slide. On the website they stay a normal
-sub-heading.
-:::
-
-### A sub-heading
-
-::: {.narration}
-This is its own slide.
-:::
-
-## Building up a slide
-
-::: {.narration}
-When a slide holds two or more code chunks, the filter expands it into an
-auto-animate build-up: one step per chunk, earlier chunks staying on screen, and
-the narration advancing with each step/click.
-:::
+To install the development version, first install the [remotes](https://remotes.r-lib.org/) package, and then use `install_github()` to install palaeoverse directly from GitHub.
 
 ```{r}
-x <- mtcars$wt
-mean(x)
+#| label: install-remotes
+#| eval: false
+
+install.packages("remotes")
+remotes::install_github("palaeoverse/palaeoverse")
 ```
-
-::: {.narration}
-The second chunk arrives on the next step, with the first still visible.
-:::
-
-```{r}
-round(sd(x), 3)
-```
-
-## Callouts
-
-::: {.narration}
-A callout gets a slide of its own. The content is un-boxed and the slide is titled by its own heading.
-:::
 
 ::: {.callout-note}
-## A note
+Before we get to the good stuff, a quick note on behalf of all developers. Behind every open-source package is a group of people who build, maintain, and support it, often in their own time and often without much recognition. If you use palaeoverse in your research, please cite the associated publication. Citations are one of the main ways this kind of work is acknowledged, and they help us keep maintaining and improving the package so that you can keep doing your research ([read more on this topic](https://doi.org/10.1038/s41559-023-02008-w)). You can access the appropriate citation via:
 
-This box is dropped on the slide, which lets a figure inside it stretch to fit.
+```{r}
+#| label: cite-palaeoverse
+#| eval: false
+
+citation("palaeoverse")
+```
 :::
-
-::: {.callout-caution collapse="true"}
-## An exercise solution
-
-A *collapsed* callout is the exception: it keeps its box. Since clicking on
-slides can be awkward, the collapsed content is held back as a fragment and
-revealed when you advance. On the website it stays a click-to-open box.
-:::
-
-## More info
-
-- [Quarto revealjs](https://quarto.org/docs/presentations/revealjs/)
-- [Callouts](https://quarto.org/docs/authoring/callouts.html)
-- the repo README, for the other two ways to build a module
