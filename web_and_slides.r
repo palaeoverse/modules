@@ -60,11 +60,13 @@ gap     <- FALSE
 last_blank <- function() length(out) == 0 || str_detect(tail(out, 1), "^\\s*$")
 
 flush <- function() {
+  # jarl-ignore-start undesirable_operator: legitimate use of <<-
   gap <<- FALSE
   if (length(para) == 0) return(invisible())
   if (!last_blank()) out[[length(out) + 1]] <<- ""
   out  <<- c(out, "::: {.narration}", para, ":::", "")
   para <<- character()
+  # jarl-ignore-end undesirable_operator
 }
 
 for (ln in body) {
