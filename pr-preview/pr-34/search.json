@@ -369,31 +369,41 @@
     ]
   },
   {
+    "objectID": "training/modules-dev/palaeoverse/index.html#motivation",
+    "href": "training/modules-dev/palaeoverse/index.html#motivation",
+    "title": "Getting started with palaeoverse",
+    "section": "2.1 Motivation",
+    "text": "2.1 Motivation\nFirst released in 2022, palaeoverse was born from a frustration that will feel familiar to many researchers. Across the palaeontological community, many of us were independently writing similar code to clean, standardise and prepare data for analysis. Without shared tools or common workflows, this meant duplicated effort and results that were not always easy for others to reproduce.\nRather than continuing to work in parallel, a group of early-career researchers came together to tackle the problem collaboratively. The result was the palaeoverse R package.",
+    "crumbs": [
+      "Getting started with palaeoverse"
+    ]
+  },
+  {
+    "objectID": "training/modules-dev/palaeoverse/index.html#design",
+    "href": "training/modules-dev/palaeoverse/index.html#design",
+    "title": "Getting started with palaeoverse",
+    "section": "2.2 Design",
+    "text": "2.2 Design\npalaeoverse is built around a small set of principles that shape how the functions look and behave.\n\nBuilt around occurrence data. Most functions expect an occurrence data.frame as input. Fossil occurrence data are records of the presence of a particular taxon at a unique location in space and time.\nModular. Each function does one job well, such as checking taxonomic names, binning ages, or estimating palaeocoordinates. You can use a single function in isolation or chain several together into a full workflow.\nFlexible. Functions are not tied to a single data source. Column names are generally arguments rather than fixed requirements, so you can use data from the Paleobiology Database (PBDB), your own compilations, or other sources.\nTransparent and reproducible. Functions are scripted, documented and open source, so every step of data preparation can be inspected, shared and repeated.\nWell documented. Every function has a help page with worked examples, and vignettes demonstrate complete workflows.\nCommunity-driven. Palaeoverse is developed openly, with input from researchers across career stages. Users are encouraged to suggest features, report bugs and contribute.\nPeer-reviewed. Every function undergoes several rounds of review and testing by the development team before it is added to the package, which helps ensure the code is reliable, readable and consistent.\n\n\n\n\n\n\n\nNoteAnatomy of an occurrence dataset\n\n\n\nOccurrence data typically include columns describing:\n\nTaxonomy, such as accepted name, genus and family\nTime, such as maximum and minimum ages or named intervals\nSpace, such as longitude and latitude\nAdditional context, such as formation, collection or reference\n\nEach row is a single record of something present at a particular place and time. That “something” is usually a taxon, but it does not have to be. In the reefs dataset, for example, each row is a fossil reef rather than a species. Most palaeoverse functions rely mainly on the time and space columns, so they work on either kind of record. Functions that deal with taxonomy, such as tax_unique(), additionally need the relevant taxonomic columns.",
+    "crumbs": [
+      "Getting started with palaeoverse"
+    ]
+  },
+  {
+    "objectID": "training/modules-dev/palaeoverse/index.html#applications",
+    "href": "training/modules-dev/palaeoverse/index.html#applications",
+    "title": "Getting started with palaeoverse",
+    "section": "2.3 Applications",
+    "text": "2.3 Applications\npalaeoverse supports the early, and sometimes most time-consuming, step of palaeontological analyses. Typical applications include:\n\nCleaning and standardising occurrence data, for example by checking taxonomic names and removing duplicates\nBinning occurrences into temporal and spatial units for analyses of diversity, turnover, and biogeography\nReconstructing palaeogeography by estimating where fossil localities were located in the past\nSummarising taxa, such as estimating temporal and geographic ranges\nBuilding reproducible workflows that can be shared alongside publications\n\nThese steps feed into a wide range of downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography. palaeoverse does not replace specialist analytical packages. Instead, it provides the shared groundwork that prepares data for them.\n\n\n\n\n\n\nNoteWhere does palaeoverse fit?\n\n\n\nThink of palaeoverse as the bridge between raw occurrence data and the analytical methods you want to apply.",
+    "crumbs": [
+      "Getting started with palaeoverse"
+    ]
+  },
+  {
     "objectID": "training/modules-dev/palaeoverse/index.html#installation",
     "href": "training/modules-dev/palaeoverse/index.html#installation",
     "title": "Getting started with palaeoverse",
-    "section": "2.1 Installation",
-    "text": "2.1 Installation\nThe palaeoverse package can be installed from CRAN (recommended) or its dedicated GitHub repository if the development version is preferred. To install via CRAN, simply use:\n\ninstall.packages(\"palaeoverse\")\n\nTo install the development version, first install the remotes package, and then use install_github() to install palaeoverse directly from GitHub:\n\ninstall.packages(\"remotes\")\nremotes::install_github(\"palaeoverse/palaeoverse\")\n\nNow you are able to load palaeoverse:\n\nlibrary(palaeoverse)",
-    "crumbs": [
-      "Getting started with palaeoverse"
-    ]
-  },
-  {
-    "objectID": "training/modules-dev/palaeoverse/index.html#documentation",
-    "href": "training/modules-dev/palaeoverse/index.html#documentation",
-    "title": "Getting started with palaeoverse",
-    "section": "2.2 Documentation",
-    "text": "2.2 Documentation\nAs with all R packages, you can access function documentation through using help() or ?, for example:\n\n# Get documentation for specific function\nhelp(bin_time)\n# or\n?bin_time\n# List of all functions\nhelp(package = \"palaeoverse\")\n\n\n\n\n\n\n\nTip\n\n\n\n\n\n\n\n\nYou can also see all function documentation via the package’s dedicated website reference guide.",
-    "crumbs": [
-      "Getting started with palaeoverse"
-    ]
-  },
-  {
-    "objectID": "training/modules-dev/palaeoverse/index.html#citing-palaeoverse",
-    "href": "training/modules-dev/palaeoverse/index.html#citing-palaeoverse",
-    "title": "Getting started with palaeoverse",
-    "section": "2.3 Citing palaeoverse",
-    "text": "2.3 Citing palaeoverse\nBefore we begin, a quick note on behalf of the developers. Open-source packages are built and maintained by people who often work in their own time with little recognition. If you use palaeoverse in your research, please cite the associated publication. Citations are one of the main ways this work is acknowledged, and they help keep the package maintained and improved (read more on this topic). You can access the appropriate citation via:\n\ncitation(\"palaeoverse\")\n\nTo cite palaeoverse in publications, please cite both the article\ndescribing the package and the package itself:\n\n  Jones, L.A., Gearty, W., Allen, B.J., Eichenseer, K., Dean, C.D.,\n  Galván S., Kouvari, M., Godoy, P.L., Nicholl, C.S.C., Buffan, L.,\n  Dillon, E.M., Flannery-Sutherland, J.T., Chiarenza, A.A. 2023.\n  palaeoverse: A community-driven R package to support palaeobiological\n  analysis. Methods in Ecology and Evolution. 14(9), 2205--2215. doi:\n  10.1111/2041-210X.14099\n\n  Jones L, Gearty W, Allen B, Eichenseer K, Dean C, Bacher E,\n  Flannery-Sutherland J (2026). _palaeoverse: Prepare and Explore Data\n  for Palaeobiological Analyses. R package version 1.5.0_.\n  doi:10.5281/zenodo.7728638 &lt;https://doi.org/10.5281/zenodo.7728638&gt;.\n  &lt;https://CRAN.R-project.org/package=palaeoverse&gt;.\n\nTo see these entries in BibTeX format, use 'print(&lt;citation&gt;,\nbibtex=TRUE)', 'toBibtex(.)', or set\n'options(citation.bibtex.max=999)'.",
+    "section": "3.1 Installation",
+    "text": "3.1 Installation\nThe palaeoverse package can be installed from CRAN (recommended) or its dedicated GitHub repository if the development version is preferred. To install via CRAN, simply use:\n\ninstall.packages(\"palaeoverse\")\n\nTo install the development version, first install the remotes package, and then use install_github() to install palaeoverse directly from GitHub:\n\ninstall.packages(\"remotes\")\nremotes::install_github(\"palaeoverse/palaeoverse\")\n\nNow you are able to load palaeoverse:\n\nlibrary(palaeoverse)",
     "crumbs": [
       "Getting started with palaeoverse"
     ]
@@ -402,28 +412,8 @@
     "objectID": "training/modules-dev/palaeoverse/index.html#getting-help",
     "href": "training/modules-dev/palaeoverse/index.html#getting-help",
     "title": "Getting started with palaeoverse",
-    "section": "2.4 Getting help",
-    "text": "2.4 Getting help",
-    "crumbs": [
-      "Getting started with palaeoverse"
-    ]
-  },
-  {
-    "objectID": "training/modules-dev/palaeoverse/index.html#motivation",
-    "href": "training/modules-dev/palaeoverse/index.html#motivation",
-    "title": "Getting started with palaeoverse",
-    "section": "3.1 Motivation",
-    "text": "3.1 Motivation\nFirst released in 2022, palaeoverse was born from a frustration that will feel familiar to many researchers: across the palaeontological community, many of us were independently writing similar code to clean, standardise, and prepare palaeontological data for analyses. Without shared tools or common workflows, this meant a lot of duplicated effort and results that were not always easy for others to reproduce.\nRather than continuing to work in parallel, a group of early-career researchers came together in 2022 to tackle the problem collaboratively. The result was the zpalaeoverse` R package.",
-    "crumbs": [
-      "Getting started with palaeoverse"
-    ]
-  },
-  {
-    "objectID": "training/modules-dev/palaeoverse/index.html#occurrence-datasets",
-    "href": "training/modules-dev/palaeoverse/index.html#occurrence-datasets",
-    "title": "Getting started with palaeoverse",
-    "section": "4.1 Occurrence datasets",
-    "text": "4.1 Occurrence datasets",
+    "section": "3.2 Getting help",
+    "text": "3.2 Getting help\nEveryone gets stuck, and knowing where to look is one of the most useful skills you can develop. As with most packages, palaeoverse has several layers of support, from built-in documentation to wider community support.\n\n3.2.1 Within R\nEvery function has a help page describing its arguments, outputs and examples. Open it with ?:\n\n?tax_unique\n\nTo search for functions by keyword, use help.search() or its shorthand ??:\n\n??latitude\n\nTo list all functions available in the package:\n\nhelp(package = \"palaeoverse\")\n\nPalaeoverse also includes vignettes, which are longer tutorials that walk through complete workflows:\n\n# List all available vignettes\nbrowseVignettes(\"palaeoverse\")\n\n\n\n3.2.2 Online\n\nPackage website: The palaeoverse website hosts the full function reference, vignettes and news on new releases. It is searchable and easier to browse than the help pages in R.\nGitHub: The package source code lives in the Palaeoverse/palaeoverse GitHub repository. Check the existing issues first, as someone may already have asked your question.\n\n\n\n\nYou can also see all function documentation via the package’s dedicated website reference guide.\n\n\n\n\n3.2.3 Asking a good question\nIf you can’t find an answer, you can open an issue on GitHub. A clear report makes it far more likely you will get a quick and useful reply. Include:\n\nWhat you were trying to do, in a sentence or two\nA minimal reproducible example, using one of the built-in datasets where possible\nThe error message or unexpected output, copied in full\nYour session information, which you can generate with:\n\n\nsessionInfo()\n\n\n\n\n\n\n\nTip\n\n\n\nThe reprex R package is helpful tool when preparing a reproducible example.\n\n\n\n\n\n\n\n\nNoteCiting palaeoverse\n\n\n\nA quick note on behalf of the developers. If you use palaeoverse in your research, please cite the associated publication. Citations are one of the main ways our work is acknowledged, and they help keep the package maintained and improved (read more on this topic). You can access the appropriate citation via:\n\ncitation(\"palaeoverse\")",
     "crumbs": [
       "Getting started with palaeoverse"
     ]
@@ -510,39 +500,46 @@
     "text": "1.3 Why use palaeoverse\nPalaeobiological analyses rarely go straight from raw data to results. Before you can run a single model, you usually need to check taxonomic names, assign occurrences to time bins, work out where your fossils sat on the ancient Earth, and summarise sampling. These steps are essential, but they are also repetitive, error-prone, and often rewritten from scratch for every project. The palaeoverse R package exists to change that.\n\nSave time on routine tasks. Functions for common tasks such as checking taxonomy (tax_check()), binning occurrences in time (bin_time()) and reconstructing palaeocoordinates (palaeorotate()) replace long, bespoke scripts with a few clear lines of code.\nWrite clearer, more readable code. Consistent function names, arguments and outputs make your scripts easier to follow, whether you are returning to them in six months or sharing them with a collaborator.\nMake your research reproducible. Documented, version-controlled, and tested functions mean that others can follow exactly what you did, and rerun it, without deciphering a one-off workflow.\nKeep full control of your analyses. palaeoverse does not impose a statistical framework. It prepares and supports your data, so it works alongside the methods and packages you already use.\nBuild on community expertise. The package is shaped and peer-reviewed by palaeobiologists working across taxa, time periods and questions, so its functions reflect real research needs rather than abstract design.\nJoin an open, welcoming project. Anyone can suggest a function, report a bug or contribute code, and the more people use and shape the package, the more useful it becomes."
   },
   {
-    "objectID": "training/modules-dev/palaeoverse/index-slides.html#documentation",
-    "href": "training/modules-dev/palaeoverse/index-slides.html#documentation",
+    "objectID": "training/modules-dev/palaeoverse/index-slides.html#motivation",
+    "href": "training/modules-dev/palaeoverse/index-slides.html#motivation",
     "title": "Getting started with palaeoverse",
-    "section": "2.4 Documentation",
-    "text": "2.4 Documentation\nAs with all R packages, you can access function documentation through using help() or ?, for example:\n\n# Get documentation for specific function\nhelp(bin_time)\n# or\n?bin_time\n# List of all functions\nhelp(package = \"palaeoverse\")"
+    "section": "2.1 Motivation",
+    "text": "2.1 Motivation\nFirst released in 2022, palaeoverse was born from a frustration that will feel familiar to many researchers. Across the palaeontological community, many of us were independently writing similar code to clean, standardise and prepare data for analysis. Without shared tools or common workflows, this meant duplicated effort and results that were not always easy for others to reproduce.\nRather than continuing to work in parallel, a group of early-career researchers came together to tackle the problem collaboratively. The result was the palaeoverse R package."
   },
   {
-    "objectID": "training/modules-dev/palaeoverse/index-slides.html#citing-palaeoverse",
-    "href": "training/modules-dev/palaeoverse/index-slides.html#citing-palaeoverse",
+    "objectID": "training/modules-dev/palaeoverse/index-slides.html#design",
+    "href": "training/modules-dev/palaeoverse/index-slides.html#design",
     "title": "Getting started with palaeoverse",
-    "section": "2.6 Citing palaeoverse",
-    "text": "2.6 Citing palaeoverse\nBefore we begin, a quick note on behalf of the developers. Open-source packages are built and maintained by people who often work in their own time with little recognition. If you use palaeoverse in your research, please cite the associated publication. Citations are one of the main ways this work is acknowledged, and they help keep the package maintained and improved (read more on this topic). You can access the appropriate citation via:\n\ncitation(\"palaeoverse\")\n\nTo cite palaeoverse in publications, please cite both the article\ndescribing the package and the package itself:\n\n  Jones, L.A., Gearty, W., Allen, B.J., Eichenseer, K., Dean, C.D.,\n  Galván S., Kouvari, M., Godoy, P.L., Nicholl, C.S.C., Buffan, L.,\n  Dillon, E.M., Flannery-Sutherland, J.T., Chiarenza, A.A. 2023.\n  palaeoverse: A community-driven R package to support palaeobiological\n  analysis. Methods in Ecology and Evolution. 14(9), 2205--2215. doi:\n  10.1111/2041-210X.14099\n\n  Jones L, Gearty W, Allen B, Eichenseer K, Dean C, Bacher E,\n  Flannery-Sutherland J (2026). _palaeoverse: Prepare and Explore Data\n  for Palaeobiological Analyses. R package version 1.5.0_.\n  doi:10.5281/zenodo.7728638 &lt;https://doi.org/10.5281/zenodo.7728638&gt;.\n  &lt;https://CRAN.R-project.org/package=palaeoverse&gt;.\n\nTo see these entries in BibTeX format, use 'print(&lt;citation&gt;,\nbibtex=TRUE)', 'toBibtex(.)', or set\n'options(citation.bibtex.max=999)'."
+    "section": "2.2 Design",
+    "text": "2.2 Design\npalaeoverse is built around a small set of principles that shape how the functions look and behave.\n\nBuilt around occurrence data. Most functions expect an occurrence data.frame as input. Fossil occurrence data are records of the presence of a particular taxon at a unique location in space and time.\nModular. Each function does one job well, such as checking taxonomic names, binning ages, or estimating palaeocoordinates. You can use a single function in isolation or chain several together into a full workflow.\nFlexible. Functions are not tied to a single data source. Column names are generally arguments rather than fixed requirements, so you can use data from the Paleobiology Database (PBDB), your own compilations, or other sources.\nTransparent and reproducible. Functions are scripted, documented and open source, so every step of data preparation can be inspected, shared and repeated.\nWell documented. Every function has a help page with worked examples, and vignettes demonstrate complete workflows.\nCommunity-driven. Palaeoverse is developed openly, with input from researchers across career stages. Users are encouraged to suggest features, report bugs and contribute.\nPeer-reviewed. Every function undergoes several rounds of review and testing by the development team before it is added to the package, which helps ensure the code is reliable, readable and consistent."
+  },
+  {
+    "objectID": "training/modules-dev/palaeoverse/index-slides.html#applications",
+    "href": "training/modules-dev/palaeoverse/index-slides.html#applications",
+    "title": "Getting started with palaeoverse",
+    "section": "2.4 Applications",
+    "text": "2.4 Applications\npalaeoverse supports the early, and sometimes most time-consuming, step of palaeontological analyses. Typical applications include:\n\nCleaning and standardising occurrence data, for example by checking taxonomic names and removing duplicates\nBinning occurrences into temporal and spatial units for analyses of diversity, turnover, and biogeography\nReconstructing palaeogeography by estimating where fossil localities were located in the past\nSummarising taxa, such as estimating temporal and geographic ranges\nBuilding reproducible workflows that can be shared alongside publications\n\nThese steps feed into a wide range of downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography. palaeoverse does not replace specialist analytical packages. Instead, it provides the shared groundwork that prepares data for them."
   },
   {
     "objectID": "training/modules-dev/palaeoverse/index-slides.html#getting-help",
     "href": "training/modules-dev/palaeoverse/index-slides.html#getting-help",
     "title": "Getting started with palaeoverse",
-    "section": "2.7 Getting help",
-    "text": "2.7 Getting help"
+    "section": "3.4 Getting help",
+    "text": "3.4 Getting help\nEveryone gets stuck, and knowing where to look is one of the most useful skills you can develop. As with most packages, palaeoverse has several layers of support, from built-in documentation to wider community support."
   },
   {
-    "objectID": "training/modules-dev/palaeoverse/index-slides.html#motivation",
-    "href": "training/modules-dev/palaeoverse/index-slides.html#motivation",
+    "objectID": "training/modules-dev/palaeoverse/index-slides.html#online",
+    "href": "training/modules-dev/palaeoverse/index-slides.html#online",
     "title": "Getting started with palaeoverse",
-    "section": "3.1 Motivation",
-    "text": "3.1 Motivation\nFirst released in 2022, palaeoverse was born from a frustration that will feel familiar to many researchers: across the palaeontological community, many of us were independently writing similar code to clean, standardise, and prepare palaeontological data for analyses. Without shared tools or common workflows, this meant a lot of duplicated effort and results that were not always easy for others to reproduce.\nRather than continuing to work in parallel, a group of early-career researchers came together in 2022 to tackle the problem collaboratively. The result was the zpalaeoverse` R package."
+    "section": "3.9 Online",
+    "text": "3.9 Online\n\nPackage website: The palaeoverse website hosts the full function reference, vignettes and news on new releases. It is searchable and easier to browse than the help pages in R.\nGitHub: The package source code lives in the Palaeoverse/palaeoverse GitHub repository. Check the existing issues first, as someone may already have asked your question.\n\n\nYou can also see all function documentation via the package’s dedicated website reference guide."
   },
   {
-    "objectID": "training/modules-dev/palaeoverse/index-slides.html#occurrence-datasets",
-    "href": "training/modules-dev/palaeoverse/index-slides.html#occurrence-datasets",
+    "objectID": "training/modules-dev/palaeoverse/index-slides.html#asking-a-good-question",
+    "href": "training/modules-dev/palaeoverse/index-slides.html#asking-a-good-question",
     "title": "Getting started with palaeoverse",
-    "section": "4.1 Occurrence datasets",
-    "text": "4.1 Occurrence datasets"
+    "section": "3.10 Asking a good question",
+    "text": "3.10 Asking a good question\nIf you can’t find an answer, you can open an issue on GitHub. A clear report makes it far more likely you will get a quick and useful reply. Include:\n\nWhat you were trying to do, in a sentence or two\nA minimal reproducible example, using one of the built-in datasets where possible\nThe error message or unexpected output, copied in full\nYour session information, which you can generate with:\n\n\nsessionInfo()"
   },
   {
     "objectID": "training/modules-dev/palaeoverse/index-slides.html#data-cleaning-and-preparing",

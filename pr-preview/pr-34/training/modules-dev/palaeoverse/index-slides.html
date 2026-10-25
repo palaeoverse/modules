@@ -278,19 +278,69 @@ Bethany J. Allen
 </ul>
 </section></section>
 <section>
-<section id="how-to-use-palaeoverse" class="title-slide slide level1 center" data-number="2">
-<h1><span class="header-section-number">2</span> How to use palaeoverse</h1>
+<section id="philosphy-design-principles-and-applications" class="title-slide slide level1 center" data-number="2">
+<h1><span class="header-section-number">2</span> Philosphy, Design Principles and Applications</h1>
 
 </section>
-<section class="slide level2" data-auto-animate="true" data-number="2.1">
-<h2 data-id="quarto-animate-title"><span class="header-section-number">2.1</span> Installation</h2>
+<section id="motivation" class="slide level2" data-number="2.1">
+<h2><span class="header-section-number">2.1</span> Motivation</h2>
+<p>First released in 2022, <a href="https://palaeoverse.palaeoverse.org"><strong>palaeoverse</strong></a> was born from a frustration that will feel familiar to many researchers. Across the palaeontological community, many of us were independently writing similar code to clean, standardise and prepare data for analysis. Without shared tools or common workflows, this meant duplicated effort and results that were not always easy for others to reproduce.</p>
+<p>Rather than continuing to work in parallel, a group of early-career researchers came together to tackle the problem collaboratively. The result was the <strong>palaeoverse</strong> R package.</p>
+</section>
+<section id="design" class="slide level2" data-number="2.2">
+<h2><span class="header-section-number">2.2</span> Design</h2>
+<p><strong>palaeoverse</strong> is built around a small set of principles that shape how the functions look and behave.</p>
+<ul>
+<li><strong>Built around occurrence data.</strong> Most functions expect an occurrence <code>data.frame</code> as input. Fossil occurrence data are records of the presence of a particular taxon at a unique location in space and time.</li>
+<li><strong>Modular.</strong> Each function does one job well, such as checking taxonomic names, binning ages, or estimating palaeocoordinates. You can use a single function in isolation or chain several together into a full workflow.</li>
+<li><strong>Flexible.</strong> Functions are not tied to a single data source. Column names are generally arguments rather than fixed requirements, so you can use data from the Paleobiology Database (PBDB), your own compilations, or other sources.</li>
+<li><strong>Transparent and reproducible.</strong> Functions are scripted, documented and open source, so every step of data preparation can be inspected, shared and repeated.</li>
+<li><strong>Well documented.</strong> Every function has a help page with worked examples, and vignettes demonstrate complete workflows.</li>
+<li><strong>Community-driven.</strong> Palaeoverse is developed openly, with input from researchers across career stages. Users are encouraged to suggest features, report bugs and contribute.</li>
+<li><strong>Peer-reviewed.</strong> Every function undergoes several rounds of review and testing by the development team before it is added to the package, which helps ensure the code is reliable, readable and consistent.</li>
+</ul>
+</section>
+<section class="slide level2" data-number="2.3">
+<h2><span class="header-section-number">2.3</span> Anatomy of an occurrence dataset</h2>
+<p>Occurrence data typically include columns describing:</p>
+<ul>
+<li><strong>Taxonomy</strong>, such as accepted name, genus and family</li>
+<li><strong>Time</strong>, such as maximum and minimum ages or named intervals</li>
+<li><strong>Space</strong>, such as longitude and latitude</li>
+<li><strong>Additional context</strong>, such as formation, collection or reference</li>
+</ul>
+<p>Each row is a single record of something present at a particular place and time. That “something” is usually a taxon, but it does not have to be. In the <code>reefs</code> dataset, for example, each row is a fossil reef rather than a species. Most <strong>palaeoverse</strong> functions rely mainly on the time and space columns, so they work on either kind of record. Functions that deal with taxonomy, such as <code>tax_unique()</code>, additionally need the relevant taxonomic columns.</p>
+</section>
+<section id="applications" class="slide level2" data-number="2.4">
+<h2><span class="header-section-number">2.4</span> Applications</h2>
+<p><strong>palaeoverse</strong> supports the early, and sometimes most time-consuming, step of palaeontological analyses. Typical applications include:</p>
+<ul>
+<li><strong>Cleaning and standardising</strong> occurrence data, for example by checking taxonomic names and removing duplicates</li>
+<li><strong>Binning</strong> occurrences into temporal and spatial units for analyses of diversity, turnover, and biogeography</li>
+<li><strong>Reconstructing palaeogeography</strong> by estimating where fossil localities were located in the past</li>
+<li><strong>Summarising taxa</strong>, such as estimating temporal and geographic ranges</li>
+<li><strong>Building reproducible workflows</strong> that can be shared alongside publications</li>
+</ul>
+<p>These steps feed into a wide range of downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography. palaeoverse does not replace specialist analytical packages. Instead, it provides the shared groundwork that prepares data for them.</p>
+</section>
+<section class="slide level2" data-number="2.5">
+<h2><span class="header-section-number">2.5</span> Where does palaeoverse fit?</h2>
+<p>Think of palaeoverse as the bridge between raw occurrence data and the analytical methods you want to apply.</p>
+</section></section>
+<section>
+<section id="how-to-use-palaeoverse" class="title-slide slide level1 center" data-number="3">
+<h1><span class="header-section-number">3</span> How to use palaeoverse</h1>
+
+</section>
+<section class="slide level2" data-auto-animate="true" data-number="3.1">
+<h2 data-id="quarto-animate-title"><span class="header-section-number">3.1</span> Installation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb1-1" class="hljs-ln-code"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <a href="https://palaeoverse.palaeoverse.org"><strong>palaeoverse</strong></a> package can be installed from CRAN (recommended) or its dedicated <a href="https://github.com/palaeoverse/palaeoverse">GitHub repository</a> if the development version is preferred. To install via CRAN, simply use:</p>
 </section>
-<section class="slide level2" data-auto-animate="true" data-number="2.2">
-<h2 data-id="quarto-animate-title"><span class="header-section-number">2.2</span> Installation</h2>
+<section class="slide level2" data-auto-animate="true" data-number="3.2">
+<h2 data-id="quarto-animate-title"><span class="header-section-number">3.2</span> Installation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -300,8 +350,8 @@ Bethany J. Allen
 </div>
 <p>To install the development version, first install the <a href="https://remotes.r-lib.org/">remotes</a> package, and then use <code>install_github()</code> to install palaeoverse directly from GitHub:</p>
 </section>
-<section class="slide level2" data-auto-animate="true" data-number="2.3">
-<h2 data-id="quarto-animate-title"><span class="header-section-number">2.3</span> Installation</h2>
+<section class="slide level2" data-auto-animate="true" data-number="3.3">
+<h2 data-id="quarto-animate-title"><span class="header-section-number">3.3</span> Installation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -314,89 +364,248 @@ Bethany J. Allen
 </div>
 <p>Now you are able to load palaeoverse:</p>
 </section>
-<section id="documentation" class="slide level2" data-number="2.4">
-<h2><span class="header-section-number">2.4</span> Documentation</h2>
-<p>As with all R packages, you can access function documentation through using <code>help()</code> or <code>?</code>, for example:</p>
+<section id="getting-help" class="slide level2" data-number="3.4">
+<h2><span class="header-section-number">3.4</span> Getting help</h2>
+<p>Everyone gets stuck, and knowing where to look is one of the most useful skills you can develop. As with most packages, palaeoverse has several layers of support, from built-in documentation to wider community support.</p>
+</section>
+<section class="slide level2" data-auto-animate="true" data-number="3.5">
+<h2 data-id="quarto-animate-title"><span class="header-section-number">3.5</span> Within R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="co"># Get documentation for specific function</span></span>
-<span id="cb7-2"><a aria-label="2"></a><span class="fu">help</span>(bin_time)</span>
-<span id="cb7-3"><a aria-label="3"></a><span class="co"># or</span></span>
-<span id="cb7-4"><a aria-label="4"></a>?bin_time</span>
-<span id="cb7-5"><a aria-label="5"></a><span class="co"># List of all functions</span></span>
-<span id="cb7-6"><a aria-label="6"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb7-1" class="hljs-ln-code"><a aria-label="1"></a>?tax_unique</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Every function has a help page describing its arguments, outputs and examples. Open it with <code>?</code>:</p>
+</section>
+<section class="slide level2" data-auto-animate="true" data-number="3.6">
+<h2 data-id="quarto-animate-title"><span class="header-section-number">3.6</span> Within R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>?tax_unique</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>??latitude</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To search for functions by keyword, use <code>help.search()</code> or its shorthand <code>??</code>:</p>
+</section>
+<section class="slide level2" data-auto-animate="true" data-number="3.7">
+<h2 data-id="quarto-animate-title"><span class="header-section-number">3.7</span> Within R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>?tax_unique</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>??latitude</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To list all functions available in the package:</p>
+</section>
+<section class="slide level2" data-auto-animate="true" data-number="3.8">
+<h2 data-id="quarto-animate-title"><span class="header-section-number">3.8</span> Within R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a>?tax_unique</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>??latitude</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># List all available vignettes</span></span>
+<span id="cb16-2"><a aria-label="2"></a><span class="fu">browseVignettes</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Palaeoverse also includes vignettes, which are longer tutorials that walk through complete workflows:</p>
+</section>
+<section id="online" class="slide level2" data-number="3.9">
+<h2><span class="header-section-number">3.9</span> Online</h2>
+<ul>
+<li><strong>Package website:</strong> The <a href="https://palaeoverse.palaeoverse.org">palaeoverse website</a> hosts the full function reference, vignettes and news on new releases. It is searchable and easier to browse than the help pages in R.</li>
+<li><strong>GitHub:</strong> The package source code lives in the <a href="https://github.com/palaeoverse/palaeoverse/">Palaeoverse/palaeoverse GitHub repository</a>. Check the existing issues first, as someone may already have asked your question.</li>
+</ul>
+
+<img data-src="img/palaeoverse-reference.png" class="r-stretch quarto-figure-center"><p class="caption">You can also see all function documentation via the package’s dedicated website <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a>.</p></section>
+<section id="asking-a-good-question" class="slide level2" data-number="3.10">
+<h2><span class="header-section-number">3.10</span> Asking a good question</h2>
+<p>If you can’t find an answer, you can open an issue on GitHub. A clear report makes it far more likely you will get a quick and useful reply. Include:</p>
+<ol type="1">
+<li><strong>What you were trying to do</strong>, in a sentence or two</li>
+<li><strong>A minimal reproducible example</strong>, using one of the built-in datasets where possible</li>
+<li><strong>The error message or unexpected output</strong>, copied in full</li>
+<li><strong>Your session information</strong>, which you can generate with:</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section class="slide level2" data-number="2.5">
-<h2><span class="header-section-number">2.5</span> Documentation</h2>
+<section class="slide level2" data-number="3.11">
+<h2><span class="header-section-number">3.11</span> Asking a good question</h2>
+<p>The <a href="https://reprex.tidyverse.org">reprex</a> R package is helpful tool when preparing a reproducible example.</p>
+</section>
+<section class="slide level2" data-number="3.12">
+<h2><span class="header-section-number">3.12</span> Citing palaeoverse</h2>
+<p>A quick note on behalf of the developers. If you use palaeoverse in your research, please cite the <a href="https://doi.org/10.1111/2041-210X.14099">associated publication</a>. Citations are one of the main ways our work is acknowledged, and they help keep the package maintained and improved (<a href="https://doi.org/10.1038/s41559-023-02008-w">read more on this topic</a>). You can access the appropriate citation via:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="fu">citation</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section>
+<section>
+<section id="data" class="title-slide slide level1 center" data-number="4">
+<h1><span class="header-section-number">4</span> Data</h1>
+<p>Two example occurrence datasets (<code>tetrapods</code> and <code>reefs</code>) are provided in palaeoverse so you can try out functions straight away. Load <code>tetrapods</code> and inspect its structure:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
+<span id="cb19-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb19-3"><a aria-label="3"></a><span class="co"># Load data</span></span>
+<span id="cb19-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb19-5"><a aria-label="5"></a><span class="co"># Inspect structure</span></span>
+<span id="cb19-6"><a aria-label="6"></a><span class="fu">str</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section class="slide level2" data-number="4.1">
+<h2><span class="header-section-number">4.1</span> What is the structure of <code>tetrapods</code>?</h2>
+<ul>
+<li>How many occurrences (observations/rows) are there?</li>
+<li>How many variables (columns) are there? What are they?</li>
+</ul>
+</section>
+<section class="slide level2" data-number="4.2">
+<h2><span class="header-section-number">4.2</span> Data</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Tip</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/palaeoverse-reference.png"></p>
-<figcaption>You can also see all function documentation via the package’s dedicated website <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a>.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="citing-palaeoverse" class="slide level2" data-number="2.6">
-<h2><span class="header-section-number">2.6</span> Citing palaeoverse</h2>
-<p>Before we begin, a quick note on behalf of the developers. Open-source packages are built and maintained by people who often work in their own time with little recognition. If you use palaeoverse in your research, please cite the <a href="https://doi.org/10.1111/2041-210X.14099">associated publication</a>. Citations are one of the main ways this work is acknowledged, and they help keep the package maintained and improved (<a href="https://doi.org/10.1038/s41559-023-02008-w">read more on this topic</a>). You can access the appropriate citation via:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">citation</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="co"># Inspect structure</span></span>
+<span id="cb20-2"><a aria-label="2"></a><span class="fu">str</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>To cite palaeoverse in publications, please cite both the article
-describing the package and the package itself:
-
-  Jones, L.A., Gearty, W., Allen, B.J., Eichenseer, K., Dean, C.D.,
-  Galván S., Kouvari, M., Godoy, P.L., Nicholl, C.S.C., Buffan, L.,
-  Dillon, E.M., Flannery-Sutherland, J.T., Chiarenza, A.A. 2023.
-  palaeoverse: A community-driven R package to support palaeobiological
-  analysis. Methods in Ecology and Evolution. 14(9), 2205--2215. doi:
-  10.1111/2041-210X.14099
-
-  Jones L, Gearty W, Allen B, Eichenseer K, Dean C, Bacher E,
-  Flannery-Sutherland J (2026). _palaeoverse: Prepare and Explore Data
-  for Palaeobiological Analyses. R package version 1.5.0_.
-  doi:10.5281/zenodo.7728638 &lt;https://doi.org/10.5281/zenodo.7728638&gt;.
-  &lt;https://CRAN.R-project.org/package=palaeoverse&gt;.
-
-To see these entries in BibTeX format, use 'print(&lt;citation&gt;,
-bibtex=TRUE)', 'toBibtex(.)', or set
-'options(citation.bibtex.max=999)'.</code></pre>
+<pre><code>'data.frame':   5270 obs. of  32 variables:
+ $ occurrence_no    : num  146665 147090 147521 147523 147563 ...
+ $ collection_no    : num  12943 13004 13043 13044 13046 ...
+ $ identified_name  : chr  "n. gen. Anconastes n. sp. vesperus" "Gorgonopsia indet." "n. gen. Procolophon n. sp. trigoniceps" "n. gen. Ophiodeirus n. sp. casei" ...
+ $ identified_rank  : chr  "species" "suborder" "species" "species" ...
+ $ accepted_name    : chr  "Anconastes vesperus" "Gorgonopsia" "Procolophon trigoniceps" "Araeoscelis casei" ...
+ $ accepted_rank    : chr  "species" "suborder" "species" "species" ...
+ $ early_interval   : chr  "Missourian" "Capitanian" "Induan" "Artinskian" ...
+ $ late_interval    : chr  "Gzhelian" NA "Olenekian" NA ...
+ $ max_ma           : num  306 265 252 290 279 ...
+ $ min_ma           : num  299 260 247 279 272 ...
+ $ phylum           : chr  "Chordata" "Chordata" "Chordata" "Chordata" ...
+ $ class            : chr  "Osteichthyes" "Osteichthyes" "Reptilia" "Reptilia" ...
+ $ order            : chr  "Temnospondyli" "Cotylosauria" "NO_ORDER_SPECIFIED" "Araeoscelidia" ...
+ $ family           : chr  "Trematopidae" NA "Procolophonidae" "Araeoscelidae" ...
+ $ genus            : chr  "Anconastes" NA "Procolophon" "Araeoscelis" ...
+ $ abund_value      : num  2 1 10 2 6 2 1 39 56 2 ...
+ $ abund_unit       : chr  "specimens" "specimens" "specimens" "individuals" ...
+ $ lng              : num  -106.3 22 26.5 -98.9 -99.2 ...
+ $ lat              : num  36.3 -32.4 -32.1 33.6 33.8 ...
+ $ collection_name  : chr  "El Cobre Canyon" "Hottentotsrivier Farm" "Donnybrook (Queenstown District)" "Mouth of Godwin Creek" ...
+ $ cc               : chr  "US" "ZA" "ZA" "US" ...
+ $ formation        : chr  "Cutler" "Abrahamskraal" "Katberg" "Nocona" ...
+ $ stratgroup       : chr  NA "Beaufort" "Beaufort" "Wichita" ...
+ $ member           : chr  NA NA NA NA ...
+ $ zone             : chr  NA "Tapinocephalus Assemblage" NA NA ...
+ $ lithology1       : chr  "siltstone" "sandstone" "mudstone" "conglomerate" ...
+ $ environment      : chr  "dry floodplain" "\"floodplain\"" "fluvial indet." "terrestrial indet." ...
+ $ pres_mode        : chr  "body" "body,mold/impression" "body" "body" ...
+ $ taxon_environment: chr  "brackish,freshwater,terrestrial" "terrestrial" "terrestrial" "terrestrial" ...
+ $ motility         : chr  "actively mobile" "actively mobile" "actively mobile" "actively mobile" ...
+ $ life_habit       : chr  "ground dwelling" NA NA NA ...
+ $ diet             : chr  "carnivore" "carnivore" NA NA ...</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section id="getting-help" class="slide level2" data-number="2.7">
-<h2><span class="header-section-number">2.7</span> Getting help</h2>
-</section></section>
-<section>
-<section id="design-principles-and-applications" class="title-slide slide level1 center" data-number="3">
-<h1><span class="header-section-number">3</span> Design Principles and Applications</h1>
-<p>Functions in palaeoverse are designed around the assumption that most users’ data are stored in an occurrence <code>data.frame</code>. As such, this is the expected input data format for most functions. Fossil occurrence data comprise records of the presence of a particular taxon at a unique location in space and geological time.</p>
+<section class="slide level2" data-number="4.3">
+<h2><span class="header-section-number">4.3</span> What is the structure of <code>reefs</code>?</h2>
 </section>
-<section id="motivation" class="slide level2" data-number="3.1">
-<h2><span class="header-section-number">3.1</span> Motivation</h2>
-<p>First released in 2022, <a href="https://palaeoverse.palaeoverse.org"><strong>palaeoverse</strong></a> was born from a frustration that will feel familiar to many researchers: across the palaeontological community, many of us were independently writing similar code to clean, standardise, and prepare palaeontological data for analyses. Without shared tools or common workflows, this meant a lot of duplicated effort and results that were not always easy for others to reproduce.</p>
-<p>Rather than continuing to work in parallel, a group of early-career researchers came together in 2022 to tackle the problem collaboratively. The result was the zpalaeoverse` R package.</p>
-</section></section>
-<section>
-<section id="data" class="title-slide slide level1 center" data-number="4">
-<h1><span class="header-section-number">4</span> Data</h1>
-
+<section class="slide level2" data-number="4.4">
+<h2><span class="header-section-number">4.4</span> Data</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="co"># Load data</span></span>
+<span id="cb22-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb22-3"><a aria-label="3"></a><span class="co"># Inspect structure</span></span>
+<span id="cb22-4"><a aria-label="4"></a><span class="fu">str</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   4363 obs. of  14 variables:
+ $ r_number  : chr  "1" "2" "3" "4" ...
+ $ name      : chr  "Tilkideligi Tepe" "Hydra" "Shiraho, W-Pacific" "Aksu-Terziler area" ...
+ $ formation : chr  "" "Pantokrator Limestone" "" "" ...
+ $ system    : chr  "Triassic" "Triassic" "Neogene" "Triassic" ...
+ $ series    : chr  "Upper Triassic" "Upper Triassic" "Holocene" "Upper Triassic" ...
+ $ interval  : chr  "lower Norian" "upper Carnian" "Recent" "Tuvalian" ...
+ $ biota_main: chr  "Calcisponges" "Corals" "Corals" "Calcisponges" ...
+ $ biota_sec : chr  "Stromatoporoids" "Calcisponges" "Algae" "Stromatoporoids" ...
+ $ lng       : num  30.4 23.6 124.2 31 13.2 ...
+ $ lat       : num  37 37.4 24.3 37.8 47.7 ...
+ $ country   : chr  "Turkey" "Greece" "Pacific" "Turkey" ...
+ $ authors   : chr  "Riedel, P." "Schafer, P., Senowbari-Daryan, B." "Kayanne, H., Suzuki, A. &amp; Saito, H." "Riedel, P." ...
+ $ title     : chr  "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" "The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -" "Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -" "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" ...
+ $ year      : num  1990 1982 1995 1990 1979 ...</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="occurrence-datasets" class="slide level2" data-number="4.1">
-<h2><span class="header-section-number">4.1</span> Occurrence datasets</h2>
+<section class="slide level2" data-number="4.5">
+<h2><span class="header-section-number">4.5</span> How do <code>tetrapods</code> and <code>reefs</code> compare? Which columns do they share, and which are specific to each?</h2>
+</section>
+<section class="slide level2" data-number="4.6">
+<h2><span class="header-section-number">4.6</span> Data</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="co"># Which column names match?</span></span>
+<span id="cb24-2"><a aria-label="2"></a><span class="fu">intersect</span>(<span class="fu">names</span>(tetrapods), <span class="fu">names</span>(reefs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "lng"       "lat"       "formation"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="co"># Which column names are different?</span></span>
+<span id="cb26-2"><a aria-label="2"></a><span class="fu">setdiff</span>(<span class="fu">names</span>(tetrapods), <span class="fu">names</span>(reefs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "occurrence_no"     "collection_no"     "identified_name"  
+ [4] "identified_rank"   "accepted_name"     "accepted_rank"    
+ [7] "early_interval"    "late_interval"     "max_ma"           
+[10] "min_ma"            "phylum"            "class"            
+[13] "order"             "family"            "genus"            
+[16] "abund_value"       "abund_unit"        "collection_name"  
+[19] "cc"                "stratgroup"        "member"           
+[22] "zone"              "lithology1"        "environment"      
+[25] "pres_mode"         "taxon_environment" "motility"         
+[28] "life_habit"        "diet"             </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section id="functions" class="title-slide slide level1 center" data-number="5">
 <h1><span class="header-section-number">5</span> Functions</h1>
@@ -438,9 +647,9 @@ bibtex=TRUE)', 'toBibtex(.)', or set
 </ul>
 <p>We provide two example occurrence datasets (<code>tetrapods</code> and <code>reefs</code>) within the package from different data sources.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a><span class="co"># Load dataset</span></span>
-<span id="cb10-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb10-3"><a aria-label="3"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="co"># Load dataset</span></span>
+<span id="cb28-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb28-3"><a aria-label="3"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
