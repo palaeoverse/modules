@@ -9,9 +9,9 @@
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="Bethany J. Allen">
 <meta name="dcterms.date" content="2026-10-26">
-<meta name="description" content="This module introduces palaeoverse, an R package that provides shared, reproducible tools for preparing, and analysing palaeontological data.">
+<meta name="description" content="Exploring, preparing, and visualising your data with palaeoverse.">
 
-<title>An introduction to the palaeoverse R package</title>
+<title>palaeoverse</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/palaeoverse/index.html">An introduction to the <em>palaeoverse</em> R package</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/palaeoverse/index.html"><em>palaeoverse</em></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/palaeoverse/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">An introduction to the <em>palaeoverse</em> R package</span></a>
+ <span class="menu-text"><em>palaeoverse</em></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -315,10 +315,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
   <ul class="collapse">
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">1.1</span> Learning objectives</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">1.2</span> Prerequisites</a></li>
-  <li><a href="#why-use-palaeoverse" id="toc-why-use-palaeoverse" class="nav-link" data-scroll-target="#why-use-palaeoverse"><span class="header-section-number">1.3</span> Why use palaeoverse</a></li>
+  <li><a href="#pre-requisites-and-related-modules" id="toc-pre-requisites-and-related-modules" class="nav-link" data-scroll-target="#pre-requisites-and-related-modules"><span class="header-section-number">1.2</span> Pre-requisites and related modules</a></li>
+  <li><a href="#why-use-palaeoverse" id="toc-why-use-palaeoverse" class="nav-link" data-scroll-target="#why-use-palaeoverse"><span class="header-section-number">1.3</span> Why use <em>palaeoverse</em></a></li>
   </ul></li>
-  <li><a href="#design" id="toc-design" class="nav-link" data-scroll-target="#design"><span class="header-section-number">2</span> Design</a></li>
+  <li><a href="#design-principles" id="toc-design-principles" class="nav-link" data-scroll-target="#design-principles"><span class="header-section-number">2</span> Design principles</a></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">3</span> Applications</a></li>
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="header-section-number">4</span> Installation</a></li>
   <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help"><span class="header-section-number">5</span> Getting help</a></li>
@@ -331,7 +331,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">An introduction to the <em>palaeoverse</em> R package</h1>
+<h1 class="title"><em>palaeoverse</em></h1>
+<p class="subtitle lead">Getting started with the <em>palaeoverse</em> R package</p>
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
     <div class="quarto-category">data</div>
@@ -342,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    <p>This module introduces <em>palaeoverse</em>, an R package that provides shared, reproducible tools for preparing, and analysing palaeontological data.</p>
+    <p>Exploring, preparing, and visualising your data with <em>palaeoverse</em>.</p>
   </div>
 </div>
 
@@ -390,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>Computational tools are now at the heart of modern palaeontology. From cleaning datasets to running complex analyses, software underpins much of what we do. This module introduces you to <a href="https://palaeoverse.palaeoverse.org"><em>palaeoverse</em></a>, an R package to help you get your palaeontological data into the right shape for analyses and keep your code clear. <em>palaeoverse</em> aims to slot neatly alongside the methods you already use, while improving the readability, transparency and reproducibility of your code.</p>
+<p>Computational tools are now at the heart of modern palaeontology. From cleaning datasets to running complex analyses, software underpins much of what we do. This module introduces you to <a href="https://palaeoverse.palaeoverse.org"><em>palaeoverse</em></a>, an R package to help you get your palaeontological data into the right shape for analyses and keep your code clear.</p>
 <section id="learning-objectives" class="level2" data-number="1.1">
 <h2 data-number="1.1" data-anchor-id="learning-objectives"><span class="header-section-number">1.1</span> Learning objectives</h2>
 <p>By the end of this module, you will be able to:</p>
@@ -401,22 +402,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Identify the functions available in <em>palaeoverse</em> and implement them into your own research</li>
 </ul>
 </section>
-<section id="prerequisites" class="level2" data-number="1.2">
-<h2 data-number="1.2" data-anchor-id="prerequisites"><span class="header-section-number">1.2</span> Prerequisites</h2>
+<section id="pre-requisites-and-related-modules" class="level2" data-number="1.2">
+<h2 data-number="1.2" data-anchor-id="pre-requisites-and-related-modules"><span class="header-section-number">1.2</span> Pre-requisites and related modules</h2>
 <p>You should be comfortable with basic R (data frames, functions, installing packages). Experience with fossil occurrence data, for example from the <a href="https://paleobiodb.org/#/">Paleobiology Database (PBDB)</a>, is also helpful but not required.</p>
+<p>If needed, you can refer to our <a href="">R Basics</a> module. <strong>LINK NEEDS ADDING</strong></p>
 </section>
 <section id="why-use-palaeoverse" class="level2" data-number="1.3">
-<h2 data-number="1.3" data-anchor-id="why-use-palaeoverse"><span class="header-section-number">1.3</span> Why use palaeoverse</h2>
-<p>Palaeobiological analyses rarely go straight from raw data to results. First you need to check names, bin occurrences in time, and work out where your fossils sat on the ancient Earth, <em>etc</em>. These steps are essential but repetitive, and often rewritten for every project. <em>palaeoverse</em> aims to make these efforts more reusable, reproducible, and readable by:</p>
+<h2 data-number="1.3" data-anchor-id="why-use-palaeoverse"><span class="header-section-number">1.3</span> Why use <em>palaeoverse</em></h2>
+<p>Palaeobiological analyses rarely go straight from raw data to results. You will likely start by carrying out routine tasks such as check taxonomic names, binning occurrences into time bins, reconstructing the palaeogeographic distribution of your occurrence dataset, and much more. These steps are essential but repetitive, and often rewritten for every project. <em>palaeoverse</em> aims to make these efforts more reusable, reproducible, and readable by:</p>
 <ol type="1">
-<li>replacing long, bespoke scripts with a few clear lines of code</li>
-<li>using consistent function names, arguments, and outputs make your scripts easier to read and share</li>
-<li>developing well-documented, tested, and peer-reviewed functions which are transparent and robust</li>
+<li>Replacing long, bespoke scripts with a few clear lines of code</li>
+<li>Using consistent function names, arguments, and outputs to make your scripts easier to read and share</li>
+<li>Developing well-documented, tested, and peer-reviewed functions which are transparent and robust</li>
 </ol>
 </section>
 </section>
-<section id="design" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Design</h1>
+<section id="design-principles" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Design principles</h1>
 <p><em>palaeoverse</em> is built around a small set of principles that shape how the functions look and behave.</p>
 <ol type="1">
 <li>Built around occurrence data: most functions expect an occurrence <code>data.frame</code> as input</li>
