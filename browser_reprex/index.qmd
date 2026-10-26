@@ -28,7 +28,7 @@ editor:
 ## Introduction
 
 Knowing how to debug code is an essential skill, whether one writes an analysis for a paper or develops an R package.
-This module covers several tools that aim at making the debugging process easier.
+This module covers several tools that aim to make the debugging process easier.
 
 <!-- For proper rendering of "diff" code blocks since Quarto won't do it: 
 https://github.com/orgs/quarto-dev/discussions/8387 -->
@@ -222,7 +222,7 @@ We have removed two out of five function calls, not bad.
 We still don't really understand the cause though.
 
 Let's assume that the documentation also doesn't give any hint about this error message.
-If we are completely stuck, then we may want to ask other people, such as package maintainers on Github or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for external people to help us.
+If we are completely stuck, then we may want to ask other people, such as package maintainers on Github or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for other people to help us.
 
 Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it.
 
@@ -346,11 +346,11 @@ One reflex is to put various `print()` statement in the function body to see whi
 
 However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: `browser()`. This allows us to run line by line *in the function body*, and it is therefore a key tool when you start writing your own functions.
 
-We will use [issue #280](github.com/palaeoverse/palaeoverse/issues/280) in `palaeoverse` as an example throughout this section.
+We will use [issue #280](https://github.com/palaeoverse/palaeoverse/issues/280) in `palaeoverse` as an example throughout this section.
 
 ## `browser()`
 
-The bug report above gives a reprex to reproduce the error (note that at the time you are reading this, this bug may have been fixed):
+The bug report above gives a reprex to reproduce the error (note that at the time you are reading this, this bug has already been fixed):
 
 ```{r}
 #| error = TRUE
@@ -396,11 +396,11 @@ function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL,
 
 In the video below, running the code with the function that now includes `browser()` doesn't error. Instead, it stops the execution at the `browser()` call:
 
-![](browser_1.webm)
+![](browser_1.webm){fig-alt="A screen capture of the debugging process in RStudio. The left hand side of the window shows the source code of `bin_space()`, and the right hand side shows the R console. We start by inserting `browser()` at the top of the function definition and running `devtools::load_all()` in the R console. After this, running the code that fails (cf previous code chunk) doesn't error but instead brings us at the location of `browser()`. The environment corresponds to the one that the function uses. Pressing 'Enter' in the console evaluates the statements one by one."}
 
 There are two interesting things in this video:
 
-1. we have access to the function environment, including the user-provided inputs. Note for instance that `sub_grid` is `NULL` by default in the function definition, but printing `sub_grid` in the console gives `250` because the user provided `sub_grid = 250`.
+1. we have access to the function environment, including the user-provided inputs. Note for instance that `sub_grid` is `NULL` by default in the function definition, but printing `sub_grid` in the console gives `250` because the call that is being inspected contains `sub_grid = 250`.
 
 2. We can execute the remaining function body statement by statement by pressing "Enter" in the console. Note that this goes doesn't necessarily execute *all* the code: an `if()` statement whose condition is `FALSE` will not be executed. `browser()` follows exactly the path taken by our code.
 
@@ -408,7 +408,7 @@ Pressing "Esc" or executing `Q` allows us to exit this "browsing" mode.
 
 Using this approach, we can find the exact source of the error:
 
-![](browser_2.webm)
+![](browser_2.webm){fig-alt="This is the same setup as in the previous video. We keep pressing 'Enter' until the code fails."}
 
 In our case, the error comes from the line:
 
@@ -426,4 +426,11 @@ Breakpoints are a feature directly integrated in the software used to run R (e.g
 
 They are a way to mimic `browser()` calls without actually modifying the function. You can add one by clicking on the left of line numbers:
 
-![](breakpoints.webm)
+![](breakpoints.webm){fig-alt="This is almost the same setup as in the previous video. In this case, we don't have an explicit `browser()` call any more, but instead we click on the left hand side of the row number. This adds a red circle, indicating a breakpoint. After running `devtools::load_all()` and then the code that is supposed to fail, we end up in almost the same situation as with `browser()`, except that we haven't modified the source code at all."}
+
+After reloading the package and running the code that is supposed to fail, we end up in almost the same situation as with `browser()`, except that we haven't modified the source code at all. We can then follow the same steps to continue our debugging process.
+
+# Conclusion
+
+Debugging is an important aspect of programming. This module focused on two essential debugging methods: producing a reproducible example, and using debugging tools such as `browser()` and breakpoints. Following good debugging practices helps us fix our own code, and it is the essential first step to produce good bug reports. It is also a way to gain experience to recognise potential bugs when reviewing code in the future. 
+
