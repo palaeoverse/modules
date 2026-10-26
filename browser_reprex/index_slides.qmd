@@ -22,6 +22,7 @@ editor:
   markdown:
     wrap: 72
 ---
+
 ## Objectives
 
 <br>
@@ -68,15 +69,15 @@ bin_time(occdf = reefs, bins = bins, method = "mid")
 
 <br>
 
-* Longer code = more potential causes.
+- Longer code = more potential causes.
 
 . . .
 
-* First step: build a **repr**oducible **ex**ample, aka a *reprex*.
+- First step: build a **repr**oducible **ex**ample, aka a *reprex*.
 
 . . .
 
-* Two steps:
+- Two steps:
 
   1. reduce the data
   1. reduce the code
@@ -98,6 +99,7 @@ Our dataset has thousands of rows and 14 columns:
 
 ```{r}
 #| eval: true
+
 library(palaeoverse)
 dim(reefs)
 ```
@@ -110,6 +112,7 @@ Keep only the first 6 rows:
 
 ```{r}
 #| code-line-numbers: "1"
+
 reefs2 <- head(reefs)
 
 reef_counts <- group_apply(occdf = reefs2, group = "interval", fun = nrow)
@@ -122,7 +125,6 @@ bins <- time_bins(interval = "Phanerozoic", rank = "stage")
 
 bin_time(occdf = reefs2, bins = bins, method = "mid")
 ```
-
 
 ```
 #> Error in `[.data.frame`:
@@ -137,6 +139,7 @@ Keep one row and 5 columns:
 
 ```{r}
 #| code-line-numbers: "1-2"
+
 reefs2 <- head(reefs, n = 1)
 reefs2 <- reefs2[, 1:5]
 
@@ -156,6 +159,7 @@ Keep one row and 6 columns:
 
 ```{r}
 #| code-line-numbers: "1-2"
+
 reefs2 <- head(reefs, n = 1)
 reefs2 <- reefs2[, 1:6]
 
@@ -170,7 +174,6 @@ bins <- time_bins(interval = "Phanerozoic", rank = "stage")
 bin_time(occdf = reefs2, bins = bins, method = "mid")
 ```
 
-
 ```
 #> Error in `[.data.frame`:
 #> ! undefined columns selected
@@ -184,6 +187,7 @@ Remove as much code as possible to limit potential causes.
 
 ```{r}
 #| code-line-numbers: "|4|9"
+
 reefs2 <- head(reefs, n = 1)
 reefs2 <- reefs2[, 1:6]
 
@@ -240,7 +244,6 @@ bin_time(occdf = reefs2, bins = bins, method = "mid")
 
 Two out of five function calls removed, but still no clear cause.
 
-
 ## Next step
 
 <br>
@@ -250,7 +253,7 @@ Stuck? Ask for help (GitHub, StackOverflow, colleagues).
 
 <br>
 
-. . . 
+. . .
 
 But before that...
 
@@ -323,6 +326,7 @@ reefs2 <- head(reefs, n = 1)
 
 ```{r}
 #| code-line-numbers: "2-3"
+
 reprex::reprex({
   library(palaeoverse)
   data(reefs)
@@ -355,6 +359,7 @@ Good practice: add session info with `si = TRUE`.
 
 ```{r}
 #| code-line-numbers: "4"
+
 reprex::reprex({
   library(palaeoverse)
   ...
@@ -420,6 +425,7 @@ Add `browser()` at the top, reload the function, and rerun the code:
 ```{r}
 #| code-line-numbers: "4"
 #| error: true
+
 function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL,
     return = FALSE, plot = FALSE)
 {
