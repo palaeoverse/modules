@@ -1,8 +1,7 @@
 ---
-title: "Getting started with palaeoverse"
-subtitle: "An introduction to the *palaeoverse* R package"
+title: "An introduction to the *palaeoverse* R package"
 description: |
-  This is a 2 hour module introducing *palaeoverse*, a community-built R package that provides shared, reproducible tools for preparing, and analysing palaeontological data. You will learn the philosophy behind the package, explore its core functionality, and work through hands-on exercises that takes fossil occurrence data and apply it to a research question.
+  This module introduces *palaeoverse*, an R package that provides shared, reproducible tools for preparing, and analysing palaeontological data.
 author:
   - Lewis A. Jones
   - Bethany J. Allen
@@ -40,83 +39,93 @@ editor:
 
 # Introduction
 
-Computational tools are now at the heart of modern palaeontology. From cleaning datasets to running complex analyses, software underpins much of what we do.
-
-[*palaeoverse*](https://palaeoverse.palaeoverse.org) is an R package developed by palaeobiologists, for palaeobiologists. Its aim is to provide a community-driven toolkit of generic functions that address the tasks palaeobiological researchers run into again and again, from preparing and cleaning occurrence data to binning records in time and space and summarising the results. Rather than reinventing these steps for every project, *palaeoverse* allows you to draw on well-documented, tested functions that the community has built and refined together.
-
-**The package deliberately does not implement statistical analyses.** Instead, it provides auxiliary functions that streamline the workflow around those analyses, helping you get your data into the right shape and keep your code clear. This design means *palaeoverse* slots neatly alongside the methods you already use, while improving the readability, transparency and reproducibility of your code.
-
-The package is open and collaborative, so researchers at any career stage are welcome to [suggest new functions](https://github.com/palaeoverse/palaeoverse/issues), report [issues](https://github.com/palaeoverse/palaeoverse/issues), and [contribute](https://palaeoverse.org/contribute/general-guide/#contributing-to-code-or-documentation) to its development.
+Computational tools are now at the heart of modern palaeontology. From cleaning datasets to running complex analyses, software underpins much of what we do. This module introduces you to [*palaeoverse*](https://palaeoverse.palaeoverse.org), an R package to help you get your palaeontological data into the right shape for analyses and keep your code clear. *palaeoverse* aims to slot neatly alongside the methods you already use, while improving the readability, transparency and reproducibility of your code.
 
 ## Learning objectives
 
 By the end of this module, you will be able to:
 
-- Install and load *palaeoverse*, and locate its documentation, vignettes, and help resources
-- Describe the philosophy and design principles behind *palaeoverse*, and the kinds of problems it is designed to solve
-- Identify the main groups of functions available in *palaeoverse* and match them to common stages of a palaeontological workflow
-- Apply *palaeoverse* functions to explore, prepare and visualise a fossil occurrence dataset
-- Implement *palaeoverse* into your own research workflows
+- Install and load *palaeoverse*, as well as locate its documentation, vignettes, and help resources
+- Understand the design and potential applications of *palaeoverse*
+- Apply *palaeoverse* functions to explore, prepare, and visualise fossil occurrence data
+- Identify the functions available in *palaeoverse* and implement them into your own research
 
-## Who is this module for?
+## Prerequisites 
 
 You should be comfortable with basic R (data frames, functions, installing packages). Experience with fossil occurrence data, for example from the [Paleobiology Database (PBDB)](https://paleobiodb.org/#/), is also helpful but not required.
 
 ## Why use palaeoverse
 
-Palaeobiological analyses rarely go straight from raw data to results. Before you can run a single model, you usually need to check taxonomic names, assign occurrences to time bins, work out where your fossils sat on the ancient Earth, and summarise sampling. These steps are essential, but they are also repetitive, error-prone, and often rewritten from scratch for every project. The *palaeoverse* R package exists to change that.
+Palaeobiological analyses rarely go straight from raw data to results. First you need to check names, bin occurrences in time, and work out where your fossils sat on the ancient Earth, *etc*. These steps are essential but repetitive, and often rewritten for every project. *palaeoverse* aims to make these efforts more reusable, reproducible, and readable by:
 
-- **Save time on routine tasks.** Functions for common tasks such as checking taxonomy (`tax_check()`), binning occurrences in time (`bin_time()`) and reconstructing palaeocoordinates (`palaeorotate()`) replace long, bespoke scripts with a few clear lines of code.
-- **Write clearer, more readable code.** Consistent function names, arguments, and outputs make your scripts easier to follow, whether you are returning to them in six months or sharing them with a collaborator.
-- **Make your research reproducible.** Documented, version-controlled, and tested functions mean that others can follow exactly what you did, and rerun it, without deciphering a one-off workflow.
-- **Keep full control of your analyses.** *palaeoverse* does not impose a statistical framework. It prepares and supports your data, so it works alongside the methods and packages you already use.
-- **Build on community expertise.** The package is shaped and peer-reviewed by palaeobiologists working across taxa, time periods, and questions, so its functions reflect real research needs rather than abstract design.
-- **Join an open, welcoming project.** Anyone can suggest a [function](https://github.com/palaeoverse/palaeoverse/issues), report a [bug](https://github.com/palaeoverse/palaeoverse/issues) or [contribute](https://palaeoverse.org/contribute/general-guide/#contributing-to-code-or-documentation) code, and the more people use and shape *palaeoverse*, the more useful it becomes.
+1. replacing long, bespoke scripts with a few clear lines of code
+2. using consistent function names, arguments, and outputs make your scripts easier to read and share
+3. developing well-documented, tested, and peer-reviewed functions which are transparent and robust
 
-# Motivation, Design Principles, and Applications
-
-## Motivation
-
-First released in 2022, [*palaeoverse*](https://palaeoverse.palaeoverse.org) was born from a frustration that will feel familiar to many researchers. Across the palaeontological community, many of us were independently writing similar code to clean, standardise, and prepare data for analysis. Without shared tools or common workflows, this meant duplicated effort and results that were not always easy for others to reproduce.
-
-Rather than continuing to work in parallel, a group of early-career researchers came together to tackle the problem collaboratively. The result was [*palaeoverse*](https://palaeoverse.palaeoverse.org).
-
-## Design
+# Design
 
 *palaeoverse* is built around a small set of principles that shape how the functions look and behave.
 
-- **Built around occurrence data.** Most functions expect an occurrence `data.frame` as input.
-- **Modular.** Each function does one job well, such as checking taxonomic names, binning ages, or estimating palaeocoordinates. You can use a single function in isolation or chain several together into a full workflow.
-- **Flexible.** Functions are not tied to a single data source. Column names are generally arguments rather than fixed requirements, so you can use data from the Paleobiology Database (PBDB), your own compilations, or other sources.
-- **Transparent and reproducible.** Functions are scripted, documented and open source, so every step of data preparation can be inspected, shared, and repeated.
-- **Well documented.** Every function has a help page with worked examples, and vignettes demonstrate complete workflows.
-- **Community-driven.** *palaeoverse* is developed openly, with input from researchers across career stages. Users are encouraged to suggest features, report bugs, and contribute.
-- **Peer-reviewed.** Every function undergoes several rounds of review and testing by the development team before it is added to the package, which helps ensure the code is reliable, readable, and consistent.
+1. Built around occurrence data: most functions expect an occurrence `data.frame` as input
 
 ::: {.callout-note}
 ## Anatomy of an occurrence dataset
 
+Each row is a single record of something present at a particular place and time. That "something" is usually a taxon, but it does not have to be. For example, in the in-built `reefs` dataset, each row is a fossil reef rather than a species.
+
 Occurrence data typically include columns describing:
 
-- **Taxonomy**, such as accepted name, genus and family
-- **Time**, such as maximum and minimum ages or named intervals
-- **Space**, such as longitude and latitude
-- **Additional context**, such as formation, collection, or reference
-
-Each row is a single record of something present at a particular place and time. That "something" is usually a taxon, but it does not have to be. For example, in the in-built `reefs` dataset, each row is a fossil reef rather than a species. Most *palaeoverse* functions rely mainly on the time and space columns, so they work on either kind of record. Functions that deal with taxonomy, such as `tax_unique()`, additionally need the relevant taxonomic columns.
+- *Taxonomy* (e.g. accepted name, genus, and family)
+- *Age* (e.g. maximum and minimum ages or named intervals)
+- *Location* (e.g. longitude and latitude)
+- *Additional context* (formation, collection, or reference)
 :::
 
-## Applications
+2. Modular: each function does one job well, you can use a single function in isolation or chain several together
 
-*palaeoverse* supports the early, and sometimes most time-consuming, step of palaeontological analyses. Typical applications include:
+```{r}
+#| label: isolation-chain
+#| eval: false
 
-- **Cleaning and standardising** occurrence data, for example by checking taxonomic names and removing duplicates
-- **Binning** occurrences into temporal and spatial units for analyses of diversity, turnover, and biogeography
-- **Reconstructing palaeogeography** by estimating where fossil localities were located in the past
-- **Summarising taxa**, such as estimating temporal and geographic ranges
-- **Building reproducible workflows** that can be shared alongside publications
+# Load library
+library(palaeoverse)
+# Get example data
+data(tetrapods)
+# Get time bins
+bins <- time_bins(interval = "Phanerozoic", rank = "stage")
+# Bin data temporally
+tetrapods |>
+  bin_time(bins = bins, method = "mid")
+```
 
-These steps feed into a wide range of downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography. *palaeoverse* does not replace specialist analytical packages. Instead, it provides the shared groundwork that prepares data for them.
+3. Flexible: functions are not tied to a single data source (e.g. Paleobiology Database), column names are generally arguments rather than fixed requirements, so you can use data from any source with ease
+
+```{r}
+#| label: flexible
+#| eval: false
+
+# Load library
+library(palaeoverse)
+# Example data
+data(tetrapods)
+# Use custom input `name`
+tax_range_time(occdf = tetrapods, name = "accepted_name")
+```
+
+4. Transparent and reproducible: all code is documented and open source, so it can be reviewed by anyone
+5. Well documented: every function has a help page with worked examples to help users get started
+6. Community driven: developed openly, with peer-review from fellow researchers, and users encouraged to suggest features, report bugs, and contribute
+
+# Applications
+
+Typical applications for *palaeoverse* include:
+
+- Cleaning and standardising occurrence data (e.g. checking taxonomic names and removing duplicates)
+- Binning occurrences into temporal and spatial units (e.g. for analyses of diversity and biogeography)
+- Estimating the position of organisms at time of deposition (i.e. palaeogeographic reconstruction)
+- Summarising taxa, such as estimating temporal and geographic ranges
+
+These steps can feed into a wide range of downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.
 
 ::: {.callout-note}
 ## Where does palaeoverse fit?
@@ -126,7 +135,7 @@ Think of palaeoverse as the bridge between raw occurrence data and the analytica
 
 # Installation
 
-The [*palaeoverse*](https://palaeoverse.palaeoverse.org) package can be installed from CRAN (recommended) or its dedicated [GitHub repository](https://github.com/palaeoverse/palaeoverse) if the development version is preferred. To install via CRAN, simply use:
+To install the current release of [*palaeoverse*](https://palaeoverse.palaeoverse.org) from [CRAN](https://cran.r-project.org/web/packages/palaeoverse/index.html) (recommended), use:
 
 ```{r}
 #| label: install-palaeoverse
@@ -135,7 +144,7 @@ The [*palaeoverse*](https://palaeoverse.palaeoverse.org) package can be installe
 install.packages("palaeoverse")
 ```
 
-To install the development version, first install the [remotes](https://remotes.r-lib.org/) package, and then use `install_github()` to install palaeoverse directly from GitHub:
+To install the development version, first install the [remotes](https://remotes.r-lib.org/) package, and then use `install_github()` to install [palaeoverse](https://github.com/palaeoverse/palaeoverse/) directly from GitHub:
 
 ```{r}
 #| label: install-remotes
@@ -157,75 +166,13 @@ library(palaeoverse)
 
 Everyone gets stuck with using new tools, and knowing where to look is one of the most useful skills you can develop. As with most packages, *palaeoverse* has several layers of support, from built-in documentation to wider community support.
 
-## Within R
+The *palaeoverse* [website](https://palaeoverse.palaeoverse.org) hosts the full function documentation, vignettes and news on new releases. It is searchable and can be easier to browse than the help pages in R for some users.
 
-Every function has a help page describing its arguments, outputs and examples. Open it with either `help()` or its shorthand `?`:
+![You can see all available functions and their documentation via the package's dedicated website [reference guide](https://palaeoverse.palaeoverse.org/reference/index.html).](img/palaeoverse-reference.png)
 
-```{r}
-#| label: help-function
-#| eval: false
+If you are familiar with GitHub, you can also check existing issues within the dedicated [repository](https://github.com/palaeoverse/palaeoverse/), as someone may already have asked your question. If you cannot find an answer to your question, you can open an [issue](https://github.com/palaeoverse/palaeoverse/issues) on GitHub (see [best practises](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html)).
 
-help(tax_unique)
-?tax_unique
-```
-
-To search for functions by keyword, use `help.search()` or its shorthand `??`:
-
-```{r}
-#| label: help-keyword
-#| eval: false
-
-??latitude
-```
-
-To list all functions available in the package:
-
-```{r}
-#| label: help-palaeoverse
-#| eval: false
-
-help(package = "palaeoverse")
-```
-
-*palaeoverse* also includes vignettes, which are longer tutorials that walk through complete workflows:
-
-```{r}
-#| label: vignettes-palaeoverse
-#| eval: false
-
-browseVignettes("palaeoverse")
-```
-
-You will be working through some of these tutorials later as [module exercises](#exercises).
-
-## Online
-
-- **Package website:** The *palaeoverse* [website](https://palaeoverse.palaeoverse.org) hosts the full function reference, vignettes and news on new releases. It is searchable and easier to browse than the help pages in R.
-- **GitHub:** The package source code lives in the [Palaeoverse/palaeoverse GitHub repository](https://github.com/palaeoverse/palaeoverse/). Check the existing issues first, as someone may already have asked your question.
-
-![You can see all function documentation via the package's dedicated website [reference guide](https://palaeoverse.palaeoverse.org/reference/index.html).](img/palaeoverse-reference.png)
-
-::: {.callout-tip}
-## Asking a good question
-
-If you cannot find an answer to your question, you can open an [issue](https://github.com/palaeoverse/palaeoverse/issues) on GitHub. A clear report makes it far more likely you will get a quick and useful reply. You should include:
-
-1. **What you were trying to do**, in a sentence or two
-2. **A minimal reproducible example**, using one of the built-in datasets where possible
-3. **The error message or unexpected output**, copied in full
-4. **Your session information**, which you can generate with:
-
-```{r}
-#| label: session-info
-#| eval: false
-
-sessionInfo()
-```
-
-Tip: The [reprex](https://reprex.tidyverse.org) R package is a helpful tool when preparing a reproducible example.
-:::
-
-GitHub can be a *scary* place if you are not familiar with it. So, you can also reach out by [email](mailto:info@palaeoverse.org) if you are facing difficulties. However, if you want to learn more about how to use GitHub, check out our module on [GitHub](https://palaeoverse.org/training/modules/github). **LINK NEEDS CONFIRMING**
+GitHub can be a *scary* place if you are not familiar with it. So, you can also reach out by [email](mailto:info@palaeoverse.org) if you are facing difficulties or join our [Zulip](https://palaeoverse.org/zulip/join-zulip/), and raise a topic.
 
 ::: {.callout-note}
 ## Citing palaeoverse
@@ -239,183 +186,6 @@ A quick note on behalf of the developers. If you use *palaeoverse* in your resea
 citation("palaeoverse")
 ```
 :::
-
-# Data
-
-*palaeoverse* includes a number of built-in datasets used throughout the documentation:
-
-- `tetrapods`: early tetrapod occurrences from the [Paleobiology Database](https://paleobiodb.org/#/)
-- `reefs`: Phanerozoic reef occurrences from the [PaleoReefs Database](https://www.paleo-reefs.pal.uni-erlangen.de)
-- `GTS2012` and `GTS2020`: geological timescale data
-- `interval_key`: an example interval key for `look_up()`
-
-Here, we'll focus on the two example occurrence datasets (`tetrapods` and `reefs`) which are provided so you can try out functions straight away. Let's load them:
-
-```{r}
-#| label: data-tetrapods
-#| eval: false
-
-# Load library
-library(palaeoverse)
-# Load data
-data(tetrapods)
-data(reefs)
-```
-
-::: {.callout-warning}
-## Exercise: Get to know `tetrapods`
-
-- How many occurrences (observations/rows) are there?
-- How many variables (columns) are there? What are they?
-- What is the oldest occurrence?
-- Do you expect any missing coordinates?
-- What is the overall structure?
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-```{r}
-#| label: data-tetrapods-collapse
-#| eval: true
-
-# Number of rows
-nrow(tetrapods)
-# Number of columns
-ncol(tetrapods)
-# Oldest occurrence
-max(tetrapods$max_ma, na.rm = TRUE)
-# Number of occurrences without latitude
-sum(is.na(tetrapods$lat))
-# Inspect overall structure
-str(tetrapods)
-```
-:::
-
-Now, let's try with the `reefs` dataset:
-
-::: {.callout-warning}
-## Exercise: Get to know `reefs`
-
-- How many occurrences (observations/rows) are there?
-- How many variables (columns) are there? What are they?
-- What is the oldest occurrence?
-- Do you expect any missing coordinates?
-- What is the overall structure?
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-```{r}
-#| label: data-reefs
-#| eval: true
-
-# Number of rows
-nrow(reefs)
-# Number of columns
-ncol(reefs)
-# Oldest occurrence
-max(reefs$max_ma, na.rm = TRUE)
-# Number of occurrences without latitude
-sum(is.na(reefs$lat))
-# Inspect overall structure
-str(reefs)
-```
-
-Note that `reefs` does not contain any columns related to taxonomy (they are a whole ecosystem after all). This means any functions requiring taxonomic data cannot (rightly) be used with `reefs`.
-:::
-
-How do these occurrence datasets differ?
-
-::: {.callout-warning}
-## How do `tetrapods` and `reefs` compare?
-
-- Which columns do they share?
-- Which columns are specific to each?
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-Which column names match?
-
-```{r}
-#| label: intersect-data
-#| eval: true
-
-# Which column names match?
-intersect(names(tetrapods), names(reefs))
-```
-
-Which column names are different?
-
-```{r}
-#| label: setdiff-data
-#| eval: true
-
-setdiff(names(tetrapods), names(reefs))
-```
-:::
-
-# Functions
-
-Palaeoverse provides generic functions that streamline data preparation, exploration and visualisation. It does not implement statistical analyses, and instead helps you get your data ready for them. The functions fall into five groups, which broadly follow the order of a typical workflow. For completeness, we summarise these below, but we'll be working through some examples with you soon.
-
-## Data cleaning and preparation
-
-Functions for cleaning and preparing occurrence or taxonomic data.
-
-  | Function            | Purpose                                                         |
-  | :---------          | :--------                                                       |
-  | `tax_check()`       | Taxonomic spell check                                           |
-  | `tax_unique()`      | Filter occurrences to unique taxa                               |
-  | `tax_certainty()`   | Classify the certainty of taxonomic identifications             |
-  | `look_up()`         | Look up geological intervals and assign geological stages       |
-  | `palaeorotate()`    | Reconstruct palaeogeographic coordinates for fossil occurrences |
-  | `phylo_check()`     | Check phylogeny tip names                                       |
-  | `tax_expand_lat()`  | Generate pseudo-occurrences from latitudinal range data         |
-  | `tax_expand_time()` | Generate pseudo-occurrences from temporal range data            |
-
-## Data binning
-
-Functions for assigning occurrences to temporal or spatial bins.
-
-  | Function      | Purpose                                       |
-  | :------------ | :-------------------------------------------- |
-  | `bin_time()`  | Assign fossil occurrences to time bins        |
-  | `bin_lat()`   | Assign fossil occurrences to latitudinal bins |
-  | `bin_space()` | Assign fossil occurrences to spatial bins     |
-
-## Data summarisation
-
-Functions that summarise occurrence-level data by taxon.
-
-  | Function            | Purpose                                       |
-  | :------------------ | :-------------------------------------------- |
-  | `tax_range_time()`  | Calculate the temporal range of fossil taxa   |
-  | `tax_range_space()` | Calculate the geographic range of fossil taxa |
-
-## Data visualisation
-
-Functions that help you plot data and results.
-
-  | Function            | Purpose                                             |
-  | :---------          | :--------                                           |
-  | `axis_geo()`        | Add an axis with a geological timescale             |
-  | `axis_geo_phylo()`  | Add a geological timescale axis to a phylogeny plot |
-  | `tax_range_strat()` | Generate a stratigraphic section plot               |
-
-## Auxiliary functions
-
-Helper functions that support the main workflow, mainly by generating the bins used above.
-
-  | Function             | Purpose                                 |
-  | :------------------- | :-------------------------------------- |
-  | `time_bins()`        | Generate time bins                      |
-  | `lat_bins_degrees()` | Generate equal-width latitudinal bins   |
-  | `lat_bins_area()`    | Generate equal-area latitudinal bins    |
-  | `group_apply()`      | Apply a function over groupings of data |
 
 # Exercises
 
