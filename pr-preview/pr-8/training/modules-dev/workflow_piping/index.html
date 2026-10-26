@@ -7,7 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-07-27">
+<meta name="author" content="Will Gearty">
+<meta name="dcterms.date" content="2026-10-26">
+<meta name="description" content="Using the pipe operator to have more readable code">
 
 <title>Workflow design and piping</title>
 <style>
@@ -83,9 +85,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-7d90357f9d89fbc0f2bc483857a8ef92.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-7f7e86105715e888ee0d9ced64fe3c17.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-7d90357f9d89fbc0f2bc483857a8ef92.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-b2b2768555c38aa97cd9256688693622.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-6e7b361ac169d139da2377e97c4962aa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-b2b2768555c38aa97cd9256688693622.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -272,7 +274,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#piping" id="toc-piping" class="nav-link active" data-scroll-target="#piping">Piping</a>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#piping" id="toc-piping" class="nav-link" data-scroll-target="#piping">Piping</a>
   <ul class="collapse">
   <li><a href="#example-where-we-dont-use-the-pipe" id="toc-example-where-we-dont-use-the-pipe" class="nav-link" data-scroll-target="#example-where-we-dont-use-the-pipe">Example where we don’t use the pipe</a>
   <ul class="collapse">
@@ -288,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules-dev/workflow_piping/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="index-slides.html"><i class="bi bi-easel"></i>Slides</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -301,21 +304,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   </div>
 
+<div>
+  <div class="description">
+    Using the pipe operator to have more readable code
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
              <p>Etienne Bacher </p>
+             <p>Will Gearty </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 27, 2026</p>
+      <p class="date">October 26, 2026</p>
     </div>
   </div>
   
@@ -327,6 +336,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><a href="https://github.com/palaeoverse/modules/blob/module-workflow-piping/workflow_piping/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<section id="objectives" class="level1">
+<h1>Objectives</h1>
+<ul>
+<li>Learn more about the pipe operator (<code>|&gt;</code>) and how to use it to write more readable code</li>
+</ul>
+</section>
 <section id="piping" class="level1">
 <h1>Piping</h1>
 <section id="example-where-we-dont-use-the-pipe" class="level2">
@@ -592,6 +608,25 @@ Coefficients:
 <p>For simple cases, <code>|&gt;</code> and <code>%&gt;%</code> behave identically. We recommend using <code>|&gt;</code> simply because it is always available in R and doesn’t rely on an external package (and the <a href="https://style.tidyverse.org/pipes.html">Tidyverse style guide</a> also recommends <code>|&gt;</code>).</p>
 
 
+<hr><br><details>
+<summary>Session info</summary>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.6.1 (2026-06-24)
+ os       Ubuntu 26.04.1 LTS
+ system   x86_64, linux-gnu
+ ui       X11
+ language (EN)
+ collate  C.UTF-8
+ ctype    C.UTF-8
+ tz       UTC
+ date     2026-10-26
+ pandoc   3.7.0.2 @ /usr/bin/pandoc
+ quarto   1.10.19 @ /usr/local/bin/quarto
+
+──────────────────────────────────────────────────────────────────────────────
+</code></pre>
+</details>
 </section>
 </section>
 </section>
@@ -1088,7 +1123,7 @@ https://goatcounter.com/help/domains
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules-dev/workflow_piping/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
