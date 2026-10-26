@@ -84,9 +84,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-89b16ce8921b1c9ad71ced157ad1996f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-bf8a51d867e30be2ce1bdafce0ea3259.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-89b16ce8921b1c9ad71ced157ad1996f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-b2b2768555c38aa97cd9256688693622.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-6e7b361ac169d139da2377e97c4962aa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-b2b2768555c38aa97cd9256688693622.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -286,6 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#browser" id="toc-browser" class="nav-link" data-scroll-target="#browser"><code>browser()</code></a></li>
   <li><a href="#breakpoints" id="toc-breakpoints" class="nav-link" data-scroll-target="#breakpoints">Breakpoints</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
@@ -331,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/browser-reprex/browser_reprex/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/browser-reprex/browser_reprex/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -355,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="introduction" class="level2">
 <h2 data-anchor-id="introduction">Introduction</h2>
-<p>Knowing how to debug code is an essential skill, whether one writes an analysis for a paper or develops an R package. This module covers several tools that aim at making the debugging process easier.</p>
+<p>Knowing how to debug code is an essential skill, whether one writes an analysis for a paper or develops an R package. This module covers several tools that aim to make the debugging process easier.</p>
 <!-- For proper rendering of "diff" code blocks since Quarto won't do it: 
 https://github.com/orgs/quarto-dev/discussions/8387 -->
 <div class="cell">
@@ -545,7 +546,7 @@ code.sourceCode.diff span.st {
 </div>
 </div>
 <p>We have removed two out of five function calls, not bad. We still don’t really understand the cause though.</p>
-<p>Let’s assume that the documentation also doesn’t give any hint about this error message. If we are completely stuck, then we may want to ask other people, such as package maintainers on Github or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for external people to help us.</p>
+<p>Let’s assume that the documentation also doesn’t give any hint about this error message. If we are completely stuck, then we may want to ask other people, such as package maintainers on Github or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for other people to help us.</p>
 <p>Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it.</p>
 </section>
 </section>
@@ -645,10 +646,10 @@ code.sourceCode.diff span.st {
 <p>Debugging a function that you wrote (either in a package or as part of a project) can be annoying because an entire (internal) block of code gets executed and you only see the final error.</p>
 <p>One reflex is to put various <code>print()</code> statement in the function body to see which ones get evaluated (meaning that the code ran fine so far) and which ones didn’t because the function errored before.</p>
 <p>However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: <code>browser()</code>. This allows us to run line by line <em>in the function body</em>, and it is therefore a key tool when you start writing your own functions.</p>
-<p>We will use <a href="github.com/palaeoverse/palaeoverse/issues/280">issue #280</a> in <code>palaeoverse</code> as an example throughout this section.</p>
+<p>We will use <a href="https://github.com/palaeoverse/palaeoverse/issues/280">issue #280</a> in <code>palaeoverse</code> as an example throughout this section.</p>
 <section id="browser" class="level2">
 <h2 data-anchor-id="browser"><code>browser()</code></h2>
-<p>The bug report above gives a reprex to reproduce the error (note that at the time you are reading this, this bug may have been fixed):</p>
+<p>The bug report above gives a reprex to reproduce the error (note that at the time you are reading this, this bug has already been fixed):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -685,15 +686,15 @@ code.sourceCode.diff span.st {
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the video below, running the code with the function that now includes <code>browser()</code> doesn’t error. Instead, it stops the execution at the <code>browser()</code> call:</p>
-<p><video src="browser_1.webm" class="img-fluid" controls=""><a href="browser_1.webm">Video</a></video></p>
+<p><video src="browser_1.webm" class="img-fluid" alt="A screen capture of the debugging process in RStudio. The left hand side of the window shows the source code of `bin_space()`, and the right hand side shows the R console. We start by inserting `browser()` at the top of the function definition and running `devtools::load_all()` in the R console. After this, running the code that fails (cf previous code chunk) doesn't error but instead brings us at the location of `browser()`. The environment corresponds to the one that the function uses. Pressing 'Enter' in the console evaluates the statements one by one." controls=""><a href="browser_1.webm">Video</a></video></p>
 <p>There are two interesting things in this video:</p>
 <ol type="1">
-<li><p>we have access to the function environment, including the user-provided inputs. Note for instance that <code>sub_grid</code> is <code>NULL</code> by default in the function definition, but printing <code>sub_grid</code> in the console gives <code>250</code> because the user provided <code>sub_grid = 250</code>.</p></li>
+<li><p>we have access to the function environment, including the user-provided inputs. Note for instance that <code>sub_grid</code> is <code>NULL</code> by default in the function definition, but printing <code>sub_grid</code> in the console gives <code>250</code> because the call that is being inspected contains <code>sub_grid = 250</code>.</p></li>
 <li><p>We can execute the remaining function body statement by statement by pressing “Enter” in the console. Note that this goes doesn’t necessarily execute <em>all</em> the code: an <code>if()</code> statement whose condition is <code>FALSE</code> will not be executed. <code>browser()</code> follows exactly the path taken by our code.</p></li>
 </ol>
 <p>Pressing “Esc” or executing <code>Q</code> allows us to exit this “browsing” mode.</p>
 <p>Using this approach, we can find the exact source of the error:</p>
-<p><video src="browser_2.webm" class="img-fluid" controls=""><a href="browser_2.webm">Video</a></video></p>
+<p><video src="browser_2.webm" class="img-fluid" alt="This is the same setup as in the previous video. We keep pressing 'Enter' until the code fails." controls=""><a href="browser_2.webm">Video</a></video></p>
 <p>In our case, the error comes from the line:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>occdf <span class="ot">&lt;-</span> <span class="fu">list</span>(occdf, grid, base_grid, primary, secondary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Fixing this requires reading all the code prior to this line, but this is out of scope for this blog post.</p>
@@ -703,7 +704,13 @@ code.sourceCode.diff span.st {
 <h2 data-anchor-id="breakpoints">Breakpoints</h2>
 <p>Breakpoints are a feature directly integrated in the software used to run R (e.g.&nbsp;RStudio or Positron. This is also known as IDE for “Integrated Development Environment”).</p>
 <p>They are a way to mimic <code>browser()</code> calls without actually modifying the function. You can add one by clicking on the left of line numbers:</p>
-<p><video src="breakpoints.webm" class="img-fluid" controls=""><a href="breakpoints.webm">Video</a></video></p>
+<p><video src="breakpoints.webm" class="img-fluid" alt="This is almost the same setup as in the previous video. In this case, we don't have an explicit `browser()` call any more, but instead we click on the left hand side of the row number. This adds a red circle, indicating a breakpoint. After running `devtools::load_all()` and then the code that is supposed to fail, we end up in almost the same situation as with `browser()`, except that we haven't modified the source code at all." controls=""><a href="breakpoints.webm">Video</a></video></p>
+<p>After reloading the package and running the code that is supposed to fail, we end up in almost the same situation as with <code>browser()</code>, except that we haven’t modified the source code at all. We can then follow the same steps to continue our debugging process.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Debugging is an important aspect of programming. This module focused on two essential debugging methods: producing a reproducible example, and using debugging tools such as <code>browser()</code> and breakpoints. Following good debugging practices helps us fix our own code, and it is the essential first step to produce good bug reports. It is also a way to gain experience to recognise potential bugs when reviewing code in the future.</p>
 
 
 <hr><br><details>
@@ -812,7 +819,6 @@ code.sourceCode.diff span.st {
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </details>
-</section>
 </section>
 
 </main> <!-- /main -->
