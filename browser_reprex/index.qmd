@@ -98,7 +98,7 @@ Let's try to reduce the size of our data:
 ```{r}
 #| error: true
 
-# Select first part of dataset
+# Select the first rows of the data
 reefs2 <- head(reefs)
 
 reef_counts <- group_apply(occdf = reefs2, group = "interval", fun = nrow)
@@ -114,7 +114,7 @@ bins <- time_bins(interval = "Phanerozoic", rank = "stage")
 bin_time(occdf = reefs2, bins = bins, method = "mid")
 ```
 
-We still see the same error but now we only have 6 rows left (the default provided by `head`), much better!
+We still see the same error but now we only have 6 rows left (the default provided by `head()`), much better!
 Let's try to reduce that to one row and to remove some columns.
 
 ```{r}
@@ -279,7 +279,7 @@ bin_time(occdf = reefs2, bins = bins, method = "mid")
 ```
 
 Our reprex fails, but not with the error we experienced so far!
-We forgot to add the calls to `library()` and `data()`, which the reason R could not find the functions and data provided by the paleoverse package.
+We forgot to add the calls to `library()` and `data()`, which is the reason R could not find the functions and data provided by the `palaeoverse` package.
 
 ```{r}
 #| eval: false
