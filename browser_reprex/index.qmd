@@ -419,6 +419,12 @@ function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL,
 }
 ```
 
+::: {.callout-note title="Reloading the function"}
+The example above is from an R package, where we can use `devtools::load_all()` to reload all functions.
+
+If you insert `browser()` in a standalone function, you need to re-execute this function definition because calling it.
+:::
+
 In the video below, running the code with the function that now includes `browser()` doesn't error. Instead, it stops the execution at the `browser()` call:
 
 ![](browser_1.webm){fig-alt="A screen capture of the debugging process in RStudio. The left hand side of the window shows the source code of `bin_space()`, and the right hand side shows the R console. We start by inserting `browser()` at the top of the function definition and running `devtools::load_all()` in the R console. After this, running the code that fails (cf previous code chunk) doesn't error but instead brings us at the location of `browser()`. The environment corresponds to the one that the function uses. Pressing 'Enter' in the console evaluates the statements one by one."}
