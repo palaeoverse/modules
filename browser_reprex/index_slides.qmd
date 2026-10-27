@@ -63,6 +63,27 @@ bin_time(occdf = reefs, bins = bins, method = "mid")
 #> ! undefined columns selected
 ```
 
+## A failing script
+
+<br>
+
+Using `traceback()` to see the chain of errors:
+
+```
+> traceback()
+4: stop("undefined columns selected")
+3: `[.data.frame`(occdf, , max_ma, drop = TRUE)
+2: occdf[, max_ma, drop = TRUE]
+1: bin_time(occdf = reefs, bins = bins, method = "mid") at #1
+```
+
+. . .
+
+<br>
+
+The root cause is not very clear.
+
+
 # Reducing the problem
 
 ## Minimal reproducible example
