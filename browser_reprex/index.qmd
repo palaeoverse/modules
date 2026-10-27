@@ -69,7 +69,7 @@ bins <- time_bins(interval = "Phanerozoic", rank = "stage")
 bin_time(occdf = reefs, bins = bins, method = "mid")
 ```
 
-We now have an error caused by `bin_time()`. 
+We now have an error caused by `bin_time()`.
 The first thing we can do is run `traceback()` to see which call inside `bin_time()` caused the error:
 
 ```
@@ -80,7 +80,7 @@ The first thing we can do is run `traceback()` to see which call inside `bin_tim
 1: bin_time(occdf = reefs, bins = bins, method = "mid") at #1
 ```
 
-The trace can be read bottom-up: `bin_time()` failed because of the line `occdf[, max_ma, drop = TRUE]`, which itself failed because of a wrong use of `[`. 
+The trace can be read bottom-up: `bin_time()` failed because of the line `occdf[, max_ma, drop = TRUE]`, which itself failed because of a wrong use of `[`.
 
 This helps, but the root cause still isn't very clear.
 Therefore, we'll have to do some debugging.
