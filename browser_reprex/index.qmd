@@ -75,6 +75,7 @@ Therefore, we'll have to do some debugging.
 # Reducing the problem
 
 The longer the code you try to debug, the more potential causes you have to explore. The first thing to do when you can't find the bug in your code right away is to build a minimal **repr**oducible **ex**ample, aka a *reprex* (this is also known as a MRE, for "Minimal Reproducible Example").
+This helps isolate the problem and makes it easier to communicate it to other users and maintainers.
 
 In our example above, we can reduce the problem in two ways: we can reduce the data first, and then reduce the code.
 
@@ -84,7 +85,7 @@ In the debugging process, we will likely run the code at least a handful of time
 Therefore, we want to make sure that it runs as fast as possible so that we don't lose our focus.
 The easiest way to do this is to reduce the size of our input data.
 
-In addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small as possible.
+In addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small and simple as possible.
 
 In this example, the dataset we are using has thousands of rows and 14 columns:
 
@@ -96,7 +97,7 @@ Let's try to reduce the size of our data:
 
 ```{r}
 #| error: true
-
+# Select first part of dataset
 reefs2 <- head(reefs)
 
 reef_counts <- group_apply(occdf = reefs2, group = "interval", fun = nrow)
@@ -112,7 +113,7 @@ bins <- time_bins(interval = "Phanerozoic", rank = "stage")
 bin_time(occdf = reefs2, bins = bins, method = "mid")
 ```
 
-We still see the same error but now we only have 6 rows left, much better!
+We still see the same error but now we only have 6 rows left (the default provided by `head`), much better!
 Let's try to reduce that to one row and to remove some columns.
 
 ```{r}
@@ -226,7 +227,7 @@ We still don't really understand the cause though.
 Let's assume that the documentation also doesn't give any hint about this error message.
 If we are completely stuck, then we may want to ask other people, such as package maintainers on Github or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for other people to help us.
 
-Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it.
+Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it, e.g., as an issue on GitHub or with other users.
 
 # How to ensure that your reprex actually is a reprex
 
@@ -277,7 +278,7 @@ bin_time(occdf = reefs2, bins = bins, method = "mid")
 ```
 
 Our reprex fails, but not with the error we experienced so far!
-We forgot to add the calls to `library()` and `data()`.
+We forgot to add the calls to `library()` and `data()`, which the reason R could not find the functions and data provided by the paleoverse package.
 
 ```{r}
 #| eval: false
@@ -317,7 +318,7 @@ bin_time(occdf = reefs2, bins = bins, method = "mid")
 
 This is the situation we had so far, so we can now share this output with other people and they should be able to reproduce the issue.
 
-Note that it is good practice to show more information on our session, including the version of packages used. This can be done with the argument `si` in `reprex()`:
+Note that it is good practice to show more information on our session, including the version of packages used. This can be done with the argument `session_info` in `reprex()`:
 
 ```{r}
 #| eval: false
@@ -335,7 +336,7 @@ reprex::reprex({
   bins <- time_bins(interval = "Phanerozoic", rank = "stage")
 
   bin_time(occdf = reefs2, bins = bins, method = "mid")
-}, si = TRUE)
+}, session_info = TRUE)
 ```
 
 You now know how to use `reprex()`! Note that the steps before actually using it are key: very often, other people will ask you to minimize your issue as much as possible before reporting it. In many cases, you can also find the issue on your own just by reducing it.
