@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-10-26">
+<meta name="dcterms.date" content="2026-10-27">
 <meta name="description" content="Some good practices and useful tools to debug R code.">
 
 <title>Debugging with reprex() and browser()</title>
@@ -320,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 26, 2026</p>
+      <p class="date">October 27, 2026</p>
     </div>
   </div>
   
@@ -332,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/browser-reprex/browser_reprex/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/browser-reprex/browser_reprex/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -397,12 +397,12 @@ code.sourceCode.diff span.st {
 </section>
 <section id="reducing-the-problem" class="level1">
 <h1>Reducing the problem</h1>
-<p>The longer the code you try to debug, the more potential causes you have to explore. The first thing to do when you can’t find the bug in your code right away is to build a minimal <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em> (this is also known as a MRE, for “Minimal Reproducible Example”).</p>
+<p>The longer the code you try to debug, the more potential causes you have to explore. The first thing to do when you can’t find the bug in your code right away is to build a minimal <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em> (this is also known as a MRE, for “Minimal Reproducible Example”). This helps isolate the problem and makes it easier to communicate it to other users and maintainers.</p>
 <p>In our example above, we can reduce the problem in two ways: we can reduce the data first, and then reduce the code.</p>
 <section id="reduce-the-size-of-the-data" class="level2">
 <h2 data-anchor-id="reduce-the-size-of-the-data">Reduce the size of the data</h2>
 <p>In the debugging process, we will likely run the code at least a handful of times. Therefore, we want to make sure that it runs as fast as possible so that we don’t lose our focus. The easiest way to do this is to reduce the size of our input data.</p>
-<p>In addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small as possible.</p>
+<p>In addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small and simple as possible.</p>
 <p>In this example, the dataset we are using has thousands of rows and 14 columns:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -412,25 +412,26 @@ code.sourceCode.diff span.st {
 </div>
 <p>Let’s try to reduce the size of our data:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select first part of dataset</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[.data.frame`:
 ! undefined columns selected</code></pre>
 </div>
 </div>
-<p>We still see the same error but now we only have 6 rows left, much better! Let’s try to reduce that to one row and to remove some columns.</p>
+<p>We still see the same error but now we only have 6 rows left (the default provided by <code>head</code>), much better! Let’s try to reduce that to one row and to remove some columns.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
@@ -547,7 +548,7 @@ code.sourceCode.diff span.st {
 </div>
 <p>We have removed two out of five function calls, not bad. We still don’t really understand the cause though.</p>
 <p>Let’s assume that the documentation also doesn’t give any hint about this error message. If we are completely stuck, then we may want to ask other people, such as package maintainers on Github or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for other people to help us.</p>
-<p>Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it.</p>
+<p>Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it, e.g., as an issue on GitHub or with other users.</p>
 </section>
 </section>
 <section id="how-to-ensure-that-your-reprex-actually-is-a-reprex" class="level1">
@@ -590,7 +591,7 @@ code.sourceCode.diff span.st {
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `bin_time()`:</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! could not find function "bin_time"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Our reprex fails, but not with the error we experienced so far! We forgot to add the calls to <code>library()</code> and <code>data()</code>.</p>
+<p>Our reprex fails, but not with the error we experienced so far! We forgot to add the calls to <code>library()</code> and <code>data()</code>, which the reason R could not find the functions and data provided by the paleoverse package.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(palaeoverse)</span>
@@ -622,7 +623,7 @@ code.sourceCode.diff span.st {
 <span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `[.data.frame`:</span></span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! undefined columns selected</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is the situation we had so far, so we can now share this output with other people and they should be able to reproduce the issue.</p>
-<p>Note that it is good practice to show more information on our session, including the version of packages used. This can be done with the argument <code>si</code> in <code>reprex()</code>:</p>
+<p>Note that it is good practice to show more information on our session, including the version of packages used. This can be done with the argument <code>session_info</code> in <code>reprex()</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(palaeoverse)</span>
@@ -637,7 +638,7 @@ code.sourceCode.diff span.st {
 <span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>}, <span class="at">si =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>}, <span class="at">session_info =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You now know how to use <code>reprex()</code>! Note that the steps before actually using it are key: very often, other people will ask you to minimize your issue as much as possible before reporting it. In many cases, you can also find the issue on your own just by reducing it.</p>
 </section>
@@ -725,7 +726,7 @@ code.sourceCode.diff span.st {
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-26
+ date     2026-10-27
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.10.19 @ /usr/local/bin/quarto
 
@@ -804,7 +805,7 @@ code.sourceCode.diff span.st {
    tinytex       0.61    2026-09-17 [1] RSPM
    units         1.0-1   2026-03-11 [1] RSPM
    utf8          1.2.6   2025-06-08 [1] RSPM
-   V8            8.2.0   2026-04-21 [1] RSPM
+   V8            8.2.1   2026-10-26 [1] RSPM
    vctrs         0.7.3   2026-04-11 [1] RSPM
    withr         3.0.3   2026-06-19 [1] RSPM
    wk            0.9.5   2025-12-18 [1] RSPM
