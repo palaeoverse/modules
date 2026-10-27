@@ -332,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/browser-reprex/browser_reprex/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/browser-reprex/browser_reprex/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -707,6 +707,20 @@ code.sourceCode.diff span.st {
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>   [ MANUALLY TRUNCATED ]</span>
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Reloading the function">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reloading the function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The example above is from an R package, where we can use <code>devtools::load_all()</code> to reload all functions.</p>
+<p>If you insert <code>browser()</code> in a standalone function, you need to re-execute this function definition because calling it.</p>
+</div>
+</div>
 <p>In the video below, running the code with the function that now includes <code>browser()</code> doesn’t error. Instead, it stops the execution at the <code>browser()</code> call:</p>
 <p><video src="browser_1.webm" class="img-fluid" alt="A screen capture of the debugging process in RStudio. The left hand side of the window shows the source code of `bin_space()`, and the right hand side shows the R console. We start by inserting `browser()` at the top of the function definition and running `devtools::load_all()` in the R console. After this, running the code that fails (cf previous code chunk) doesn't error but instead brings us at the location of `browser()`. The environment corresponds to the one that the function uses. Pressing 'Enter' in the console evaluates the statements one by one." controls=""><a href="browser_1.webm">Video</a></video></p>
 <p>There are two interesting things in this video:</p>
