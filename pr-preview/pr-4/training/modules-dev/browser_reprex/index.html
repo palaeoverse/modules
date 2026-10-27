@@ -394,11 +394,11 @@ code.sourceCode.diff span.st {
 </div>
 </div>
 <p>We now have an error caused by <code>bin_time()</code>. The first thing we can do is run <code>traceback()</code> to see which call inside <code>bin_time()</code> caused the error:</p>
-<pre><code>&gt; traceback()
-4: stop("undefined columns selected")
-3: `[.data.frame`(occdf, , max_ma, drop = TRUE)
-2: occdf[, max_ma, drop = TRUE]
-1: bin_time(occdf = reefs, bins = bins, method = "mid") at #1</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">traceback</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span><span class="sc">:</span> <span class="fu">stop</span>(<span class="st">"undefined columns selected"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">:</span> <span class="st">`</span><span class="at">[.data.frame</span><span class="st">`</span>(occdf, , max_ma, <span class="at">drop =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">:</span> occdf[, max_ma, drop <span class="ot">=</span> <span class="cn">TRUE</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>) at <span class="co">#1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The trace can be read bottom-up: <code>bin_time()</code> failed because of the line <code>occdf[, max_ma, drop = TRUE]</code>, which itself failed because of a wrong use of <code>[</code>.</p>
 <p>This helps, but the root cause still isn’t very clear. Therefore, we’ll have to do some debugging.</p>
 </section>
