@@ -1,0 +1,156 @@
+---
+title: "Create a package"
+author: "Etienne Bacher"
+date: "`r Sys.Date()`"
+toc: true
+execute:
+  eval: false
+  warning: false
+  message: false
+  freeze: auto
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Structure of a package
+
+At a minimum, a package **must have** two folders:
+
+- `R`: contains all the `.R` files where we will write our functions
+
+- `man`: short for "manual". This will contain all the documentation that is
+  accessible with `?` in R (for example `?factor`)
+
+It is recommended to have the following folders:
+
+- `tests`: contains all the tests for your package
+
+- `vignettes`: additional documentation that contains more extensive examples and
+  tutorials for your package.
+
+## Practical example
+
+The easiest way to learn how to make a package is to actually make one.
+
+Let's say we want to create a package containing two functions.
+
+1. A function to compute the logarithm that returns `NULL` if the input is not
+   numeric:
+
+```{r}
+#| eval: true
+#| error: true
+#| warning: true
+
+safe_log <- function(x) {
+  if (is.numeric(x)) {
+    log(x)
+  } else {
+    warning("Can't compute the logarithm of a non-numeric input.")
+    NULL
+  }
+}
+log("a")
+safe_log("a")
+```
+
+2. A function to count the number of unique elements in a vector:
+
+```{r}
+#| eval: true
+#| error: true
+
+n_unique <- function(x) {
+  length(unique(x))
+}
+n_unique(1:10)
+n_unique(c(1, 1, 2, 3, 4, 4))
+```
+
+## Requirements
+
+Our three best friends for this job:
+
+::: {.columns .center}
+::::: {.column width="33%"}
+<img src="devtools.svg" height=150>
+<br>
+`devtools`
+:::::
+
+::::: {.column width="33%"}
+<img src="usethis.png" height=150>
+<br>
+`usethis`
+:::::
+
+::::: {.column width="33%"}
+<img src="testthat.png" height=150>
+<br>
+`testthat`
+:::::
+:::
+
+<br>
+
+```{r}
+# if not already installed
+install.packages(c("devtools", "usethis", "testthat"))
+```
+
+## Create the package
+
+Create a package called "my.pkg":
+
+- either with `devtools`
+
+```{r}
+devtools::create("<path>/my.pkg")
+```
+
+- or with RStudio: File > New Project > New Directory > R Package > Name it and choose its location
+
+## How is it organized?
+
+```r
+.
+├── DESCRIPTION
+├── my.pkg.Rproj
+├── NAMESPACE
+├── R
+│   └── hello.R
+└── man
+    └── hello.Rd
+```
+
+We see the two mandatory folders: `R` and `man`.
+
+The `DESCRIPTION` file contains all the important information about our package:
+
+- who built it?
+- when?
+- what is the goal of the package?
+- what are its dependencies?
+- what is its license?
+- ...
+
+The `NAMESPACE` file contains all the information about the functions that are
+imported and exported by our package.
+
+## Add our functions
+
+1. Remove `R/hello.R` and `man/hello.Rd`
+
+2. Create two files in the folder `R`: `n_unique.R` and `safe_log.R`.
+
+3. Paste the functions we created in each of these files.
+
+## Add our functions
+
+Run `devtools::load_all()` in the console.
+
+You should now be able to run our functions in the console!
+
+Next steps: **documenting** and **testing** our functions.
+
