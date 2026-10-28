@@ -53,7 +53,7 @@ argument values and input checking.
 
 ## Demo: standardizing values
 
-Let's say that you want to [standardize
+Let's say you want to [standardize
 values](https://en.wikipedia.org/wiki/Standard_score), i.e. run this
 formula on multiple columns in your data:
 
@@ -72,8 +72,7 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] - mean(iris[["Sepal.Width"]]
   sd(iris[["Sepal.Width"]])
 ```
 
-This works, but what if we want to ignore missing values? We have to add
-8 parameters:
+This works, but what if we want to ignore missing values? We have to add `na.rm = TRUE` eight times:
 
 ```{r}
 iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - mean(iris[["Petal.Length"]], na.rm = TRUE)) /
@@ -88,10 +87,8 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] - mean(iris[["Sepal.Width"]]
 
 Do you notice anything weird about the code in the previous two blocks?
 
-Look again...
-
-On the third line, we used `mean(iris[["Sepal.Width"]])` instead of
-`mean(iris[["Petal.Width"]])`! By duplicating lines of code with very
+For the third column, we used `mean(iris[["Sepal.Width"]], na.rm = TRUE)` instead of
+`mean(iris[["Petal.Width"]], na.rm = TRUE)`! By duplicating lines of code with very
 small variations, we make it harder to notice mistakes like this one,
 small in size but with important consequences for our results.
 
@@ -105,12 +102,12 @@ We start with the template of a function:
 my_std <- function() {}
 ```
 
-- `my_std` is the **function name**, meaning that we can use it like
-  `my_std(<more code>)`;
-- `function()` is the **function definition**. In the next steps we
-  will add **function arguments** (or **function parameters**) in
+- `my_std` is the *function name*, meaning that we can use it like
+  `my_std(<some code>)`;
+- `function()` is the *function definition*. In the next steps we
+  will add *function arguments* (or *function parameters*) in
   `()`;
-- `{}` contains the **function body**. This is where we will add the
+- `{}` contains the *function body*. This is where we will add
   code that runs every time we call the function.
 
 For now, this function is useless:
@@ -174,7 +171,7 @@ my_std <- function(column) {
 ```
 
 Note that we don't assign the output *inside* the function: the function
-merely makes the computation and we assign its output to our object when
+merely makes the computation, and we then assign its output to our object when
 we call the function:
 
 ```{r}
@@ -199,7 +196,7 @@ a column name that doesn't exist in the data:
 my_std("unknown_column")
 ```
 
-Note that this doesn't error, it just throws a warning and returns a
+Note that this doesn't error, it throws a warning that is easy to ignore, and then it returns a
 useless result. To prevent that, we should add some validation steps in
 our function body to ensure that we don't run nonsensical code and that
 we clearly tell the user when they have given wrong inputs to the
@@ -213,7 +210,7 @@ that we can then add one check per requirement. In our case:
 - the column should exist in the data, e.g. `my_std("column_1")`
   should fail.
 
-Now that we have clarified are requirements, we can add one `if()`
+Now that we have clarified our requirements, we can add one `if()`
 condition for each of them:
 
 ```{r}
@@ -232,7 +229,7 @@ my_std <- function(column) {
 }
 ```
 
-And now we have proper error messages and avoid nonsensical results!
+And now we have proper error messages and we avoid nonsensical results!
 
 ```{r}
 #| error: true
@@ -250,6 +247,8 @@ you could for instance look at
 and [`checkmate`](https://mllg.github.io/checkmate/).
 
 #### With `rlang`
+
+`rlang` doesn't provide a function to check whether a column exists in data, but its `check_string()` function ensures that the input is a character vector of length 1:
 
 ```{r}
 #| error: true
@@ -306,7 +305,7 @@ my_std <- function(column, na.rm) {
 }
 ```
 
-*For conciseness, I hid the parameter checks we have written above.*
+*For conciseness, we hid the parameter checks we wrote above.*
 
 This works fine but it forces the user to explicitly pass the parameter
 when calling the function, no matter whether it is `TRUE` or `FALSE`:
@@ -356,7 +355,7 @@ f <- function(x) {
 
 Note that the last value in the function is implicitly returned, so you
 don't need to wrap it in `return()` (but you can if you want, it's just
-a matter of preferences). Note that if the last statement in the
+a matter of preference). Note that if the last statement in the
 function is an assignment, then the function returns the value of this
 assignment but doesn't print it when you call it:
 
@@ -397,29 +396,33 @@ documentation. The documentation should include:
 ### Functions as arguments
 
 In R, functions are just another type of objects, meaning that they can be updated
-by the user, assigned to variables, and passed over to other functions.
-at the built-in function for the mean as an example.
+by the user, assigned to variables, and passed to other functions.
+Let's look at the built-in function `mean()` as an example.
 
 ```{r}
 my_variable <- mean
 ```
 
 Note that the parentheses are missing from `mean` here, which means we
-are not evaluating the function but just refering to it.
+are not evaluating the function but just refering to it:
+
+```{r}
+my_variable
+```
 
 Passing functions as arguments is a powerful programming technique,
 which can be best demonstrated by the family of `apply` functions. As an
 example, let's assume we have data stored in a list:
 
 ```{r}
-data_list <- list("a" = rnorm(100),
-                 "b" = rnorm(100, mean = 3))
+data_list <- list(a = rnorm(10), b = rnorm(10, mean = 3))
+data_list
 ```
 
-We're looking for the median values of our data. We would loop through
+We're looking for the median values of our data. We could loop through
 each of the list entries and apply the `median` function individually.
-However, the `lapply` functions provides a more elegant solution, where
-we can just pass the list and a function as argument to `lapply`, and
+However, the `lapply()` function provides a more elegant solution, where
+we can just pass the list and a function as argument to `lapply()`, and
 the function will be applied to each list entry individually:
 
 ```{r}
@@ -434,18 +437,18 @@ function"](https://en.wikipedia.org/wiki/Higher-order_function).
 
 ### Anonymous functions
 
-All functions you have encountered so far have been named either by R,
-the package developer, or yourself (e.g., the `my_std` functions above).
-Generally, it is good practice to give your variables and functions
-informative names so others and your future self can understand their
-purpose.
+All functions we have encountered so far have been named either by R,
+a package developer, or ourselves (e.g., the `my_std` functions above).
+Generally, it is good practice to give informative names to variables 
+and functions so that their purpose is clear to others and to our future
+self.
 
 However, sometimes you will just need a quick, short throwaway function
 that serves one purpose without wanting to bother to write a full size
-function. For this, you can use *anonymous functions.* These are
+function. For this, you can use *anonymous functions*. These are
 functions that are defined on the spot and immediately evaluated without
 being assigned to a variable. Their syntax is straightforward, as you
-just skip the variable assignment:
+just skip the assignment:
 
 ```{r}
 #| eval: false
@@ -466,9 +469,9 @@ lapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))
 
 When working with R, you will interact with functions all the time. The
 primary purpose of functions is to combine a number of complex
-operations and give them a shared name (the name of the function).
+operations and give them a shared name (the function name).
 However, sometimes it is useful to unwarp a function to understand
-exactly what it is doing and how your inputs are modified. For this, you
+exactly what it does and how your inputs are modified. For this, you
 can simply enter the name of the function (without parentheses) into the
 console, which will display the body of the function to give you some
 insight into how it is implemented:\
