@@ -1,0 +1,125 @@
+/* Same background as on the website */
+.reveal .slide-background {
+  background: rgb(245.4, 250.35, 250.65);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+center,
+.quarto-title-authors {
+  color: #575756 !important;
+}
+
+/* Logo pinned in the top right corner of every slide */
+.reveal::after {
+  content: "";
+  position: fixed;
+  right: 10%;
+  top: -5px;
+  width: 15%;
+  height: 15%;
+  background-image: url(logo_top_right.png);
+  background-size: contain;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  z-index: 10;
+}
+
+/* Social links footer, on the title slide only */
+.title-footer {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 3%;
+  width: 100%;
+  padding: 0.6em 1em;
+  text-align: center;
+  font-family: var(--r-main-font);
+  font-size: 18px;
+  color: white;
+  background-color: #0d725a;
+  z-index: 10;
+}
+
+.title-footer span {
+  margin: 0 1.5em;
+}
+
+.title-footer a {
+  display: inline-flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+
+.title-footer i {
+  font-size: 1.4em;
+}
+
+body:has(#title-slide.present) .title-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Larger logo on the title slide */
+.reveal:has(#title-slide.present)::after {
+  width: 30%;
+  height: 30%;
+  left: 33%;
+  top: -45px;
+}
+
+/* Recolor the menu icon (it is an image, not a glyph) */
+body:has(#title-slide.present) .reveal .slide-menu-button .fa-bars::before {
+  filter: brightness(0) invert(1);
+}
+
+h1 {
+  text-align: center;
+}
+
+/* Slide numbers: plain text, not on the title slide */
+.reveal .slide-number a {
+  color: #575756;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+body:has(#title-slide.present) .reveal .slide-number {
+  display: none !important;
+}
+
+/* Code almost at the same size as the surrounding text */
+.reveal code {
+  font-size: 0.9em;
+}
+
+.reveal pre {
+  font-size: 0.7em;
+}
+
+/* Slightly rounded code blocks */
+.reveal div.sourceCode {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #0d725a;
+}
+
+.reveal pre {
+  border-radius: 8px;
+}
+
+/* Wrap the slide title to avoid overlapping with the logo in the top right corner */
+section>h2 {
+  width: 85%;
+}
