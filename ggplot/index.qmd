@@ -125,7 +125,7 @@ most of the work for us once we specify our dataset and our `x` and `y`
 variables.
 :::
 
-:::: callout-note
+::: callout-note
 ## Missing data
 
 You may have noticed a warning that some rows of the dataset contain
@@ -133,15 +133,15 @@ missing values. There are two penguins without any measurements in the
 dataset. How might we remove them using `dplyr` so we don't get this
 warning over and over?
 
-::: {.callout-caution collapse="true" appearance="simple" icon="false"}
+::::: {.callout-caution collapse="true" appearance="simple" icon="false"}
 ##### Solution
 
 ```{r}
 penguins <- penguins |>
   dplyr::filter(!is.na(body_mass))
 ```
+:::::
 :::
-::::
 
 ::: narration
 Now, let's go a step further and color the points by another variable
