@@ -380,8 +380,6 @@ identical(result_1, result_2)
 
 ### Documenting functions
 
-\[UNSURE: this could fit better in the package development module\]
-
 If you plan to keep using custom functions in your project, or if you
 want to share those with colleagues, then it is important to write
 documentation. The documentation should include:
@@ -390,6 +388,26 @@ documentation. The documentation should include:
 - an explanation of each function parameter, including the expected
   type (e.g. "a character value of length 1")
 - details on the expected output
+
+Going back to our `my_std` example defined as `my_std <- function(column, na.rm) `,
+the documentation could look like the following:
+
+```{r}
+#| eval: false
+
+# A function to standardize values
+#
+# This takes a column name from the `iris` data and returns its standardized values computed
+# as `(x - mean(x)) / sd(x)`.
+#
+# - column: a single column name from the `iris` data.
+# - na.rm: a logical value (`FALSE` by default) indicating whether to remove `NA`s from the
+#   column.
+# 
+# More info: https://en.wikipedia.org/wiki/Standard_score
+
+my_std <- function(column, na.rm = FALSE) {}
+```
 
 ## Other ways to use and create functions
 
