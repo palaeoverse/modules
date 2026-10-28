@@ -43,7 +43,7 @@ etc.
 
 . . .
 
-R comes with comes with hundreds of functions by default. Thousands more are available via user-written packages.
+R comes with hundreds of functions by default. Thousands more are available via user-written packages.
 
 # Demo: standardizing values
 
@@ -62,18 +62,26 @@ $$z = \frac{x - mean(x)}{sd(x)}$$
 Option 1: same code for several columns in our data:
 
 ```{r}
-iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
-  mean(iris[["Petal.Length"]])) /
-  sd(iris[["Petal.Length"]])
-iris[["Sepal.Length_std"]] <- (iris[["Sepal.Length"]] - 
-  mean(iris[["Sepal.Length"]])) /
-  sd(iris[["Sepal.Length"]])
-iris[["Petal.Width_std"]] <- (iris[["Petal.Width"]] - 
-  mean(iris[["Sepal.Width"]])) /
-  sd(iris[["Petal.Width"]])
-iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] - 
-  mean(iris[["Sepal.Width"]])) /
-  sd(iris[["Sepal.Width"]])
+#| eval: true
+#| echo: false
+iris2 <- iris
+```
+
+```{r}
+iris2 <- iris
+
+iris2[["Petal.Length_std"]] <- (iris2[["Petal.Length"]] - 
+  mean(iris2[["Petal.Length"]])) /
+  sd(iris2[["Petal.Length"]])
+iris2[["Sepal.Length_std"]] <- (iris2[["Sepal.Length"]] - 
+  mean(iris2[["Sepal.Length"]])) /
+  sd(iris2[["Sepal.Length"]])
+iris2[["Petal.Width_std"]] <- (iris2[["Petal.Width"]] - 
+  mean(iris2[["Sepal.Width"]])) /
+  sd(iris2[["Petal.Width"]])
+iris2[["Sepal.Width_std"]] <- (iris2[["Sepal.Width"]] - 
+  mean(iris2[["Sepal.Width"]])) /
+  sd(iris2[["Sepal.Width"]])
 ```
 
 ## Demo: standardizing values
@@ -83,18 +91,18 @@ iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] -
 This works, but what if we want to ignore missing values?
 
 ```{r}
-iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
-  mean(iris[["Petal.Length"]], na.rm = TRUE)) /
-  sd(iris[["Petal.Length"]], na.rm = TRUE)
-iris[["Sepal.Length_std"]] <- (iris[["Sepal.Length"]] - 
-  mean(iris[["Sepal.Length"]], na.rm = TRUE)) /
-  sd(iris[["Sepal.Length"]], na.rm = TRUE)
-iris[["Petal.Width_std"]] <- (iris[["Petal.Width"]] - 
-  mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
-  sd(iris[["Petal.Width"]], na.rm = TRUE)
-iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] - 
-  mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
-  sd(iris[["Sepal.Width"]], na.rm = TRUE)
+iris2[["Petal.Length_std"]] <- (iris2[["Petal.Length"]] -
+  mean(iris2[["Petal.Length"]], na.rm = TRUE)) /
+  sd(iris2[["Petal.Length"]], na.rm = TRUE)
+iris2[["Sepal.Length_std"]] <- (iris2[["Sepal.Length"]] -
+  mean(iris2[["Sepal.Length"]], na.rm = TRUE)) /
+  sd(iris2[["Sepal.Length"]], na.rm = TRUE)
+iris2[["Petal.Width_std"]] <- (iris2[["Petal.Width"]] -
+  mean(iris2[["Sepal.Width"]], na.rm = TRUE)) /
+  sd(iris2[["Petal.Width"]], na.rm = TRUE)
+iris2[["Sepal.Width_std"]] <- (iris2[["Sepal.Width"]] -
+  mean(iris2[["Sepal.Width"]], na.rm = TRUE)) /
+  sd(iris2[["Sepal.Width"]], na.rm = TRUE)
 ```
 
 . . .
@@ -108,18 +116,18 @@ Do you notice anything weird about the code above?
 A small typo with big consequences!
 
 ```r {code-line-numbers="8"}
-iris[["Petal.Length_std"]] <- (iris[["Petal.Length"]] - 
-  mean(iris[["Petal.Length"]], na.rm = TRUE)) /
-  sd(iris[["Petal.Length"]], na.rm = TRUE)
-iris[["Sepal.Length_std"]] <- (iris[["Sepal.Length"]] - 
-  mean(iris[["Sepal.Length"]], na.rm = TRUE)) /
-  sd(iris[["Sepal.Length"]], na.rm = TRUE)
-iris[["Petal.Width_std"]] <- (iris[["Petal.Width"]] - 
-  mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
-  sd(iris[["Petal.Width"]], na.rm = TRUE)
-iris[["Sepal.Width_std"]] <- (iris[["Sepal.Width"]] - 
-  mean(iris[["Sepal.Width"]], na.rm = TRUE)) /
-  sd(iris[["Sepal.Width"]], na.rm = TRUE)
+iris2[["Petal.Length_std"]] <- (iris2[["Petal.Length"]] -
+  mean(iris2[["Petal.Length"]], na.rm = TRUE)) /
+  sd(iris2[["Petal.Length"]], na.rm = TRUE)
+iris2[["Sepal.Length_std"]] <- (iris2[["Sepal.Length"]] -
+  mean(iris2[["Sepal.Length"]], na.rm = TRUE)) /
+  sd(iris2[["Sepal.Length"]], na.rm = TRUE)
+iris2[["Petal.Width_std"]] <- (iris2[["Petal.Width"]] -
+  mean(iris2[["Sepal.Width"]], na.rm = TRUE)) /
+  sd(iris2[["Petal.Width"]], na.rm = TRUE)
+iris2[["Sepal.Width_std"]] <- (iris2[["Sepal.Width"]] -
+  mean(iris2[["Sepal.Width"]], na.rm = TRUE)) /
+  sd(iris2[["Sepal.Width"]], na.rm = TRUE)
 ```
 
 ## Demo: standardizing values
@@ -200,18 +208,18 @@ Parts in [red]{style="color:red;"} are the parts that change across lines (the c
 
 ::: {.sourceCode .cell-code}
 ```{=html}
-<pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Length_std"</span>]] &lt;- (<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Length"</span>]] -
-  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Length"</span>]])) /
-  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Length"</span>]])
-<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Length_std"</span>]] &lt;- (<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Length"</span>]] -
-  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Length"</span>]])) /
-  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Length"</span>]])
-<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Width_std"</span>]] &lt;- (<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Width"</span>]] -
-  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Width"</span>]])) /
-  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Petal.Width"</span>]])
-<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Width_std"</span>]] &lt;- (<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Width"</span>]] -
-  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Width"</span>]])) /
-  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris</span>[[<span style="color: #ff0000;">"Sepal.Width"</span>]])</code></pre>
+<pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Length_std"</span>]] &lt;- (<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Length"</span>]] -
+  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Length"</span>]])) /
+  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Length"</span>]])
+<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Length_std"</span>]] &lt;- (<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Length"</span>]] -
+  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Length"</span>]])) /
+  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Length"</span>]])
+<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Width_std"</span>]] &lt;- (<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Width"</span>]] -
+  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Width"</span>]])) /
+  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Petal.Width"</span>]])
+<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Width_std"</span>]] &lt;- (<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Width"</span>]] -
+  <span style="color: #795e26;">mean</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Width"</span>]])) /
+  <span style="color: #795e26;">sd</span>(<span style="color: #001080;">iris2</span>[[<span style="color: #ff0000;">"Sepal.Width"</span>]])</code></pre>
 ```
 :::
 
@@ -219,7 +227,7 @@ Parts in [red]{style="color:red;"} are the parts that change across lines (the c
 
 <br>
 
-Therefore we can create a `column` parameter to specify which column to use in the computation:
+Create a `column` parameter to specify which column to use in the computation:
 
 <br>
 
@@ -235,9 +243,9 @@ The function body takes the code that doesn't change across lines:
 
 ```{r}
 my_std <- function(column) {
-  (iris[["Petal.Length"]] - 
-    mean(iris[["Petal.Length"]], na.rm = TRUE)) /
-    sd(iris[["Petal.Length"]], na.rm = TRUE)
+  (iris2[["Petal.Length"]] -
+    mean(iris2[["Petal.Length"]], na.rm = TRUE)) /
+    sd(iris2[["Petal.Length"]], na.rm = TRUE)
 }
 ```
 
@@ -251,9 +259,9 @@ The function body takes the code that doesn't change across lines:
 #| eval: true
 
 my_std <- function(column) {
-  (iris[[column]] - 
-    mean(iris[[column]], na.rm = TRUE)) /
-    sd(iris[[column]], na.rm = TRUE)
+  (iris2[[column]] -
+    mean(iris2[[column]], na.rm = TRUE)) /
+    sd(iris2[[column]], na.rm = TRUE)
 }
 ```
 
@@ -274,13 +282,54 @@ We don't assign the output *inside* the function: the function merely makes the 
 <br>
 
 ```{r}
-iris[["Petal.Length_std"]] <- my_std("Petal.Length")
-iris[["Sepal.Length_std"]] <- my_std("Sepal.Length")
-iris[["Petal.Width_std"]] <- my_std("Petal.Width")
-iris[["Sepal.Width_std"]] <- my_std("Sepal.Width")
+iris2[["Petal.Length_std"]] <- my_std("Petal.Length")
+iris2[["Sepal.Length_std"]] <- my_std("Sepal.Length")
+iris2[["Petal.Width_std"]] <- my_std("Petal.Width")
+iris2[["Sepal.Width_std"]] <- my_std("Sepal.Width")
 ```
 
 Notice how it is much easier to check whether we made a typo in this code.
+
+## Avoid global objects
+
+<br>
+
+`my_std()` uses `iris2` but it's not a parameter: R looks for `iris2` outside the function.
+
+. . .
+
+<br>
+
+This is:
+
+- **fragile**: what if `iris2` is modified?
+- **limited**: what if the user wants to run this on other data?
+
+## Avoid global objects
+
+<br>
+
+Better: pass the data as a parameter.
+
+```{r}
+#| eval: true
+
+my_std <- function(data, column) {
+  (data[[column]] - mean(data[[column]], na.rm = TRUE)) /
+    sd(data[[column]], na.rm = TRUE)
+}
+```
+
+. . .
+
+The function no longer depends on anything outside of it, and it works on any dataset:
+
+```{r}
+iris2[["Petal.Length_std"]] <- my_std(iris2, "Petal.Length")
+
+mtcars2 <- mtcars
+mtcars2[["mpg_std"]] <- my_std(mtcars2, "mpg")
+```
 
 ## Validate function parameters
 
@@ -294,7 +343,7 @@ If we pass a column name that doesn't exist in the data:
 #| warning: true
 #| eval: true
 
-my_std("unknown_column")
+my_std(iris2, "unknown_column")
 ```
 
 . . .
@@ -313,18 +362,23 @@ Step 1: list all input requirements.
 
 . . .
 
-- the column should be a single value, e.g.
-  `my_std(c("Sepal.Length", "Petal.Width"))` should fail;
+- the data should be a data frame;
 
 . . .
 
-- the column should be a character value, e.g. `my_std(1)` should
-  fail;
+- the column should be a single value;
 
 . . .
 
-- the column should exist in the data, e.g. `my_std("column_1")`
-  should fail.
+- the column should be a character value;
+
+. . .
+
+- the column should exist in the data;
+
+. . .
+
+- the column values should be numeric.
 
 ## Validate function parameters
 
@@ -332,19 +386,25 @@ Step 1: list all input requirements.
 
 Step 2: check each of those.
 
-```r {code-line-numbers="2-4|5-7|8-10|"}
-my_std <- function(column) {
+```r {code-line-numbers="2-4|5-7|8-10|11-13|14-16|"}
+my_std <- function(data, column) {
+  if (!is.data.frame(data)) {
+    stop("The `data` parameter must be a data frame.")
+  }
   if (length(column) != 1) {
     stop("The `column` parameter must be of length 1.")
   }
   if (!is.character(column)) {
     stop("The `column` parameter must be a character.")
   }
-  if (!(column %in% names(iris))) {
+  if (!(column %in% names(data))) {
     stop("Column '", column, "' doesn't exist in the data.")
   }
+  if (!is.numeric(data[[column]])) {
+    stop("Column '", column, "' must be numeric.")
+  }
 
-  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+  (data[[column]] - mean(data[[column]], na.rm = TRUE)) / sd(data[[column]], na.rm = TRUE)
 }
 ```
 
@@ -352,18 +412,24 @@ my_std <- function(column) {
 #| echo: false
 #| eval: true
 
-my_std <- function(column) {
+my_std <- function(data, column) {
+  if (!is.data.frame(data)) {
+    stop("The `data` parameter must be a data frame.")
+  }
   if (length(column) != 1) {
     stop("The `column` parameter must be of length 1.")
   }
   if (!is.character(column)) {
     stop("The `column` parameter must be a character.")
   }
-  if (!(column %in% names(iris))) {
+  if (!(column %in% names(data))) {
     stop("Column '", column, "' doesn't exist in the data.")
   }
+  if (!is.numeric(data[[column]])) {
+    stop("Column '", column, "' must be numeric.")
+  }
 
-  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+  (data[[column]] - mean(data[[column]], na.rm = TRUE)) / sd(data[[column]], na.rm = TRUE)
 }
 ```
 
@@ -377,7 +443,7 @@ And now we have proper error messages!
 #| error: true
 #| eval: true
 
-my_std(c("Sepal.Length", "Petal.Width"))
+my_std(1:3, "Sepal.Length")
 ```
 
 <br>
@@ -386,7 +452,7 @@ my_std(c("Sepal.Length", "Petal.Width"))
 #| error: true
 #| eval: true
 
-my_std(1)
+my_std(iris2, c("Sepal.Length", "Petal.Width"))
 ```
 
 <br>
@@ -395,7 +461,29 @@ my_std(1)
 #| error: true
 #| eval: true
 
-my_std("column_1")
+my_std(iris2, 1)
+```
+
+## Validate function parameters
+
+<br>
+
+And now we have proper error messages!
+
+```{r}
+#| error: true
+#| eval: true
+
+my_std(iris2, "column_1")
+```
+
+<br>
+
+```{r}
+#| error: true
+#| eval: true
+
+my_std(iris2, "Species")
 ```
 
 ## Validate function parameters
@@ -413,15 +501,18 @@ useful error messages, e.g. [`rlang`](https://rlang.r-lib.org/reference/index.ht
 #| error: true
 #| eval: true
 
-### With rlang
-my_std <- function(column) {
+my_std <- function(data, column) {
+  rlang::check_data_frame(data)
   rlang::check_string(column)
-  if (!(column %in% names(iris))) {
+  if (!(column %in% names(data))) {
     stop("Column '", column, "' doesn't exist in the data.")
   }
-  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+  if (!is.numeric(data[[column]])) {
+    stop("Column '", column, "' must be numeric.")
+  }
+  (data[[column]] - mean(data[[column]], na.rm = TRUE)) / sd(data[[column]], na.rm = TRUE)
 }
-my_std(c("Sepal.Length", "Petal.Width"))
+my_std(iris2, c("Sepal.Length", "Petal.Width"))
 ```
 
 #### With `checkmate`
@@ -430,17 +521,19 @@ my_std(c("Sepal.Length", "Petal.Width"))
 #| error: true
 #| eval: true
 
-my_std <- function(column) {
+my_std <- function(data, column) {
+  checkmate::assert_data_frame(data)
   checkmate::assert_string(column)
-  checkmate::assert_subset(column, names(iris))
-  (iris[[column]] - mean(iris[[column]], na.rm = TRUE)) / sd(iris[[column]], na.rm = TRUE)
+  checkmate::assert_subset(column, names(data))
+  checkmate::assert_numeric(data[[column]], .var.name = column)
+  (data[[column]] - mean(data[[column]], na.rm = TRUE)) / sd(data[[column]], na.rm = TRUE)
 }
-my_std(c("Sepal.Length", "Petal.Width"))
+my_std(iris2, c("Sepal.Length", "Petal.Width"))
 ```
 :::::
 :::
 
-## Set default value for parameters
+## Set default values for parameters
 
 <br>
 
@@ -451,21 +544,21 @@ Instead of setting `na.rm = TRUE` in the function body, we could let the user de
 We can add a `na.rm` parameter and use its value in `mean()` and `sd()`:
 
 ```{r}
-my_std <- function(column, na.rm) {
+my_std <- function(data, column, na.rm) {
   # [parameter checks]
 
-  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)
+  (data[[column]] - mean(data[[column]], na.rm = na.rm)) / sd(data[[column]], na.rm = na.rm)
 }
 ```
 
-## Set default value for parameters
+## Set default values for parameters
 
 <br>
 
 This works but forces the user to write `na.rm = TRUE` (or `FALSE`):
 
 ```{r}
-head(my_std("Sepal.Length", na.rm = FALSE))
+head(my_std(iris2, "Sepal.Length", na.rm = FALSE))
 ```
 
 . . .
@@ -473,28 +566,28 @@ head(my_std("Sepal.Length", na.rm = FALSE))
 We could set a default value instead:
 
 ```{r}
-my_std <- function(column, na.rm = FALSE) {
+my_std <- function(data, column, na.rm = FALSE) {
   # [parameter checks]
 
-  (iris[[column]] - mean(iris[[column]], na.rm = na.rm)) / sd(iris[[column]], na.rm = na.rm)
+  (data[[column]] - mean(data[[column]], na.rm = na.rm)) / sd(data[[column]], na.rm = na.rm)
 }
 ```
 
 ```{r}
-head(my_std("Sepal.Length"))
+head(my_std(iris2, "Sepal.Length"))
 ```
 
 ## Exit a function early
 
 <br>
 
-Sometimes, we want to return an object early on instead of executing the rest of the function.
-
-We can use `return()` for this.
+Use `return()` to return an object early on instead of executing the rest of the function.
 
 . . .
 
-Example: return `NA` if the input contains at least one `NA` value:
+<br>
+
+Return `NA` if the input contains at least one `NA` value:
 
 ```{r}
 f <- function(x) {
@@ -507,18 +600,35 @@ f <- function(x) {
 }
 ```
 
-<!-- ## Documenting functions
+## Document functions
 
-\[UNSURE: this could fit better in the package development module\]
+<br>
 
-If you plan to keep using custom functions in your project, or if you
-want to share those with colleagues, then it is important to write
-documentation. The documentation should include:
+Documentation is important if you keep using your functions or share them with colleagues. It should include:
 
--   an explanation of the function's purpose
--   an explanation of each function parameter, including the expected
-    type (e.g. "a character value of length 1")
--   details on the expected output -->
+- the function's purpose
+- each function parameter, including the expected type (e.g. "a character value of length 1")
+- the expected output
+
+## Document functions
+
+<br>
+
+```{r}
+# A function to standardize values
+#
+# This takes a column name from a dataset and returns its 
+# standardized values computed as `(x - mean(x)) / sd(x)`.
+#
+# - data: a data frame.
+# - column: a single column name from `data`.
+# - na.rm: a logical value (`FALSE` by default) indicating 
+#   whether to remove `NA`s from the column values.
+#
+# More info: https://en.wikipedia.org/wiki/Standard_score
+
+my_std <- function(data, column, na.rm = FALSE) {}
+```
 
 # Other ways to use and create functions
 
@@ -526,7 +636,7 @@ documentation. The documentation should include:
 
 <br>
 
-Functions are just another type of objects: they can be updated by the user, assigned to variables, and passed over to other functions:
+Functions are just another type of object: 
 
 ```{r}
 my_variable <- mean
@@ -534,7 +644,7 @@ my_variable <- mean
 
 <br>
 
-The absence of parentheses after `mean` means we are not evaluating the function, just refering to it.
+No parentheses after `mean` means we are not evaluating the function, just referring to it.
 
 ## Functions as arguments
 
@@ -543,6 +653,7 @@ The absence of parentheses after `mean` means we are not evaluating the function
 The family of `apply` functions can use these function objects:
 
 ```{r}
+set.seed(123)
 data_list <- list(a = rnorm(100), b = rnorm(100, mean = 3))
 lapply(X = data_list, FUN = median)
 ```
@@ -553,24 +664,24 @@ lapply(X = data_list, FUN = median)
 
 So far, we have seen and used *named* functions.
 
-Generally, it is good practice to give your variables and functions informative names.
+<br>
+
+Good practice to give your variables and functions informative names.
 
 . . .
 
 <br>
-But sometimes you just need a quick, short throwaway function
-that serves one purpose.
-
-For this, you can use *anonymous* functions. These are defined on the spot and immediately evaluated without being assigned to a variable.
+Need quick, short throwaway function? Use *anonymous* functions. 
 
 ## Anonymous functions
 
 <br>
 
-Once again, these can be very useful in `*apply()` functions (and in other places):
+Example: absolute difference between the 3rd and 5th value of each element of the list:
+
+<br>
 
 ```{r}
-data_list <- list("a" = rnorm(100), "b" = rnorm(100, mean = 3))
 lapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))
 ```
 
@@ -580,10 +691,13 @@ lapply(X = data_list, FUN = function(x) abs(x[3] - x[5]))
 
 It can be useful to see the inside of a function created by someone else.
 
-Running the function name (without parentheses) in the console shows the source code:
+<br>
+
+Run the function name (without parentheses) in the console:
 
 ```{r}
-my_std
+#| eval: true
+sd
 ```
 
 ## Inspect the source code
