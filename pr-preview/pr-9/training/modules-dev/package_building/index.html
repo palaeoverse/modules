@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="generator" content="quarto-1.10.19">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Etienne Bacher">
+<meta name="dcterms.date" content="2026-10-29">
 <meta name="description" content="Build an R package: why and how.">
-
 <title>Package development</title>
 <style>
 /* Default styles provided by pandoc.
@@ -65,7 +62,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -85,8 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../../site_libs/bootstrap/bootstrap-dark-7839a3d42b02d8d57e8e35ae165ba577.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,25 +108,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-
-
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-9/training/modules-dev/package_building/_brand/logos/logo-opengraph.png">
 <meta property="og:locale" content="en_GB">
 </head>
-
 <body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content">
-    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
-    </a>
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content"><img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content"></a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -139,12 +127,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item dropdown ">
+<li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">
+<li>
     <a class="dropdown-item" href="../../../about/about-us">
  <span class="dropdown-text">About us</span></a>
   </li>  
@@ -165,13 +153,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Sponsors</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-zulip" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Zulip</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">
+<li>
     <a class="dropdown-item" href="../../../zulip/join-zulip">
  <span class="dropdown-text">Join Zulip</span></a>
   </li>  
@@ -180,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">User guide</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../../our-packages"> 
 <span class="menu-text">Software</span></a>
@@ -189,8 +177,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-training" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Training</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">
+<li>
     <a class="dropdown-item" href="../../../training/workshops">
  <span class="dropdown-text">Workshops</span></a>
   </li>  
@@ -207,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Mentorship Scheme</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../../resources"> 
 <span class="menu-text">Resources</span></a>
@@ -220,8 +208,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Contribute</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">
+<li>
     <a class="dropdown-item" href="../../../contribute/general-guide">
  <span class="dropdown-text">Contribute to Palaeoverse</span></a>
   </li>  
@@ -230,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Contribute to our packages</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/palaeoverse" target="_blank"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
@@ -257,13 +245,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -271,15 +257,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../../training/modules-dev/package_building/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Package development</span></a>
@@ -287,8 +269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/package_building/create.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Create</span></a>
@@ -319,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/package_building/github-actions.html" class="sidebar-item-text sidebar-link">
@@ -327,34 +309,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#should-you-create-a-package" id="toc-should-you-create-a-package" class="nav-link active" data-scroll-target="#should-you-create-a-package">Should you create a package?</a>
-  <ul class="collapse">
-  <li><a href="#pros" id="toc-pros" class="nav-link" data-scroll-target="#pros">Pros</a></li>
-  <li><a href="#cons" id="toc-cons" class="nav-link" data-scroll-target="#cons">Cons</a></li>
-  </ul></li>
-  <li><a href="#the-many-aspects-of-package-development" id="toc-the-many-aspects-of-package-development" class="nav-link" data-scroll-target="#the-many-aspects-of-package-development">The many aspects of package development</a></li>
-  <li><a href="#advanced" id="toc-advanced" class="nav-link" data-scroll-target="#advanced">Advanced</a>
-  <ul class="collapse">
-  <li><a href="#github-actions" id="toc-github-actions" class="nav-link" data-scroll-target="#github-actions">Github actions</a></li>
-  <li><a href="#list-of-things-to-be-careful" id="toc-list-of-things-to-be-careful" class="nav-link" data-scroll-target="#list-of-things-to-be-careful">List of things to be careful</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Package development</h1>
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
@@ -381,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
+      <p class="date">October 29, 2026</p>
     </div>
   </div>
   
@@ -390,10 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header>
-
-
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+</header><p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -404,59 +363,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"devtools"</span>, <span class="st">"dplyr"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"covr"</span>, <span class="st">"devtools"</span>, <span class="st">"dplyr"</span>, <span class="st">"usethis"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="should-you-create-a-package" class="level1">
-<h1>Should you create a package?</h1>
-<section id="pros" class="level2">
-<h2 data-anchor-id="pros">Pros</h2>
-<ul>
-<li><p>You want to implement some statistical methods in R</p></li>
-<li><p>You want to share some data or functions that you think are useful</p></li>
-</ul>
-</section>
-<section id="cons" class="level2">
-<h2 data-anchor-id="cons">Cons</h2>
-<ul>
-<li><p>Takes some time</p></li>
-<li><p>The statistical method may already be implemented (~ <em>24,000</em> packages on CRAN)</p></li>
-</ul>
-</section>
-</section>
-<section id="the-many-aspects-of-package-development" class="level1">
-<h1>The many aspects of package development</h1>
-<p>Developing an R package covers many aspects. There is an entire book on the topic (available for free <a href="https://r-pkgs.org/">here</a>).</p>
+<!-- TODO: add link to module on writing functions -->
+<p>An R package is a way to convert a collection of functions into a well-organised, documented, and ideally well-tested piece of software that other people can easily install and use. A lot of the work goes into the creation of functions (for which we have a module!).</p>
+<p>This module is will show you the multiple steps of R package development, from having a single standalone function, to creating, documenting, testing, and sharing a package.</p>
+<p>It is easy to expand on many of these aspects, and we will cover the most important ones, but entire books are written on package (and more generally, on software) development. This module is inspired from the <a href="https://r-pkgs.org/">“R Packages” book</a>, and we recommend exploring this book more if you want to dig deeper on the topic on general, or on specific aspects only.</p>
 <p>This module will cover three parts:</p>
 <ol type="1">
 <li><p><strong>Create a package</strong>: implement, document, export, and test functions</p></li>
 <li><p><strong>Share a package</strong>: put your package on Github, CRAN, make a website</p></li>
 <li><p><strong>Maintain a package</strong>: fix bugs, use Continuous Integration (CI)</p></li>
 </ol>
-</section>
-<section id="advanced" class="level1">
-<h1>Advanced</h1>
-<section id="github-actions" class="level2">
-<h2 data-anchor-id="github-actions">Github actions</h2>
-</section>
-<section id="list-of-things-to-be-careful" class="level2">
-<h2 data-anchor-id="list-of-things-to-be-careful">List of things to be careful</h2>
-<ul>
-<li><p>Check the name of your package: check that there’s not already a package with the same name with <code>available::available()</code></p></li>
-<li><p>Check the name of your functions: avoid name conflicts with functions from very popular packages</p></li>
-<li><p>Reduce the number of dependencies</p></li>
-<li><p><strong>Test your package</strong></p>
-<ul>
-<li>explain that CRAN tests the package 1) when you upload a new version, 2) if there’s a new version from a dependency</li>
-<li>linked to the dependencies topic</li>
-</ul></li>
-<li><p>If you have a statistical package, get peer-reviewed with <a href="https://ropensci.org/stat-software-review/">rOpenSci Statistical Software Peer Review</a></p></li>
-</ul>
+<p>Before we start, we recommend installing these three packages:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"devtools"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="columns center">
+<div class="column" style="width:33%;">
+<p><img src="devtools.svg" height="150"><br><code>devtools</code></p>
+</div><div class="column" style="width:33%;">
+<p><img src="usethis.png" height="150"><br><code>usethis</code></p>
+</div><div class="column" style="width:33%;">
+<p><img src="testthat.png" height="150"><br><code>testthat</code></p>
+</div>
+</div>
 
 
-<hr><br><details>
-<summary>Session info</summary>
-<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+<hr>
+<br><details><summary>Session info</summary><pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
  version  R version 4.6.1 (2026-06-24)
  os       Ubuntu 26.04.1 LTS
@@ -466,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-28
+ date     2026-10-29
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.10.19 @ /usr/local/bin/quarto
 
@@ -581,12 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
-</details>
-</section>
-</section>
-
-</main> <!-- /main -->
-<script>
+</details></main><!-- /main --><script>
 // Quarto doesn't add an `active` class to the current page's navbar link in
 // this setup, so do it ourselves: match each top-level navbar link's path
 // against the current page and mark it.
@@ -618,24 +549,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-</script>
-<!-- This is for site analytics. -->
-
-<!-- 
+</script><!-- This is for site analytics. --><!-- 
 Include the domain in the URL reported in goatcounter's dashboard.
 This is needed to separate subdomains that would point to the same page name, e.g.
 "palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
 
 https://goatcounter.com/help/domains
-  -->
-<script>
+  --><script>
     window.goatcounter = {
         path: function (p) { return location.host + p }
     }
-</script>
-
-<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
-<script>
+</script><script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><script>
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and
   //  2) turning each category badge into a link that opens the list filtered by
@@ -675,8 +599,7 @@ https://goatcounter.com/help/domains
       });
     });
   })();
-</script>
-<script id="quarto-html-after-body" type="application/javascript">
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
@@ -1070,8 +993,7 @@ https://goatcounter.com/help/domains
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
@@ -1083,8 +1005,6 @@ https://goatcounter.com/help/domains
     </div>
   </div>
 </footer>
-
-
 
 
 </body></html>
