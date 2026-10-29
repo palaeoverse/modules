@@ -1,0 +1,156 @@
+---
+title: "Code review"
+description: "Why it is important to read other people's code and how to do it."
+author:
+  - Bethany Allen
+  - Etienne Bacher
+  - Lewis Jones
+date: "`r Sys.Date()`"
+categories: [r, package development]
+difficulty: Intermediate
+format:
+  html:
+    toc: true
+other-links:
+  - text: "Slides"
+    href: index-slides.html
+    icon: easel
+language:
+  other-links-title: "Other Formats"
+execute:
+  warning: false
+  message: false
+  freeze: auto
+editor:
+  markdown:
+    wrap: 72
+comments:
+  hypothesis: true
+---
+
+::: {.callout}
+## Learning Objectives
+
+After this module, you will:
+
+- Understand what code review is and its benefits  
+- Be able to perform self-code review  
+- Be able to review other people’s code, and clearly and appropriately communicate your feedback  
+- Be able to use GitHub features for code review 
+:::
+
+## Motivation
+
+We spend a lot of time writing code, but even more time reading it. This could be code that is part of a tutorial, a package, some analysis shared by a colleague, or even when we come back to our own code months later. Being able to read and understand code before running it is important, as we may not be able to immediately run code, or we may have to wait for minutes or hours before the execution ends.
+
+Being able to review code becomes even more important as the amount of AI-generated code keeps growing. We should be able to trust the output of AI models and this requires being able to critically review their output.
+
+Finally, reviewing code is a good way to expose yourself to new methods, new coding practices, and new functions that you might not have known existed.
+
+## How to review code?
+
+The main objectives of code review are i) to find potential mistakes, and ii) to ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future. 
+
+The reviewer should start by asking themselves the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g. code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?
+
+Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? Are these cases realistic? Are these cases properly handled?
+
+::: {.callout-note title="Required level of knowledge to review code"}
+There is a distinction to be made between the requirements on the code author and the requirements on the code reviewer. The code author should follow good practices to ensure that other people can understand the code without asking, and to facilitate code review. This includes using informative variable names, providing clear documentation, and writing informative code comments to clarify why a piece of code is written how it is.
+
+However, the author does not have to explain everything the code does if this information is easily available in the documentation. For example, if the reviewer is not familiar with a particular base R function, then they may need to look for this information on their own. The author is not responsible  for teaching the reviewer about this function, but they should ensure that the reviewer can easily retrieve all the required information to understand the code.
+:::
+
+A good way to assess your own understanding of the code is to prepare a list of expectations about what this code should do, and then compare these expectations to what the code actually does. This is not always convenient or possible, for example if the code to review is part of a pipeline that takes a long time to run, but it can uncover issues in many cases.
+
+Note that the amount of tests or expectations to validate is also very context-dependent. In general, code written as part of a data analysis project is very specific to your use case and its purpose is not to run on completely different datasets. **Code that is part of a data analysis project still needs to be properly reviewed and tested**, but you have more control over what this code does. If your project is a package meant to be used by other people, then you also need to think about all sorts of ways people might misuse your code in their own context.
+
+
+*Activity: Try out reviewing mini ‘bad code’ examples that we provide*
+
+## Where to review code (either yours or someone else’s)?
+
+Now that we know how to critically review code, we need to be able to communicate our findings to the author. One obvious way would be to talk to the author directly or via email, but that quickly leads to information being lost, which increases the chances of these issues reappearing later. Instead, we should use tools that are dedicated to collaborative coding, such as git and GitHub.
+
+In this section, we assume that you are already familiar with the git workflow to create and merge branches. We also assume that you have a github account. The git and GitHub module provides an introduction to these two tools.
+
+If needed, you can refer to our module on Git and GitHub: \<link\>
+
+::: {.callout-note title="Steps to reproduce the video below" collapse="true"}
+How to use the GitHub interface to review PRs?
+
+- Go to the PR  
+- Go to the tab “Files changed”. All changes are displayed there. Some files are collapsed (e.g. Rd files), indicating that they are automatically generated and shouldn’t be reviewed.  
+- When you hover a line, a blue cross appears on the left. This is how you can select a line for which you want to add a comment.  
+- Write your comment using the Markdown syntax. There is a button “Add a suggestion” that you can use to directly show the change you would like the author to apply.  
+- All comments you make are “Pending”, meaning that they are not visible to the author until you submit your review. They are still saved, so you can leave without submitting your review and come back to it later if needed.  
+- Once you have written all your comments, go to “Submit review”. There, you can decide whether you want to accept the PR, request changes (meaning that the author won’t be able to merge until you approve), or comment only. You can also write a general message regarding the PR.  
+- Once you are happy with your comments, you can submit your review.
+:::
+
+![](demo_github_review.webm)
+
+Note that you can pull the branch locally to directly try it and explore more before making your review. However, depending on the amount and on the complexity of changes, reviewing on GitHub only without actually running code is completely fine.
+
+## Self-reviewing your code
+
+Before asking someone else to review the code, it is a good practice to review your code yourself. This largely overlaps with what a reviewer would do, meaning that you need to be able to answer the questions detailed in the “How to review code?” above. 
+
+You also need to ensure that your code is being tested. In an R package, this means that the test suite must not have any failure (and potentially that you must add new tests). In a data analysis project, this could be done via data validation (e.g. with [validate](https://github.com/data-cleaning/validate)), and with some tests as well.
+
+Finally, you should make sure your changes are as self-contained as possible. It is good practice to have one pull request (PR) per new feature or bug fix: it is easier and faster to review (which benefits to both the author and the reviewer) and it helps debugging in the future since it is easier to narrow down the change that caused a problem. In many cases, PRs should contain code changes, updated documentation, and new tests, but this depends a lot on the context.
+
+## Review process
+
+### Reviewer side
+
+Communicating comments to the author in a constructive way can be hard. The reviewer should remember the overarching goal of the code they are reviewing: is this something to improve code readability? Is it a change to improve the performance at the expense of readability? This will determine the scope and relevance of the comments needed.
+
+It is important that the reviewer focuses on the code and not on the author. Alienating the author has no benefit in terms of output and morale: either the discussion becomes more aggressive and the code isn’t properly written or reviewed anymore, or one of the parties involved simply stops spending time on the PR, and maybe will stop contributing altogether.
+
+When the reviewer disagrees with the approach taken by the author in a part of the code, they should explain why they think another approach would be more suitable. You can also include code suggestions using the GitHub interface.  Note, however, that reviewers do not have to specify exactly how they would do this and they don’t have to provide code directly. In general, it is up to the PR author to address comments.
+
+For example:
+
+- Bad: “You shouldn’t use a for loop here, this is very slow.”  
+  - Uses “you”, so the author may feel directly attacked.  
+  - Doesn’t suggest a solution.
+
+- Better: “Can this for loop be replaced by a vectorised function? In general, for loops should be avoided because they tend to be much slower than vectorised code.”  
+  - Gives the opportunity to the author to explain why they wrote the code as they did (maybe they made a mistake, maybe not).  
+  - Gives a potential alternative (but the exploration still needs to be done by the author)
+
+Note that occasional positive comments are welcome to acknowledge good changes. Remember that even if you think the author did a good job, they will mostly see review comments that criticise their work, which can be demoralising.
+
+### Author side
+
+On top of preparing a self-contained PR and doing some self-review of their code before requesting a review (see above), the author can take several actions to simplify the review process and make it more efficient.
+
+First, the author should succinctly describe the objective of the PR: does it improve the documentation? Does it fix a bug? Does it add a new feature? If so, is this feature a new function, a new argument, something else? And so on. This doesn’t have to be a long description, one or two sentences may be enough. Note that it is also good practice to link to the issue addressed by this PR. You can add “Closes \#1234” or “Fixes \#1234” so that issue 1234 is automatically closed when the PR is merged. 
+
+The PR author can also add their own review comments using the GitHub interface before requesting a review. Some parts of a PR might be hard to understand without the context, so it is completely fine for the author to add a few comments to clarify some specific lines of code in advance. The author can also use these comments to inform the reviewer upfront that they have doubts and would like feedback on some of their changes. Note that review comments on GitHub are not equivalent to writing comments directly in the file.
+
+The author should address all comments and questions of the reviewer. This doesn’t mean agreeing with the reviewer all the time, but disagreements should be based on concrete arguments. Handling the reviewer’s comments can be a frustrating process, but it is important to stay polite and to ground opinions on facts and concrete examples regarding the code. The review process is asynchronous, so you usually don’t need to reply instantly to the reviewer and you can instead take some time to think more about their points. 
+
+If you keep disagreeing with the reviewer, it might be better to discuss in person to avoid misunderstandings. You can seek external opinions in the case of strong disagreement, but this is not always possible depending on the size of your team. 
+
+### Discussion points between authors and reviewers
+
+Some practices vary across developers and it’s hard to tell whether some are better than others. Usually, these can be cleared up by asking directly the other person what they prefer, or they can be integrated in a pull request template or a project-wide policy that the author has to follow.
+
+One of these discussion points is about “resolving comments”. On GitHub, one can hide a comment by “resolving” it but it is not clear whether both the author and the reviewer should resolve comments or if only the reviewer should do this. A reviewer might want to check that all their comments are properly addressed before marking them as resolved, but some reviewers are also fine with letting PR authors resolve comments themselves. 
+
+Another discussion point concerns who should push commits to the branch. Usually, both the author and the reviewer have the permissions to push to the same branch, but this can lead to conflicts. This is also worth clarifying upfront. It can be tiring for the PR author to go through multiple rounds of review, so in this case it is often acceptable (but not required) for the reviewer to fix the few remaining minor changes to make (e.g. typos) before merging the PR to avoid another round of review. 
+
+Finally, AI usage might be a point of contention, in which case it is important that both the author and the reviewer agree on the acceptable AI usage, both in code and in discussion. Sometimes, this is covered by a project-wide AI policy, but in any case it is worth being transparent about this.
+
+
+*Activity: Write some bad code, make a pull request, swap with a partner and review, swap back to address review*
+
+*Activity: Discuss what makes a ‘good’ author and reviewer, and any barriers to this*
+
+## Conclusion
+
+Being able to critically review code, no matter who or what produced it, and to communicate feedback are essential skills. In this module, we have seen the general principles of code review, how to review code in practice, and discussed how to facilitate communication between the author and the reviewer.
+
+If you want to read more on the process, you can read the code review principles from the [tidyverse team](https://code-review.tidyverse.org), itself inspired from the [Google code review principles](https://google.github.io/eng-practices/review/reviewer/comments.html).  
