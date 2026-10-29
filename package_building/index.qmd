@@ -21,23 +21,13 @@ editor:
     wrap: 72
 ---
 
-# Should you create a package?
+<!-- TODO: add link to module on writing functions -->
 
-## Pros
+An R package is a way to convert a collection of functions into a well-organised, documented, and ideally well-tested piece of software that other people can easily install and use. A lot of the work goes into the creation of functions (for which we have a module!). 
 
-- You want to implement some statistical methods in R
+This module is will show you the multiple steps of R package development, from having a single standalone function, to creating, documenting, testing, and sharing a package.
 
-- You want to share some data or functions that you think are useful
-
-## Cons
-
-- Takes some time
-
-- The statistical method may already be implemented (~ *24,000* packages on CRAN)
-
-# The many aspects of package development
-
-Developing an R package covers many aspects. There is an entire book on the topic (available for free [here](https://r-pkgs.org/)).
+It is easy to expand on many of these aspects, and we will cover the most important ones, but entire books are written on package (and more generally, on software) development. This module is inspired from the ["R Packages" book](https://r-pkgs.org/), and we recommend exploring this book more if you want to dig deeper on the topic on general, or on specific aspects only.
 
 This module will cover three parts:
 
@@ -47,21 +37,28 @@ This module will cover three parts:
 
 3. **Maintain a package**: fix bugs, use Continuous Integration (CI)
 
-# Advanced
+Before we start, we recommend installing these three packages:
 
-## Github actions
+```{r}
+install.packages(c("devtools", "testthat", "usethis"))
+```
 
-## List of things to be careful
+::: {.columns .center}
+::::: {.column width="33%"}
+<img src="devtools.svg" height=150>
+<br>
+`devtools`
+:::::
 
-- Check the name of your package: check that there's not already a package with the same name with `available::available()`
+::::: {.column width="33%"}
+<img src="usethis.png" height=150>
+<br>
+`usethis`
+:::::
 
-- Check the name of your functions: avoid name conflicts with functions from very popular packages
-
-- Reduce the number of dependencies
-
-- **Test your package**
-
-  - explain that CRAN tests the package 1) when you upload a new version, 2) if there's a new version from a dependency
-  - linked to the dependencies topic
-
-- If you have a statistical package, get peer-reviewed with [rOpenSci Statistical Software Peer Review](https://ropensci.org/stat-software-review/)
+::::: {.column width="33%"}
+<img src="testthat.png" height=150>
+<br>
+`testthat`
+:::::
+:::
