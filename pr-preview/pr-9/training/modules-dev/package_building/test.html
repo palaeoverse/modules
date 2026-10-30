@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta charset="UTF-8">
-<meta name="generator" content="quarto-1.10.19">
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.20">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-10-29">
+<meta name="dcterms.date" content="2026-10-30">
+
 <title>Test a package</title>
 <style>
 /* Default styles provided by pandoc.
@@ -61,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -73,14 +78,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8574e35074353e5de839972ed73d34f7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-e878736e7310bf45e68d1e79aa752b87.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-7839a3d42b02d8d57e8e35ae165ba577.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-497f5b01c96b4e662609ea7464af8298.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,18 +113,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-9/training/modules-dev/package_building/_brand/logos/logo-opengraph.png">
 <meta property="og:locale" content="en_GB">
 </head>
+
 <body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content"><img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content"></a>
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content">
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
+    </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -126,12 +139,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item dropdown ">
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">    
+        <li>
     <a class="dropdown-item" href="../../../about/about-us">
  <span class="dropdown-text">About us</span></a>
   </li>  
@@ -152,13 +165,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Sponsors</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-zulip" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Zulip</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">    
+        <li>
     <a class="dropdown-item" href="../../../zulip/join-zulip">
  <span class="dropdown-text">Join Zulip</span></a>
   </li>  
@@ -167,7 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">User guide</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../../our-packages"> 
 <span class="menu-text">Software</span></a>
@@ -176,8 +189,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-training" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Training</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">    
+        <li>
     <a class="dropdown-item" href="../../../training/workshops">
  <span class="dropdown-text">Workshops</span></a>
   </li>  
@@ -194,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Mentorship Scheme</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../../resources"> 
 <span class="menu-text">Resources</span></a>
@@ -207,8 +220,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Contribute</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
+        <li>
     <a class="dropdown-item" href="../../../contribute/general-guide">
  <span class="dropdown-text">Contribute to Palaeoverse</span></a>
   </li>  
@@ -217,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Contribute to our packages</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/palaeoverse" target="_blank"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
@@ -244,11 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -256,11 +271,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item sidebar-item-section">
+        <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../../training/modules-dev/package_building/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package development</span></a>
@@ -268,17 +287,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/package_building/create.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Create</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/package_building/document.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Document</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -300,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/package_building/github-actions.html" class="sidebar-item-text sidebar-link">
@@ -308,23 +321,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#test-a-function" id="toc-test-a-function" class="nav-link active" data-scroll-target="#test-a-function">Test a function</a></li>
+  <li><a href="#test-a-function" id="toc-test-a-function" class="nav-link active" data-scroll-target="#test-a-function">Test a function</a></li>
   <li><a href="#structure-of-a-test" id="toc-structure-of-a-test" class="nav-link" data-scroll-target="#structure-of-a-test">Structure of a test</a></li>
   <li><a href="#skip-some-tests" id="toc-skip-some-tests" class="nav-link" data-scroll-target="#skip-some-tests">Skip some tests</a></li>
   <li><a href="#run-the-tests" id="toc-run-the-tests" class="nav-link" data-scroll-target="#run-the-tests">Run the tests</a></li>
   <li><a href="#do-you-have-enough-tests" id="toc-do-you-have-enough-tests" class="nav-link" data-scroll-target="#do-you-have-enough-tests">Do you have enough tests?</a></li>
   <li><a href="#check-a-package" id="toc-check-a-package" class="nav-link" data-scroll-target="#check-a-package">Check a package</a></li>
-  </ul></nav>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/index.html">Package development</a></li><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/test.html">Test</a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/index.html">Package development</a></li><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/test.html">Test</a></li></ol></nav>
+<div class="quarto-title">
 <h1 class="title">Test a package</h1>
 </div>
 
@@ -342,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 29, 2026</p>
+      <p class="date">October 30, 2026</p>
     </div>
   </div>
   
@@ -351,7 +370,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/test.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+</header>
+
+
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/test.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -362,10 +384,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"covr"</span>, <span class="st">"devtools"</span>, <span class="st">"dplyr"</span>, <span class="st">"usethis"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"dplyr"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="test-a-function" class="level2"><h2 data-anchor-id="test-a-function">Test a function</h2>
+<section id="test-a-function" class="level2">
+<h2 data-anchor-id="test-a-function">Test a function</h2>
 <p>Testing a package is <strong>crucial</strong>.</p>
 <p>Having tests reassures:</p>
 <ul>
@@ -375,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Testing is made much easier by the package <code>testthat</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <p>To start using this package, run:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_testthat.html">use_testthat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>✔ Setting active project to <span class="st">'/home/etienne/Bureau/Git/misc/my.pkg'</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>✔ Adding <span class="st">'testthat'</span> to Suggests field <span class="cf">in</span> DESCRIPTION</span>
@@ -388,8 +411,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>├── testthat</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>└── testthat.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can now add tests files in <code>tests/testthat</code>.</p>
-<p>Go back to the file <code>n_unique.R</code> and run <code><a href="https://usethis.r-lib.org/reference/use_r.html">usethis::use_test()</a></code>. This will create a file <code>test-n_unique.R</code> containing an example of test.</p>
-</section><section id="structure-of-a-test" class="level2"><h2 data-anchor-id="structure-of-a-test">Structure of a test</h2>
+<p>Go back to the file <code>n_unique.R</code> and run <code>usethis::use_test()</code>. This will create a file <code>test-n_unique.R</code> containing an example of test.</p>
+</section>
+<section id="structure-of-a-test" class="level2">
+<h2 data-anchor-id="structure-of-a-test">Structure of a test</h2>
 <p>Two main things:</p>
 <ul>
 <li><p><code>test_that()</code>: contains the title of the test and the code for the test</p></li>
@@ -397,26 +422,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Example:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">test_that</span><span class="op">(</span><span class="st">"n_unique works with all types of vector"</span>, <span class="op">{</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span></span>
-<span>    <span class="fu">n_unique</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="co"># the function we want to test</span></span>
-<span>    <span class="fl">3</span>                           <span class="co"># our expectation</span></span>
-<span>  <span class="op">)</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span></span>
-<span>    <span class="fu">n_unique</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    <span class="fl">3</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with all types of vector"</span>, {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>)), <span class="co"># the function we want to test</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>                           <span class="co"># our expectation</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>, <span class="st">"c"</span>)),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Try to make sure your function covers corner cases!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">test_that</span><span class="op">(</span><span class="st">"n_unique works with missing values"</span>, <span class="op">{</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu">n_unique</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"n_unique works with empty vectors"</span>, <span class="op">{</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu">n_unique</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with missing values"</span>, {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>)), <span class="dv">2</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with empty vectors"</span>, {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(<span class="fu">c</span>()), <span class="dv">0</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>There are many helper functions for your expectations:</p>
 <ul>
@@ -425,35 +450,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>expect_named()</code></li>
 <li><code>expect_warning()</code></li>
 <li><code>expect_error()</code></li>
-<li>and <a href="https://testthat.r-lib.org/reference/index.html">more…</a>
-</li>
-</ul></section><section id="skip-some-tests" class="level2"><h2 data-anchor-id="skip-some-tests">Skip some tests</h2>
+<li>and <a href="https://testthat.r-lib.org/reference/index.html">more…</a></li>
+</ul>
+</section>
+<section id="skip-some-tests" class="level2">
+<h2 data-anchor-id="skip-some-tests">Skip some tests</h2>
 <p>Some tests shouldn’t be run all the time:</p>
 <ul>
-<li>they might depend on another package, so use <code>skip_if_not_installed()</code>
-</li>
+<li>they might depend on another package, so use <code>skip_if_not_installed()</code></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">test_that</span><span class="op">(</span><span class="st">"n_unique works with dataframes"</span>, <span class="op">{</span></span>
-<span>  <span class="fu">skip_if_not_installed</span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/band_members.html">band_members</a></span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu">n_unique</span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">band</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with dataframes"</span>, {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skip_if_not_installed</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>band_members</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(data<span class="sc">$</span>band, <span class="dv">2</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
-<li>they might require an Internet connection (e.g if you’re building a package wrapping an API), so use <code>skip_if_offline()</code>
-</li>
+<li>they might require an Internet connection (e.g if you’re building a package wrapping an API), so use <code>skip_if_offline()</code></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">test_that</span><span class="op">(</span><span class="st">"n_unique works"</span>, <span class="op">{</span></span>
-<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu">n_unique</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works"</span>, {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skip_if_offline</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">2</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="run-the-tests" class="level2"><h2 data-anchor-id="run-the-tests">Run the tests</h2>
+</section>
+<section id="run-the-tests" class="level2">
+<h2 data-anchor-id="run-the-tests">Run the tests</h2>
 <p>Two options:</p>
 <ul>
-<li><code><a href="https://devtools.r-lib.org/reference/test.html">devtools::test()</a></code></li>
+<li><code>devtools::test()</code></li>
 <li>Pane “Build” (next to “Environment”, “History”, etc.) &gt; button “Test”</li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ℹ Testing my.pkg</span>
@@ -464,15 +491,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>Duration<span class="sc">:</span> <span class="fl">0.2</span> s</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>[ FAIL <span class="dv">0</span> <span class="sc">|</span> WARN <span class="dv">0</span> <span class="sc">|</span> SKIP <span class="dv">0</span> <span class="sc">|</span> PASS <span class="dv">4</span> ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section><section id="do-you-have-enough-tests" class="level2"><h2 data-anchor-id="do-you-have-enough-tests">Do you have enough tests?</h2>
+</section>
+<section id="do-you-have-enough-tests" class="level2">
+<h2 data-anchor-id="do-you-have-enough-tests">Do you have enough tests?</h2>
 <p>We now have some tests in our package, but do they cover all function arguments? All possible use cases?</p>
 <p>This is hard to know because users will always find new <del>annoying</del> interesting bugs.</p>
 <p>We can use the package <code>covr</code> to see how much of our package is covered by tests:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/report.html">report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>covr<span class="sc">::</span><span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="check-a-package" class="level2"><h2 data-anchor-id="check-a-package">Check a package</h2>
-<p>We have seen how to run tests, but we can now perform a more thorough check with <code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> (or the button “Check” in the “Build” pane).</p>
+</section>
+<section id="check-a-package" class="level2">
+<h2 data-anchor-id="check-a-package">Check a package</h2>
+<p>We have seen how to run tests, but we can now perform a more thorough check with <code>devtools::check()</code> (or the button “Check” in the “Build” pane).</p>
 <p>This will check that:</p>
 <ul>
 <li><p>you use all of your dependencies</p></li>
@@ -482,10 +513,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 
 
-<hr>
-<br><details><summary>Session info</summary><pre><code>─ Session info ───────────────────────────────────────────────────────────────
+<hr><br><details>
+<summary>Session info</summary>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
- version  R version 4.6.1 (2026-06-24)
+ version  R version 4.6.2 (2026-10-29)
  os       Ubuntu 26.04.1 LTS
  system   x86_64, linux-gnu
  ui       X11
@@ -493,125 +525,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-29
+ date     2026-10-30
  pandoc   3.7.0.2 @ /usr/bin/pandoc
- quarto   1.10.19 @ /usr/local/bin/quarto
+ quarto   1.10.20 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- ! package     * version date (UTC) lib source
-   askpass       1.2.1   2024-10-04 [1] RSPM
-   base64enc     0.1-6   2026-02-02 [1] RSPM
-   brew          1.0-10  2023-12-16 [1] RSPM
-   brio          1.1.5   2024-04-24 [1] RSPM
-   bslib         0.12.0  2026-08-04 [1] RSPM
-   cachem        1.1.0   2024-05-16 [1] RSPM
-   callr         3.8.0   2026-06-05 [1] RSPM
-   cli           3.6.6   2026-04-09 [1] RSPM
-   clipr         0.8.1   2026-05-25 [1] RSPM
-   commonmark    2.0.0   2025-07-07 [1] RSPM
-   covr          3.6.5   2025-11-09 [1] RSPM
- R cpp11         &lt;NA&gt;    &lt;NA&gt;       [?] &lt;NA&gt;
-   crayon        1.5.3   2024-06-20 [1] RSPM
-   credentials   2.0.3   2025-09-12 [1] RSPM
-   curl          8.1.0   2026-10-14 [1] RSPM
-   desc          1.4.3   2023-12-10 [1] RSPM
-   devtools      2.5.2   2026-04-30 [1] RSPM
-   diffobj       0.3.9   2026-09-11 [1] RSPM
-   digest        0.6.39  2025-11-19 [1] RSPM
-   downlit       0.4.5   2025-11-14 [1] RSPM
-   dplyr         1.2.1   2026-04-03 [1] RSPM
-   ellipsis      0.3.3   2026-04-04 [1] RSPM
-   evaluate      1.0.5   2025-08-27 [1] RSPM
-   fansi         1.0.7   2025-11-19 [1] RSPM
-   fastmap       1.2.0   2024-05-15 [1] RSPM
-   fontawesome   0.5.3   2024-11-16 [1] RSPM
-   fs            2.1.0   2026-04-18 [1] RSPM
-   generics      0.1.4   2025-05-09 [1] RSPM
-   gert          2.5.0   2026-10-14 [1] RSPM
-   gh            1.6.1   2026-07-20 [1] RSPM
-   gitcreds      0.1.2   2022-09-08 [1] RSPM
-   glue          1.8.1   2026-04-17 [1] RSPM
-   highr         0.12    2026-03-06 [1] RSPM
-   htmltools     0.5.9   2025-12-04 [1] RSPM
-   htmlwidgets   1.6.4   2023-12-06 [1] RSPM
-   httpuv        1.6.17  2026-03-18 [1] RSPM
-   httr          1.4.9   2026-09-01 [1] RSPM
-   httr2         1.3.0   2026-07-13 [1] RSPM
-   ini           0.3.1   2018-05-20 [1] RSPM
-   jquerylib     0.1.4   2021-04-26 [1] RSPM
-   jsonlite      2.0.0   2025-03-27 [1] RSPM
-   knitr         1.52    2026-09-06 [1] RSPM
-   later         1.4.8   2026-03-05 [1] RSPM
-   lifecycle     1.0.5   2026-01-08 [1] RSPM
-   magrittr      2.0.5   2026-04-04 [1] RSPM
-   memoise       2.0.1   2021-11-26 [1] RSPM
-   mime          0.13    2025-03-17 [1] RSPM
-   miniUI        0.1.2   2025-04-17 [1] RSPM
-   openssl       2.4.2   2026-06-09 [1] RSPM
-   otel          0.2.0   2025-08-29 [1] RSPM
-   pak           0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
-   pillar        1.11.1  2025-09-17 [1] RSPM
-   pkgbuild      1.4.8   2025-05-26 [1] RSPM
-   pkgconfig     2.0.3   2019-09-22 [1] RSPM
-   pkgdown       2.2.1   2026-07-07 [1] RSPM
-   pkgload       1.5.3   2026-06-15 [1] RSPM
-   praise        1.0.0   2015-08-11 [1] RSPM
-   prettyunits   1.2.0   2023-09-24 [1] RSPM
-   processx      3.9.0   2026-04-22 [1] RSPM
-   profvis       0.4.0   2024-09-20 [1] RSPM
-   promises      1.5.0   2025-11-01 [1] RSPM
-   ps            1.9.3   2026-04-20 [1] RSPM
-   purrr         1.2.2   2026-04-10 [1] RSPM
-   R6            2.6.1   2025-02-15 [1] RSPM
-   ragg          1.5.2   2026-03-23 [1] RSPM
-   rappdirs      0.3.4   2026-01-17 [1] RSPM
-   rcmdcheck     1.4.0   2021-09-27 [1] RSPM
-   Rcpp          1.1.2   2026-07-05 [1] RSPM
-   rdtools       0.1.0   2026-07-16 [1] RSPM
-   rex           1.2.2   2026-03-28 [1] RSPM
-   rlang         1.3.0   2026-07-05 [1] RSPM
-   rmarkdown     2.32    2026-09-01 [1] RSPM
-   roxygen2      8.1.1   2026-10-08 [1] RSPM
-   rprojroot     2.1.1   2025-08-26 [1] RSPM
-   rstudioapi    0.19.0  2026-06-11 [1] RSPM
-   rversions     3.0.0   2025-10-09 [1] RSPM
-   sass          0.4.10  2025-04-11 [1] RSPM
-   sessioninfo   1.2.4   2026-06-04 [1] RSPM
-   shiny         1.14.0  2026-06-21 [1] RSPM
-   sourcetools   0.1.7-2 2026-03-28 [1] RSPM
-   stringi       1.8.9   2026-08-04 [1] RSPM
-   sys           3.4.3   2024-10-04 [1] RSPM
-   systemfonts   1.3.2   2026-03-05 [1] RSPM
-   testthat      3.3.2   2026-01-11 [1] RSPM
-   textshaping   1.0.5   2026-03-06 [1] RSPM
-   tibble        3.3.1   2026-01-11 [1] RSPM
-   tidyselect    1.2.1   2024-03-11 [1] RSPM
-   tinytex       0.61    2026-09-17 [1] RSPM
-   urlchecker    2.0.0   2026-07-08 [1] RSPM
-   usethis       3.2.2   2026-09-10 [1] RSPM
-   utf8          1.2.6   2025-06-08 [1] RSPM
-   vctrs         0.7.3   2026-04-11 [1] RSPM
-   waldo         0.6.2   2025-07-11 [1] RSPM
-   whisker       0.4.1   2022-12-05 [1] RSPM
-   withr         3.0.3   2026-06-19 [1] RSPM
-   xfun          0.62    2026-10-16 [1] RSPM
-   xml2          1.6.0   2026-06-22 [1] RSPM
-   xopen         1.0.1   2024-04-25 [1] RSPM
-   xtable        1.8-8   2026-02-22 [1] RSPM
-   yaml          2.3.12  2025-12-10 [1] RSPM
-   zip           3.0.2   2026-08-04 [1] RSPM
+ package     * version date (UTC) lib source
+ askpass       1.2.1   2024-10-04 [1] RSPM
+ cli           3.6.6   2026-04-09 [1] RSPM
+ clipr         0.8.1   2026-05-25 [1] RSPM
+ covr          3.6.5   2025-11-09 [1] RSPM
+ crayon        1.5.3   2024-06-20 [1] RSPM
+ credentials   2.0.3   2025-09-12 [1] RSPM
+ curl          8.1.0   2026-10-14 [1] RSPM
+ desc          1.4.3   2023-12-10 [1] RSPM
+ digest        0.6.39  2025-11-19 [1] RSPM
+ dplyr         1.2.1   2026-04-03 [1] RSPM
+ fs            2.1.0   2026-04-18 [1] RSPM
+ generics      0.1.4   2025-05-09 [1] RSPM
+ gert          2.5.0   2026-10-14 [1] RSPM
+ gh            1.6.1   2026-07-20 [1] RSPM
+ gitcreds      0.1.2   2022-09-08 [1] RSPM
+ glue          1.8.1   2026-04-17 [1] RSPM
+ httr          1.4.9   2026-09-01 [1] RSPM
+ httr2         1.3.0   2026-07-13 [1] RSPM
+ ini           0.3.1   2018-05-20 [1] RSPM
+ jsonlite      2.0.0   2025-03-27 [1] RSPM
+ lifecycle     1.0.5   2026-01-08 [1] RSPM
+ magrittr      2.0.5   2026-04-04 [1] RSPM
+ mime          0.13    2025-03-17 [1] RSPM
+ openssl       2.4.2   2026-06-09 [1] RSPM
+ pak           0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
+ pillar        1.11.1  2025-09-17 [1] RSPM
+ pkgconfig     2.0.3   2019-09-22 [1] RSPM
+ purrr         1.2.2   2026-04-10 [1] RSPM
+ R6            2.6.1   2025-02-15 [1] RSPM
+ rappdirs      0.3.4   2026-01-17 [1] RSPM
+ rex           1.2.2   2026-03-28 [1] RSPM
+ rlang         1.3.0   2026-07-05 [1] RSPM
+ rprojroot     2.1.1   2025-08-26 [1] RSPM
+ rstudioapi    0.19.0  2026-06-11 [1] RSPM
+ sys           3.4.3   2024-10-04 [1] RSPM
+ tibble        3.3.1   2026-01-11 [1] RSPM
+ tidyselect    1.2.1   2024-03-11 [1] RSPM
+ usethis       3.2.2   2026-09-10 [1] RSPM
+ utf8          1.2.6   2025-06-08 [1] RSPM
+ vctrs         0.7.3   2026-04-11 [1] RSPM
+ whisker       0.4.1   2022-12-05 [1] RSPM
+ withr         3.0.3   2026-06-19 [1] RSPM
+ yaml          2.3.12  2025-12-10 [1] RSPM
+ zip           3.0.2   2026-08-04 [1] RSPM
 
  [1] /home/runner/work/_temp/Library
- [2] /opt/R/4.6.1/lib/R/library
-
- R ── Package was removed from disk.
+ [2] /opt/R/4.6.2/lib/R/library
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
-</details></section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</details>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
 <ol>
 <li id="fn1"><p>You might also be interested in <a href="https://github.com/markvanderloo/tinytest/"><code>tinytest</code></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></div></main><!-- /main --><script>
+</ol>
+</section></div></main> <!-- /main -->
+<script>
 // Quarto doesn't add an `active` class to the current page's navbar link in
 // this setup, so do it ourselves: match each top-level navbar link's path
 // against the current page and mark it.
@@ -643,17 +623,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-</script><!-- This is for site analytics. --><!-- 
+</script>
+<!-- This is for site analytics. -->
+
+<!-- 
 Include the domain in the URL reported in goatcounter's dashboard.
 This is needed to separate subdomains that would point to the same page name, e.g.
 "palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
 
 https://goatcounter.com/help/domains
-  --><script>
+  -->
+<script>
     window.goatcounter = {
         path: function (p) { return location.host + p }
     }
-</script><script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><script>
+</script>
+
+<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and
   //  2) turning each category badge into a link that opens the list filtered by
@@ -693,7 +680,8 @@ https://goatcounter.com/help/domains
       });
     });
   })();
-</script><script id="quarto-html-after-body" type="application/javascript">
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
@@ -1087,18 +1075,22 @@ https://goatcounter.com/help/domains
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
+<p>Supported by the <a class="footer-sponsor" href="https://www.software.ac.uk/" target="_blank">Institute for Research Software</a> (2026–2028)</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
+
 
 
 </body></html>

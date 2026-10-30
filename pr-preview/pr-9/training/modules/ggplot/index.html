@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta charset="UTF-8">
-<meta name="generator" content="quarto-1.10.19">
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.20">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Will Gearty">
 <meta name="dcterms.date" content="2026-06-12">
 <meta name="description" content="Visualizing your data with the grammar of graphics">
+
 <title>Plotting in R with ggplot2</title>
 <style>
 /* Default styles provided by pandoc.
@@ -62,6 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -74,14 +79,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8574e35074353e5de839972ed73d34f7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-e878736e7310bf45e68d1e79aa752b87.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-7839a3d42b02d8d57e8e35ae165ba577.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-497f5b01c96b4e662609ea7464af8298.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -108,6 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-9/training/modules/ggplot/images/2d_density.png">
@@ -115,13 +123,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:image:height" content="960">
 <meta property="og:image:width" content="1344">
 </head>
+
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content"><img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content"></a>
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content">
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
+    </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -129,12 +142,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item dropdown ">
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">    
+        <li>
     <a class="dropdown-item" href="../../../about/about-us">
  <span class="dropdown-text">About us</span></a>
   </li>  
@@ -155,13 +168,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Sponsors</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-zulip" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Zulip</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">    
+        <li>
     <a class="dropdown-item" href="../../../zulip/join-zulip">
  <span class="dropdown-text">Join Zulip</span></a>
   </li>  
@@ -170,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">User guide</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../../our-packages"> 
 <span class="menu-text">Software</span></a>
@@ -179,8 +192,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-training" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Training</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">    
+        <li>
     <a class="dropdown-item" href="../../../training/workshops">
  <span class="dropdown-text">Workshops</span></a>
   </li>  
@@ -197,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Mentorship Scheme</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../../resources"> 
 <span class="menu-text">Resources</span></a>
@@ -210,8 +223,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Contribute</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
+        <li>
     <a class="dropdown-item" href="../../../contribute/general-guide">
  <span class="dropdown-text">Contribute to Palaeoverse</span></a>
   </li>  
@@ -220,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Contribute to our packages</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/palaeoverse" target="_blank"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
@@ -247,34 +260,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#the-ggplot2-basics" id="toc-the-ggplot2-basics" class="nav-link" data-scroll-target="#the-ggplot2-basics">The ggplot2 basics</a></li>
   <li><a href="#theming" id="toc-theming" class="nav-link" data-scroll-target="#theming">Theming</a></li>
-  <li>
-<a href="#more-complex-features" id="toc-more-complex-features" class="nav-link" data-scroll-target="#more-complex-features">More complex features</a>
+  <li><a href="#more-complex-features" id="toc-more-complex-features" class="nav-link" data-scroll-target="#more-complex-features">More complex features</a>
   <ul class="collapse">
-<li><a href="#other-layers" id="toc-other-layers" class="nav-link" data-scroll-target="#other-layers">Other layers</a></li>
+  <li><a href="#other-layers" id="toc-other-layers" class="nav-link" data-scroll-target="#other-layers">Other layers</a></li>
   <li><a href="#combining-layers" id="toc-combining-layers" class="nav-link" data-scroll-target="#combining-layers">Combining layers</a></li>
   <li><a href="#facetting" id="toc-facetting" class="nav-link" data-scroll-target="#facetting">Facetting</a></li>
-  </ul>
-</li>
+  </ul></li>
   <li><a href="#combining-plots" id="toc-combining-plots" class="nav-link" data-scroll-target="#combining-plots">Combining plots</a></li>
   <li><a href="#saving-plots" id="toc-saving-plots" class="nav-link" data-scroll-target="#saving-plots">Saving plots</a></li>
-  </ul><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
 <h1 class="title">Plotting in R with ggplot2</h1>
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
@@ -311,7 +330,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/ggplot/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+</header>
+
+
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/ggplot/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -322,19 +344,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dplyr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"patchwork"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"dplyr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"patchwork"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="introduction" class="level2"><h2 data-anchor-id="introduction">Introduction</h2>
+<section id="introduction" class="level2">
+<h2 data-anchor-id="introduction">Introduction</h2>
 <p>While you can make plots with just the packages that come bundled with base R, many R users make their visualizations entirely using the <a href="https://ggplot2.tidyverse.org/index.html"><code>ggplot2</code></a> package and an <a href="https://exts.ggplot2.tidyverse.org/gallery/">ecosystem of packages</a> designed around it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># load the ggplot2 package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the ggplot2 package</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To demonstrate this, we’ll be using the Palmer penguins dataset (built-in to R as of version 4.5.0). First, let’s load the dataset. Then let’s inspect the data using the <code>glimpse()</code> function.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 344
 Columns: 8
@@ -349,37 +372,42 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 </div>
 <p>This dataset includes many different measurements for individual penguins from three different studies. The studies cover both sexes of three different species of penguins from three different islands in the Palmer Archipelago.</p>
-</section><section id="the-ggplot2-basics" class="level2"><h2 data-anchor-id="the-ggplot2-basics">The ggplot2 basics</h2>
-<p>The most important function in the <code>ggplot2</code> package is <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>. Note that this function doesn’t include the “2” of the package name. Let’s go ahead and try using this function on our penguins data.</p>
+</section>
+<section id="the-ggplot2-basics" class="level2">
+<h2 data-anchor-id="the-ggplot2-basics">The ggplot2 basics</h2>
+<p>The most important function in the <code>ggplot2</code> package is <code>ggplot()</code>. Note that this function doesn’t include the “2” of the package name. Let’s go ahead and try using this function on our penguins data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/ggplot-raw-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/ggplot-raw-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>You’ll notice that the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function doesn’t actually do much by itself. Here, we provide it with the penguins dataset, but the result looks like someone started making a plot and then stopped after the first step of making the rectangle for the plot area. This is because <code>ggplot2</code> is designed around the “grammar of graphics”. Therefore, it expects you to build a sentence-like structure out of its functions. A single word (i.e., the call to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> above) doesn’t make much of a sentence, so let’s start building up a real sentence.</p>
-<p>By using the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function, we are essentially stating that we are beginning a plotting “sentence”. We then combine this with other “words” (function calls) using the <code>+</code> operator. The next component you usually want to specify in a <code>ggplot</code> “sentence” is our “aesthetic” mappings. These specify the columns of the dataset that correspond to each axis of the plot, including the x/y axes, but also the axes of color, shape, etc. We do this with the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> function:</p>
+<p>You’ll notice that the <code>ggplot()</code> function doesn’t actually do much by itself. Here, we provide it with the penguins dataset, but the result looks like someone started making a plot and then stopped after the first step of making the rectangle for the plot area. This is because <code>ggplot2</code> is designed around the “grammar of graphics”. Therefore, it expects you to build a sentence-like structure out of its functions. A single word (i.e., the call to <code>ggplot()</code> above) doesn’t make much of a sentence, so let’s start building up a real sentence.</p>
+<p>By using the <code>ggplot()</code> function, we are essentially stating that we are beginning a plotting “sentence”. We then combine this with other “words” (function calls) using the <code>+</code> operator. The next component you usually want to specify in a <code>ggplot</code> “sentence” is our “aesthetic” mappings. These specify the columns of the dataset that correspond to each axis of the plot, including the x/y axes, but also the axes of color, shape, etc. We do this with the <code>aes()</code> function:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/ggplot-aes-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/ggplot-aes-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Hey, it’s starting to look like a plot now! Except there isn’t any actual data being plotted. Let’s fix that. We’ll start off with a simple scatter plot by using the <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> function:</p>
+<p>Hey, it’s starting to look like a plot now! Except there isn’t any actual data being plotted. Let’s fix that. We’ll start off with a simple scatter plot by using the <code>geom_point()</code> function:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len) <span class="sc">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-label="3"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_point-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_point-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -409,8 +437,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">penguins</span> <span class="op">&lt;-</span> <span class="va">penguins</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">body_mass</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -425,13 +453,14 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb9-4"><a href="#cb9-4" aria-label="4"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_point-color-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_point-color-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Notice that <code>ggplot2</code> comes with its own default color scheme. However, I would strongly discourage you from using the default colors, especially as the number of categories increases (with only 3 categories here it isn’t too bad). Let’s try out some of the more accessible color palettes that are also available in R.</p>
-<p>First, let’s try one of the <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html"><code>viridis</code></a> color palettes. Since this palette is included in <code>ggplot2</code>, all we need to do is add the proper “scale” to our <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> call. Scales tell ggplot how to handle a particular aesthetic, and are usually of the form <code>scale_[aesthetic]_[type]()</code>.</p>
+<p>First, let’s try one of the <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html"><code>viridis</code></a> color palettes. Since this palette is included in <code>ggplot2</code>, all we need to do is add the proper “scale” to our <code>ggplot()</code> call. Scales tell ggplot how to handle a particular aesthetic, and are usually of the form <code>scale_[aesthetic]_[type]()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
@@ -440,7 +469,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb10-5"><a href="#cb10-5" aria-label="5"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.7</span>) <span class="co"># avoid yellow at the end of the palette</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/viridis-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/viridis-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -454,7 +484,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb11-5"><a href="#cb11-5" aria-label="5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/brewer-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/brewer-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -469,7 +500,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb12-6"><a href="#cb12-6" aria-label="6"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/shape-aes-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/shape-aes-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -484,7 +516,7 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Urgh, more missing data! It appears that nine of the penguins are missing sex identification data. We can ignore the warning message, but that extra “NA” category in the legend is quite annoying. We can remove this category from the legend using <code>na.translate = FALSE</code> within <code><a href="https://ggplot2.tidyverse.org/reference/scale_shape.html">scale_shape_discrete()</a></code> (you could also use <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_shape_manual()</a></code> if you wanted to supply your own shapes):</p>
+<p>Urgh, more missing data! It appears that nine of the penguins are missing sex identification data. We can ignore the warning message, but that extra “NA” category in the legend is quite annoying. We can remove this category from the legend using <code>na.translate = FALSE</code> within <code>scale_shape_discrete()</code> (you could also use <code>scale_shape_manual()</code> if you wanted to supply your own shapes):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
@@ -495,7 +527,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb13-7"><a href="#cb13-7" aria-label="7"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/na.translate-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/na.translate-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -515,12 +548,15 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb14-9"><a href="#cb14-9" aria-label="9"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/axis-scales-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/axis-scales-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="theming" class="level2"><h2 data-anchor-id="theming">Theming</h2>
+</section>
+<section id="theming" class="level2">
+<h2 data-anchor-id="theming">Theming</h2>
 <p>The last basic thing you might want to do with <code>ggplot2</code> is modify the style of the visualization. This is extremely customizable, but the first place to start is with a <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">built-in theme</a>. I personally prefer the classic theme, which looks very similar to base R plots:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -535,12 +571,13 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb15-10"><a href="#cb15-10" aria-label="10"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/theme_classic-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/theme_classic-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Using this built-in theme has changed many visual aspects of the graph, including changing the plot background color, adding axis lines, and removing the internal grid lines. If you look very closely, however, the axis tick labels are still a slight grey. We can use the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> function to further customize the appearance and change this. In this case, we’ll make the axis text elements have a black color instead of the default gray.</p>
+<p>Using this built-in theme has changed many visual aspects of the graph, including changing the plot background color, adding axis lines, and removing the internal grid lines. If you look very closely, however, the axis tick labels are still a slight grey. We can use the <code>theme()</code> function to further customize the appearance and change this. In this case, we’ll make the axis text elements have a black color instead of the default gray.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-label="2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
@@ -555,17 +592,22 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb16-11"><a href="#cb16-11" aria-label="11"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/theming-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/theming-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And there we have it! With just 10 lines we’ve created what I would say is a publication quality graph! <code>ggplot</code> does a lot of the tedious work for us, giving us time to focus on the more important aspects, such as labeling and color. Admittedly, I’ve spent a LOT of time on these aspects in the past…</p>
-<p>More information about all of the hierarchical theme components that you can customize is available <a href="https://ggplot2.tidyverse.org/reference/theme.html">here</a>. In order to change many of these components, you need to use theme elements like we did above with <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text()</a></code>. That and other theme elements are documented <a href="https://ggplot2.tidyverse.org/reference/element.html">here</a>.</p>
-</section><section id="more-complex-features" class="level2"><h2 data-anchor-id="more-complex-features">More complex features</h2>
-<section id="other-layers" class="level3"><h3 data-anchor-id="other-layers">Other layers</h3>
+<p>More information about all of the hierarchical theme components that you can customize is available <a href="https://ggplot2.tidyverse.org/reference/theme.html">here</a>. In order to change many of these components, you need to use theme elements like we did above with <code>element_text()</code>. That and other theme elements are documented <a href="https://ggplot2.tidyverse.org/reference/element.html">here</a>.</p>
+</section>
+<section id="more-complex-features" class="level2">
+<h2 data-anchor-id="more-complex-features">More complex features</h2>
+<section id="other-layers" class="level3">
+<h3 data-anchor-id="other-layers">Other layers</h3>
 <p>There are many other <a href="https://ggplot2.tidyverse.org/reference/#layers">types of plots</a> that we can make with <code>ggplot2</code>.</p>
-<section id="histograms" class="level4"><h4 data-anchor-id="histograms">Histograms</h4>
+<section id="histograms" class="level4">
+<h4 data-anchor-id="histograms">Histograms</h4>
 <p>We can visualize the density of values for a single variable with a histogram:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -575,7 +617,8 @@ $ year        &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb17-5"><a href="#cb17-5" aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_histogram-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_histogram-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -599,14 +642,17 @@ Note
 <span id="cb18-5"><a href="#cb18-5" aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/hist-dodge-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/hist-dodge-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section><section id="boxplots-and-violin-plotss" class="level4"><h4 data-anchor-id="boxplots-and-violin-plotss">Boxplots and Violin Plotss</h4>
+</section>
+<section id="boxplots-and-violin-plotss" class="level4">
+<h4 data-anchor-id="boxplots-and-violin-plotss">Boxplots and Violin Plotss</h4>
 <p>We can visualize the density of values for a single variable across a discrete variable with boxplots or violin plots:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -616,7 +662,8 @@ Note
 <span id="cb19-5"><a href="#cb19-5" aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_boxplot-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_boxplot-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -629,7 +676,8 @@ Note
 <span id="cb20-5"><a href="#cb20-5" aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_violin-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_violin-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -644,10 +692,12 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that many of these “geom”s have lots of options. For example, here we’ve decided to <code>scale</code> all of the violin plots to the same width and to draw the quartiles on them (mimicking the boxplots above). You can see all of the options for a geom by checking out it’s help page (<code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">?geom_violin</a></code>) or on the ggplot <a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">website</a>.</p>
+<p>Note that many of these “geom”s have lots of options. For example, here we’ve decided to <code>scale</code> all of the violin plots to the same width and to draw the quartiles on them (mimicking the boxplots above). You can see all of the options for a geom by checking out it’s help page (<code>?geom_violin</code>) or on the ggplot <a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">website</a>.</p>
 </div>
 </div>
-</section><section id="d-contours" class="level4"><h4 data-anchor-id="d-contours">2D Contours</h4>
+</section>
+<section id="d-contours" class="level4">
+<h4 data-anchor-id="d-contours">2D Contours</h4>
 <p>We can also visualize the density of values across two continuous variables using a 2D contour:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-label="1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
@@ -657,7 +707,8 @@ Note
 <span id="cb21-5"><a href="#cb21-5" aria-label="5"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_density_2d-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_density_2d-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -672,34 +723,39 @@ Note
 <span id="cb22-6"><a href="#cb22-6" aria-label="6"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_density_2d_expand-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_density_2d_expand-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="time-series" class="level4"><h4 data-anchor-id="time-series">Time Series</h4>
+</section>
+<section id="time-series" class="level4">
+<h4 data-anchor-id="time-series">Time Series</h4>
 <p>Since there isn’t really any time series data in the penguins dataset, we’ll take a quick detour and use the built-in <code>economics</code> dataset to explore visualizing a time series. In this case, we are looking at unemployment over time:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">economics</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> unemploy)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_line-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_line-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_path()</a></code> lets you explore how two variables are related over time. For example, unemployment and personal savings rate:</p>
+<p><code>geom_path()</code> lets you explore how two variables are related over time. For example, unemployment and personal savings rate:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">economics</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">unemploy</span> <span class="op">/</span> <span class="va">pop</span>, y <span class="op">=</span> <span class="va">psavert</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_path</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> unemploy <span class="sc">/</span> pop, <span class="at">y =</span> psavert)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">as.numeric</span>(date))) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/geom_path-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/geom_path-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -717,22 +773,26 @@ Note
 <p>Note how we’ve used multiple columns of the data to define the x-axis here. You can use any sort of mathematical operators to combine multiple columns into a single aesthetic, as long as you are doing row-wise math.</p>
 </div>
 </div>
-</section></section><section id="combining-layers" class="level3"><h3 data-anchor-id="combining-layers">Combining layers</h3>
+</section>
+</section>
+<section id="combining-layers" class="level3">
+<h3 data-anchor-id="combining-layers">Combining layers</h3>
 <p>We can also combine multiple layers to show the same data in different ways in the same plot. For example, we could show the raw data for the above contour plot in addition to the contours:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bill_len</span>, y <span class="op">=</span> <span class="va">bill_dep</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">geom_density_2d_filled</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">geom_density_2d</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.25</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">60</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">23</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># don't expand the axes so the background is all filled</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>)) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">23</span>)) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># don't expand the axes so the background is all filled</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/combined-layers-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/combined-layers-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -747,25 +807,28 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When combining layers, the layers are added to the plot in order, so in this case the points are the bottom layer and the contour lines are the top layer. We changed the alpha of the middle layer to prevent the points from being blocked. I’ve also used the <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian()</a></code> function to remove the default axis expansion. This way the background color reaches both axes and doesn’t have a white gap.</p>
+<p>When combining layers, the layers are added to the plot in order, so in this case the points are the bottom layer and the contour lines are the top layer. We changed the alpha of the middle layer to prevent the points from being blocked. I’ve also used the <code>coord_cartesian()</code> function to remove the default axis expansion. This way the background color reaches both axes and doesn’t have a white gap.</p>
 </div>
 </div>
-</section><section id="facetting" class="level3"><h3 data-anchor-id="facetting">Facetting</h3>
+</section>
+<section id="facetting" class="level3">
+<h3 data-anchor-id="facetting">Facetting</h3>
 <p>Let’s take our scatterplot example from earlier:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass</span>, y <span class="op">=</span> <span class="va">flipper_len</span>,</span>
-<span>      color <span class="op">=</span> <span class="va">island</span>, shape <span class="op">=</span> <span class="va">sex</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_shape.html">scale_shape_discrete</a></span><span class="op">(</span>na.translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Body Mass (grams)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Flipper Length (millimeters)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> island, <span class="at">shape =</span> sex) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_discrete</span>(<span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Body Mass (grams)"</span>) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Flipper Length (millimeters)"</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/scatter-full-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/scatter-full-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -785,7 +848,8 @@ Note
 <span id="cb27-11"><a href="#cb27-11" aria-label="11"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/scatter-facet-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/scatter-facet-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -805,76 +869,85 @@ Note
 <span id="cb28-11"><a href="#cb28-11" aria-label="11"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/scatter-facet-grid-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/scatter-facet-grid-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>OK, maybe we’ve gone a little too far here, but you get the picture!</p>
-</section></section><section id="combining-plots" class="level2"><h2 data-anchor-id="combining-plots">Combining plots</h2>
+</section>
+</section>
+<section id="combining-plots" class="level2">
+<h2 data-anchor-id="combining-plots">Combining plots</h2>
 <p>When publishing results, often we need to combine multiple figures into a single visualization. There are lots of packages for accomplishing this (even my own <a href="https://williamgearty.com/deeptime">deeptime</a> package has some functionality for it), but today we’ll check out the <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a> package which extends the “grammar of graphics” to combining plots (you may need to install it if you haven’t done so already).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>First, let’s go ahead and make some plots. Instead of plotting them, though, we’ll save them as objects in our environment. Note that when you save a plot to an object it isn’t displayed in the “Plots” tab.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass</span>, y <span class="op">=</span> <span class="va">flipper_len</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bill_len</span>, y <span class="op">=</span> <span class="va">bill_dep</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">geom_density_2d_filled</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">geom_density_2d</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.25</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">60</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">23</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> body_mass, <span class="at">y =</span> flipper_len) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_len, <span class="at">y =</span> bill_dep) <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>)) <span class="sc">+</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">23</span>)) <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, in order to combine these, all we need to do is combine them using the <code>+</code> operator, like we did with the individual elements of the plots.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">+</span> <span class="va">g2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/add-plots-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/add-plots-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>You can see that <code>patchwork</code> does all of the work for us, lining up the different components of the plots. If we have more plots to combine, we can then use the <code>|</code> (side-by-side) and <code>/</code> (above-and-below) operators to make more complex arrangements of plots.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">island</span>, y <span class="op">=</span> <span class="va">bill_len</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="op">(</span><span class="va">g1</span> <span class="op">|</span> <span class="va">g2</span><span class="op">)</span> <span class="op">/</span> <span class="va">g3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> bill_len) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>))</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>(g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="index_files/figure-revealjs/patchwork-complex-1.png" class="img-fluid figure-img" width="960"></p>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/patchwork-complex-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>There’s a lot more you can do with <code>patchwork</code>, including <a href="https://patchwork.data-imaginist.com/articles/guides/layout.html">adjusting the widths and heights</a> and <a href="https://patchwork.data-imaginist.com/articles/guides/annotation.html">adding annotations and styling</a>, but we’ll stop here for now.</p>
-</section><section id="saving-plots" class="level2"><h2 data-anchor-id="saving-plots">Saving plots</h2>
-<p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave()</a></code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave()</a></code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you).</p>
+</section>
+<section id="saving-plots" class="level2">
+<h2 data-anchor-id="saving-plots">Saving plots</h2>
+<p>The last big thing you’ll need to know about plotting is how to save your plots. <code>ggplot2</code> comes with a nifty <code>ggsave()</code> function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. <code>ggsave()</code> detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">g1</span> <span class="op">|</span> <span class="va">g2</span><span class="op">)</span> <span class="op">/</span> <span class="va">g3</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/penguins_1.pdf"</span>, <span class="va">gg</span>, height <span class="op">=</span> <span class="fl">10</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/penguins_1.jpg"</span>, <span class="va">gg</span>, height <span class="op">=</span> <span class="fl">10</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> (g1 <span class="sc">|</span> g2) <span class="sc">/</span> g3</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.pdf"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figures/penguins_1.jpg"</span>, gg, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
-<hr>
-<br><details><summary>Session info</summary><pre><code>─ Session info ───────────────────────────────────────────────────────────────
+<hr><br><details>
+<summary>Session info</summary>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
- version  R version 4.6.1 (2026-06-24)
+ version  R version 4.6.2 (2026-10-29)
  os       Ubuntu 26.04.1 LTS
  system   x86_64, linux-gnu
  ui       X11
@@ -882,9 +955,9 @@ Note
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-29
+ date     2026-10-30
  pandoc   3.7.0.2 @ /usr/bin/pandoc
- quarto   1.10.19 @ /usr/local/bin/quarto
+ quarto   1.10.20 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  ! package      * version date (UTC) lib source
@@ -916,13 +989,17 @@ Note
    withr          3.0.3   2026-06-19 [1] RSPM
 
  [1] /home/runner/work/_temp/Library
- [2] /opt/R/4.6.1/lib/R/library
+ [2] /opt/R/4.6.2/lib/R/library
 
  R ── Package was removed from disk.
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
-</details></section></main><!-- /main --><script>
+</details>
+</section>
+
+</main> <!-- /main -->
+<script>
 // Quarto doesn't add an `active` class to the current page's navbar link in
 // this setup, so do it ourselves: match each top-level navbar link's path
 // against the current page and mark it.
@@ -954,17 +1031,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-</script><!-- This is for site analytics. --><!-- 
+</script>
+<!-- This is for site analytics. -->
+
+<!-- 
 Include the domain in the URL reported in goatcounter's dashboard.
 This is needed to separate subdomains that would point to the same page name, e.g.
 "palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
 
 https://goatcounter.com/help/domains
-  --><script>
+  -->
+<script>
     window.goatcounter = {
         path: function (p) { return location.host + p }
     }
-</script><script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><script>
+</script>
+
+<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and
   //  2) turning each category badge into a link that opens the list filtered by
@@ -1004,7 +1088,9 @@ https://goatcounter.com/help/domains
   //     });
   //   });
   // })();
-</script><script>
+</script>
+
+<script>
   // htmlwidgets need to know to resize themselves when slides are shown/hidden.
   // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
   // slide changes (different for each slide format).
@@ -1039,7 +1125,9 @@ https://goatcounter.com/help/domains
     }
 
   })();
-</script><script id="quarto-html-after-body" type="application/javascript">
+</script>
+
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
@@ -1433,18 +1521,22 @@ https://goatcounter.com/help/domains
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
+<p>Supported by the <a class="footer-sponsor" href="https://www.software.ac.uk/" target="_blank">Institute for Research Software</a> (2026–2028)</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
+
 
 
 </body></html>

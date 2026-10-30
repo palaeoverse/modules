@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta charset="UTF-8">
-<meta name="generator" content="quarto-1.10.19">
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.20">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-10-29">
+<meta name="dcterms.date" content="2026-10-30">
+
 <title>Create a package</title>
 <style>
 /* Default styles provided by pandoc.
@@ -61,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -73,14 +78,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8574e35074353e5de839972ed73d34f7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-e878736e7310bf45e68d1e79aa752b87.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-7839a3d42b02d8d57e8e35ae165ba577.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-0c127d6da624f36557fd3cd42ec483a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-497f5b01c96b4e662609ea7464af8298.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,18 +113,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-9/training/modules-dev/package_building/_brand/logos/logo-opengraph.png">
 <meta property="og:locale" content="en_GB">
 </head>
+
 <body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content"><img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content"></a>
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content">
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
+    </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -126,12 +139,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item dropdown ">
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">    
+        <li>
     <a class="dropdown-item" href="../../../about/about-us">
  <span class="dropdown-text">About us</span></a>
   </li>  
@@ -152,13 +165,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Sponsors</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-zulip" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Zulip</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">    
+        <li>
     <a class="dropdown-item" href="../../../zulip/join-zulip">
  <span class="dropdown-text">Join Zulip</span></a>
   </li>  
@@ -167,7 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">User guide</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../../our-packages"> 
 <span class="menu-text">Software</span></a>
@@ -176,8 +189,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-training" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Training</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">    
+        <li>
     <a class="dropdown-item" href="../../../training/workshops">
  <span class="dropdown-text">Workshops</span></a>
   </li>  
@@ -194,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Mentorship Scheme</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../../resources"> 
 <span class="menu-text">Resources</span></a>
@@ -207,8 +220,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Contribute</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">
-<li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
+        <li>
     <a class="dropdown-item" href="../../../contribute/general-guide">
  <span class="dropdown-text">Contribute to Palaeoverse</span></a>
   </li>  
@@ -217,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Contribute to our packages</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/palaeoverse" target="_blank"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
@@ -244,11 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -256,11 +271,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item sidebar-item-section">
+        <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../../training/modules-dev/package_building/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package development</span></a>
@@ -268,17 +287,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/package_building/create.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Create</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/package_building/document.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Document</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -300,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/package_building/github-actions.html" class="sidebar-item-text sidebar-link">
@@ -308,24 +321,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#structure-of-a-package" id="toc-structure-of-a-package" class="nav-link active" data-scroll-target="#structure-of-a-package">Structure of a package</a></li>
-  <li><a href="#practical-example" id="toc-practical-example" class="nav-link" data-scroll-target="#practical-example">Practical example</a></li>
-  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a></li>
+  <li><a href="#structure-of-a-package" id="toc-structure-of-a-package" class="nav-link active" data-scroll-target="#structure-of-a-package">Structure of a package</a></li>
+  <li><a href="#practical-example" id="toc-practical-example" class="nav-link" data-scroll-target="#practical-example">Practical example</a>
+  <ul class="collapse">
   <li><a href="#create-the-package" id="toc-create-the-package" class="nav-link" data-scroll-target="#create-the-package">Create the package</a></li>
-  <li><a href="#how-is-it-organized" id="toc-how-is-it-organized" class="nav-link" data-scroll-target="#how-is-it-organized">How is it organized?</a></li>
   <li><a href="#add-our-functions" id="toc-add-our-functions" class="nav-link" data-scroll-target="#add-our-functions">Add our functions</a></li>
-  <li><a href="#add-our-functions-1" id="toc-add-our-functions-1" class="nav-link" data-scroll-target="#add-our-functions-1">Add our functions</a></li>
-  </ul></nav>
+  </ul></li>
+  <li><a href="#document-a-function" id="toc-document-a-function" class="nav-link" data-scroll-target="#document-a-function">Document a function</a></li>
+  <li><a href="#build-the-package" id="toc-build-the-package" class="nav-link" data-scroll-target="#build-the-package">Build the package</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/index.html">Package development</a></li><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/create.html">Create</a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/index.html">Package development</a></li><li class="breadcrumb-item"><a href="../../../training/modules-dev/package_building/create.html">Create</a></li></ol></nav>
+<div class="quarto-title">
 <h1 class="title">Create a package</h1>
 </div>
 
@@ -343,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 29, 2026</p>
+      <p class="date">October 30, 2026</p>
     </div>
   </div>
   
@@ -352,7 +372,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/create.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+</header>
+
+
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/create.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -363,40 +386,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"covr"</span>, <span class="st">"devtools"</span>, <span class="st">"dplyr"</span>, <span class="st">"usethis"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"dplyr"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="structure-of-a-package" class="level2"><h2 data-anchor-id="structure-of-a-package">Structure of a package</h2>
+<p>In this section, we will see how to create the basic structure of an R package.</p>
+<section id="structure-of-a-package" class="level2">
+<h2 data-anchor-id="structure-of-a-package">Structure of a package</h2>
 <p>At a minimum, a package <strong>must have</strong> two folders:</p>
 <ul>
 <li><p><code>R</code>: contains all the <code>.R</code> files where we will write our functions</p></li>
-<li><p><code>man</code>: short for “manual”. This will contain all the documentation that is accessible with <code>?</code> in R (for example <code><a href="https://rdrr.io/r/base/factor.html">?factor</a></code>)</p></li>
+<li><p><code>man</code>: short for “manual”. This will contain all the documentation that is accessible with <code>?</code> in R (for example <code>?factor</code>)</p></li>
 </ul>
-<p>It is recommended to have the following folders:</p>
+<p>While not mandatory, it is also recommended to have the following folders:</p>
 <ul>
 <li><p><code>tests</code>: contains all the tests for your package</p></li>
 <li><p><code>vignettes</code>: additional documentation that contains more extensive examples and tutorials for your package.</p></li>
-</ul></section><section id="practical-example" class="level2"><h2 data-anchor-id="practical-example">Practical example</h2>
+</ul>
+<p>This section focuses on <code>R</code> and <code>man</code>, we will see how to populate these other folders in separate sections.</p>
+</section>
+<section id="practical-example" class="level2">
+<h2 data-anchor-id="practical-example">Practical example</h2>
 <p>The easiest way to learn how to make a package is to actually make one.</p>
-<p>Let’s say we want to create a package containing two functions.</p>
+<p>Let’s say that we have already two functions and that we use them in our work, but now we want to package them so that they are easier to share with coworkers. Our two functions are:</p>
 <ol type="1">
 <li>A function to compute the logarithm that returns <code>NULL</code> if the input is not numeric:</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">safe_log</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="st">"Can't compute the logarithm of a non-numeric input."</span><span class="op">)</span></span>
-<span>    <span class="cn">NULL</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>safe_log <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(x)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">"Can't compute the logarithm of a non-numeric input."</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NULL</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="st">"a"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `log()`:
 ! non-numeric argument to mathematical function</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">safe_log</span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">safe_log</span>(<span class="st">"a"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in safe_log("a"): Can't compute the logarithm of a non-numeric input.</code></pre>
 </div>
@@ -408,80 +437,221 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>A function to count the number of unique elements in a vector:</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">n_unique</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">n_unique</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n_unique <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(x))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">n_unique</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">n_unique</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
 </div>
-</section><section id="requirements" class="level2"><h2 data-anchor-id="requirements">Requirements</h2>
-<p>Our three best friends for this job:</p>
-<div class="columns center">
-<div class="column" style="width:33%;">
-<p><img src="devtools.svg" height="150"><br><code>devtools</code></p>
-</div><div class="column" style="width:33%;">
-<p><img src="usethis.png" height="150"><br><code>usethis</code></p>
-</div><div class="column" style="width:33%;">
-<p><img src="testthat.png" height="150"><br><code>testthat</code></p>
-</div>
-</div>
-<p><br></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># if not already installed</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"devtools"</span>, <span class="st">"usethis"</span>, <span class="st">"testthat"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section><section id="create-the-package" class="level2"><h2 data-anchor-id="create-the-package">Create the package</h2>
-<p>Create a package called “my.pkg”:</p>
+<section id="create-the-package" class="level3">
+<h3 data-anchor-id="create-the-package">Create the package</h3>
+<p>Let’s create a package called <code>my.pkg</code>. We can do this in various ways:</p>
 <ul>
-<li>either with <code>devtools</code>
-</li>
+<li><p>we can use <code>usethis</code> in an R console:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"&lt;path&gt;/my.pkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></li>
+<li><p>with RStudio: File &gt; New Project &gt; New Directory &gt; R Package &gt; Name it, and choose its location</p></li>
 </ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/create.html">create</a></span><span class="op">(</span><span class="st">"&lt;path&gt;/my.pkg"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ul>
-<li>or with RStudio: File &gt; New Project &gt; New Directory &gt; R Package &gt; Name it and choose its location</li>
-</ul></section><section id="how-is-it-organized" class="level2"><h2 data-anchor-id="how-is-it-organized">How is it organized?</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>.</span>
+<p>If we choose to do this with <code>usethis</code>, then we should see this:</p>
+<pre><code>✔ Creating my.pkg/.
+✔ Setting active project to "/home/etienne/Desktop/Git/modules/my.pkg".
+✔ Creating R/.
+✔ Writing DESCRIPTION.
+Package: my.pkg
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R (parsed):
+    * First Last &lt;first.last@example.com&gt; [aut, cre]
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Config/roxygen2/version: 8.1.0
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+✔ Writing NAMESPACE.
+✔ Writing my.pkg.Rproj.
+✔ Adding "^my\\.pkg\\.Rproj$" to .Rbuildignore.
+✔ Adding ".Rproj.user" to .gitignore.
+✔ Adding "^\\.Rproj\\.user$" to .Rbuildignore.
+✔ Opening /home/etienne/Desktop/Git/modules/my.pkg/ in a new session.
+✔ Setting active project to "&lt;no active project&gt;".</code></pre>
+<p>There is a lot of information to unpack here! We can see that this command created a folder <code>my.pkg</code>, an <code>R</code> folder inside it, and then it created multiple files: <code>DESCRIPTION</code> and <code>NAMESPACE</code>.</p>
+<p>Printing the structure of the <code>my.pkg</code> folder may be useful here:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>my.pkg</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>├── DESCRIPTION</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>├── my.pkg.Rproj</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>├── NAMESPACE</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>├── R</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>│   └── hello.R</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>└── man</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    └── hello.Rd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We see the two mandatory folders: <code>R</code> and <code>man</code>.</p>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>├── NAMESPACE</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>├── R</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>└── my.pkg.Rproj</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="How to print a tree structure as above?">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>How to print a tree structure as above?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you have the package <code>fs</code> installed, you can use <code>fs::dir_tree()</code> with the path you want.</p>
+<p>For example, if <code>my.pkg</code> is your working directory then you can simply call <code>fs::dir_tree()</code>, but if it is a subfolder then you need to call <code>fs::dir_tree("my.pkg")</code>.</p>
+</div>
+</div>
+</div>
 <p>The <code>DESCRIPTION</code> file contains all the important information about our package:</p>
 <ul>
 <li>who built it?</li>
 <li>when?</li>
 <li>what is the goal of the package?</li>
+<li>what is the version of the package?</li>
 <li>what are its dependencies?</li>
-<li>what is its license?</li>
-<li>…</li>
 </ul>
-<p>The <code>NAMESPACE</code> file contains all the information about the functions that are imported and exported by our package.</p>
-</section><section id="add-our-functions" class="level2"><h2 data-anchor-id="add-our-functions">Add our functions</h2>
+<p>and a lot more information.</p>
+<p>The <code>NAMESPACE</code> file contains all the information about the functions that are imported and exported by our package. <strong>Imported functions</strong> are provided by other packages, meaning that these packages are now our dependencies. <strong>Exported functions</strong> are what our package provides, i.e.&nbsp;the functions made available to users of our packages after they call <code>library(my.pkg)</code> or when they use <code>my.pkg::</code>.</p>
+<p>The <code>R</code> folder is where we are going to store our functions.</p>
+</section>
+<section id="add-our-functions" class="level3">
+<h3 data-anchor-id="add-our-functions">Add our functions</h3>
+<p>Let’s create two files in the <code>R</code> folder: <code>n_unique.R</code> and <code>safe_log.R</code>. We don’t <em>need</em> to create one file per function, we could just bundle everything in a single file. However, it is generally good practice to keep those separated, especially when we start creating more exported functions. We can now move the functions we created to each of these files:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R/n_unique.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-filename="R/n_unique.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n_unique <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(x))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R/safe_log.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-filename="R/safe_log.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>safe_log <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(x)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">"Can't compute the logarithm of a non-numeric input."</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NULL</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Our package structure now is:</p>
+<pre><code>my.pkg
+├── DESCRIPTION
+├── NAMESPACE
+├── R
+│   ├── n_unique.R
+│   └── safe_log.R
+└── my.pkg.Rproj</code></pre>
+<p>When we create a standalone function in a non-package project, we need to evaluate it in the R console to then be able to run it. Doing this for all functions in an R package would be very tedious. Moreover, the order in which R files are evaluated may matter. Therefore, we can use <code>devtools::load_all()</code> whenever we want to load the package we are currently developing:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ℹ Loading my.pkg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We are now be able to run our functions in the console! We have now populated one of the two mandatory folders (<code>R</code>), so let’s move on to the documentation process, which will lead to the creation of the <code>man</code> folder.</p>
+</section>
+</section>
+<section id="document-a-function" class="level2">
+<h2 data-anchor-id="document-a-function">Document a function</h2>
+<p>The documentation of a function is done in the <code>.R</code> file: it will then automatically be converted to an <code>.Rd</code> file placed in the <code>man</code> folder. There is <em>no need</em> to create an <code>.Rd</code> file yourself!</p>
+<p>Writing the documentation is similar to writing comments, but you need to use <code>#'</code> (with an apostrophe) instead of <code>#</code>.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R/n_unique.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" data-filename="R/n_unique.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Title</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @description</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' Some description.</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x An input</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A numeric value indicating the number of unique values in the input.</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' n_unique(c(1, 2, 1))</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>n_unique <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(x))</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let’s go through these changes:</p>
+<ul>
+<li><code>description</code> contains the text that appears between the title and the “Usage” section in a function help page. Usually it contains a few sentences describing the general purpose of the function.</li>
+<li><code>@param</code> is the description of the expected input (there can be several <code>@param</code> tags);</li>
+<li><code>@return</code> is the description of what this function returns;</li>
+<li><code>@export</code> indicates that this function is exported, i.e is available to users of this package;</li>
+<li><code>@examples</code> gives some examples that show how the function works.</li>
+</ul>
+<p>These are <code>roxygen2</code> tags, and there are many more that you can find here: https://roxygen2.r-lib.org/articles/rd.html.</p>
+<p>Let’s now run <code>devtools::document()</code> to create the <code>.Rd</code> file.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="I have a 'Skipping NAMESPACE' message">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>I have a ‘Skipping NAMESPACE’ message
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Maybe <code>devtools::document()</code> will print the following message:</p>
+<pre><code>ℹ Updating my.pkg documentation
+ℹ Loading my.pkg
+✖ Skipping NAMESPACE
+ℹ It already exists and was not generated by roxygen2.</code></pre>
+<p>In this case, delete <code>NAMESPACE</code> and run <code>devtools::document()</code> again.</p>
+</div>
+</div>
+</div>
+<p>You should see the following message:</p>
+<pre><code>ℹ Updating my.pkg documentation
+ℹ Loading my.pkg
+Writing n_unique.Rd</code></pre>
+<p>You should then be able to access the documentation of our function with <code>?n_unique</code>.</p>
+<div style="text-align: center;">
+<p><img src="img/help-page.png" height="500"></p>
+</div>
+<p>We have the minimal documentation but you can make it much bigger. Note that we can also use <a href="https://roxygen2.r-lib.org/articles/rd-formatting.html">Markdown syntax</a> in the text.</p>
+<div class="callout callout-style-default callout-caution callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your turn! Improve the documentation:</p>
 <ol type="1">
-<li><p>Remove <code>R/hello.R</code> and <code>man/hello.Rd</code></p></li>
-<li><p>Create two files in the folder <code>R</code>: <code>n_unique.R</code> and <code>safe_log.R</code>.</p></li>
-<li><p>Paste the functions we created in each of these files.</p></li>
-</ol></section><section id="add-our-functions-1" class="level2"><h2 data-anchor-id="add-our-functions-1">Add our functions</h2>
-<p>Run <code><a href="https://devtools.r-lib.org/reference/load_all.html">devtools::load_all()</a></code> in the console.</p>
-<p>You should now be able to run our functions in the console!</p>
-<p>Next steps: <strong>documenting</strong> and <strong>testing</strong> our functions.</p>
+<li>write a longer description for <code>n_unique()</code></li>
+<li>create the documentation for <code>safe_log()</code></li>
+<li>add more explanations in the <code>@details</code> section of <code>safe_log()</code></li>
+</ol>
+<p>Don’t forget to re-document so that your changes appear in <code>.Rd</code> files in <code>man</code>.</p>
+</div>
+</div>
+<p>The help page is one of the first things users will check to learn about your functions. Give details and <em>examples</em>!</p>
+<p>We now have the most basic structure of a working R package. Let’s build it!</p>
+</section>
+<section id="build-the-package" class="level2">
+<h2 data-anchor-id="build-the-package">Build the package</h2>
 
 
-<hr>
-<br><details><summary>Session info</summary><pre><code>─ Session info ───────────────────────────────────────────────────────────────
+<hr><br><details>
+<summary>Session info</summary>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
- version  R version 4.6.1 (2026-06-24)
+ version  R version 4.6.2 (2026-10-29)
  os       Ubuntu 26.04.1 LTS
  system   x86_64, linux-gnu
  ui       X11
@@ -489,122 +659,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-29
+ date     2026-10-30
  pandoc   3.7.0.2 @ /usr/bin/pandoc
- quarto   1.10.19 @ /usr/local/bin/quarto
+ quarto   1.10.20 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- ! package     * version date (UTC) lib source
-   askpass       1.2.1   2024-10-04 [1] RSPM
-   base64enc     0.1-6   2026-02-02 [1] RSPM
-   brew          1.0-10  2023-12-16 [1] RSPM
-   brio          1.1.5   2024-04-24 [1] RSPM
-   bslib         0.12.0  2026-08-04 [1] RSPM
-   cachem        1.1.0   2024-05-16 [1] RSPM
-   callr         3.8.0   2026-06-05 [1] RSPM
-   cli           3.6.6   2026-04-09 [1] RSPM
-   clipr         0.8.1   2026-05-25 [1] RSPM
-   commonmark    2.0.0   2025-07-07 [1] RSPM
-   covr          3.6.5   2025-11-09 [1] RSPM
- R cpp11         &lt;NA&gt;    &lt;NA&gt;       [?] &lt;NA&gt;
-   crayon        1.5.3   2024-06-20 [1] RSPM
-   credentials   2.0.3   2025-09-12 [1] RSPM
-   curl          8.1.0   2026-10-14 [1] RSPM
-   desc          1.4.3   2023-12-10 [1] RSPM
-   devtools      2.5.2   2026-04-30 [1] RSPM
-   diffobj       0.3.9   2026-09-11 [1] RSPM
-   digest        0.6.39  2025-11-19 [1] RSPM
-   downlit       0.4.5   2025-11-14 [1] RSPM
-   dplyr         1.2.1   2026-04-03 [1] RSPM
-   ellipsis      0.3.3   2026-04-04 [1] RSPM
-   evaluate      1.0.5   2025-08-27 [1] RSPM
-   fansi         1.0.7   2025-11-19 [1] RSPM
-   fastmap       1.2.0   2024-05-15 [1] RSPM
-   fontawesome   0.5.3   2024-11-16 [1] RSPM
-   fs            2.1.0   2026-04-18 [1] RSPM
-   generics      0.1.4   2025-05-09 [1] RSPM
-   gert          2.5.0   2026-10-14 [1] RSPM
-   gh            1.6.1   2026-07-20 [1] RSPM
-   gitcreds      0.1.2   2022-09-08 [1] RSPM
-   glue          1.8.1   2026-04-17 [1] RSPM
-   highr         0.12    2026-03-06 [1] RSPM
-   htmltools     0.5.9   2025-12-04 [1] RSPM
-   htmlwidgets   1.6.4   2023-12-06 [1] RSPM
-   httpuv        1.6.17  2026-03-18 [1] RSPM
-   httr          1.4.9   2026-09-01 [1] RSPM
-   httr2         1.3.0   2026-07-13 [1] RSPM
-   ini           0.3.1   2018-05-20 [1] RSPM
-   jquerylib     0.1.4   2021-04-26 [1] RSPM
-   jsonlite      2.0.0   2025-03-27 [1] RSPM
-   knitr         1.52    2026-09-06 [1] RSPM
-   later         1.4.8   2026-03-05 [1] RSPM
-   lifecycle     1.0.5   2026-01-08 [1] RSPM
-   magrittr      2.0.5   2026-04-04 [1] RSPM
-   memoise       2.0.1   2021-11-26 [1] RSPM
-   mime          0.13    2025-03-17 [1] RSPM
-   miniUI        0.1.2   2025-04-17 [1] RSPM
-   openssl       2.4.2   2026-06-09 [1] RSPM
-   otel          0.2.0   2025-08-29 [1] RSPM
-   pak           0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
-   pillar        1.11.1  2025-09-17 [1] RSPM
-   pkgbuild      1.4.8   2025-05-26 [1] RSPM
-   pkgconfig     2.0.3   2019-09-22 [1] RSPM
-   pkgdown       2.2.1   2026-07-07 [1] RSPM
-   pkgload       1.5.3   2026-06-15 [1] RSPM
-   praise        1.0.0   2015-08-11 [1] RSPM
-   prettyunits   1.2.0   2023-09-24 [1] RSPM
-   processx      3.9.0   2026-04-22 [1] RSPM
-   profvis       0.4.0   2024-09-20 [1] RSPM
-   promises      1.5.0   2025-11-01 [1] RSPM
-   ps            1.9.3   2026-04-20 [1] RSPM
-   purrr         1.2.2   2026-04-10 [1] RSPM
-   R6            2.6.1   2025-02-15 [1] RSPM
-   ragg          1.5.2   2026-03-23 [1] RSPM
-   rappdirs      0.3.4   2026-01-17 [1] RSPM
-   rcmdcheck     1.4.0   2021-09-27 [1] RSPM
-   Rcpp          1.1.2   2026-07-05 [1] RSPM
-   rdtools       0.1.0   2026-07-16 [1] RSPM
-   rex           1.2.2   2026-03-28 [1] RSPM
-   rlang         1.3.0   2026-07-05 [1] RSPM
-   rmarkdown     2.32    2026-09-01 [1] RSPM
-   roxygen2      8.1.1   2026-10-08 [1] RSPM
-   rprojroot     2.1.1   2025-08-26 [1] RSPM
-   rstudioapi    0.19.0  2026-06-11 [1] RSPM
-   rversions     3.0.0   2025-10-09 [1] RSPM
-   sass          0.4.10  2025-04-11 [1] RSPM
-   sessioninfo   1.2.4   2026-06-04 [1] RSPM
-   shiny         1.14.0  2026-06-21 [1] RSPM
-   sourcetools   0.1.7-2 2026-03-28 [1] RSPM
-   stringi       1.8.9   2026-08-04 [1] RSPM
-   sys           3.4.3   2024-10-04 [1] RSPM
-   systemfonts   1.3.2   2026-03-05 [1] RSPM
-   testthat      3.3.2   2026-01-11 [1] RSPM
-   textshaping   1.0.5   2026-03-06 [1] RSPM
-   tibble        3.3.1   2026-01-11 [1] RSPM
-   tidyselect    1.2.1   2024-03-11 [1] RSPM
-   tinytex       0.61    2026-09-17 [1] RSPM
-   urlchecker    2.0.0   2026-07-08 [1] RSPM
-   usethis       3.2.2   2026-09-10 [1] RSPM
-   utf8          1.2.6   2025-06-08 [1] RSPM
-   vctrs         0.7.3   2026-04-11 [1] RSPM
-   waldo         0.6.2   2025-07-11 [1] RSPM
-   whisker       0.4.1   2022-12-05 [1] RSPM
-   withr         3.0.3   2026-06-19 [1] RSPM
-   xfun          0.62    2026-10-16 [1] RSPM
-   xml2          1.6.0   2026-06-22 [1] RSPM
-   xopen         1.0.1   2024-04-25 [1] RSPM
-   xtable        1.8-8   2026-02-22 [1] RSPM
-   yaml          2.3.12  2025-12-10 [1] RSPM
-   zip           3.0.2   2026-08-04 [1] RSPM
+ package     * version date (UTC) lib source
+ askpass       1.2.1   2024-10-04 [1] RSPM
+ cli           3.6.6   2026-04-09 [1] RSPM
+ clipr         0.8.1   2026-05-25 [1] RSPM
+ covr          3.6.5   2025-11-09 [1] RSPM
+ crayon        1.5.3   2024-06-20 [1] RSPM
+ credentials   2.0.3   2025-09-12 [1] RSPM
+ curl          8.1.0   2026-10-14 [1] RSPM
+ desc          1.4.3   2023-12-10 [1] RSPM
+ digest        0.6.39  2025-11-19 [1] RSPM
+ dplyr         1.2.1   2026-04-03 [1] RSPM
+ fs            2.1.0   2026-04-18 [1] RSPM
+ generics      0.1.4   2025-05-09 [1] RSPM
+ gert          2.5.0   2026-10-14 [1] RSPM
+ gh            1.6.1   2026-07-20 [1] RSPM
+ gitcreds      0.1.2   2022-09-08 [1] RSPM
+ glue          1.8.1   2026-04-17 [1] RSPM
+ httr          1.4.9   2026-09-01 [1] RSPM
+ httr2         1.3.0   2026-07-13 [1] RSPM
+ ini           0.3.1   2018-05-20 [1] RSPM
+ jsonlite      2.0.0   2025-03-27 [1] RSPM
+ lifecycle     1.0.5   2026-01-08 [1] RSPM
+ magrittr      2.0.5   2026-04-04 [1] RSPM
+ mime          0.13    2025-03-17 [1] RSPM
+ openssl       2.4.2   2026-06-09 [1] RSPM
+ pak           0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
+ pillar        1.11.1  2025-09-17 [1] RSPM
+ pkgconfig     2.0.3   2019-09-22 [1] RSPM
+ purrr         1.2.2   2026-04-10 [1] RSPM
+ R6            2.6.1   2025-02-15 [1] RSPM
+ rappdirs      0.3.4   2026-01-17 [1] RSPM
+ rex           1.2.2   2026-03-28 [1] RSPM
+ rlang         1.3.0   2026-07-05 [1] RSPM
+ rprojroot     2.1.1   2025-08-26 [1] RSPM
+ rstudioapi    0.19.0  2026-06-11 [1] RSPM
+ sys           3.4.3   2024-10-04 [1] RSPM
+ tibble        3.3.1   2026-01-11 [1] RSPM
+ tidyselect    1.2.1   2024-03-11 [1] RSPM
+ usethis       3.2.2   2026-09-10 [1] RSPM
+ utf8          1.2.6   2025-06-08 [1] RSPM
+ vctrs         0.7.3   2026-04-11 [1] RSPM
+ whisker       0.4.1   2022-12-05 [1] RSPM
+ withr         3.0.3   2026-06-19 [1] RSPM
+ yaml          2.3.12  2025-12-10 [1] RSPM
+ zip           3.0.2   2026-08-04 [1] RSPM
 
  [1] /home/runner/work/_temp/Library
- [2] /opt/R/4.6.1/lib/R/library
-
- R ── Package was removed from disk.
+ [2] /opt/R/4.6.2/lib/R/library
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
-</details></section></main><!-- /main --><script>
+</details>
+</section>
+
+</main> <!-- /main -->
+<script>
 // Quarto doesn't add an `active` class to the current page's navbar link in
 // this setup, so do it ourselves: match each top-level navbar link's path
 // against the current page and mark it.
@@ -636,17 +751,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-</script><!-- This is for site analytics. --><!-- 
+</script>
+<!-- This is for site analytics. -->
+
+<!-- 
 Include the domain in the URL reported in goatcounter's dashboard.
 This is needed to separate subdomains that would point to the same page name, e.g.
 "palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
 
 https://goatcounter.com/help/domains
-  --><script>
+  -->
+<script>
     window.goatcounter = {
         path: function (p) { return location.host + p }
     }
-</script><script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><script>
+</script>
+
+<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and
   //  2) turning each category badge into a link that opens the list filtered by
@@ -686,7 +808,8 @@ https://goatcounter.com/help/domains
       });
     });
   })();
-</script><script id="quarto-html-after-body" type="application/javascript">
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
@@ -1080,18 +1203,22 @@ https://goatcounter.com/help/domains
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
+<p>Supported by the <a class="footer-sponsor" href="https://www.software.ac.uk/" target="_blank">Institute for Research Software</a> (2026–2028)</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
+
 
 
 </body></html>
