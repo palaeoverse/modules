@@ -35,19 +35,84 @@ editor:
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 
-## Heading 1
+## Introduction
 
-Text
+In this exercise, you will use **palaeoverse** to explore latitudinal trends in Phanerozoic reefs. Along the way, you will meet the functions you need for a typical palaeobiological workflow: exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.
 
-::: {.callout-note}
-## Citing palaeoverse
+::: {.callout-tip title="How the exercises work"}
+You will see **Exercise** boxes throughout this document. Run the code in your own R session as you go.
 
-A quick note on behalf of the developers. If you use *palaeoverse* in your research, please cite the [associated publication](https://doi.org/10.1111/2041-210X.14099). Citations are one of the main ways our work is acknowledged, and they help keep the package maintained and improved ([read more on this topic](https://doi.org/10.1038/s41559-023-02008-w)). You can access the appropriate citation via:
+- **Questions:** work out your answer in R first, then click the *Answers* box beneath the questions to check it.
+- **Hints and solutions:** click the boxes labelled *Hint* or *Solution* to reveal them. Try the task yourself first.
+- **Your turn:** code chunks marked `___` are incomplete. Replace each `___` before running them.
+:::
+
+## Setting up
+
+Load **palaeoverse**. If you have not yet installed it, see [Introduction to the palaeoverse R package](introduction.qmd).
 
 ```{r}
-#| label: cite-palaeoverse
+#| label: load-library
+
+library(palaeoverse)
+```
+
+## The `reefs` dataset
+
+Functions in **palaeoverse** are designed around the assumption that your data are stored in an occurrence `data.frame`, which is the expected input for most functions. The package includes two example occurrence datasets from different data sources: `tetrapods` and `reefs`. In this exercise, we will be using `reefs`, a compilation of Phanerozoic reef occurrences (*n* = `r nrow(palaeoverse::reefs)`) from the [PaleoReefs Database](https://www.paleo-reefs.pal.uni-erlangen.de) (Kiessling & Krause, 2022).
+
+```{r}
+#| label: load-reefs
+
+# Load the dataset
+data(reefs)
+# View the first five rows
+head(reefs)
+```
+
+Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset are available via the usual documentation call:
+
+```{r}
+#| label: reefs-help
 #| eval: false
 
-citation("palaeoverse")
+# Call documentation for dataset
+?reefs
+# You can also use
+help(reefs)
 ```
+
+## Let's begin!
+
+Reefs have long been considered good tracers of past tropical and subtropical conditions (Kiessling, 2001; Perrin & Kiessling, 2010). More specifically, their distribution has historically been used to infer the latitudinal extent of tropical and subtropical climatic conditions in deep time. This is a bit of an oversimplification given all we know about modern reef systems and their engineers. However, for the purpose of this example, let's not get weighed down by the finer details.
+
+We will use the `reefs` dataset to examine latitudinal trends in Phanerozoic reefs. Before conducting any analyses, it is always a good idea to explore your data and understand what you are working with.
+
+::: {.callout-caution title="Exercise 1: Know your data" icon=false}
+Use `nrow()`, `ncol()`, and `?reefs` to answer the following.
+
+1. How many rows does `reefs` have?
+2. How many columns does `reefs` have?
+3. What does each row of `reefs` represent?
+4. True or false: the `reefs` dataset tells us how many species lived in each reef.
+
+::::: {.callout-tip collapse="true" title="Answers"}
+1. `r nrow(reefs)`
+2. `r ncol(reefs)`
+3. A whole reef (an ecosystem).
+4. False. Each row describes a reef as a whole, not all the species within it.
+:::::
 :::
+
+Not bad (*n* = `r nrow(palaeoverse::reefs)`), that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in `tetrapods`. But how much does this vary across time? We can make use of the `group_apply()` wrapper function to run a function across subsets of data.
+
+```{r}
+#| label: group-apply-interval
+
+# How many reefs per interval?
+# Let's group by the interval column to test
+reef_counts <- group_apply(occdf = reefs, group = "interval", fun = nrow)
+head(reef_counts)
+```
+
+Oh dear, we have just hit a common issue: our reef data do not conform to a common time scale. Some reefs are resolved to stage level, while others are resolved to a coarser or finer temporal resolution. In some instances, regional names are used, while international names are used in others. This makes comparisons through time challenging.

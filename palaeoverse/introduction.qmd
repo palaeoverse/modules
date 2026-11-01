@@ -37,13 +37,13 @@ editor:
 
 # Why use palaeoverse
 
-Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions, which are often rewritten from scratch for every project.
+Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.
 
 The **palaeoverse** R package aims to make such efforts more reusable, reproducible, and readable by:
 
 - Replacing long, bespoke scripts with a few clear lines of code
-- Using consistent function names, arguments and outputs so that scripts are easy to follow and share
-- Providing well-documented, tested and peer-reviewed functions that are transparent and robust
+- Using consistent function names, arguments, and outputs so that scripts are easy to follow and share
+- Providing well-documented, tested, and peer-reviewed functions that are transparent and robust
 
 # Design
 
@@ -56,14 +56,14 @@ Most functions in **palaeoverse** take an occurrence `data.frame` as input, so t
 ::: {.callout-note}
 ## What is an occurrence dataset?
 
-In an occurrence dataset, each row is a single record of something present at a particular place and time. That "something" is usually a taxon, but it does not have to be. For example, in the in-built `reefs` dataset, each row is a fossil reef rather than a species.
+In an occurrence dataset, each row is a single record of something present at a particular place and time. That "something" is usually a taxon, but it does not have to be. For example, in **palaeoverse's** in-built `reefs` dataset, each row is a fossil reef rather than a species.
 
 Occurrence data typically include columns describing:
 
-- *Taxonomy* (e.g. accepted name, genus, and family)
-- *Age* (e.g. maximum and minimum ages or named intervals)
-- *Location* (e.g. longitude and latitude)
-- *Additional context* (formation, collection, or reference)
+- Identity, what the entity represents, such as taxonomy (e.g. accepted name, genus, and family)
+- Age (e.g. maximum and minimum ages or named intervals)
+- Location (e.g. longitude and latitude)
+- Additional context (formation, collection, or reference)
 
 It could look something a little like this:
 
@@ -77,7 +77,7 @@ It could look something a little like this:
 
 ## Modular
 
-Each function in **palaeoverse** does one job well. Use one on its own, or chain several together into a full workflow.
+Each function in **palaeoverse** does one job well. You can use one on its own, or chain several together into a full workflow.
 
 ```{r}
 #| label: modular
@@ -96,7 +96,7 @@ tetrapods |>
 
 ## Flexible
 
-Functions in **palaeoverse** are not tied to a single source such as the [Paleobiology Database](https://paleobiodb.org/#/). Column names are generally arguments rather than fixed requirements, so data from any source can be used with ease.
+Functions in **palaeoverse** are not tied to a single source such as the [Paleobiology Database](https://paleobiodb.org/#/). Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.
 
 ```{r}
 #| label: flexible
@@ -106,74 +106,20 @@ Functions in **palaeoverse** are not tied to a single source such as the [Paleob
 library(palaeoverse)
 # Get example data
 data(tetrapods)
-# Get time bins
-bins <- time_bins(interval = "Phanerozoic", rank = "stage")
-# Bin data temporally
-tetrapods |>
-  bin_time(bins = bins, method = "mid")
+# Get unique species
+tax_unique(occdf = tetrapods, genus = "genus", family = "family", 
+           order = "order", class = "class", name = "accepted_name")
 ```
 
 # Applications
 
-**palaeoverse** can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography. A preview of this is provided below, but the module exercises ([Exercise 1: Tetrapod biodiversity](tetrapod-biodiversity.qmd), [Exercise 2: Phanerozoic reefs](phanerozoic-reefs.qmd)) will expose you to the full functionality and use cases of **palaeoverse** functions.
+**palaeoverse** can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.
 
-## Cleaning and standardising data
+Minimal examples of potential applications are provided below, but the module exercises ([Exercise 1: Tetrapod biodiversity](tetrapod-biodiversity.qmd), [Exercise 2: Phanerozoic reefs](phanerozoic-reefs.qmd)) will expose you to the full functionality and use cases of **palaeoverse** functions.
 
-Whether you are removing duplicates, standardising ages, checking taxonomic names for potential misspellings, **palaeoverse** can help support such tasks:
+## Exploring and summarising data
 
-```{r}
-#| label: check-names
-#| eval: false
-
-# Load library
-library(palaeoverse)
-# Get example data
-data(tetrapods)
-# Check for potential misspellings
-tax_check(tetrapods, name = "genus")
-```
-
-## Binning data
-
-Most diversity and biogeographic analyses require temporal and spatial units. The **palaeoverse** package provides functions to generate temporal and spatial bins, and bin data into those bins:
-
-```{r}
-#| label: bin-lat
-#| eval: false
-
-# Load library
-library(palaeoverse)
-# Get example data
-data(reefs)
-# Generate equal-area latitudinal bins
-bins <- lat_bins_area(n = 12, plot = TRUE)
-# Bin data
-bin_lat(reefs, bins)
-```
-
-![Equal-area latitudinal bins.](img/lat-bins.png)
-
-## Palaeogeographic reconstruction
-
-Research on the deep-time spatial distribution of biodiversity requires estimating where organisms were located at the time of deposition. The **palaeoverse** package can support such research:
-
-```{r}
-#| label: palaeorotate
-#| eval: false
-
-# Load library
-library(palaeoverse)
-# Get example data
-data(tetrapods)
-# Add midpoint age
-tetrapods$mid_ma <- (tetrapods$max_ma + tetrapods$min_ma) / 2
-# Bin data into equal-area hexagonal cells
-palaeorotate(tetrapods, age = "mid_ma", model = "PALEOMAP")
-```
-
-## Summarising data
-
-Several functions are included in **palaeoverse** to help users explore and understand their data better, such as estimating temporal and geographic ranges:
+**palaeoverse** includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:
 
 ```{r}
 #| label: temporal-range
@@ -193,6 +139,42 @@ tetrapods |>
 
 ![Temporal range of Carboniferous to Early Triassic tetrapods.](img/temporal-range.png)
 
+## Cleaning and harmonising data
+
+**palaeoverse** includes functions to support the cleaning and harmonising of data such as removing duplicates, standardising ages, and checking taxonomic names for potential misspellings:
+
+```{r}
+#| label: check-names
+#| eval: true
+
+# Load library
+library(palaeoverse)
+# Get example data
+data(tetrapods)
+# Check for potential misspellings
+tax_check(occdf = tetrapods, name = "genus")
+```
+
+## Preparing data for analyses
+
+**palaeoverse** includes functions to help prepare data for downstream analyses, such as reconstructing palaeogeographic distributions or temporally and spatially binning data:
+
+```{r}
+#| label: bin-lat
+#| eval: false
+
+# Load library
+library(palaeoverse)
+# Get example data
+data(reefs)
+# Generate equal-area latitudinal bins
+bins <- lat_bins_area(n = 12, plot = TRUE)
+# Bin data
+bin_lat(occdf = reefs, bins = bins)
+```
+
+![12 approximately equal-area latitudinal bins.](img/lat-bins.png)
+
 ::: {.callout-note}
 ## Where does palaeoverse fit?
 
@@ -201,14 +183,16 @@ Think of palaeoverse as the bridge between raw occurrence data and the analytica
 
 # Getting help
 
-Everyone gets stuck with using new (and familiar) tools from time-to-time, and knowing where to look is one of the most useful skills you can develop. As with most packages, *palaeoverse* has several layers of support, from built-in documentation to wider community support.
+Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, **palaeoverse** has several layers of support, from built-in documentation to wider community support.
 
-The *palaeoverse* [website](https://palaeoverse.palaeoverse.org) hosts the full function documentation, vignettes and updates on new releases. It is searchable and can be easier to browse than the help pages in R.
+The **palaeoverse** [website](https://palaeoverse.palaeoverse.org) hosts documentation for every function available, as well as vignettes (tutorials) demonstrating possible applications, and updates on new releases. It is a searchable resource and can be easier to navigate than the help pages in R.
 
 ![You can see all available functions and their documentation via the package's dedicated website [reference guide](https://palaeoverse.palaeoverse.org/reference/index.html).](img/palaeoverse-reference.png)
 
-If you are familiar with GitHub, you can also check existing issues within the dedicated [repository](https://github.com/palaeoverse/palaeoverse/), as someone may already have asked your question. If you cannot find an answer to your question, you can open an [issue](https://github.com/palaeoverse/palaeoverse/issues) on GitHub (see [best practises](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html)).
+If you are familiar with GitHub, you can search existing issues in the **palaeoverse** [repository](https://github.com/palaeoverse/palaeoverse/) to see whether someone has previously encountered the issue you are facing and whether it has already been addressed. If you cannot find an answer, you are welcome to [open an issue](https://github.com/palaeoverse/palaeoverse/issues) and include a minimal reproducible example (see [guidance on writing one](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html)).
 
 ::: {.callout-tip}
-GitHub can be a *scary* place if you are not familiar with it. So, you can also reach out by [email](mailto:info@palaeoverse.org) if you are facing difficulties or join our [Zulip](https://palaeoverse.org/zulip/join-zulip/), and raise a topic.
+GitHub can be a daunting place if you have not used it before. You are welcome to join our [Zulip](https://palaeoverse.org/zulip/join-zulip/) and create a topic under "Help".
+
+![You can [join](https://palaeoverse.org/zulip/join-zulip/) **palaeoverse**'s Zulip and ask for help if you are still stuck after reading the package documentation.](img/zulip.png)
 :::
