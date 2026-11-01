@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.10.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="Bethany J. Allen">
-<meta name="dcterms.date" content="2026-10-27">
+<meta name="dcterms.date" content="2026-11-01">
 
 <title>Introduction to the palaeoverse R package</title>
 <style>
@@ -81,14 +81,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8574e35074353e5de839972ed73d34f7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-e878736e7310bf45e68d1e79aa752b87.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-6681c478c33e242da69fb2b686d92b3e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-b2b2768555c38aa97cd9256688693622.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-6e7b361ac169d139da2377e97c4962aa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-b2b2768555c38aa97cd9256688693622.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-497f5b01c96b4e662609ea7464af8298.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-97bc12453193412ea4b6e690e5dd3011.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/palaeoverse/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with <em>palaeoverse</em></span></a>
+ <span class="menu-text">Getting started with palaeoverse</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -327,10 +327,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">3</span> Applications</a>
   <ul class="collapse">
-  <li><a href="#cleaning-and-standardising-data" id="toc-cleaning-and-standardising-data" class="nav-link" data-scroll-target="#cleaning-and-standardising-data"><span class="header-section-number">3.1</span> Cleaning and standardising data</a></li>
-  <li><a href="#binning-data" id="toc-binning-data" class="nav-link" data-scroll-target="#binning-data"><span class="header-section-number">3.2</span> Binning data</a></li>
-  <li><a href="#palaeogeographic-reconstruction" id="toc-palaeogeographic-reconstruction" class="nav-link" data-scroll-target="#palaeogeographic-reconstruction"><span class="header-section-number">3.3</span> Palaeogeographic reconstruction</a></li>
-  <li><a href="#summarising-data" id="toc-summarising-data" class="nav-link" data-scroll-target="#summarising-data"><span class="header-section-number">3.4</span> Summarising data</a></li>
+  <li><a href="#exploring-and-summarising-data" id="toc-exploring-and-summarising-data" class="nav-link" data-scroll-target="#exploring-and-summarising-data"><span class="header-section-number">3.1</span> Exploring and summarising data</a></li>
+  <li><a href="#cleaning-and-harmonising-data" id="toc-cleaning-and-harmonising-data" class="nav-link" data-scroll-target="#cleaning-and-harmonising-data"><span class="header-section-number">3.2</span> Cleaning and harmonising data</a></li>
+  <li><a href="#preparing-data-for-analyses" id="toc-preparing-data-for-analyses" class="nav-link" data-scroll-target="#preparing-data-for-analyses"><span class="header-section-number">3.3</span> Preparing data for analyses</a></li>
   </ul></li>
   <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help"><span class="header-section-number">4</span> Getting help</a></li>
   </ul>
@@ -365,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 27, 2026</p>
+      <p class="date">November 1, 2026</p>
     </div>
   </div>
   
@@ -395,12 +394,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 <section id="why-use-palaeoverse" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Why use palaeoverse</h1>
-<p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions, which are often rewritten from scratch for every project.</p>
+<p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.</p>
 <p>The <strong>palaeoverse</strong> R package aims to make such efforts more reusable, reproducible, and readable by:</p>
 <ul>
 <li>Replacing long, bespoke scripts with a few clear lines of code</li>
-<li>Using consistent function names, arguments and outputs so that scripts are easy to follow and share</li>
-<li>Providing well-documented, tested and peer-reviewed functions that are transparent and robust</li>
+<li>Using consistent function names, arguments, and outputs so that scripts are easy to follow and share</li>
+<li>Providing well-documented, tested, and peer-reviewed functions that are transparent and robust</li>
 </ul>
 </section>
 <section id="design" class="level1" data-number="2">
@@ -419,13 +418,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In an occurrence dataset, each row is a single record of something present at a particular place and time. That “something” is usually a taxon, but it does not have to be. For example, in the in-built <code>reefs</code> dataset, each row is a fossil reef rather than a species.</p>
+<p>In an occurrence dataset, each row is a single record of something present at a particular place and time. That “something” is usually a taxon, but it does not have to be. For example, in <strong>palaeoverse’s</strong> in-built <code>reefs</code> dataset, each row is a fossil reef rather than a species.</p>
 <p>Occurrence data typically include columns describing:</p>
 <ul>
-<li><em>Taxonomy</em> (e.g.&nbsp;accepted name, genus, and family)</li>
-<li><em>Age</em> (e.g.&nbsp;maximum and minimum ages or named intervals)</li>
-<li><em>Location</em> (e.g.&nbsp;longitude and latitude)</li>
-<li><em>Additional context</em> (formation, collection, or reference)</li>
+<li>Identity, what the entity represents, such as taxonomy (e.g.&nbsp;accepted name, genus, and family)</li>
+<li>Age (e.g.&nbsp;maximum and minimum ages or named intervals)</li>
+<li>Location (e.g.&nbsp;longitude and latitude)</li>
+<li>Additional context (formation, collection, or reference)</li>
 </ul>
 <p>It could look something a little like this:</p>
 <table class="caption-top table">
@@ -493,7 +492,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="modular" class="level2" data-number="2.2">
 <h2 data-number="2.2" data-anchor-id="modular"><span class="header-section-number">2.2</span> Modular</h2>
-<p>Each function in <strong>palaeoverse</strong> does one job well. Use one on its own, or chain several together into a full workflow.</p>
+<p>Each function in <strong>palaeoverse</strong> does one job well. You can use one on its own, or chain several together into a full workflow.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -508,88 +507,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="flexible" class="level2" data-number="2.3">
 <h2 data-number="2.3" data-anchor-id="flexible"><span class="header-section-number">2.3</span> Flexible</h2>
-<p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are generally arguments rather than fixed requirements, so data from any source can be used with ease.</p>
+<p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get time bins</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin data temporally</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique species</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_unique</span>(tetrapods, <span class="at">genus =</span> <span class="st">"genus"</span>, <span class="at">family =</span> <span class="st">"family"</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">order =</span> <span class="st">"order"</span>, <span class="at">class =</span> <span class="st">"class"</span>, <span class="at">name =</span> <span class="st">"accepted_name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="applications" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Applications</h1>
-<p><strong>palaeoverse</strong> can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography. A preview of this is provided below, but the module exercises (<a href="../../../training/modules-dev/palaeoverse/tetrapod-biodiversity.html">Exercise 1: Tetrapod biodiversity</a>, <a href="../../../training/modules-dev/palaeoverse/phanerozoic-reefs.html">Exercise 2: Phanerozoic reefs</a>) will expose you to the full functionality and use cases of <strong>palaeoverse</strong> functions.</p>
-<section id="cleaning-and-standardising-data" class="level2" data-number="3.1">
-<h2 data-number="3.1" data-anchor-id="cleaning-and-standardising-data"><span class="header-section-number">3.1</span> Cleaning and standardising data</h2>
-<p>Whether you are removing duplicates, standardising ages, checking taxonomic names for potential misspellings, <strong>palaeoverse</strong> can help support such tasks:</p>
+<p><strong>palaeoverse</strong> can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.</p>
+<p>Minimal examples of potential applications are provided below, but the module exercises (<a href="../../../training/modules-dev/palaeoverse/tetrapod-biodiversity.html">Exercise 1: Tetrapod biodiversity</a>, <a href="../../../training/modules-dev/palaeoverse/phanerozoic-reefs.html">Exercise 2: Phanerozoic reefs</a>) will expose you to the full functionality and use cases of <strong>palaeoverse</strong> functions.</p>
+<section id="exploring-and-summarising-data" class="level2" data-number="3.1">
+<h2 data-number="3.1" data-anchor-id="exploring-and-summarising-data"><span class="header-section-number">3.1</span> Exploring and summarising data</h2>
+<p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for potential misspellings</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="binning-data" class="level2" data-number="3.2">
-<h2 data-number="3.2" data-anchor-id="binning-data"><span class="header-section-number">3.2</span> Binning data</h2>
-<p>Most diversity and biogeographic analyses require temporal and spatial units. The <strong>palaeoverse</strong> package provides functions to generate temporal and spatial bins, and bin data into those bins:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin data</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_lat</span>(reefs, bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/lat-bins.png" class="img-fluid figure-img"></p>
-<figcaption>Equal-area latitudinal bins.</figcaption>
-</figure>
-</div>
-</section>
-<section id="palaeogeographic-reconstruction" class="level2" data-number="3.3">
-<h2 data-number="3.3" data-anchor-id="palaeogeographic-reconstruction"><span class="header-section-number">3.3</span> Palaeogeographic reconstruction</h2>
-<p>Research on the deep-time spatial distribution of biodiversity requires estimating where organisms were located at the time of deposition. The <strong>palaeoverse</strong> package can support such research:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add midpoint age</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>mid_ma <span class="ot">&lt;-</span> (tetrapods<span class="sc">$</span>max_ma <span class="sc">+</span> tetrapods<span class="sc">$</span>min_ma) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin data into equal-area hexagonal cells</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">palaeorotate</span>(tetrapods, <span class="at">age =</span> <span class="st">"mid_ma"</span>, <span class="at">model =</span> <span class="st">"PALEOMAP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="summarising-data" class="level2" data-number="3.4">
-<h2 data-number="3.4" data-anchor-id="summarising-data"><span class="header-section-number">3.4</span> Summarising data</h2>
-<p>Several functions are included in <strong>palaeoverse</strong> to help users explore and understand their data better, such as estimating temporal and geographic ranges:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate temporal range of taxa</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop NAs</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot temporal range</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate temporal range of taxa</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop NAs</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot temporal range</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/temporal-range.png" class="img-fluid figure-img"></p>
 <figcaption>Temporal range of Carboniferous to Early Triassic tetrapods.</figcaption>
+</figure>
+</div>
+</section>
+<section id="cleaning-and-harmonising-data" class="level2" data-number="3.2">
+<h2 data-number="3.2" data-anchor-id="cleaning-and-harmonising-data"><span class="header-section-number">3.2</span> Cleaning and harmonising data</h2>
+<p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates, standardising ages, and checking taxonomic names for potential misspellings:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for potential misspellings</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$synonyms
+  group     greater     lesser count_greater count_lesser
+1     D Dvinosaurus Dinosaurus            23            2
+2     V   Varanopus   Varanops             5            3
+
+$non_letter_name
+NULL
+
+$non_letter_group
+NULL</code></pre>
+</div>
+</div>
+</section>
+<section id="preparing-data-for-analyses" class="level2" data-number="3.3">
+<h2 data-number="3.3" data-anchor-id="preparing-data-for-analyses"><span class="header-section-number">3.3</span> Preparing data for analyses</h2>
+<p><strong>palaeoverse</strong> includes functions to help prepare data for downstream analyses, such as reconstructing palaeogeographic distributions or temporally and spatially binning data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin data</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_lat</span>(<span class="at">occdf =</span> reefs, <span class="at">bins =</span> bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/lat-bins.png" class="img-fluid figure-img"></p>
+<figcaption>12 approximately equal-area latitudinal bins.</figcaption>
 </figure>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -609,15 +605,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="getting-help" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Getting help</h1>
-<p>Everyone gets stuck with using new (and familiar) tools from time-to-time, and knowing where to look is one of the most useful skills you can develop. As with most packages, <em>palaeoverse</em> has several layers of support, from built-in documentation to wider community support.</p>
-<p>The <em>palaeoverse</em> <a href="https://palaeoverse.palaeoverse.org">website</a> hosts the full function documentation, vignettes and updates on new releases. It is searchable and can be easier to browse than the help pages in R.</p>
+<p>Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, <strong>palaeoverse</strong> has several layers of support, from built-in documentation to wider community support.</p>
+<p>The <strong>palaeoverse</strong> <a href="https://palaeoverse.palaeoverse.org">website</a> hosts documentation for every function available, as well as vignettes (tutorials) demonstrating possible applications, and updates on new releases. It is a searchable resource and can be easier to navigate than the help pages in R.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/palaeoverse-reference.png" class="img-fluid figure-img"></p>
 <figcaption>You can see all available functions and their documentation via the package’s dedicated website <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a>.</figcaption>
 </figure>
 </div>
-<p>If you are familiar with GitHub, you can also check existing issues within the dedicated <a href="https://github.com/palaeoverse/palaeoverse/">repository</a>, as someone may already have asked your question. If you cannot find an answer to your question, you can open an <a href="https://github.com/palaeoverse/palaeoverse/issues">issue</a> on GitHub (see <a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html">best practises</a>).</p>
+<p>If you are familiar with GitHub, you can search existing issues in the <strong>palaeoverse</strong> <a href="https://github.com/palaeoverse/palaeoverse/">repository</a> to see whether someone has previously encountered the issue you are facing and whether it has already been addressed. If you cannot find an answer, you are welcome to <a href="https://github.com/palaeoverse/palaeoverse/issues">open an issue</a> and include a minimal reproducible example (see <a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html">guidance on writing one</a>).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -628,7 +624,13 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>GitHub can be a <em>scary</em> place if you are not familiar with it. So, you can also reach out by <a href="mailto:info@palaeoverse.org">email</a> if you are facing difficulties or join our <a href="https://palaeoverse.org/zulip/join-zulip/">Zulip</a>, and raise a topic.</p>
+<p>GitHub can be a daunting place if you have not used it before. You are welcome to join our <a href="https://palaeoverse.org/zulip/join-zulip/">Zulip</a> and create a topic under “Help”.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/zulip.png" class="img-fluid figure-img"></p>
+<figcaption>You can <a href="https://palaeoverse.org/zulip/join-zulip/">join</a> <strong>palaeoverse</strong>’s Zulip and ask for help if you are still stuck after reading the package documentation.</figcaption>
+</figure>
+</div>
 </div>
 </div>
 
@@ -637,7 +639,7 @@ Tip
 <summary>Session info</summary>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
- version  R version 4.6.1 (2026-06-24)
+ version  R version 4.6.2 (2026-10-29)
  os       Ubuntu 26.04.1 LTS
  system   x86_64, linux-gnu
  ui       X11
@@ -645,15 +647,15 @@ Tip
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-27
+ date     2026-11-01
  pandoc   3.7.0.2 @ /usr/bin/pandoc
- quarto   1.10.19 @ /usr/local/bin/quarto
+ quarto   1.10.20 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  ! package     * version date (UTC) lib source
    ape           5.8-1   2024-12-16 [1] RSPM
    askpass       1.2.1   2024-10-04 [1] RSPM
-   class         7.3-23  2025-01-01 [2] CRAN (R 4.6.1)
+   class         7.3-24  2026-08-03 [2] CRAN (R 4.6.2)
    classInt      0.4-11  2025-01-08 [1] RSPM
    cli           3.6.6   2026-04-09 [1] RSPM
  R cpp11         &lt;NA&gt;    &lt;NA&gt;       [?] &lt;NA&gt;
@@ -671,13 +673,12 @@ Tip
    httr          1.4.9   2026-09-01 [1] RSPM
  R jsonify       &lt;NA&gt;    &lt;NA&gt;       [?] &lt;NA&gt;
    jsonlite      2.0.0   2025-03-27 [1] RSPM
-   KernSmooth    2.23-26 2025-01-01 [2] CRAN (R 4.6.1)
-   lattice       0.22-9  2026-02-09 [2] CRAN (R 4.6.1)
+   KernSmooth    2.23-27 2026-08-12 [2] CRAN (R 4.6.2)
+   lattice       0.23-1  2026-08-12 [2] CRAN (R 4.6.2)
    lifecycle     1.0.5   2026-01-08 [1] RSPM
    magrittr      2.0.5   2026-04-04 [1] RSPM
-   MASS          7.3-65  2025-02-28 [2] CRAN (R 4.6.1)
    mime          0.13    2025-03-17 [1] RSPM
-   nlme          3.1-169 2026-03-27 [2] CRAN (R 4.6.1)
+   nlme          3.1-171 2026-09-01 [2] CRAN (R 4.6.2)
    openssl       2.4.2   2026-06-09 [1] RSPM
    palaeoverse   1.5.0   2026-06-11 [1] RSPM
    pbapply       1.7-5   2026-09-01 [1] RSPM
@@ -707,7 +708,7 @@ Tip
    wk            0.9.5   2025-12-18 [1] RSPM
 
  [1] /home/runner/work/_temp/Library
- [2] /opt/R/4.6.1/lib/R/library
+ [2] /opt/R/4.6.2/lib/R/library
 
  R ── Package was removed from disk.
 
@@ -1202,8 +1203,8 @@ https://goatcounter.com/help/domains
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../training/modules-dev/palaeoverse/index.html" class="pagination-link" aria-label="Getting started with *palaeoverse*">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Getting started with <em>palaeoverse</em></span>
+      <a href="../../../training/modules-dev/palaeoverse/index.html" class="pagination-link" aria-label="Getting started with palaeoverse">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Getting started with palaeoverse</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1220,6 +1221,7 @@ https://goatcounter.com/help/domains
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
+<p>Supported by the <a class="footer-sponsor" href="https://www.software.ac.uk/" target="_blank">Institute for Research Software</a> (2026–2028)</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

@@ -7,12 +7,12 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.19">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.20">
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="Bethany J. Allen">
-  <meta name="dcterms.date" content="2026-10-27">
+  <meta name="dcterms.date" content="2026-11-01">
   <title>Exercise 2: Latitudinal trends in Phanerozoic reefs</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -198,6 +198,16 @@
     }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+  <style>
+  .reveal .slides section div.callout.callout-style-simple,
+  .reveal .slides section div.callout.callout-style-default { font-size: inherit; }
+  .reveal .slides section div.callout.callout-style-simple h1,
+  .reveal .slides section div.callout.callout-style-default h1 { font-size: var(--r-heading1-size); }
+  .reveal .slides section div.callout.callout-style-simple h2,
+  .reveal .slides section div.callout.callout-style-default h2 { font-size: var(--r-heading2-size); }
+  .reveal .slides section div.callout.callout-style-simple h3,
+  .reveal .slides section div.callout.callout-style-default h3 { font-size: var(--r-heading3-size); }
+  </style>
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-34/training/modules-dev/palaeoverse/img/palaeoverse-logo.png">
@@ -225,23 +235,186 @@ Bethany J. Allen
 </div>
 </div>
 
-  <p class="date">2026-10-27</p>
+  <p class="date">2026-11-01</p>
 </section>
 <section class="slide level2">
 
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 </section>
-<section id="heading-1" class="slide level2">
-<h2>Heading 1</h2>
-<p>Text</p>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<p>In this exercise, you will use <strong>palaeoverse</strong> to explore latitudinal trends in Phanerozoic reefs. Along the way, you will meet the functions you need for a typical palaeobiological workflow: exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.</p>
+<p>You will see <strong>Exercise</strong> boxes throughout this document.</p>
+<ul>
+<li><strong>Questions:</strong> work out your answer in R first, then click the “Answers” box beneath the questions to check it.</li>
+<li><strong>Hints and solutions:</strong> click the boxes labelled “Hint” or “Solution” to reveal them. <strong>Try the task yourself first!</strong></li>
+<li><strong>Your turn:</strong> code chunks marked <code>___</code> are incomplete. Replace each <code>___</code> before running them.</li>
+</ul>
+</section>
+<section id="setting-up" class="slide level2">
+<h2>Setting up</h2>
+<p>Load <strong>palaeoverse</strong>. If you have not yet installed it, see <a href="../../../training/modules-dev/palaeoverse/introduction.html">Introduction to the palaeoverse R package</a>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(palaeoverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb2-2" class="hljs-ln-code"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb2-3" class="hljs-ln-code"><a aria-label="3"></a><span class="co"># View the first five rows</span></span>
+<span id="cb2-4" class="hljs-ln-code"><a aria-label="4"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  r_number               name             formation   system         series
+1        1   Tilkideligi Tepe                       Triassic Upper Triassic
+2        2              Hydra Pantokrator Limestone Triassic Upper Triassic
+3        3 Shiraho, W-Pacific                        Neogene       Holocene
+4        4 Aksu-Terziler area                       Triassic Upper Triassic
+5        5    Adnet, Salzburg                       Triassic Upper Triassic
+6        6          Rotelwand                       Triassic Upper Triassic
+        interval   biota_main       biota_sec      lng     lat country
+1   lower Norian Calcisponges Stromatoporoids  30.3833 37.0333  Turkey
+2  upper Carnian       Corals    Calcisponges  23.6333 37.3833  Greece
+3         Recent       Corals           Algae 124.2500 24.3333 Pacific
+4       Tuvalian Calcisponges Stromatoporoids  31.0333 37.8000  Turkey
+5 upper Rhaetian       Corals    Calcisponges  13.1667 47.7000 Austria
+6       Rhaetian       Corals    Calcisponges  13.1833 47.7000 Austria
+                              authors
+1                          Riedel, P.
+2   Schafer, P., Senowbari-Daryan, B.
+3 Kayanne, H., Suzuki, A. &amp; Saito, H.
+4                          Riedel, P.
+5                         Schafer, P.
+6                         Schafer, P.
+                                                                                                                                                  title
+1                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+2                                                The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -
+3                                                                      Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+4                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+5  Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke, Salzburg)
+6 Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke,  Salzburg)
+  year
+1 1990
+2 1982
+3 1995
+4 1990
+5 1979
+6 1979</code></pre>
+</div>
+</div>
+<p>Functions in <strong>palaeoverse</strong> are designed around the assumption that your data are stored in an occurrence <code>data.frame</code>, which is the expected input for most functions. The package includes two example occurrence datasets from different data sources: <code>tetrapods</code> and <code>reefs</code>. In this exercise, we will be using <code>reefs</code>, a compilation of Phanerozoic reef occurrences (<em>n</em> = 4363) from the <a href="https://www.paleo-reefs.pal.uni-erlangen.de">PaleoReefs Database</a> (Kiessling &amp; Krause, 2022).</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb4-3"><a aria-label="3"></a><span class="co"># View the first five rows</span></span>
+<span id="cb4-4"><a aria-label="4"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  r_number               name             formation   system         series
+1        1   Tilkideligi Tepe                       Triassic Upper Triassic
+2        2              Hydra Pantokrator Limestone Triassic Upper Triassic
+3        3 Shiraho, W-Pacific                        Neogene       Holocene
+4        4 Aksu-Terziler area                       Triassic Upper Triassic
+5        5    Adnet, Salzburg                       Triassic Upper Triassic
+6        6          Rotelwand                       Triassic Upper Triassic
+        interval   biota_main       biota_sec      lng     lat country
+1   lower Norian Calcisponges Stromatoporoids  30.3833 37.0333  Turkey
+2  upper Carnian       Corals    Calcisponges  23.6333 37.3833  Greece
+3         Recent       Corals           Algae 124.2500 24.3333 Pacific
+4       Tuvalian Calcisponges Stromatoporoids  31.0333 37.8000  Turkey
+5 upper Rhaetian       Corals    Calcisponges  13.1667 47.7000 Austria
+6       Rhaetian       Corals    Calcisponges  13.1833 47.7000 Austria
+                              authors
+1                          Riedel, P.
+2   Schafer, P., Senowbari-Daryan, B.
+3 Kayanne, H., Suzuki, A. &amp; Saito, H.
+4                          Riedel, P.
+5                         Schafer, P.
+6                         Schafer, P.
+                                                                                                                                                  title
+1                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+2                                                The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -
+3                                                                      Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+4                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+5  Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke, Salzburg)
+6 Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke,  Salzburg)
+  year
+1 1990
+2 1982
+3 1995
+4 1990
+5 1979
+6 1979</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Call documentation for dataset</span></span>
+<span id="cb6-2"><a aria-label="2"></a>?reefs</span>
+<span id="cb6-3"><a aria-label="3"></a><span class="co"># You can also use</span></span>
+<span id="cb6-4"><a aria-label="4"></a><span class="fu">help</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset are available via the usual documentation call:</p>
+</section>
+<section id="lets-begin" class="slide level2">
+<h2>Let’s begin!</h2>
+<p>Reefs have long been considered good tracers of past tropical and subtropical conditions (Kiessling, 2001; Perrin &amp; Kiessling, 2010). More specifically, their distribution has historically been used to infer the latitudinal extent of tropical and subtropical climatic conditions in deep time. This is a bit of an oversimplification given all we know about modern reef systems and their engineers. However, for the purpose of this example, let’s not get weighed down by the finer details.</p>
+<p>We will use the <code>reefs</code> dataset to examine latitudinal trends in Phanerozoic reefs. Before conducting any analyses, it is always a good idea to explore your data and understand what you are working with.</p>
+<p>Use <code>nrow()</code>, <code>ncol()</code>, and <code>?reefs</code> to answer the following.</p>
+<ol type="1">
+<li>How many rows does <code>reefs</code> have?</li>
+<li>How many columns does <code>reefs</code> have?</li>
+<li>What does each row of <code>reefs</code> represent?</li>
+<li>True or false: the <code>reefs</code> dataset tells us how many species lived in each reef.</li>
+</ol>
 </section>
 <section class="slide level2">
-<h2>Citing palaeoverse</h2>
-<p>A quick note on behalf of the developers. If you use <em>palaeoverse</em> in your research, please cite the <a href="https://doi.org/10.1111/2041-210X.14099">associated publication</a>. Citations are one of the main ways our work is acknowledged, and they help keep the package maintained and improved (<a href="https://doi.org/10.1038/s41559-023-02008-w">read more on this topic</a>). You can access the appropriate citation via:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">citation</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h2>Let’s begin!</h2>
+<div title="Answers">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<p><strong>Answers</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<ol type="1">
+<li>4363</li>
+<li>14</li>
+<li>A whole reef (an ecosystem).</li>
+<li>False. Each row describes a reef as a whole, not all the species within it.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Let’s begin!</h2>
+<p>Not bad (<em>n</em> = 4363), that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in <code>tetrapods</code>. But how much does this vary across time? We can make use of the <code>group_apply()</code> wrapper function to run a function across subsets of data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="co"># How many reefs per interval?</span></span>
+<span id="cb7-2"><a aria-label="2"></a><span class="co"># Let's group by the interval column to test</span></span>
+<span id="cb7-3"><a aria-label="3"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb7-4"><a aria-label="4"></a><span class="fu">head</span>(reef_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  nrow                interval
+1    2       (early?) Toarcian
+2    1       Aalenian-Bajocian
+3    4       Aalenian/Bajocian
+4    1 Aalenian/lower Bajocian
+5    1               Abadehian
+6    6                Aeronian</code></pre>
+</div>
+</div>
+<p>Oh dear, we have just hit a common issue: our reef data do not conform to a common time scale. Some reefs are resolved to stage level, while others are resolved to a coarser or finer temporal resolution. In some instances, regional names are used, while international names are used in others. This makes comparisons through time challenging.</p>
 
 
 </section>

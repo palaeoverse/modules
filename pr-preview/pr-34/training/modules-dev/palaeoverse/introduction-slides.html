@@ -7,12 +7,12 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.19">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.20">
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="Bethany J. Allen">
-  <meta name="dcterms.date" content="2026-10-27">
+  <meta name="dcterms.date" content="2026-11-01">
   <title>Introduction to the palaeoverse R package</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -225,7 +225,7 @@ Bethany J. Allen
 </div>
 </div>
 
-  <p class="date">2026-10-27</p>
+  <p class="date">2026-11-01</p>
 </section>
 <section class="slide level2">
 
@@ -234,12 +234,12 @@ Bethany J. Allen
 </section>
 <section id="why-use-palaeoverse" class="title-slide slide level1 center" data-number="1">
 <h1><span class="header-section-number">1</span> Why use palaeoverse</h1>
-<p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions, which are often rewritten from scratch for every project.</p>
+<p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.</p>
 <p>The <strong>palaeoverse</strong> R package aims to make such efforts more reusable, reproducible, and readable by:</p>
 <ul>
 <li>Replacing long, bespoke scripts with a few clear lines of code</li>
-<li>Using consistent function names, arguments and outputs so that scripts are easy to follow and share</li>
-<li>Providing well-documented, tested and peer-reviewed functions that are transparent and robust</li>
+<li>Using consistent function names, arguments, and outputs so that scripts are easy to follow and share</li>
+<li>Providing well-documented, tested, and peer-reviewed functions that are transparent and robust</li>
 </ul>
 </section>
 
@@ -254,13 +254,13 @@ Bethany J. Allen
 </section>
 <section class="slide level2" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> What is an occurrence dataset?</h2>
-<p>In an occurrence dataset, each row is a single record of something present at a particular place and time. That “something” is usually a taxon, but it does not have to be. For example, in the in-built <code>reefs</code> dataset, each row is a fossil reef rather than a species.</p>
+<p>In an occurrence dataset, each row is a single record of something present at a particular place and time. That “something” is usually a taxon, but it does not have to be. For example, in <strong>palaeoverse’s</strong> in-built <code>reefs</code> dataset, each row is a fossil reef rather than a species.</p>
 <p>Occurrence data typically include columns describing:</p>
 <ul>
-<li><em>Taxonomy</em> (e.g.&nbsp;accepted name, genus, and family)</li>
-<li><em>Age</em> (e.g.&nbsp;maximum and minimum ages or named intervals)</li>
-<li><em>Location</em> (e.g.&nbsp;longitude and latitude)</li>
-<li><em>Additional context</em> (formation, collection, or reference)</li>
+<li>Identity, what the entity represents, such as taxonomy (e.g.&nbsp;accepted name, genus, and family)</li>
+<li>Age (e.g.&nbsp;maximum and minimum ages or named intervals)</li>
+<li>Location (e.g.&nbsp;longitude and latitude)</li>
+<li>Additional context (formation, collection, or reference)</li>
 </ul>
 <p>It could look something a little like this:</p>
 <table class="caption-top">
@@ -326,7 +326,7 @@ Bethany J. Allen
 </section>
 <section id="modular" class="slide level2" data-number="2.3">
 <h2><span class="header-section-number">2.3</span> Modular</h2>
-<p>Each function in <strong>palaeoverse</strong> does one job well. Use one on its own, or chain several together into a full workflow.</p>
+<p>Each function in <strong>palaeoverse</strong> does one job well. You can use one on its own, or chain several together into a full workflow.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
 <span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -341,93 +341,101 @@ Bethany J. Allen
 </section>
 <section id="flexible" class="slide level2" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> Flexible</h2>
-<p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are generally arguments rather than fixed requirements, so data from any source can be used with ease.</p>
+<p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
 <span id="cb2-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb2-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
 <span id="cb2-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb2-5"><a aria-label="5"></a><span class="co"># Get time bins</span></span>
-<span id="cb2-6"><a aria-label="6"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb2-7"><a aria-label="7"></a><span class="co"># Bin data temporally</span></span>
-<span id="cb2-8"><a aria-label="8"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb2-9"><a aria-label="9"></a>  <span class="fu">bin_time</span>(<span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a aria-label="5"></a><span class="co"># Get unique species</span></span>
+<span id="cb2-6"><a aria-label="6"></a><span class="fu">tax_unique</span>(tetrapods, <span class="at">genus =</span> <span class="st">"genus"</span>, <span class="at">family =</span> <span class="st">"family"</span>, </span>
+<span id="cb2-7"><a aria-label="7"></a>           <span class="at">order =</span> <span class="st">"order"</span>, <span class="at">class =</span> <span class="st">"class"</span>, <span class="at">name =</span> <span class="st">"accepted_name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section></section>
 <section>
 <section id="applications" class="title-slide slide level1 center" data-number="3">
 <h1><span class="header-section-number">3</span> Applications</h1>
-<p><strong>palaeoverse</strong> can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography. A preview of this is provided below, but the module exercises (<a href="../../../training/modules-dev/palaeoverse/tetrapod-biodiversity.html">Exercise 1: Tetrapod biodiversity</a>, <a href="../../../training/modules-dev/palaeoverse/phanerozoic-reefs.html">Exercise 2: Phanerozoic reefs</a>) will expose you to the full functionality and use cases of <strong>palaeoverse</strong> functions.</p>
+<p><strong>palaeoverse</strong> can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.</p>
+<p>Minimal examples of potential applications are provided below, but the module exercises (<a href="../../../training/modules-dev/palaeoverse/tetrapod-biodiversity.html">Exercise 1: Tetrapod biodiversity</a>, <a href="../../../training/modules-dev/palaeoverse/phanerozoic-reefs.html">Exercise 2: Phanerozoic reefs</a>) will expose you to the full functionality and use cases of <strong>palaeoverse</strong> functions.</p>
 </section>
-<section id="cleaning-and-standardising-data" class="slide level2" data-number="3.1">
-<h2><span class="header-section-number">3.1</span> Cleaning and standardising data</h2>
-<p>Whether you are removing duplicates, standardising ages, checking taxonomic names for potential misspellings, <strong>palaeoverse</strong> can help support such tasks:</p>
+<section id="exploring-and-summarising-data" class="slide level2" data-number="3.1">
+<h2><span class="header-section-number">3.1</span> Exploring and summarising data</h2>
+<p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
 <span id="cb3-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb3-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
 <span id="cb3-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb3-5"><a aria-label="5"></a><span class="co"># Check for potential misspellings</span></span>
-<span id="cb3-6"><a aria-label="6"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a aria-label="5"></a><span class="co"># Estimate temporal range of taxa</span></span>
+<span id="cb3-6"><a aria-label="6"></a>tetrapods <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a aria-label="7"></a>  <span class="co"># Drop NAs</span></span>
+<span id="cb3-8"><a aria-label="8"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a aria-label="9"></a>  <span class="co"># Plot temporal range</span></span>
+<span id="cb3-10"><a aria-label="10"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="binning-data" class="slide level2" data-number="3.2">
-<h2><span class="header-section-number">3.2</span> Binning data</h2>
-<p>Most diversity and biogeographic analyses require temporal and spatial units. The <strong>palaeoverse</strong> package provides functions to generate temporal and spatial bins, and bin data into those bins:</p>
+
+<img data-src="img/temporal-range.png" class="r-stretch quarto-figure-center"><p class="caption">Temporal range of Carboniferous to Early Triassic tetrapods.</p></section>
+<section id="cleaning-and-harmonising-data" class="slide level2" data-number="3.2">
+<h2><span class="header-section-number">3.2</span> Cleaning and harmonising data</h2>
+<p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates, standardising ages, and checking taxonomic names for potential misspellings:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
 <span id="cb4-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb4-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
-<span id="cb4-4"><a aria-label="4"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb4-5"><a aria-label="5"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
-<span id="cb4-6"><a aria-label="6"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-7"><a aria-label="7"></a><span class="co"># Bin data</span></span>
-<span id="cb4-8"><a aria-label="8"></a><span class="fu">bin_lat</span>(reefs, bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<span id="cb4-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb4-5"><a aria-label="5"></a><span class="co"># Check for potential misspellings</span></span>
+<span id="cb4-6"><a aria-label="6"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$synonyms
+  group     greater     lesser count_greater count_lesser
+1     D Dvinosaurus Dinosaurus            23            2
+2     V   Varanopus   Varanops             5            3
 
-<img data-src="img/lat-bins.png" class="r-stretch quarto-figure-center"><p class="caption">Equal-area latitudinal bins.</p></section>
-<section id="palaeogeographic-reconstruction" class="slide level2" data-number="3.3">
-<h2><span class="header-section-number">3.3</span> Palaeogeographic reconstruction</h2>
-<p>Research on the deep-time spatial distribution of biodiversity requires estimating where organisms were located at the time of deposition. The <strong>palaeoverse</strong> package can support such research:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb5-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
-<span id="cb5-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb5-5"><a aria-label="5"></a><span class="co"># Add midpoint age</span></span>
-<span id="cb5-6"><a aria-label="6"></a>tetrapods<span class="sc">$</span>mid_ma <span class="ot">&lt;-</span> (tetrapods<span class="sc">$</span>max_ma <span class="sc">+</span> tetrapods<span class="sc">$</span>min_ma) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb5-7"><a aria-label="7"></a><span class="co"># Bin data into equal-area hexagonal cells</span></span>
-<span id="cb5-8"><a aria-label="8"></a><span class="fu">palaeorotate</span>(tetrapods, <span class="at">age =</span> <span class="st">"mid_ma"</span>, <span class="at">model =</span> <span class="st">"PALEOMAP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+$non_letter_name
+NULL
+
+$non_letter_group
+NULL</code></pre>
+</div>
 </div>
 </section>
-<section id="summarising-data" class="slide level2" data-number="3.4">
-<h2><span class="header-section-number">3.4</span> Summarising data</h2>
-<p>Several functions are included in <strong>palaeoverse</strong> to help users explore and understand their data better, such as estimating temporal and geographic ranges:</p>
+<section id="preparing-data-for-analyses" class="slide level2" data-number="3.3">
+<h2><span class="header-section-number">3.3</span> Preparing data for analyses</h2>
+<p><strong>palaeoverse</strong> includes functions to help prepare data for downstream analyses, such as reconstructing palaeogeographic distributions or temporally and spatially binning data:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
 <span id="cb6-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb6-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
-<span id="cb6-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb6-5"><a aria-label="5"></a><span class="co"># Estimate temporal range of taxa</span></span>
-<span id="cb6-6"><a aria-label="6"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a aria-label="7"></a>  <span class="co"># Drop NAs</span></span>
-<span id="cb6-8"><a aria-label="8"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
-<span id="cb6-9"><a aria-label="9"></a>  <span class="co"># Plot temporal range</span></span>
-<span id="cb6-10"><a aria-label="10"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-4"><a aria-label="4"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb6-5"><a aria-label="5"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
+<span id="cb6-6"><a aria-label="6"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-7"><a aria-label="7"></a><span class="co"># Bin data</span></span>
+<span id="cb6-8"><a aria-label="8"></a><span class="fu">bin_lat</span>(<span class="at">occdf =</span> reefs, <span class="at">bins =</span> bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
-<img data-src="img/temporal-range.png" class="r-stretch quarto-figure-center"><p class="caption">Temporal range of Carboniferous to Early Triassic tetrapods.</p></section>
-<section class="slide level2" data-number="3.5">
-<h2><span class="header-section-number">3.5</span> Where does palaeoverse fit?</h2>
+<img data-src="img/lat-bins.png" class="r-stretch quarto-figure-center"><p class="caption">12 approximately equal-area latitudinal bins.</p></section>
+<section class="slide level2" data-number="3.4">
+<h2><span class="header-section-number">3.4</span> Where does palaeoverse fit?</h2>
 <p>Think of palaeoverse as the bridge between raw occurrence data and the analytical methods you want to apply.</p>
 </section></section>
 <section id="getting-help" class="title-slide slide level1 center" data-number="4">
 <h1><span class="header-section-number">4</span> Getting help</h1>
-<p>Everyone gets stuck with using new (and familiar) tools from time-to-time, and knowing where to look is one of the most useful skills you can develop. As with most packages, <em>palaeoverse</em> has several layers of support, from built-in documentation to wider community support.</p>
-<p>The <em>palaeoverse</em> <a href="https://palaeoverse.palaeoverse.org">website</a> hosts the full function documentation, vignettes and updates on new releases. It is searchable and can be easier to browse than the help pages in R.</p>
-
-<img data-src="img/palaeoverse-reference.png" class="r-stretch quarto-figure-center"><p class="caption">You can see all available functions and their documentation via the package’s dedicated website <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a>.</p><p>If you are familiar with GitHub, you can also check existing issues within the dedicated <a href="https://github.com/palaeoverse/palaeoverse/">repository</a>, as someone may already have asked your question. If you cannot find an answer to your question, you can open an <a href="https://github.com/palaeoverse/palaeoverse/issues">issue</a> on GitHub (see <a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html">best practises</a>).</p>
-<p>GitHub can be a <em>scary</em> place if you are not familiar with it. So, you can also reach out by <a href="mailto:info@palaeoverse.org">email</a> if you are facing difficulties or join our <a href="https://palaeoverse.org/zulip/join-zulip/">Zulip</a>, and raise a topic.</p>
+<p>Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, <strong>palaeoverse</strong> has several layers of support, from built-in documentation to wider community support.</p>
+<p>The <strong>palaeoverse</strong> <a href="https://palaeoverse.palaeoverse.org">website</a> hosts documentation for every function available, as well as vignettes (tutorials) demonstrating possible applications, and updates on new releases. It is a searchable resource and can be easier to navigate than the help pages in R.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/palaeoverse-reference.png"></p>
+<figcaption>You can see all available functions and their documentation via the package’s dedicated website <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a>.</figcaption>
+</figure>
+</div>
+<p>If you are familiar with GitHub, you can search existing issues in the <strong>palaeoverse</strong> <a href="https://github.com/palaeoverse/palaeoverse/">repository</a> to see whether someone has previously encountered the issue you are facing and whether it has already been addressed. If you cannot find an answer, you are welcome to <a href="https://github.com/palaeoverse/palaeoverse/issues">open an issue</a> and include a minimal reproducible example (see <a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html">guidance on writing one</a>).</p>
+<p>GitHub can be a daunting place if you have not used it before. You are welcome to join our <a href="https://palaeoverse.org/zulip/join-zulip/">Zulip</a> and create a topic under “Help”.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/zulip.png"></p>
+<figcaption>You can <a href="https://palaeoverse.org/zulip/join-zulip/">join</a> <strong>palaeoverse</strong>’s Zulip and ask for help if you are still stuck after reading the package documentation.</figcaption>
+</figure>
+</div>
 
 
 </section>
