@@ -39,11 +39,11 @@ editor:
 
 In this exercise, you will use **palaeoverse** to explore latitudinal trends in Phanerozoic reefs. Along the way, you will meet the functions you need for a typical palaeobiological workflow: exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.
 
-::: {.callout-tip title="How the exercises work"}
-You will see **Exercise** boxes throughout this document. Run the code in your own R session as you go.
+::: {.callout-info title="How the exercises work"}
+You will see **Exercise** boxes throughout this document.
 
-- **Questions:** work out your answer in R first, then click the *Answers* box beneath the questions to check it.
-- **Hints and solutions:** click the boxes labelled *Hint* or *Solution* to reveal them. Try the task yourself first.
+- **Questions:** work out your answer in R first, then click the "Answers" box beneath the questions to check it.
+- **Hints and solutions:** click the boxes labelled "Hint" or "Solution" to reveal them. **Try the task yourself first!**
 - **Your turn:** code chunks marked `___` are incomplete. Replace each `___` before running them.
 :::
 
@@ -95,13 +95,13 @@ Use `nrow()`, `ncol()`, and `?reefs` to answer the following.
 2. How many columns does `reefs` have?
 3. What does each row of `reefs` represent?
 4. True or false: the `reefs` dataset tells us how many species lived in each reef.
+:::
 
-::::: {.callout-tip collapse="true" title="Answers"}
+::: {.callout-tip collapse="true" title="Answers"}
 1. `r nrow(reefs)`
 2. `r ncol(reefs)`
 3. A whole reef (an ecosystem).
 4. False. Each row describes a reef as a whole, not all the species within it.
-:::::
 :::
 
 Not bad (*n* = `r nrow(palaeoverse::reefs)`), that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in `tetrapods`. But how much does this vary across time? We can make use of the `group_apply()` wrapper function to run a function across subsets of data.
