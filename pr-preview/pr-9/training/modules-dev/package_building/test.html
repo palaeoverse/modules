@@ -341,6 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#testing-errors" id="toc-testing-errors" class="nav-link" data-scroll-target="#testing-errors">Testing errors</a></li>
   <li><a href="#skipping-tests" id="toc-skipping-tests" class="nav-link" data-scroll-target="#skipping-tests">Skipping tests</a></li>
   <li><a href="#do-we-have-enough-tests" id="toc-do-we-have-enough-tests" class="nav-link" data-scroll-target="#do-we-have-enough-tests">Do we have enough tests?</a></li>
+  <li><a href="#more-on-tests" id="toc-more-on-tests" class="nav-link" data-scroll-target="#more-on-tests">More on tests</a></li>
   </ul></li>
   <li><a href="#check-a-package" id="toc-check-a-package" class="nav-link" data-scroll-target="#check-a-package">Check a package</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -381,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/test.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/test.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -480,17 +481,34 @@ Tip
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> devtools<span class="sc">::</span><span class="fu">test</span>()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ℹ Testing my.pkg</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span> F W  S  OK <span class="sc">|</span> Context</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span>          <span class="dv">2</span> <span class="sc">|</span> n_unique                                                                                                       </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span>          <span class="dv">2</span> <span class="sc">|</span> n_unique                                                                           </span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>══ Results ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>══ Results ════════════════════════════════════════════════════════════════════════</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>[ FAIL <span class="dv">0</span> <span class="sc">|</span> WARN <span class="dv">0</span> <span class="sc">|</span> SKIP <span class="dv">0</span> <span class="sc">|</span> PASS <span class="dv">2</span> ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run a subset of test files
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It can quickly become annoying to run the entire test suite when we work on a single function. We can use the <code>filter</code> argument in <code>devtools::test()</code> to run a subset of all test files.</p>
+<p>For example, <code>devtools::test(filter = "unique")</code> would only run test files whose name contains “unique”.</p>
+</div>
+</div>
+</div>
 <p>In both cases, our tests depend on the global environment, which is not ideal because test results might vary across sessions. Therefore, it is recommended to run tests in a clean R session. In RStudio, you can also use the “Test” button:</p>
 <p><img src="img/rstudio_test_button.png" class="img-fluid"></p>
 </section>
 <section id="being-imaginative-when-writing-tests" class="level3">
 <h3 data-anchor-id="being-imaginative-when-writing-tests">Being imaginative when writing tests</h3>
-<p>Testing the behaviour of our functions in reasonable use cases is an essential first step, and already gives us a lot of confidence when we will modify the package in the future.</p>
-<p>However, keep in mind that users will always find <del>annoying</del> interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a couple of hours on this when we create the test suite can save a lot of time in the future.</p>
+<p>Testing the behaviour of our functions in reasonable use cases is an essential first step, and it already gives us a lot of confidence when we will modify the package in the future.</p>
+<p>However, keep in mind that users will always find <del>annoying</del> interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a little bit of extra time on this when we create the test suite can save a lot of time in the future.</p>
 <p>Let’s try to make sure our function covers corner cases!</p>
 <p>For instance, we should make sure that missing values, <code>NaN</code>, and empty vectors are properly handled:</p>
 <div class="cell">
@@ -515,9 +533,9 @@ Tip
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> devtools<span class="sc">::</span><span class="fu">test</span>()</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ℹ Testing my.pkg</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span> F W  S  OK <span class="sc">|</span> Context</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span>          <span class="dv">6</span> <span class="sc">|</span> n_unique                                                                                                       </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span>          <span class="dv">6</span> <span class="sc">|</span> n_unique  </span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>══ Results ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>══ Results ═══════════════════════════════════════════════════════════════════════════════</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>[ FAIL <span class="dv">0</span> <span class="sc">|</span> WARN <span class="dv">0</span> <span class="sc">|</span> SKIP <span class="dv">0</span> <span class="sc">|</span> PASS <span class="dv">6</span> ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -544,7 +562,7 @@ Tip
 </section>
 <section id="testing-errors" class="level3">
 <h3 data-anchor-id="testing-errors">Testing errors</h3>
-<p>Sometimes, throwing the error is the expected behaviour. For instance, <code>n_unique()</code> should give an error because the function requires <code>x</code>, even if <code>x</code> itself is empty. One way to do this is to use <code>expect_error()</code>:</p>
+<p>Sometimes, throwing an error is the expected behaviour. For instance, <code>n_unique()</code> (without any input) should give an error because the function requires <code>x</code>, even if <code>x</code> itself is empty. One way to do this is to use <code>expect_error()</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique errors if no input is provided"</span>, {</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_error</span>(<span class="fu">n_unique</span>())</span>
@@ -559,10 +577,10 @@ Tip
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Still, this only ensures that our message matches this expression, but maybe some parts of the message are really not helpful to the user.</p>
+<p>Still, this only ensures that our message matches this expression, but maybe some parts of the message are very confusing and do not help the user solving the problem.</p>
 <p>The best way to test error messages is to use a snapshot test to capture the entirety of the user-visible output.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -571,10 +589,10 @@ Tip
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Snapshot tests are tests that capture the output as the user views it. They are very useful to check side effects of function calls, such as printing messages and warnings, or when the output appearance is key, e.g.&nbsp;for functions that produce plots.</p>
-<p>Snapshot tests can be run with <code>testthat::expect_snapshot()</code>. See <a href="https://testthat.r-lib.org/articles/snapshotting.html">this vignette</a> on snapshot tests for more information.</p>
+<p>Snapshot tests are tests that capture the output as users see it. They are very useful to check side effects of function calls, such as printing messages and warnings, or when the output appearance is key, e.g.&nbsp;for functions that produce plots.</p>
+<p>We can define snapshot tests with <code>expect_snapshot()</code>. See <a href="https://testthat.r-lib.org/articles/snapshotting.html">this vignette</a> on snapshot tests for more information.</p>
 </div>
 </div>
 </div>
@@ -583,24 +601,24 @@ Tip
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">n_unique</span>(), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note that this expectation will only be checked when run non-interactively, meaning that copying this block and running it in the R console will simply skip the test. It has to be run via <code>devtools::test()</code> or via the “Test” button in RStudio.</p>
-<pre><code>&gt; devtools::test()
-ℹ Testing my.pkg
-✔ | F W  S  OK | Context
-✔ |   1      7 | n_unique                                                                                                       
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Warning (test-n_unique.R:28:3): n_unique errors if no input is provided
-Adding new snapshot:
-Code
-  n_unique()
-Condition
-  Error in `n_unique()`:
-  ! argument "x" is missing, with no default
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
-══ Results ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-[ FAIL 0 | WARN 1 | SKIP 0 | PASS 7 ]</code></pre>
-<p>On the first run, a <code>warning</code> tells us “Adding a new snapshot”. From now on, this test will always compare the output of <code>n_unique()</code> (with no input) to this error message. If the message changes in the future, then this test will fail and the snapshot will either need to be updated, or the change in the message will need to be reverted.</p>
+<p>Note that this expectation will only be checked when it is run non-interactively, meaning that copying this block and running it in the R console will simply skip the test. It has to be run via <code>devtools::test()</code> or via the “Test” button in RStudio.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> devtools<span class="sc">::</span><span class="fu">test</span>()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ℹ Testing my.pkg</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span> F W  S  OK <span class="sc">|</span> Context</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>✔ <span class="sc">|</span>   <span class="dv">1</span>      <span class="dv">7</span> <span class="sc">|</span> n_unique                                                                                                       </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>───────────────────────────────────────────────────────────────────────────────────────────</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Warning</span> (test<span class="sc">-</span>n_unique.R<span class="sc">:</span><span class="dv">28</span><span class="sc">:</span><span class="dv">3</span>)<span class="sc">:</span> n_unique errors <span class="cf">if</span> no input is provided</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>Adding new snapshot<span class="sc">:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>Code</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">n_unique</span>()</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>Condition</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  Error <span class="cf">in</span> <span class="st">`</span><span class="at">n_unique()</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span> argument <span class="st">"x"</span> is missing, with no default</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>───────────────────────────────────────────────────────────────────────────────────────────</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>══ Results ════════════════════════════════════════════════════════════════════════════════</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>[ FAIL <span class="dv">0</span> <span class="sc">|</span> WARN <span class="dv">1</span> <span class="sc">|</span> SKIP <span class="dv">0</span> <span class="sc">|</span> PASS <span class="dv">7</span> ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On the first run, a <code>warning</code> says “Adding a new snapshot”. From now on, this test will always compare the output of <code>n_unique()</code> (with no input) to this error message. If the message changes in the future, then this test will fail and the snapshot will either need to be updated, or the change in the message will need to be reverted.</p>
 <details>
 <summary>
 Click to see the entire test file for <code>n_unique()</code>
@@ -656,43 +674,39 @@ Click to see the entire test file for <code>n_unique()</code>
 </section>
 <section id="skipping-tests" class="level3">
 <h3 data-anchor-id="skipping-tests">Skipping tests</h3>
-<p>In some cases, you may want to skip tests, and <code>testthat</code> provides a family of functions to handle these cases. For example, you could skip tests that:</p>
+<p>At some point, depending on the features of your package, you might want to skip some tests, and <code>testthat</code> provides a family of functions to handle these cases. For example, you could skip tests that:</p>
 <ul>
-<li>depend on another package, using <code>skip_if_not_installed()</code></li>
-</ul>
+<li><p>depend on another package, using <code>skip_if_not_installed()</code></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"..."</span>, {</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skip_if_not_installed</span>(<span class="st">"dplyr"</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ul>
-<li>require an Internet connection (e.g if you’re building a package wrapping an API), using <code>skip_if_offline()</code></li>
-</ul>
+</div></li>
+<li><p>require an Internet connection (e.g if you’re building a package wrapping an API), using <code>skip_if_offline()</code></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"..."</span>, {</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skip_if_offline</span>()</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ul>
-<li>cannot work on macOS, using <code>skip_if_os()</code></li>
-</ul>
+</div></li>
+<li><p>cannot work on macOS, using <code>skip_if_os()</code></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"..."</span>, {</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skip_if_os</span>(<span class="st">"mac"</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+</div></li>
+</ul>
 </section>
 <section id="do-we-have-enough-tests" class="level3">
 <h3 data-anchor-id="do-we-have-enough-tests">Do we have enough tests?</h3>
-<p>We now have some tests in our package, but do they cover all function arguments? All possible use cases?</p>
-<p>We can use the package <code>covr</code> to see how much of our package is covered by tests:</p>
+<p>We now have some tests in our package, but do they cover all function arguments? All possible use cases? We can use the package <code>covr</code> to see how much of our package is covered by tests:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>covr<span class="sc">::</span><span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="img/covr_output.png" class="img-fluid"></p>
+<p>Here, we only cover 20% of the package because <code>safe_log()</code> is still untested.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -703,10 +717,20 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Code coverage gives information on which parts of the code are never tested, but it doesn’t mean that other parts of the code are correctly tested!</p>
-<p>For example, our <code>n_unique()</code> would get a 100% coverage with our very first <code>expect_equal()</code>, which is by no means enough to ensure that this function is correct.</p>
+<p>Code coverage gives information on which parts of the code are never tested, but it doesn’t mean that the covered parts are correctly tested!</p>
+<p>For example, our <code>n_unique()</code> would get a 100% coverage with our first <code>expect_equal()</code>, which is by no means enough to ensure that this function works correctly.</p>
 </div>
 </div>
+</section>
+<section id="more-on-tests" class="level3">
+<h3 data-anchor-id="more-on-tests">More on tests</h3>
+<p>Testing software is not trivial and there is a lot of literature on this topic. We list below some other testing practices that may be worth exploring but won’t be covered in this module:</p>
+<ul>
+<li><p>parametrised testing: a way to deduplicate tests by defining a lot of input combinations. See the R package <a href="https://github.com/google/patrick"><code>patrick</code></a>.</p></li>
+<li><p>property-based testing: a testing framework where we define a property that the code should respect, and we test this property by generating many random inputs and checking whether this property is respected. An example of application is a package that implements a known method in a faster way (or with other features). Property-based testing can help ensuring that the old and new softwares give the same results. See the R package <a href="https://armcn.github.io/quickcheck/"><code>quickcheck</code></a> and <a href="https://www.etiennebacher.com/posts/2024-10-01-using-property-testing-in-r/">this blog post</a>.</p></li>
+<li><p>fuzzy testing: a testing framework where inputs are generated randomly. This encompasses property-based testing. See the R package <a href="https://mcol.github.io/caught-by-the-fuzz/"><code>CBTF</code></a>.</p></li>
+<li><p>mutation testing: a framework to complement test coverage. It ensures that our tests actually check the function’s behaviour. It works by replacing some parts of the function, e.g.&nbsp;a <code>&gt;</code> by a <code>&lt;</code>. If this change doesn’t make any test fail, then our test suite isn’t robust enough, even if the code coverage is high. See the R packages <a href="https://prl-prg.github.io/mutator/index.html"><code>mutator</code></a> and <a href="https://jakubsob.github.io/muttest/"><code>muttest</code></a>.</p></li>
+</ul>
 </section>
 </section>
 <section id="check-a-package" class="level2">
