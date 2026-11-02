@@ -13,18 +13,21 @@ editor:
     wrap: 72
 ---
 
-## Test a function
+We have a working package! We have checked that it can run locally and that results are as expected, so everything seems fine.
 
-Testing a package is **crucial**.
+In practice though, a package will almost always evolve in some way: we may want to add new features, such as new function arguments or entire new functions, a user may report a bug that we need to fix, maybe we will want to add more documentation at some point, among other possible changes.
 
-Having tests reassures:
+As we incorporate these changes, we need to make sure that we are not breaking other functionalities of the package. We could keep running some checks manually, but this quickly becomes tedious and error-prone, or we might just forget to do it.
 
-- the user: it shows that you (the developer) have checked that your function produces
-  the correct results, at least in basic cases.
+An essential step in package development is to **build a test suite** that can run every time we change something. Building a test suite reassures:
+
+- the user: it shows that you (the developer) have checked that your function produces the correct results, at least in basic cases.
 
 - yourself: it ensures you can add functionalities to your package or fix bugs without breaking your existing code.
 
-Testing is made much easier by the package `testthat`^[You might also be interested in [`tinytest`](https://github.com/markvanderloo/tinytest/).].
+## Set up the test suite
+
+There exist several packages to create and manage a test suite. The most famous one is `testthat`, but you might also be interested in [`tinytest`](https://github.com/markvanderloo/tinytest/).
 
 To start using this package, run:
 
@@ -33,41 +36,46 @@ usethis::use_testthat()
 ```
 
 ```r
-✔ Setting active project to '/home/etienne/Bureau/Git/misc/my.pkg'
-✔ Adding 'testthat' to Suggests field in DESCRIPTION
-✔ Setting Config/testthat/edition field in DESCRIPTION to '3'
-✔ Creating 'tests/testthat/'
-✔ Writing 'tests/testthat.R'
-• Call `use_test()` to initialize a basic test file and open it for editing.
+✔ Setting active project to "/path/to/my.pkg".
+✔ Adding testthat to Suggests field in DESCRIPTION.
+✔ Adding "3" to Config/testthat/edition.
+✔ Creating tests/testthat/.
+✔ Writing tests/testthat.R.
+☐ Call usethis::use_test() to initialize a basic test file and open it for editing.
 ```
 
 This created a folder called `tests`:
 
 ```r
-tests
-├── testthat
-└── testthat.R
+my.pkg
+├── DESCRIPTION
+├── NAMESPACE
+├── R
+├── man
+├── my.pkg.Rproj
+└── tests
+    ├── testthat
+    └── testthat.R
 ```
 
-We can now add tests files in `tests/testthat`.
+We can now add tests files in `tests/testthat`. By convention, we name test files `test-<name of the file to test>>R`, such as `test-n_unique.R`.
 
-Go back to the file `n_unique.R` and run `usethis::use_test()`. This will create a file `test-n_unique.R` containing an example of test.
 
-## Structure of a test
+::: {.callout-tip}
+If you have the R file you want to test opened in the editor, you can run `usethis::use_test()` to automatically create and open the corresponding test file.
+:::
 
-Two main things:
+## Getting started with tests
 
-- `test_that()`: contains the title of the test and the code for the test
+When using `testthat`, a test is composed of a `test_that()` call that contains the title of the test and the code for the test, and one or several `expect_*()` calls that define your expectations, i.e. what the code should do.
 
-- `expect_*()`: the expectations you have for the test.
+Let's see how we could test `n_unique()`. This function counts unique values in a vector, so it should work with any type of vector, e.g. `numeric`, `character`, `logical`, etc. We can start by writing some cases that are easy for us to check:
 
-Example:
-
-```{r}
+```{.r filename="tests/testthat/test-n_unique.R"}
 test_that("n_unique works with all types of vector", {
   expect_equal(
-    n_unique(c(1, 2, 3, 1, 3)), # the function we want to test
-    3                           # our expectation
+    n_unique(c(1, 2, 3, 1, 3)), # The function we want to test.
+    3                           # Our expectation.
   )
   expect_equal(
     n_unique(c("a", "b", "c", "c", "c")),
@@ -76,7 +84,49 @@ test_that("n_unique works with all types of vector", {
 })
 ```
 
-Try to make sure your function covers corner cases!
+We now want to check that our tests pass. There are a few ways to do that.
+
+The simplest way is to simply evaluate the entire `test_that()` block defined above. We could also run the code inside `test_that()` line by line, but for now let's evaluate the entire block at once. Note that we need to run `devtools::load_all()` first to ensure we use the latest version of our functions and that `testthat` is loaded in the session:
+
+```r
+test_that("n_unique works with all types of vector", {
+  expect_equal(
+    n_unique(c(1, 2, 3, 1, 3)), # The function we want to test.
+    3 # Our expectation.
+  )
+  expect_equal(
+    n_unique(c("a", "b", "c", "c", "c")),
+    3
+  )
+})
+
+Test passed with 2 successes 🥇.
+```
+
+Our tests pass! This approach is fine when we want to test one or two `test_that()` blocks, but it would quickly become annoying when we have more tests. We can use `devtools::test()` to run the entire test suite instead:
+
+```r
+> devtools::test()
+ℹ Testing my.pkg
+✔ | F W  S  OK | Context
+✔ |          2 | n_unique                                                                                                       
+
+══ Results ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 2 ]
+```
+
+In both cases, our tests depend on the global environment, which is not ideal because test results might vary across sessions. Therefore, it is recommended to run tests in a clean R session. In RStudio, you can also use the "Test" button:
+
+![](img/rstudio_test_button.png)
+
+
+## Being imaginative when writing tests
+
+Testing the behaviour of our functions in reasonable use cases is an essential first step, and already gives us a lot of confidence when we will modify the package in the future.
+
+However, keep in mind that users will always find ~annoying~ interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a couple of hours on this early on can save lots of time in the future.
+
+Let's try to make sure our function covers corner cases!
 
 ```{r}
 test_that("n_unique works with missing values", {
