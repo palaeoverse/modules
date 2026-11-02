@@ -239,6 +239,49 @@ Condition
 
 On the first run, a `warning` tells us "Adding a new snapshot". From now on, this test will always compare the output of `n_unique()` (with no input) to this error message. If the message changes in the future, then this test will fail and the snapshot will either need to be updated, or the change in the message will need to be reverted.
 
+<details>
+<summary>Click to see the entire test file for `n_unique()`</summary>
+
+```{.r filename="tests/testthat/test-n_unique.R"}
+test_that("n_unique works with all types of vector", {
+  expect_equal(
+    n_unique(c(1, 2, 3, 1, 3)), # The function we want to test.
+    3 # Our expectation.
+  )
+  expect_equal(
+    n_unique(c("a", "b", "c", "c", "c")),
+    3
+  )
+})
+
+test_that("n_unique works with missing values", {
+  expect_equal(n_unique(c(NA, 1)), 2)
+})
+
+test_that("n_unique works with NaN", {
+  expect_equal(n_unique(c(NaN, 1)), 2)
+
+  # NA and NaN are not the same thing
+  expect_equal(n_unique(c(NaN, NA)), 2)
+})
+
+test_that("n_unique works with empty vectors", {
+  expect_equal(n_unique(c()), 0)
+})
+
+test_that("n_unique errors if no input is provided", {
+  expect_snapshot(n_unique(), error = TRUE)
+})
+
+```
+
+</details>
+
+
+::: {.callout-caution title="Exercise"}
+Your turn! Add some tests for `safe_log()`.
+:::
+
 
 ### Skipping tests
 
