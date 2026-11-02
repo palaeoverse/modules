@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
+<meta name="dcterms.date" content="2026-11-02">
 
 <title>Develop a package</title>
 <style>
@@ -332,7 +333,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#namespace" id="toc-namespace" class="nav-link active" data-scroll-target="#namespace">Namespace</a></li>
+  <li><a href="#namespace" id="toc-namespace" class="nav-link active" data-scroll-target="#namespace">Namespace</a>
+  <ul class="collapse">
+  <li><a href="#namespace-conflicts" id="toc-namespace-conflicts" class="nav-link" data-scroll-target="#namespace-conflicts">Namespace conflicts</a></li>
+  <li><a href="#s3-methods" id="toc-s3-methods" class="nav-link" data-scroll-target="#s3-methods">S3 methods</a></li>
+  </ul></li>
   <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a></li>
   </ul>
 </nav>
@@ -359,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
+      <p class="date">November 2, 2026</p>
     </div>
   </div>
   
@@ -382,22 +387,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"pkgcheck"</span>, <span class="st">"sloop"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>We now know the basics of a package: how to create one, document it, and test it.</p>
-<p>But creating a package is not only that. There are plenty of choices to make, such as:</p>
+<p>We now know the basics of a package: how to create one, document it, and test it. But there are plenty of choices to make when developing a package, such as:</p>
 <ul>
-<li><p>how should I name my functions?</p></li>
-<li><p>what dependencies should my package have?</p></li>
+<li>how should I name my functions?</li>
+<li>what dependencies should my package have?</li>
+<li>should I add support for popular plotting packages?</li>
 </ul>
+<p>In this section, we are going to cover some of these questions and define some good practices when developing a package.</p>
 <section id="namespace" class="level2">
 <h2 data-anchor-id="namespace">Namespace</h2>
-<p>The <code>NAMESPACE</code> file contains the list of functions that your package exports.</p>
-<p>When someone loads your package with <code>library(my.pkg)</code>, all exported functions will be imported in the environment.</p>
-<p>In the (very likely) event where this person uses several packages, there can be a <strong>namespace conflict</strong> if two packages (or more) provide two functions with the same name.</p>
-<p>It is also possible that some of your functions have the same name as functions included by default in R.</p>
-<p>For example, <code>dplyr</code> overwrites several functions:</p>
+<section id="namespace-conflicts" class="level3">
+<h3 data-anchor-id="namespace-conflicts">Namespace conflicts</h3>
+<p>As seen in the first section, the <code>NAMESPACE</code> file contains the list of functions that your package exports. When someone loads your package with <code>library(my.pkg)</code>, all exported functions will be imported in the environment.</p>
+<p>In the likely scenario where this user loads several packages, there can be a <strong>namespace conflict</strong> if two packages (or more) provide two functions with the same name. It is also possible that some of your functions have the same name as functions included by default in R. For example, <code>dplyr</code> overwrites several functions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: ‘dplyr’</span></span>
@@ -409,17 +414,116 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">## The following objects are masked from ‘package:base’:</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   </span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  intersect, setdiff, setequal, union</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>While the user has some means to fix such conflicts (e.g see the package <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a>), you should do your maximum to avoid them.</p>
-<p>In particular, be very careful that your functions don’t have the same names as other functions in popular packages (e.g <code>data.table</code>, <code>tidyverse</code> packages, etc.).</p>
-<p><strong>Advanced:</strong> S3 methods.</p>
-<p>Have you ever wondered how <code>summary()</code> worked with so many outputs? Or <code>print()</code>? Or <code>plot()</code>?</p>
-<p><code>summary()</code> is an <em>S3 method</em> that gets <em>dispatched</em> according to the class of its input.</p>
-<p><strong>EXPLAIN MORE ON S3 METHODS?</strong></p>
+<p>While some tools are available on the user’s side to fix such conflicts (e.g see the package <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a>), it is good practice to try to avoid them. In particular, you should be very careful that your functions don’t have the same names as other functions in popular packages (e.g <code>data.table</code>, <code>tidyverse</code> packages, etc.).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The package <a href="https://docs.ropensci.org/pkgcheck/"><code>pkgcheck</code></a> allows us to quickly check whether a function name is already provided by a package on CRAN. For instance, <code>filter()</code> is exported by multiple packages:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pkgcheck<span class="sc">::</span><span class="fu">fn_names_on_cran</span>(<span class="st">"filter"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         package version fn_name
+1  cohortBuilder   1.0.0  filter
+2         crunch  1.31.3  filter
+3          dplyr   1.2.1  filter
+4        gsignal   0.3-7  filter
+5         narray   0.5.2  filter
+6      pammtools   0.8.1  filter
+7  pandocfilters   0.1-6  filter
+8           rTLS 0.2.6.1  filter
+9            rbi   1.0.1  filter
+10        signal   1.8-1  filter
+11        tidyft  0.9.20  filter
+12       tidylog   1.1.0  filter
+13     tidytable  0.11.2  filter
+14   rjd3filters   2.4.0  filter
+15        vectra  0.14.1  filter
+16       poorman   0.3.0  filter</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="s3-methods" class="level3">
+<h3 data-anchor-id="s3-methods">S3 methods</h3>
+<p>In certain cases, we can address namespace conflicts by using S3 methods. This is the mechanism that allows R users to call <code>summary()</code> or <code>plot()</code> on a lot of different objects while not having namespace conflicts.</p>
+<p>A function like <code>summary()</code> is called an <strong>S3 generic</strong>. When we first call this function, it gets dispatched to one of the existing <strong>S3 methods</strong> based on the class of the first input (in this case, <code>object</code>). For instance, let’s make a linear regression and store its output in <code>res</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> cyl, <span class="at">data =</span> mtcars)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "lm"</code></pre>
+</div>
+</div>
+<p>As we can see, <code>res</code> is an object of class <code>"lm"</code>. When I call <code>summary(res)</code>, <code>summary()</code> will see that class and look for the method <code>summary.lm()</code> (more generally, it will look for the method <code>summary.&lt;class&gt;()</code>). In this case, <code>summary.lm</code> is implemented in base R:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> summary.lm</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span> (object, <span class="at">correlation =</span> <span class="cn">FALSE</span>, <span class="at">symbolic.cor =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ...) </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    [truncated by hand]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>bytecode<span class="sc">:</span> <span class="dv">0x599a48d052d0</span><span class="sc">&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>environment<span class="sc">:</span> namespace<span class="sc">:</span>stats<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Packages can also provide their own methods for existing generics! For instance, in our package, we could have our functions return objects of class <code>"my.class"</code> and define a custom <code>summary.my.class()</code> so that we could simply call <code>summary()</code> on our objects.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Visualising S3 dispatch
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The package <a href="https://sloop.r-lib.org/"><code>sloop</code></a> allows us to see how S3 dispatch works:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">s3_dispatch</span>(<span class="fu">summary</span>(res))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=&gt; summary.lm
+ * summary.default</code></pre>
+</div>
+</div>
+<p>In this case, our call to <code>summary(res)</code> found two relevant methods: <code>summary.lm()</code> is the one that is called, and <code>summary.default()</code> is the one that would have been used as fallback if there were no <code>summary.lm()</code>.</p>
+</div>
+</div>
+</div>
+<p>Implementing methods for well-known generics such as <code>summary()</code>, <code>plot()</code>, <code>mean()</code>, <code>quantile()</code>, and many others, is a good way to reduce namespace conflicts while ensuring a good user experience.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How do I know which functions are generic?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can check whether a function is generic by printing it in the console, as it will call <code>UseMethod()</code> internally:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> quantile</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span> (x, ...) </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">UseMethod</span>(<span class="st">"quantile"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>bytecode<span class="sc">:</span> <span class="dv">0x599a488ea330</span><span class="sc">&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>environment<span class="sc">:</span> namespace<span class="sc">:</span>stats<span class="sc">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Another way to know this is to use <code>sloop::is_s3_generic()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> sloop<span class="sc">::</span><span class="fu">is_s3_generic</span>(<span class="st">"quantile"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
 </section>
 <section id="dependencies" class="level2">
 <h2 data-anchor-id="dependencies">Dependencies</h2>
 <div style="text-align: center;">
-<p><img src="dependencies.png" height="600"></p>
+<p><img src="img/dependencies.png" height="400"></p>
 </div>
 <p>When you develop your package, you can import other packages, either because they provide essential features or simply because they make the development easier.</p>
 <p>However, these dependencies have a <strong>cost</strong>:</p>
@@ -459,47 +563,121 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  quarto   1.11.9 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- package     * version date (UTC) lib source
- askpass       1.2.1   2024-10-04 [1] RSPM
- cli           3.6.6   2026-04-09 [1] RSPM
- clipr         0.8.1   2026-05-25 [1] RSPM
- covr          3.6.5   2025-11-09 [1] RSPM
- crayon        1.5.3   2024-06-20 [1] RSPM
- credentials   2.0.3   2025-09-12 [1] RSPM
- curl          8.1.0   2026-10-14 [1] RSPM
- desc          1.4.3   2023-12-10 [1] RSPM
- digest        0.6.39  2025-11-19 [1] RSPM
- fs            2.1.0   2026-04-18 [1] RSPM
- gert          2.5.0   2026-10-14 [1] RSPM
- gh            1.6.1   2026-07-20 [1] RSPM
- gitcreds      0.1.2   2022-09-08 [1] RSPM
- glue          1.8.1   2026-04-17 [1] RSPM
- httr          1.4.9   2026-09-01 [1] RSPM
- httr2         1.3.0   2026-07-13 [1] RSPM
- ini           0.3.1   2018-05-20 [1] RSPM
- jsonlite      2.0.0   2025-03-27 [1] RSPM
- lifecycle     1.0.5   2026-01-08 [1] RSPM
- magrittr      2.0.5   2026-04-04 [1] RSPM
- mime          0.13    2025-03-17 [1] RSPM
- openssl       2.4.2   2026-06-09 [1] RSPM
- pak           0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
- purrr         1.2.2   2026-04-10 [1] RSPM
- R6            2.6.1   2025-02-15 [1] RSPM
- rappdirs      0.3.4   2026-01-17 [1] RSPM
- rex           1.2.2   2026-03-28 [1] RSPM
- rlang         1.3.0   2026-07-05 [1] RSPM
- rprojroot     2.1.1   2025-08-26 [1] RSPM
- rstudioapi    0.19.0  2026-06-11 [1] RSPM
- sys           3.4.3   2024-10-04 [1] RSPM
- usethis       3.2.2   2026-09-10 [1] RSPM
- vctrs         0.7.3   2026-04-11 [1] RSPM
- whisker       0.4.1   2022-12-05 [1] RSPM
- withr         3.0.3   2026-06-19 [1] RSPM
- yaml          2.3.12  2025-12-10 [1] RSPM
- zip           3.0.2   2026-08-04 [1] RSPM
+ ! package      * version date (UTC) lib source
+   askpass        1.2.1   2024-10-04 [1] RSPM
+   backports      1.5.1   2026-04-03 [1] RSPM
+   base64enc      0.1-6   2026-02-02 [1] RSPM
+   bit            4.6.0   2025-03-06 [1] RSPM
+   bit64          4.8.6   2026-09-01 [1] RSPM
+   brew           1.0-10  2023-12-16 [1] RSPM
+   brio           1.1.5   2024-04-24 [1] RSPM
+   bslib          0.12.0  2026-08-04 [1] RSPM
+   cachem         1.1.0   2024-05-16 [1] RSPM
+   callr          3.8.0   2026-06-05 [1] RSPM
+   checkmate      2.3.4   2026-02-03 [1] RSPM
+   cli            3.6.6   2026-04-09 [1] RSPM
+   clipr          0.8.1   2026-05-25 [1] RSPM
+   codetools      0.2-20  2024-03-31 [2] CRAN (R 4.6.2)
+   commonmark     2.0.0   2025-07-07 [1] RSPM
+   covr           3.6.5   2025-11-09 [1] RSPM
+ R cpp11          &lt;NA&gt;    &lt;NA&gt;       [?] &lt;NA&gt;
+   crayon         1.5.3   2024-06-20 [1] RSPM
+   credentials    2.0.3   2025-09-12 [1] RSPM
+   curl           8.1.0   2026-10-14 [1] RSPM
+   cyclocomp      1.1.2   2026-03-11 [1] RSPM
+   desc           1.4.3   2023-12-10 [1] RSPM
+   digest         0.6.39  2025-11-19 [1] RSPM
+   dplyr          1.2.1   2026-04-03 [1] RSPM
+   evaluate       1.0.5   2025-08-27 [1] RSPM
+   fastmap        1.2.0   2024-05-15 [1] RSPM
+   fontawesome    0.5.3   2024-11-16 [1] RSPM
+   fs             2.1.0   2026-04-18 [1] RSPM
+   generics       0.1.4   2025-05-09 [1] RSPM
+   gert           2.5.0   2026-10-14 [1] RSPM
+   gh             1.6.1   2026-07-20 [1] RSPM
+   gitcreds       0.1.2   2022-09-08 [1] RSPM
+   glue           1.8.1   2026-04-17 [1] RSPM
+   goodpractice   1.2.0   2026-08-31 [1] RSPM
+   here           1.0.2   2025-09-15 [1] RSPM
+   highr          0.12    2026-03-06 [1] RSPM
+   hms            1.1.4   2025-10-17 [1] RSPM
+   htmltools      0.5.9   2025-12-04 [1] RSPM
+   httr           1.4.9   2026-09-01 [1] RSPM
+   httr2          1.3.0   2026-07-13 [1] RSPM
+   hunspell       3.0.6   2025-03-22 [1] RSPM
+   igraph         2.3.4   2026-09-30 [1] RSPM
+   ini            0.3.1   2018-05-20 [1] RSPM
+   jquerylib      0.1.4   2021-04-26 [1] RSPM
+   jsonlite       2.0.0   2025-03-27 [1] RSPM
+   knitr          1.52    2026-09-06 [1] RSPM
+   lattice        0.23-1  2026-08-12 [2] CRAN (R 4.6.2)
+   lifecycle      1.0.5   2026-01-08 [1] RSPM
+   lintr          3.4.0   2026-07-16 [1] RSPM
+   magrittr       2.0.5   2026-04-04 [1] RSPM
+   Matrix         1.7-6   2026-07-25 [2] CRAN (R 4.6.2)
+   memoise        2.0.1   2021-11-26 [1] RSPM
+   mime           0.13    2025-03-17 [1] RSPM
+   openssl        2.4.2   2026-06-09 [1] RSPM
+   otel           0.2.0   2025-08-29 [1] RSPM
+   pak            0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
+   pillar         1.11.1  2025-09-17 [1] RSPM
+   pkgbuild       1.4.8   2025-05-26 [1] RSPM
+   pkgcheck       0.3.4   2026-10-13 [1] RSPM
+   pkgconfig      2.0.3   2019-09-22 [1] RSPM
+   pkgload        1.5.3   2026-06-15 [1] RSPM
+   pkgstats       0.2.5   2026-10-11 [1] RSPM
+   praise         1.0.0   2015-08-11 [1] RSPM
+   prettyunits    1.2.0   2023-09-24 [1] RSPM
+   processx       3.9.0   2026-04-22 [1] RSPM
+ R progress       &lt;NA&gt;    &lt;NA&gt;       [?] &lt;NA&gt;
+   ps             1.9.3   2026-04-20 [1] RSPM
+   purrr          1.2.2   2026-04-10 [1] RSPM
+   R6             2.6.1   2025-02-15 [1] RSPM
+   rappdirs       0.3.4   2026-01-17 [1] RSPM
+   rcmdcheck      1.4.0   2021-09-27 [1] RSPM
+   Rcpp           1.1.2   2026-07-05 [1] RSPM
+   rdtools        0.1.0   2026-07-16 [1] RSPM
+   readr          2.2.0   2026-02-19 [1] RSPM
+   remotes        2.5.0   2024-03-17 [1] RSPM
+   rex            1.2.2   2026-03-28 [1] RSPM
+   rlang          1.3.0   2026-07-05 [1] RSPM
+   rmarkdown      2.32    2026-09-01 [1] RSPM
+   roxygen2       8.1.1   2026-10-08 [1] RSPM
+   rprojroot      2.1.1   2025-08-26 [1] RSPM
+   rstudioapi     0.19.0  2026-06-11 [1] RSPM
+   rvest          1.0.5   2025-08-29 [1] RSPM
+   sass           0.4.10  2025-04-11 [1] RSPM
+   selectr        0.8-0   2026-09-27 [1] RSPM
+   sessioninfo    1.2.4   2026-06-04 [1] RSPM
+   sloop          1.0.1   2019-02-17 [1] RSPM
+   spelling       2.3.2   2025-08-18 [1] RSPM
+   srr            1.0.0   2026-06-23 [1] RSPM
+   sys            3.4.3   2024-10-04 [1] RSPM
+   tibble         3.3.1   2026-01-11 [1] RSPM
+   tidyselect     1.2.1   2024-03-11 [1] RSPM
+   tinytex        0.61    2026-09-17 [1] RSPM
+   treesitter     0.3.2   2026-04-03 [1] RSPM
+   treesitter.r   1.3.0   2026-06-19 [1] RSPM
+   tzdb           0.5.0   2025-03-15 [1] RSPM
+   urlchecker     2.0.0   2026-07-08 [1] RSPM
+   usethis        3.2.2   2026-09-10 [1] RSPM
+   utf8           1.2.6   2025-06-08 [1] RSPM
+   vctrs          0.7.3   2026-04-11 [1] RSPM
+   vroom          1.7.1   2026-03-31 [1] RSPM
+   whisker        0.4.1   2022-12-05 [1] RSPM
+   whoami         1.3.0   2019-03-19 [1] RSPM
+   withr          3.0.3   2026-06-19 [1] RSPM
+   xfun           0.62    2026-10-16 [1] RSPM
+   xml2           1.6.0   2026-06-22 [1] RSPM
+   xmlparsedata   1.0.5   2021-03-06 [1] RSPM
+   xopen          1.0.1   2024-04-25 [1] RSPM
+   yaml           2.3.12  2025-12-10 [1] RSPM
+   zip            3.0.2   2026-08-04 [1] RSPM
 
  [1] /home/runner/work/_temp/Library
  [2] /opt/R/4.6.2/lib/R/library
+
+ R ── Package was removed from disk.
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
