@@ -27,7 +27,7 @@ An essential step in package development is to **build a test suite** that can r
 
 ## Set up the test suite
 
-There exist several packages to create and manage a test suite. The most famous one is `testthat`, but you might also be interested in [`tinytest`](https://github.com/markvanderloo/tinytest/).
+There exist several packages to create and manage a test suite. The most famous one is [`testthat`](https://testthat.r-lib.org/), but you might also be interested in [`tinytest`](https://github.com/markvanderloo/tinytest/).
 
 To start using this package, run:
 
@@ -58,7 +58,7 @@ my.pkg
     └── testthat.R
 ```
 
-We can now add tests files in `tests/testthat`. By convention, we name test files `test-<name of the file to test>>R`, such as `test-n_unique.R`.
+We can now add tests files in `tests/testthat`. By convention, we name test files `test-<name of the file to test>.R`, such as `test-n_unique.R`.
 
 
 ::: {.callout-tip}
@@ -86,7 +86,7 @@ test_that("n_unique works with all types of vector", {
 
 We now want to check that our tests pass. There are a few ways to do that.
 
-The simplest way is to simply evaluate the entire `test_that()` block defined above. We could also run the code inside `test_that()` line by line, but for now let's evaluate the entire block at once. Note that we need to run `devtools::load_all()` first to ensure we use the latest version of our functions and that `testthat` is loaded in the session:
+The simplest way is to simply evaluate the entire `test_that()` block defined above. We could also run the code inside `test_that()` line by line, but for now let's evaluate the entire block at once. Note that we need to run `devtools::load_all()` first to ensure that we use the latest version of our functions and that `testthat` is loaded in the session:
 
 ```r
 test_that("n_unique works with all types of vector", {
@@ -124,7 +124,7 @@ In both cases, our tests depend on the global environment, which is not ideal be
 
 Testing the behaviour of our functions in reasonable use cases is an essential first step, and already gives us a lot of confidence when we will modify the package in the future.
 
-However, keep in mind that users will always find ~annoying~ interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a couple of hours on this early on can save lots of time in the future.
+However, keep in mind that users will always find ~~annoying~~ interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a couple of hours on this early on can save lots of time in the future.
 
 Let's try to make sure our function covers corner cases!
 
