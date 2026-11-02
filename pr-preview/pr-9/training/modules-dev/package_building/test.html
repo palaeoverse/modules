@@ -401,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="set-up-the-test-suite" class="level2">
 <h2 data-anchor-id="set-up-the-test-suite">Set up the test suite</h2>
-<p>There exist several packages to create and manage a test suite. The most famous one is <code>testthat</code>, but you might also be interested in <a href="https://github.com/markvanderloo/tinytest/"><code>tinytest</code></a>.</p>
+<p>There exist several packages to create and manage a test suite. The most famous one is <a href="https://testthat.r-lib.org/"><code>testthat</code></a>, but you might also be interested in <a href="https://github.com/markvanderloo/tinytest/"><code>tinytest</code></a>.</p>
 <p>To start using this package, run:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -422,7 +422,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>└── tests</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    ├── testthat</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    └── testthat.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We can now add tests files in <code>tests/testthat</code>. By convention, we name test files <code>test-&lt;name of the file to test&gt;&gt;R</code>, such as <code>test-n_unique.R</code>.</p>
+<p>We can now add tests files in <code>tests/testthat</code>. By convention, we name test files <code>test-&lt;name of the file to test&gt;.R</code>, such as <code>test-n_unique.R</code>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -457,7 +457,7 @@ Tip
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We now want to check that our tests pass. There are a few ways to do that.</p>
-<p>The simplest way is to simply evaluate the entire <code>test_that()</code> block defined above. We could also run the code inside <code>test_that()</code> line by line, but for now let’s evaluate the entire block at once. Note that we need to run <code>devtools::load_all()</code> first to ensure we use the latest version of our functions and that <code>testthat</code> is loaded in the session:</p>
+<p>The simplest way is to simply evaluate the entire <code>test_that()</code> block defined above. We could also run the code inside <code>test_that()</code> line by line, but for now let’s evaluate the entire block at once. Note that we need to run <code>devtools::load_all()</code> first to ensure that we use the latest version of our functions and that <code>testthat</code> is loaded in the session:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with all types of vector"</span>, {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>)), <span class="co"># The function we want to test.</span></span>
@@ -484,7 +484,7 @@ Tip
 <section id="being-imaginative-when-writing-tests" class="level2">
 <h2 data-anchor-id="being-imaginative-when-writing-tests">Being imaginative when writing tests</h2>
 <p>Testing the behaviour of our functions in reasonable use cases is an essential first step, and already gives us a lot of confidence when we will modify the package in the future.</p>
-<p>However, keep in mind that users will always find <sub>annoying</sub> interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a couple of hours on this early on can save lots of time in the future.</p>
+<p>However, keep in mind that users will always find <del>annoying</del> interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a couple of hours on this early on can save lots of time in the future.</p>
 <p>Let’s try to make sure our function covers corner cases!</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"n_unique works with missing values"</span>, {</span>
