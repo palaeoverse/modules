@@ -31,7 +31,7 @@ An essential tool in software development is **continuous integration**, often r
 
 ## GitHub Actions
 
-GitHub Actions (sometimes abbreviated to "GHA") is a service provided by GitHub to run CI workflows. We will demonstrate how to use it by adding a workflow to run `R CMD check` on every commit to `main`, on every commit to a PR, and on multiple operating systems. 
+GitHub Actions (sometimes abbreviated to "GHA") is a service provided by GitHub to run CI workflows. We will demonstrate how to use it by adding a workflow to run `R CMD check` on every commit to `main`, on every commit to a PR, and on multiple operating systems and R versions. 
 
 Keep in mind that a CI workflow is not limited to checking R packages. It is essentially a list of steps where each step can run some code. Therefore, you can create workflows to check spelling in your repository, to run code stylers and linters, to check that all URLs are valid, and many other things.
 
@@ -74,13 +74,13 @@ jobs:
 
 There is a lot to unpack here! The `on` block tells GitHub when this workflow should be run. For now, we only want to run it when we push a new commit to `main`. We then have the `name` and `permissions` of the workflow. In some cases, we want to give some write access to workflows to make automated commits for instance, but here we can leave it as `read-all`.
 
-The `jobs` part is where we define the `steps` that will be run by our workflow. Note that one workflow can run multiple jobs, but here we have just one named `R-CMD-check`. This will run on `ubuntu-latest` (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: `actions/checkout`, `r-lib/actions/setup-r`, and `r-lib/actions/setup-r-dependencies`. These are here to install R and our package dependencies.
+The `jobs` part is where we define the `steps` that will be run by our workflow. Note that one workflow can run multiple jobs, but here we just have one named `R-CMD-check`. This will run on `ubuntu-latest` (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: `actions/checkout`, `r-lib/actions/setup-r`, and `r-lib/actions/setup-r-dependencies`, that are here to install R and our package dependencies.
 
-Once this is done, the last step is to run `R CMD check`, which is done via `r-lib/actions/check-r-package`.
+Once this is done, the last step is to run `R CMD check` via `r-lib/actions/check-r-package`.
 
 ### Run this workflow in more cases
 
-This is a good start but for now it only runs when change `main`. This is a bit too late, we would like to run this in a PR so that test failures due to changes in a PR do not affect the "clean" development version. We can tweak the `on` block to run this in pull requests as well:
+This is a good start but for now it only runs when we push changes to `main`. This is a bit too late, we would like to run this in a PR so that test failures due to changes in a PR do not affect the "clean" development version. We can tweak the `on` block to run this in pull requests as well:
 
 ```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
 on:
@@ -88,19 +88,19 @@ on:
     branches: [main]
   pull_request:
 
-[ truncated by hand ]
+[ ... ]
 ```
 
 Now, this workflow will run on every change in every pull request.
 
 ### Expanding R versions and platforms
 
-We now run this more frequently, which address the first drawback of running tests locally only (the developer might forget to run them), but it doesn't fix the second drawback (depending too much on the developer environment). Let's now run this workflow on more platforms and with more R versions!
+We now run this more frequently, which addresses the first drawback of running tests locally (the developer might forget to run them), but it doesn't fix the second drawback (depending too much on the developer environment). Let's now run this workflow on more platforms and with more R versions!
 
-To avoid making adding one `jobs` per configuration option, we can create a `matrix` with all our desired inputs:
+To avoid adding one `jobs` per configuration option, we can create a `matrix` with all our desired inputs:
 
 ```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
-[ truncated by hand ]
+[ ... ]
 
 jobs:
   R-CMD-check:
@@ -115,7 +115,7 @@ jobs:
           - {os: macOS-latest}
           - {os: windows-latest}
 
-[ truncated by hand ]
+[ ... ]
 ```
 
 We have added a `matrix` of `config` options. For now, each `config` has a single key, `os`, that contains the operating system we want to use. We can retrieve this value with `${{ matrix.config.os }}`, which we use both in `runs-on` (to actually change the OS used by the workflow) and in `name` (so that we can easily distinguish the output of these CI workflows).
@@ -123,7 +123,7 @@ We have added a `matrix` of `config` options. For now, each `config` has a singl
 We can add more keys to the `config`, such as an `r` key to define the R version we want to use.
 
 ```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
-[ truncated by hand ]
+[ ... ]
 
 jobs:
   R-CMD-check:
@@ -139,13 +139,13 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: windows-latest, r: 'oldrel-1'}
 
-[ truncated by hand ]
+[ ... ]
 
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
 
-[ truncated by hand ]
+[ ... ]
 ```
 
 We added `r: 'release'` to use the latest stable version of R, and `r: 'oldrel-1'` to use the previous R version. We use this `matrix.config.r` key in two places: in the `name` (for the same reason as before), and in the `setup-r` step, where we actually install R.
@@ -157,27 +157,27 @@ We still have a single workflow, but it now runs four different jobs with variou
 
 We could stop here, but instead I would like to highlight two changes that improve the efficiency and robustness of CI workflows.
 
-The first one is `timeout`. GitHub Actions is a very useful tool, but it depends on many external factors, starting from the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to longer than usual workflows that sometimes run for hours! Using the `timeout` parameter is an easy way to avoid this problem. 
+The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting from the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to longer-than-usual workflows that sometimes run for hours! Using the `timeout-minutes` parameter is an easy way to avoid this problem. 
 
 ```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
-[ truncated by hand ]
+[ ... ]
 
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
     timeout-minutes: 20
 
-[ truncated by hand ]
+[ ... ]
 ```
 
 Using a 20-minute timeout is in general more than enough to check a standard R package.
 
-The second change is to use `concurrency`. When we work in a pull request, we may make several commits in a few minutes, and each of this commit triggers the workflows. The default behaviour is to queue workflows, which can significantly slow us down since we have to wait for workflows associated to early commits while we are only interested in the results for our last commit.
+The second change is to use `concurrency`. When we work in a pull request, we may push several commits in a few minutes, and each of these commits triggers the workflows. The default behaviour is to queue workflows, which can significantly slow us down since we have to wait for workflows associated to early commits while we are only interested in the results for our last commit.
 
 The `concurrency` parameter changes this by automatically cancelling workflows if a newer one is triggered:
 
 ```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
-[ truncated by hand ]
+[ ... ]
 
 name: R-CMD-check
 
@@ -187,7 +187,7 @@ concurrency:
 
 jobs:
 
-[ truncated by hand ]
+[ ... ]
 ```
 
 ### Final workflow
