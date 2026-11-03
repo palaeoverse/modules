@@ -7,16 +7,16 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.20">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="Bethany J. Allen">
-  <meta name="dcterms.date" content="2026-11-01">
-  <title>Exercise 2: Latitudinal trends in Phanerozoic reefs</title>
+  <meta name="dcterms.date" content="2026-11-03">
+  <title>Tutorial 2: Latitudinal trends in Phanerozoic reefs</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
   <style>
@@ -104,7 +104,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-e145cfcbf0ca25dcb75ad642aac8a0ea.css">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
   <link rel="stylesheet" href="style/template.css">
   <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -220,7 +220,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Exercise 2: Latitudinal trends in Phanerozoic reefs</h1>
+  <h1 class="title">Tutorial 2: Latitudinal trends in Phanerozoic reefs</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -235,37 +235,64 @@ Bethany J. Allen
 </div>
 </div>
 
-  <p class="date">2026-11-01</p>
+  <p class="date">2026-11-03</p>
 </section>
 <section class="slide level2">
 
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 </section>
-<section id="introduction" class="slide level2">
-<h2>Introduction</h2>
-<p>In this exercise, you will use <strong>palaeoverse</strong> to explore latitudinal trends in Phanerozoic reefs. Along the way, you will meet the functions you need for a typical palaeobiological workflow: exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.</p>
-<p>You will see <strong>Exercise</strong> boxes throughout this document.</p>
+<section id="preamble" class="slide level2">
+<h2>Preamble</h2>
+<p>In this tutorial, you will use <strong>palaeoverse</strong> to explore latitudinal trends in Phanerozoic reefs.</p>
+<p>Along the way, you will meet the functions you need for a typical palaeobiological workflow: exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.</p>
+</section>
+<section class="slide level2">
+<h2>How exercises work</h2>
 <ul>
 <li><strong>Questions:</strong> work out your answer in R first, then click the “Answers” box beneath the questions to check it.</li>
-<li><strong>Hints and solutions:</strong> click the boxes labelled “Hint” or “Solution” to reveal them. <strong>Try the task yourself first!</strong></li>
-<li><strong>Your turn:</strong> code chunks marked <code>___</code> are incomplete. Replace each <code>___</code> before running them.</li>
+<li><strong>Hints and solutions:</strong> click the boxes labelled “Hint” or “Solution” to reveal them, but make sure to try the task yourself first!</li>
+<li><strong>Your turn:</strong> code chunks marked <code>___</code> are incomplete. Replace each <code>___</code> before running them locally.</li>
 </ul>
 </section>
-<section id="setting-up" class="slide level2">
-<h2>Setting up</h2>
-<p>Load <strong>palaeoverse</strong>. If you have not yet installed it, see <a href="../../../training/modules-dev/palaeoverse/introduction.html">Introduction to the palaeoverse R package</a>.</p>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<p>Reefs, especially tropical coral reefs, are commonly thought to be highly sensitive to climate change (Kiessling, 2001; Perrin &amp; Kiessling, 2010), and their distribution has been used to infer the latitudinal extent of tropical and subtropical climatic conditions in deep time.</p>
+<p>As palaeobiologists we know that we cannot take the present-day distribution of fossil reef systems at face value–we must contend with the shift of the continents over geological timescales. Specifically, the geographic location of fossil occurrences on the Earth’s surface today does not necessarily represent their location <em>in vivo</em>; fossil remains found at tropical latitudes might have been deposited at temperate latitudes and vice versa.</p>
+<p>As such, to be able to trace the latitudinal distribution of reefs in the geological past, we must reconstruct their past geographic distribution using a Global Plate Model. However, recent work has also demonstrated that there can be substantial differences between Global Plate Models in their palaeogeographic reconstructions, so we must also consider this uncertainty (<a href="https://doi.org/10.1111/2041-210X.14204">Buffan et al., 2023</a>).</p>
+<p>Let’s start by loading <strong>palaeoverse</strong>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(palaeoverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># Install palaeoverse (if required)</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="co"># install.packages("palaeoverse")</span></span>
+<span id="cb1-3"><a aria-label="3"></a><span class="co"># Load palaeoverse</span></span>
+<span id="cb1-4"><a aria-label="4"></a><span class="fu">library</span>(palaeoverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="the-reefs-dataset" class="slide level2">
+<h2>The <code>reefs</code> dataset</h2>
+<p>In this tutorial, we will be using <code>reefs</code> for our analyses, a compilation of Phanerozoic reef occurrences (<em>n</em> = 4363) from the <a href="https://www.paleo-reefs.pal.uni-erlangen.de">PaleoReefs Database</a> (Kiessling &amp; Krause, 2022).</p>
+</section>
+<section class="slide level2">
+<h2>Built-in datasets</h2>
+<p>Recall from the <a href="../../../training/modules-dev/palaeoverse/introduction.html">introduction</a> that functions in <strong>palaeoverse</strong> are designed around the assumption that your data are stored in an occurrence <code>data.frame</code>, which is the expected input for almost all functions. The package includes two example occurrence datasets from different data sources: <code>tetrapods</code> and <code>reefs</code>.</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load the dataset</span></span>
-<span id="cb2-2" class="hljs-ln-code"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb2-3" class="hljs-ln-code"><a aria-label="3"></a><span class="co"># View the first five rows</span></span>
-<span id="cb2-4" class="hljs-ln-code"><a aria-label="4"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load in-built dataset</span></span>
+<span id="cb2-2" class="hljs-ln-code"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Load the <code>reefs</code> dataset:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load in-built dataset</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># View the first six rows</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  r_number               name             formation   system         series
 1        1   Tilkideligi Tepe                       Triassic Upper Triassic
@@ -303,16 +330,37 @@ Bethany J. Allen
 5 1979
 6 1979</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Look at the structure of the dataset</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="fu">str</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   4363 obs. of  14 variables:
+ $ r_number  : chr  "1" "2" "3" "4" ...
+ $ name      : chr  "Tilkideligi Tepe" "Hydra" "Shiraho, W-Pacific" "Aksu-Terziler area" ...
+ $ formation : chr  "" "Pantokrator Limestone" "" "" ...
+ $ system    : chr  "Triassic" "Triassic" "Neogene" "Triassic" ...
+ $ series    : chr  "Upper Triassic" "Upper Triassic" "Holocene" "Upper Triassic" ...
+ $ interval  : chr  "lower Norian" "upper Carnian" "Recent" "Tuvalian" ...
+ $ biota_main: chr  "Calcisponges" "Corals" "Corals" "Calcisponges" ...
+ $ biota_sec : chr  "Stromatoporoids" "Calcisponges" "Algae" "Stromatoporoids" ...
+ $ lng       : num  30.4 23.6 124.2 31 13.2 ...
+ $ lat       : num  37 37.4 24.3 37.8 47.7 ...
+ $ country   : chr  "Turkey" "Greece" "Pacific" "Turkey" ...
+ $ authors   : chr  "Riedel, P." "Schafer, P., Senowbari-Daryan, B." "Kayanne, H., Suzuki, A. &amp; Saito, H." "Riedel, P." ...
+ $ title     : chr  "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" "The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -" "Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -" "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" ...
+ $ year      : num  1990 1982 1995 1990 1979 ...</code></pre>
 </div>
-<p>Functions in <strong>palaeoverse</strong> are designed around the assumption that your data are stored in an occurrence <code>data.frame</code>, which is the expected input for most functions. The package includes two example occurrence datasets from different data sources: <code>tetrapods</code> and <code>reefs</code>. In this exercise, we will be using <code>reefs</code>, a compilation of Phanerozoic reef occurrences (<em>n</em> = 4363) from the <a href="https://www.paleo-reefs.pal.uni-erlangen.de">PaleoReefs Database</a> (Kiessling &amp; Krause, 2022).</p>
+</div>
+<p>Before conducting any analyses, it is always a good idea to explore your data and understand what you are working with:</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Load the dataset</span></span>
-<span id="cb4-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb4-3"><a aria-label="3"></a><span class="co"># View the first five rows</span></span>
-<span id="cb4-4"><a aria-label="4"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># Load in-built dataset</span></span>
+<span id="cb8-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="co"># View the first six rows</span></span>
+<span id="cb9-2"><a aria-label="2"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  r_number               name             formation   system         series
 1        1   Tilkideligi Tepe                       Triassic Upper Triassic
@@ -350,19 +398,36 @@ Bethany J. Allen
 5 1979
 6 1979</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="co"># Look at the structure of the dataset</span></span>
+<span id="cb11-2"><a aria-label="2"></a><span class="fu">str</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   4363 obs. of  14 variables:
+ $ r_number  : chr  "1" "2" "3" "4" ...
+ $ name      : chr  "Tilkideligi Tepe" "Hydra" "Shiraho, W-Pacific" "Aksu-Terziler area" ...
+ $ formation : chr  "" "Pantokrator Limestone" "" "" ...
+ $ system    : chr  "Triassic" "Triassic" "Neogene" "Triassic" ...
+ $ series    : chr  "Upper Triassic" "Upper Triassic" "Holocene" "Upper Triassic" ...
+ $ interval  : chr  "lower Norian" "upper Carnian" "Recent" "Tuvalian" ...
+ $ biota_main: chr  "Calcisponges" "Corals" "Corals" "Calcisponges" ...
+ $ biota_sec : chr  "Stromatoporoids" "Calcisponges" "Algae" "Stromatoporoids" ...
+ $ lng       : num  30.4 23.6 124.2 31 13.2 ...
+ $ lat       : num  37 37.4 24.3 37.8 47.7 ...
+ $ country   : chr  "Turkey" "Greece" "Pacific" "Turkey" ...
+ $ authors   : chr  "Riedel, P." "Schafer, P., Senowbari-Daryan, B." "Kayanne, H., Suzuki, A. &amp; Saito, H." "Riedel, P." ...
+ $ title     : chr  "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" "The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -" "Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -" "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" ...
+ $ year      : num  1990 1982 1995 1990 1979 ...</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Call documentation for dataset</span></span>
-<span id="cb6-2"><a aria-label="2"></a>?reefs</span>
-<span id="cb6-3"><a aria-label="3"></a><span class="co"># You can also use</span></span>
-<span id="cb6-4"><a aria-label="4"></a><span class="fu">help</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># Call documentation for dataset</span></span>
+<span id="cb13-2"><a aria-label="2"></a>?reefs</span>
+<span id="cb13-3"><a aria-label="3"></a><span class="co"># You can also use</span></span>
+<span id="cb13-4"><a aria-label="4"></a><span class="fu">help</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset are available via the usual documentation call:</p>
+<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;origin) are also available via the usual documentation call:</p>
 </section>
-<section id="lets-begin" class="slide level2">
-<h2>Let’s begin!</h2>
-<p>Reefs have long been considered good tracers of past tropical and subtropical conditions (Kiessling, 2001; Perrin &amp; Kiessling, 2010). More specifically, their distribution has historically been used to infer the latitudinal extent of tropical and subtropical climatic conditions in deep time. This is a bit of an oversimplification given all we know about modern reef systems and their engineers. However, for the purpose of this example, let’s not get weighed down by the finer details.</p>
-<p>We will use the <code>reefs</code> dataset to examine latitudinal trends in Phanerozoic reefs. Before conducting any analyses, it is always a good idea to explore your data and understand what you are working with.</p>
+<section class="slide level2">
+<h2>Exercise 1: Get to know <code>reefs</code></h2>
 <p>Use <code>nrow()</code>, <code>ncol()</code>, and <code>?reefs</code> to answer the following.</p>
 <ol type="1">
 <li>How many rows does <code>reefs</code> have?</li>
@@ -372,8 +437,7 @@ Bethany J. Allen
 </ol>
 </section>
 <section class="slide level2">
-<h2>Let’s begin!</h2>
-<div title="Answers">
+<h2>The <code>reefs</code> dataset</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -394,16 +458,14 @@ Bethany J. Allen
 </div>
 </div>
 </div>
-</div>
 </section>
 <section class="slide level2">
-<h2>Let’s begin!</h2>
-<p>Not bad (<em>n</em> = 4363), that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in <code>tetrapods</code>. But how much does this vary across time? We can make use of the <code>group_apply()</code> wrapper function to run a function across subsets of data.</p>
+<h2>The <code>reefs</code> dataset</h2>
+<p>Not bad, that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the <code>tetrapods</code> dataset. <strong>But how does the number of occurrences vary across time?</strong> We can make use of the <code>group_apply()</code> wrapper function to run a function across subsets of data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="co"># How many reefs per interval?</span></span>
-<span id="cb7-2"><a aria-label="2"></a><span class="co"># Let's group by the interval column to test</span></span>
-<span id="cb7-3"><a aria-label="3"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb7-4"><a aria-label="4"></a><span class="fu">head</span>(reef_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># Group by the interval column to calculate nrow x interval</span></span>
+<span id="cb14-2"><a aria-label="2"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb14-3"><a aria-label="3"></a><span class="fu">head</span>(reef_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  nrow                interval
 1    2       (early?) Toarcian
@@ -414,7 +476,373 @@ Bethany J. Allen
 6    6                Aeronian</code></pre>
 </div>
 </div>
+</section>
+<section class="slide level2">
+<h2>Exercise 2: Spot the problem</h2>
+<ol type="1">
+<li>How many different interval names are there in <code>reefs</code>?</li>
+<li>Why is this a problem for counting reefs through time?</li>
+</ol>
+</section>
+<section class="slide level2">
+<h2>The <code>reefs</code> dataset</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Hint</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p><code>group_apply()</code> returns one row per group. How many groups did you get?</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>The <code>reefs</code> dataset</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answers</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<ol type="1">
+<li>782</li>
+<li>Intervals differ in resolution and naming scheme, so counts are not comparable.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 <p>Oh dear, we have just hit a common issue: our reef data do not conform to a common time scale. Some reefs are resolved to stage level, while others are resolved to a coarser or finer temporal resolution. In some instances, regional names are used, while international names are used in others. This makes comparisons through time challenging.</p>
+</section>
+<section id="assign-common-time-scale" class="slide level2">
+<h2>Assign common time scale</h2>
+<p>One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the <code>reefs</code> dataset (i.e.&nbsp;<code>max_age</code> and <code>min_age</code>). We must therefore use the name of each interval to link to a common time scale: the <a href="https://stratigraphy.org/chart">international geological stages</a> established by the International Commission on Stratigraphy (ICS).</p>
+<p>Fortunately, we can make use of the <code>look_up()</code> function help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we can do the latter using the example <code>interval_key</code> available in <strong>palaeoverse</strong>.</p>
+<p>Load <code>interval_key</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># Load the interval key</span></span>
+<span id="cb16-2"><a aria-label="2"></a><span class="fu">data</span>(<span class="st">"interval_key"</span>)</span>
+<span id="cb16-3"><a aria-label="3"></a><span class="co"># View first six rows</span></span>
+<span id="cb16-4"><a aria-label="4"></a><span class="fu">head</span>(interval_key)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Exercise 3: Get to know <code>interval_key</code></h2>
+<ol type="1">
+<li>What columns does <code>interval_key</code> contain?</li>
+<li>What is the source of <code>interval_key</code>?</li>
+</ol>
+</section>
+<section class="slide level2">
+<h2>Assign common time scale</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answers</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<ol type="1">
+<li>Use <code>colnames(interval_key)</code>: interval_name, early_stage, late_stage</li>
+<li>Use <code>help(interval_key)</code> or <code>?interval_key</code>: geowhen</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Assign common time scale</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb17-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb17-2" class="hljs-ln-code"><a aria-label="2"></a>reefs <span class="ot">&lt;-</span> <span class="fu">look_up</span>(reefs,</span>
+<span id="cb17-3" class="hljs-ln-code"><a aria-label="3"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb17-4" class="hljs-ln-code"><a aria-label="4"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb17-5" class="hljs-ln-code"><a aria-label="5"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb17-6" class="hljs-ln-code"><a aria-label="6"></a><span class="co"># View first six rows</span></span>
+<span id="cb17-7" class="hljs-ln-code"><a aria-label="7"></a><span class="fu">head</span>(reefs)[, <span class="fu">c</span>(<span class="st">"interval"</span>, <span class="st">"interval_max_ma"</span>, <span class="st">"interval_min_ma"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        interval interval_max_ma interval_min_ma
+1   lower Norian        227.0000           208.5
+2  upper Carnian        237.0000           227.0
+3         Recent          0.0117             0.0
+4       Tuvalian        237.0000           227.0
+5 upper Rhaetian        208.5000           201.3
+6       Rhaetian        208.5000           201.3</code></pre>
+</div>
+</div>
+<p>Using <code>interval_key</code>, we can now assign international geological stages and numeric ages to our <code>reefs</code> dataset, using <code>look_up</code>:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Assign common time scale</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb19-2"><a aria-label="2"></a>reefs <span class="ot">&lt;-</span> <span class="fu">look_up</span>(reefs,</span>
+<span id="cb19-3"><a aria-label="3"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb19-4"><a aria-label="4"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb19-5"><a aria-label="5"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb19-6"><a aria-label="6"></a><span class="co"># View first six rows</span></span>
+<span id="cb19-7"><a aria-label="7"></a><span class="fu">head</span>(reefs)[, <span class="fu">c</span>(<span class="st">"interval"</span>, <span class="st">"interval_max_ma"</span>, <span class="st">"interval_min_ma"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        interval interval_max_ma interval_min_ma
+1   lower Norian        227.0000           208.5
+2  upper Carnian        237.0000           227.0
+3         Recent          0.0117             0.0
+4       Tuvalian        237.0000           227.0
+5 upper Rhaetian        208.5000           201.3
+6       Rhaetian        208.5000           201.3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="co"># Extract Phanerozoic stage-level time bins</span></span>
+<span id="cb21-2"><a aria-label="2"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb21-3"><a aria-label="3"></a><span class="fu">head</span>(bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  bin interval_name  rank max_ma mid_ma min_ma duration_myr abbr  colour  font
+1   1     Fortunian stage  541.0 535.00  529.0         12.0   Fo #99B575 black
+2   2       Stage 2 stage  529.0 525.00  521.0          8.0   S2 #A6BA80 black
+3   3       Stage 3 stage  521.0 517.50  514.0          7.0   S3 #A6C583 black
+4   4       Stage 4 stage  514.0 511.50  509.0          5.0   S4 #B3CA8E black
+5   5       Wuliuan stage  509.0 506.75  504.5          4.5  Wul #B3D492 black
+6   6       Drumian stage  504.5 502.50  500.5          4.0   Dr #BFD99D black</code></pre>
+</div>
+</div>
+<p>Great! We now have a common time scale and numeric ages. However, some of our reefs seem to range through several stages (e.g.&nbsp;“lower Norian”), so we cannot simply count by the early or late stage. Our data still need to be binned.</p>
+<p>Let’s check out the <code>time_bins()</code> and <code>bin_time()</code> functions:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Assign common time scale</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb23-2"><a aria-label="2"></a>reefs <span class="ot">&lt;-</span> <span class="fu">look_up</span>(reefs,</span>
+<span id="cb23-3"><a aria-label="3"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb23-4"><a aria-label="4"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb23-5"><a aria-label="5"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb23-6"><a aria-label="6"></a><span class="co"># View first six rows</span></span>
+<span id="cb23-7"><a aria-label="7"></a><span class="fu">head</span>(reefs)[, <span class="fu">c</span>(<span class="st">"interval"</span>, <span class="st">"interval_max_ma"</span>, <span class="st">"interval_min_ma"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        interval interval_max_ma interval_min_ma
+1   lower Norian        227.0000           208.5
+2  upper Carnian        237.0000           227.0
+3         Recent          0.0117             0.0
+4       Tuvalian        237.0000           227.0
+5 upper Rhaetian        208.5000           201.3
+6       Rhaetian        208.5000           201.3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="co"># Extract Phanerozoic stage-level time bins</span></span>
+<span id="cb25-2"><a aria-label="2"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb25-3"><a aria-label="3"></a><span class="fu">head</span>(bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  bin interval_name  rank max_ma mid_ma min_ma duration_myr abbr  colour  font
+1   1     Fortunian stage  541.0 535.00  529.0         12.0   Fo #99B575 black
+2   2       Stage 2 stage  529.0 525.00  521.0          8.0   S2 #A6BA80 black
+3   3       Stage 3 stage  521.0 517.50  514.0          7.0   S3 #A6C583 black
+4   4       Stage 4 stage  514.0 511.50  509.0          5.0   S4 #B3CA8E black
+5   5       Wuliuan stage  509.0 506.75  504.5          4.5  Wul #B3D492 black
+6   6       Drumian stage  504.5 502.50  500.5          4.0   Dr #BFD99D black</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="co"># Now we have numeric ages for our data, we can easily</span></span>
+<span id="cb27-2"><a aria-label="2"></a><span class="co"># remove pre-Phanerozoic data to focus our study</span></span>
+<span id="cb27-3"><a aria-label="3"></a>reefs <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs, interval_max_ma <span class="sc">&lt;=</span> <span class="fu">max</span>(bins<span class="sc">$</span>max_ma))</span>
+<span id="cb27-4"><a aria-label="4"></a><span class="co"># bin_time() defaults to "max_ma" and "min_ma" columns</span></span>
+<span id="cb27-5"><a aria-label="5"></a><span class="co"># Rename columns in reefs</span></span>
+<span id="cb27-6"><a aria-label="6"></a><span class="fu">colnames</span>(reefs)[<span class="fu">which</span>(<span class="fu">colnames</span>(reefs) <span class="sc">==</span> <span class="st">"interval_max_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"max_ma"</span></span>
+<span id="cb27-7"><a aria-label="7"></a><span class="fu">colnames</span>(reefs)[<span class="fu">which</span>(<span class="fu">colnames</span>(reefs) <span class="sc">==</span> <span class="st">"interval_min_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"min_ma"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+<img data-src="img/time-bins.png" class="r-stretch quarto-figure-center"><p class="caption">Phanerozoic stage-level time bins.</p></section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Assign common time scale</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span id="cb28-2"><a aria-label="2"></a>reefs <span class="ot">&lt;-</span> <span class="fu">look_up</span>(reefs,</span>
+<span id="cb28-3"><a aria-label="3"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb28-4"><a aria-label="4"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
+<span id="cb28-5"><a aria-label="5"></a>                 <span class="at">int_key =</span> interval_key)</span>
+<span id="cb28-6"><a aria-label="6"></a><span class="co"># View first six rows</span></span>
+<span id="cb28-7"><a aria-label="7"></a><span class="fu">head</span>(reefs)[, <span class="fu">c</span>(<span class="st">"interval"</span>, <span class="st">"interval_max_ma"</span>, <span class="st">"interval_min_ma"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        interval interval_max_ma interval_min_ma
+1   lower Norian        227.0000           208.5
+2  upper Carnian        237.0000           227.0
+3         Recent          0.0117             0.0
+4       Tuvalian        237.0000           227.0
+5 upper Rhaetian        208.5000           201.3
+6       Rhaetian        208.5000           201.3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="co"># Extract Phanerozoic stage-level time bins</span></span>
+<span id="cb30-2"><a aria-label="2"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
+<span id="cb30-3"><a aria-label="3"></a><span class="fu">head</span>(bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  bin interval_name  rank max_ma mid_ma min_ma duration_myr abbr  colour  font
+1   1     Fortunian stage  541.0 535.00  529.0         12.0   Fo #99B575 black
+2   2       Stage 2 stage  529.0 525.00  521.0          8.0   S2 #A6BA80 black
+3   3       Stage 3 stage  521.0 517.50  514.0          7.0   S3 #A6C583 black
+4   4       Stage 4 stage  514.0 511.50  509.0          5.0   S4 #B3CA8E black
+5   5       Wuliuan stage  509.0 506.75  504.5          4.5  Wul #B3D492 black
+6   6       Drumian stage  504.5 502.50  500.5          4.0   Dr #BFD99D black</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="co"># Now we have numeric ages for our data, we can easily</span></span>
+<span id="cb32-2"><a aria-label="2"></a><span class="co"># remove pre-Phanerozoic data to focus our study</span></span>
+<span id="cb32-3"><a aria-label="3"></a>reefs <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs, interval_max_ma <span class="sc">&lt;=</span> <span class="fu">max</span>(bins<span class="sc">$</span>max_ma))</span>
+<span id="cb32-4"><a aria-label="4"></a><span class="co"># bin_time() defaults to "max_ma" and "min_ma" columns</span></span>
+<span id="cb32-5"><a aria-label="5"></a><span class="co"># Rename columns in reefs</span></span>
+<span id="cb32-6"><a aria-label="6"></a><span class="fu">colnames</span>(reefs)[<span class="fu">which</span>(<span class="fu">colnames</span>(reefs) <span class="sc">==</span> <span class="st">"interval_max_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"max_ma"</span></span>
+<span id="cb32-7"><a aria-label="7"></a><span class="fu">colnames</span>(reefs)[<span class="fu">which</span>(<span class="fu">colnames</span>(reefs) <span class="sc">==</span> <span class="st">"interval_min_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"min_ma"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a><span class="co"># Bin by midpoint age</span></span>
+<span id="cb33-2"><a aria-label="2"></a><span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
+<span id="cb33-3"><a aria-label="3"></a><span class="co"># Bin by overlap majority</span></span>
+<span id="cb33-4"><a aria-label="4"></a><span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"majority"</span>)</span>
+<span id="cb33-5"><a aria-label="5"></a><span class="co"># Bin into every bin within age range</span></span>
+<span id="cb33-6"><a aria-label="6"></a><span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"all"</span>)</span>
+<span id="cb33-7"><a aria-label="7"></a><span class="co"># Bin randomly into bins within age range (equal probability)</span></span>
+<span id="cb33-8"><a aria-label="8"></a><span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"random"</span>, <span class="at">reps =</span> <span class="dv">10</span>)</span>
+<span id="cb33-9"><a aria-label="9"></a><span class="co"># Bin randomly into bins within age range (uniform probability)</span></span>
+<span id="cb33-10"><a aria-label="10"></a><span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"point"</span>, <span class="at">reps =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Five methods exist in <code>bin_time()</code> for binning occurrence data. You can see details on each via <code>?bin_time</code>:</p>
+</section>
+<section class="slide level2">
+<h2>Exercise 4: Choose a temporal binning method</h2>
+<p>Before we pick a method, let’s see how the choice affects the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a><span class="co"># Your turn: bin the reefs using the "majority" method</span></span>
+<span id="cb34-2"><a aria-label="2"></a>reefs_majority <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(reefs, <span class="at">max_ma =</span> ___, <span class="at">min_ma =</span> ___, <span class="at">bins =</span> ___, <span class="at">method =</span> ___)</span>
+<span id="cb34-3"><a aria-label="3"></a><span class="co"># How many rows does the result have?</span></span>
+<span id="cb34-4"><a aria-label="4"></a><span class="fu">nrow</span>(___)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="1">
+<li>How many rows does <code>reefs</code> have after binning with <code>method = "majority"</code>?</li>
+<li>How many rows does <code>reefs</code> have if we filter “overlap_percentage” to more than 50%?</li>
+<li>Which method would you expect to <em>increase</em> the number of rows?</li>
+</ol>
+</section>
+<section class="slide level2">
+<h2>Assign common time scale</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answers</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<ol type="1">
+<li>Trick question! It’s the same: 4335</li>
+<li>3946</li>
+<li><code>"all"</code></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Assign common time scale</h2>
+<p>We will go with <code>"all"</code> for this tutorial:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-label="1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note that the number of rows of <code>reefs</code> has now increased: the <code>"all"</code> method duplicates an occurrence for every bin its age range overlaps with.</p>
+</section>
+<section class="slide level2">
+<h2>Assign common time scale</h2>
+</section>
+<section id="how-many-rows-did-we-gain" class="slide level2 callout-info" data-collapse="true">
+<h2>How many rows did we gain?</h2>
+<div class="fragment">
+<p><code>reefs</code> grew from 4335 to 6554 rows. Each extra row is a copy of a reef placed in an additional bin.</p>
+</div>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Assign common time scale</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb36-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Count number of reefs per time bin</span></span>
+<span id="cb36-2" class="hljs-ln-code"><a aria-label="2"></a>reefs_time <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb36-3" class="hljs-ln-code"><a aria-label="3"></a><span class="co"># Make sure bins are in chronological order</span></span>
+<span id="cb36-4" class="hljs-ln-code"><a aria-label="4"></a>reefs_time <span class="ot">&lt;-</span> reefs_time[<span class="fu">order</span>(<span class="fu">as.numeric</span>(reefs_time<span class="sc">$</span>bin_midpoint)), ]</span>
+<span id="cb36-5" class="hljs-ln-code"><a aria-label="5"></a><span class="co"># Check output</span></span>
+<span id="cb36-6" class="hljs-ln-code"><a aria-label="6"></a><span class="fu">head</span>(reefs_time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  nrow bin_midpoint
+1    3       0.0021
+2    3       0.0062
+3    3      0.00995
+4  117      0.07035
+5   52       0.4515
+6   34        1.287</code></pre>
+</div>
+</div>
+<p>Let’s check those reef numbers through time again using our binned data:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Assign common time scale</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-label="1"></a><span class="co"># Count number of reefs per time bin</span></span>
+<span id="cb38-2"><a aria-label="2"></a>reefs_time <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb38-3"><a aria-label="3"></a><span class="co"># Make sure bins are in chronological order</span></span>
+<span id="cb38-4"><a aria-label="4"></a>reefs_time <span class="ot">&lt;-</span> reefs_time[<span class="fu">order</span>(<span class="fu">as.numeric</span>(reefs_time<span class="sc">$</span>bin_midpoint)), ]</span>
+<span id="cb38-5"><a aria-label="5"></a><span class="co"># Check output</span></span>
+<span id="cb38-6"><a aria-label="6"></a><span class="fu">head</span>(reefs_time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  nrow bin_midpoint
+1    3       0.0021
+2    3       0.0062
+3    3      0.00995
+4  117      0.07035
+5   52       0.4515
+6   34        1.287</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-label="1"></a><span class="co"># Plot data</span></span>
+<span id="cb40-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> reefs_time<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb40-3"><a aria-label="3"></a>     <span class="at">y =</span> reefs_time<span class="sc">$</span>nrow,</span>
+<span id="cb40-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb40-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Number of reefs per stage"</span>,</span>
+<span id="cb40-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb40-7"><a aria-label="7"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb40-8"><a aria-label="8"></a>     <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb40-9"><a aria-label="9"></a><span class="co"># Add axis of the geological time scale</span></span>
+<span id="cb40-10"><a aria-label="10"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="phanerozoic-reefs_files/figure-html/n-reefs-1.png" width="672" class="r-stretch quarto-figure-center"><p class="caption">Counts of the number of reefs per international geological stage.</p><p>That is more like it! But let’s not forget it is always useful to visualise our data. Why don’t we plot the number of reefs through time? We can make use of the <code>axis_geo()</code> function to add the geological time scale to our plot:</p>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<p>Buffan, L., Jones, L. A., Domeier, M., Scotese, C. R., Zahirovic, S., &amp; Varela, S. (2023). Mind the uncertainty: Global plate model choice impacts deep‐time palaeobiological studies. Methods in Ecology and Evolution, 14(12), 3007-3019. DOI: <a href="https://doi.org/10.1111/2041-210X.14204">10.1111/2041-210X.14204</a></p>
+<p>Kiessling, W. (2001). Paleoclimatic significance of Phanerozoic reefs. <em>Geology</em>, 29, 751–754. DOI: <a href="https://doi.org/10.1130/0091-7613(2001)029%3C0751:PSOPR%3E2.0.CO;2">10.1130/0091-7613(2001)029%3C0751:PSOPR%3E2.0.CO;2</a></p>
+<p>Kiessling, W. &amp; Krause, M. C. (2022). PaleoReefs Database (PARED) (1.0) [Data set]. DOI: <a href="https://doi.org/10.5281/zenodo.6037852">10.5281/zenodo.6037852</a>.</p>
+<p>Merdith, A., Williams, S. E., Collins, A. S., Tetley, M. G., Mulder, J. A., Blades, M. L., Young, A., Armistead, S. E., Cannon, J., Zahirovic, S., &amp; Müller, R. D. (2021). Extending full-plate tectonic models into deep time: Linking the Neoproterozoic and the Phanerozoic. <em>Earth-Science Reviews</em>, 214, 103477. DOI: <a href="https://doi.org/10.1016/j.earscirev.2020.103477">10.1016/j.earscirev.2020.103477</a>.</p>
+<p>Perrin, C. &amp; Kiessling, W. (2010). Latitudinal trends in Cenozoic reef patterns and their relationship to climate. <em>Carbonate Systems during the Oligocene–Miocene Climatic Transition</em>, 17–33. DOI: <a href="https://doi.org/10.1002/9781118398364.ch2">10.1002/9781118398364.ch2</a></p>
+<p>Scotese, C. &amp; Wright, N. M. (2018). PALEOMAP Paleodigital Elevation Models (PaleoDEMs) for the Phanerozoic. <a href="https://www.earthbyte.org/paleodem-resource-scotese-and-wright-2018/">PALEOMAP Project</a>.</p>
+<p>Wright, N., Zahirovic, S., Müller, R. D., &amp; Seton, M. (2013). Towards community-driven paleogeographic reconstructions: integrating open-access paleogeographic and paleobiology data with plate tectonics. <em>Biogeosciences</em>, 10(3), 1529–1541. DOI: <a href="https://doi.org/10.5194/bg-10-1529-2013">10.5194/bg-10-1529-2013</a>.</p>
 
 
 </section>
@@ -453,7 +881,7 @@ Bethany J. Allen
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu"},
 'smaller': true,
  
         // Display controls in the bottom right corner
@@ -756,7 +1184,8 @@ Bethany J. Allen
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
           // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
           for (var i=0; i<links.length; i++) {
             const link = links[i];
             if (!isInternal(link.href)) {
@@ -765,8 +1194,69 @@ Bethany J. Allen
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+              if (!link.classList.contains('no-external-icon')) {
+              }
             }
           }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
           const config = {
             allowHTML: true,
@@ -780,6 +1270,7 @@ Bethany J. Allen
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
           };
           if (contentFn) {
             config.content = contentFn;
