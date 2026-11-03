@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-11-03">
 
 <title>Share a package</title>
 <style>
@@ -333,11 +332,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#github" id="toc-github" class="nav-link active" data-scroll-target="#github">Github</a></li>
+  <li><a href="#publish-your-package" id="toc-publish-your-package" class="nav-link active" data-scroll-target="#publish-your-package">Publish your package</a>
+  <ul class="collapse">
+  <li><a href="#version-control-system" id="toc-version-control-system" class="nav-link" data-scroll-target="#version-control-system">Version control system</a></li>
+  <li><a href="#r-universe" id="toc-r-universe" class="nav-link" data-scroll-target="#r-universe">R-universe</a></li>
   <li><a href="#cran" id="toc-cran" class="nav-link" data-scroll-target="#cran">CRAN</a></li>
-  <li><a href="#website" id="toc-website" class="nav-link" data-scroll-target="#website">Website</a>
+  </ul></li>
+  <li><a href="#make-a-package-website" id="toc-make-a-package-website" class="nav-link" data-scroll-target="#make-a-package-website">Make a package website</a>
   <ul class="collapse">
   <li><a href="#local-website" id="toc-local-website" class="nav-link" data-scroll-target="#local-website">Local website</a></li>
+  <li><a href="#publish-the-website" id="toc-publish-the-website" class="nav-link" data-scroll-target="#publish-the-website">Publish the website</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -364,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 3, 2026</p>
+      <p class="date">Invalid Date</p>
     </div>
   </div>
   
@@ -390,81 +394,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"pkgcheck"</span>, <span class="st">"sloop"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>Having a package is cool but it’s much less useful if you keep it for you<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>There are two main, non-exclusive ways to share your package to the world:</p>
+<p>Having a package is nice but it’s much less useful if you keep it for you. There are two main, non-exclusive ways to share your package to the world:</p>
 <ul>
-<li>put it on Github</li>
-<li>put it on CRAN</li>
+<li>put it on some version control system (e.g.&nbsp;GitHub, Gitlab, Codeberg);</li>
+<li>put it on R-universe;</li>
+<li>put it on CRAN.</li>
 </ul>
-<section id="github" class="level2">
-<h2 data-anchor-id="github">Github</h2>
-<p>Git and Github are useful tools for code sharing, which means they’re perfect to share an R package.</p>
-<p>This is <em>not</em> a Git tutorial, I’ll “just” show how to connect Git and Github to RStudio.</p>
-<p>If this is already done, skip the next two slides.</p>
-<ol type="1">
-<li><p>Download and install <a href="https://git-scm.com/">Git</a>.</p></li>
-<li><p>Connect Git and RStudio:</p>
-<ul>
-<li><p>in RStudio: Tools &gt; Global Options &gt; Git/SVN &gt; Git executable &gt; Browse &gt; Find your installation of Git</p></li>
-<li><p>it should probably be similar to mine: “C:/Users/etienne/AppData/Local/Programs/Git/bin”</p></li>
-</ul></li>
-<li><p>If necessary, create an account on <a href="github.com/">Github</a>.</p></li>
-<li><p>In RStudio, run <code>usethis::use_git_config(user.name = "&lt;YOUR NAME&gt;", user.email = "&lt;YOUR EMAIL&gt;")</code> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p></li>
-<li><p>Now you need a token that will be stored in RStudio so that Github knows that RStudio has the right to push code to your repositories. You can create one with <code>usethis::create_github_token()</code> (you can also change the expiration date).</p></li>
-<li><p>Generate the token and store it in RStudio with <code>gitcreds::gitcreds_set()</code>.</p></li>
-<li><p>Restart RStudio.</p></li>
-</ol>
-<p>Doesn’t work? More info at <a href="https://happygitwithr.com">Happy Git with R</a>.</p>
+<section id="publish-your-package" class="level2">
+<h2 data-anchor-id="publish-your-package">Publish your package</h2>
+<section id="version-control-system" class="level3">
+<h3 data-anchor-id="version-control-system">Version control system</h3>
+<p>In this section, we assume you are already familiar with Git and GitHub. If this is not the case, then you might be interested in our module on these tools: &lt;link&gt;.</p>
+<p>Supposing we put our package <code>my.pkg</code> on GitHub, R users can now install it with the following alternatives:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Can I install packages from other platforms?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>GitHub is the most famous platform to use Git features and store code. However, you could also use other platforms, such as Gitlab, Codeberg, or Forgejo.</p>
+<p>Using these platforms will not affect the ability to install your package. For instance, if your host your package on Codeberg, then it can be installed with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span>(<span class="st">"https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"git::https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </section>
-<section id="cran" class="level2">
-<h2 data-anchor-id="cran">CRAN</h2>
-<div style="text-align: center; font-size: 2.3rem">
-<p>CRAN <br> <br> Comprehensive R Archive Network <br> <br> Where packages are stored (around 20,000 packages currently).</p>
-</div>
-<p>Put a package on CRAN:</p>
-<ul>
-<li>Pros:
-<ul>
-<li>More visibility</li>
-<li>Package is tested before being uploaded</li>
-<li>Package is tested with new versions of R or with new versions of its dependencies</li>
-</ul></li>
-<li>Cons:
-<ul>
-<li>Delay to fix a bug in your package can be short (2 weeks)</li>
-</ul></li>
-</ul>
-<p>CRAN has strict rules in terms of formatting or testing, but that shouldn’t worry you:</p>
-<ul>
-<li><p>there are some collaborative todo lists before submitting to CRAN, such as <a href="https://github.com/ThinkR-open/prepare-for-cran">this one</a></p></li>
-<li><p>there are a lot of packages to make your life easier (<a href="https://cran.r-project.org/web/packages/urlchecker/index.html">urlchecker</a>, <a href="https://cran.r-project.org/web/packages/spelling/index.html">spelling</a>, etc.)</p></li>
-</ul>
+<section id="r-universe" class="level3">
+<h3 data-anchor-id="r-universe">R-universe</h3>
+<p>TODO?</p>
 </section>
-<section id="website" class="level2">
-<h2 data-anchor-id="website">Website</h2>
-<p>We could stop here, but we can add something more: a website!</p>
-<p>And no, it won’t (or rather shouldn’t) take long.</p>
-<div class="columns center">
-<div class="column" style="width:50%;">
-<p>We’re going to use an amazing package to build a package website in a few minutes: <code>pkgdown</code></p>
-</div><div class="column" style="width:50%;">
-<p><img src="pkgdown.png" height="150" style="margin-left: 5rem"></p>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if not already installed</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pkgdown"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="cran" class="level3">
+<h3 data-anchor-id="cran">CRAN</h3>
+<p>CRAN is the Comprehensive R Archive Network. It is a general repository where packages can be stored, and it is where packages are installed from by default. Currently, there are more than 25,000 packages on CRAN (you can see the entire list <a href="https://cran.r-project.org/web/packages/available_packages_by_name.html">here</a>).</p>
+<p>Puting a package on CRAN has several advantages. First, it gives your package more visibility, and it guarantees that it is easy to install it on almost all operating systems. Second, your package is constantly tested against new versions of R or with new versions of its dependencies. This guarantees that your package is compatible with the rest of the ecosystem at a given time.</p>
+<p>This last point comes at a cost, however. If your test suite starts failing because of changes in R or in some of its dependencies, it becomes at risk of removal from CRAN. Usually, the CRAN team gives the package maintainer two or three weeks to fix the errors and submit a new version (although an extension can be requested if needed). Therefore, putting your package on CRAN doesn’t guarantee it will stay there and it requires you to be available for maintenance if needed.</p>
+<p>Publishing a package on CRAN also means complying with a set of strict rules in terms of formatting or testing. This may sound intimidating but there exist many resources to make this process easier. For instance, there are a lot of packages to make your life easier (<a href="https://cran.r-project.org/web/packages/urlchecker/index.html">urlchecker</a> to check invalid URLs, <a href="https://cran.r-project.org/web/packages/spelling/index.html">spelling</a> to detect spelling mistakes, among others). There are also collaborative todo lists before submitting to CRAN, such as <a href="https://github.com/ThinkR-open/prepare-for-cran">this one</a>. Finally, the function <code>devtools::release()</code> provides a long checklist to ensure that your package is ready to be submitted.</p>
+<p>We recommend reading <a href="https://r-pkgs.org/release.html">this section</a> of the “R packages” book for a list of good practices and things to do. This looks intimidating and it can be a non-negligible amount of work, but it becomes easier as you get more familiar with the package development process.</p>
+</section>
+</section>
+<section id="make-a-package-website" class="level2">
+<h2 data-anchor-id="make-a-package-website">Make a package website</h2>
+<p>Publishing a package on GitHub, R-universe, or CRAN makes it easy to install but not necessarily easy to discover. We can add something more: a website!</p>
+<p>This might sound like a lot of work, but we are going to use a great package to build a package website in a few minutes: <code>pkgdown</code>.</p>
 <section id="local-website" class="level3">
 <h3 data-anchor-id="local-website">Local website</h3>
-<p>Before putting the website online, we can already create locally with <code>pkgdown::build_site()</code>.</p>
-<p>This takes care of everything:</p>
+<p>We can create the website locally with <code>pkgdown::build_site()</code>. This takes care of everything:</p>
 <ul>
 <li>converting documentation</li>
 <li>create links to the Github repository</li>
 <li>create pages for license, authors, etc.</li>
 </ul>
-<p>Once you have a website, you can include it in the <code>DESCRIPTION</code> file.</p>
+<p>This will automatically open a preview. Note that <code>pkgdown</code> uses all the information stored in <code>DESCRIPTION</code>, so you should ensure this is up to date!</p>
+</section>
+<section id="publish-the-website" class="level3">
+<h3 data-anchor-id="publish-the-website">Publish the website</h3>
 
 
 <hr><br><details>
@@ -609,14 +598,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Although it can be a fine practice.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Note that the email must be the same as the one used to create the Github account.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script>
 // Quarto doesn't add an `active` class to the current page's navbar link in
 // this setup, so do it ourselves: match each top-level navbar link's path
