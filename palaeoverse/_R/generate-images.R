@@ -25,3 +25,16 @@ tetrapods |>
   subset(!is.na(order)) |>
   tax_range_time(name = "order", plot = TRUE)
 dev.off()
+
+# Time bins
+png(filename = "palaeoverse/img/time-bins.png",
+    width = width, height = height, res = res,
+    bg = "transparent", type = "cairo")
+par(mar = mar)
+time_bins(interval = "Phanerozoic", rank = "stage", plot = TRUE)
+dev.off()
+
+
+binned_reefs <- bin_time(reefs, max_ma = "interval_max_ma", min_ma = "interval_min_ma", bins = bins, method = "majority")
+n_reefs_majority <- nrow(binned_reefs)
+n_reefs_filtered <- subset(binned_reefs, overlap_percentage > 50)
