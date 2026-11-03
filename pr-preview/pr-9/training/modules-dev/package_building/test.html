@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-11-02">
+<meta name="dcterms.date" content="2026-11-03">
 
 <title>Test a package</title>
 <style>
@@ -370,7 +370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 2, 2026</p>
+      <p class="date">November 3, 2026</p>
     </div>
   </div>
   
@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/test.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/test.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -393,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"pkgcheck"</span>, <span class="st">"sloop"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"pkgcheck"</span>, <span class="st">"sloop"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <p>We have a working package! We have checked that it can run locally and that results are as expected, so everything seems fine.</p>
@@ -410,6 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-anchor-id="set-up-the-test-suite">Set up the test suite</h3>
 <p>There exist several packages to create and manage a test suite. The most famous one is <a href="https://testthat.r-lib.org/"><code>testthat</code></a>, but you might also be interested in <a href="https://github.com/markvanderloo/tinytest/"><code>tinytest</code></a>.</p>
 <p>To start using this package, run:</p>
+<!-- This chunk is only here so that `pak::scan_deps()` detects `testthat`.  -->
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -756,7 +757,7 @@ Caution
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-02
+ date     2026-11-03
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -784,6 +785,7 @@ Caution
    curl           8.1.0   2026-10-14 [1] RSPM
    cyclocomp      1.1.2   2026-03-11 [1] RSPM
    desc           1.4.3   2023-12-10 [1] RSPM
+   diffobj        0.3.9   2026-09-11 [1] RSPM
    digest         0.6.39  2025-11-19 [1] RSPM
    dplyr          1.2.1   2026-04-03 [1] RSPM
    evaluate       1.0.5   2025-08-27 [1] RSPM
@@ -815,7 +817,7 @@ Caution
    Matrix         1.7-6   2026-07-25 [2] CRAN (R 4.6.2)
    memoise        2.0.1   2021-11-26 [1] RSPM
    mime           0.13    2025-03-17 [1] RSPM
-   openssl        2.4.2   2026-06-09 [1] RSPM
+   openssl        2.5.0   2026-11-02 [1] RSPM
    otel           0.2.0   2025-08-29 [1] RSPM
    pak            0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
    pillar         1.11.1  2025-09-17 [1] RSPM
@@ -851,6 +853,7 @@ Caution
    spelling       2.3.2   2025-08-18 [1] RSPM
    srr            1.0.0   2026-06-23 [1] RSPM
    sys            3.4.3   2024-10-04 [1] RSPM
+   testthat       3.3.2   2026-01-11 [1] RSPM
    tibble         3.3.1   2026-01-11 [1] RSPM
    tidyselect     1.2.1   2024-03-11 [1] RSPM
    tinytex        0.61    2026-09-17 [1] RSPM
@@ -862,6 +865,7 @@ Caution
    utf8           1.2.6   2025-06-08 [1] RSPM
    vctrs          0.7.3   2026-04-11 [1] RSPM
    vroom          1.7.1   2026-03-31 [1] RSPM
+   waldo          0.6.2   2025-07-11 [1] RSPM
    whisker        0.4.1   2022-12-05 [1] RSPM
    whoami         1.3.0   2019-03-19 [1] RSPM
    withr          3.0.3   2026-06-19 [1] RSPM

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-11-02">
+<meta name="dcterms.date" content="2026-11-03">
 
 <title>Develop a package</title>
 <style>
@@ -338,7 +338,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#namespace-conflicts" id="toc-namespace-conflicts" class="nav-link" data-scroll-target="#namespace-conflicts">Namespace conflicts</a></li>
   <li><a href="#s3-methods" id="toc-s3-methods" class="nav-link" data-scroll-target="#s3-methods">S3 methods</a></li>
   </ul></li>
-  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a></li>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a>
+  <ul class="collapse">
+  <li><a href="#to-take-or-not-to-take-dependencies" id="toc-to-take-or-not-to-take-dependencies" class="nav-link" data-scroll-target="#to-take-or-not-to-take-dependencies">To take or not to take dependencies</a></li>
+  <li><a href="#an-example" id="toc-an-example" class="nav-link" data-scroll-target="#an-example">An example</a></li>
+  <li><a href="#how-to-use-dependencies" id="toc-how-to-use-dependencies" class="nav-link" data-scroll-target="#how-to-use-dependencies">How to use dependencies</a></li>
+  <li><a href="#reverse-dependencies" id="toc-reverse-dependencies" class="nav-link" data-scroll-target="#reverse-dependencies">Reverse dependencies</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -364,7 +370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 2, 2026</p>
+      <p class="date">November 3, 2026</p>
     </div>
   </div>
   
@@ -376,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/develop.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/develop.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -387,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"pkgcheck"</span>, <span class="st">"sloop"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"pkgcheck"</span>, <span class="st">"sloop"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <p>We now know the basics of a package: how to create one, document it, and test it. But there are plenty of choices to make when developing a package, such as:</p>
@@ -416,14 +422,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  intersect, setdiff, setequal, union</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>While some tools are available on the user’s side to fix such conflicts (e.g see the package <a href="https://conflicted.r-lib.org/"><code>conflicted</code></a>), it is good practice to try to avoid them. In particular, you should be very careful that your functions don’t have the same names as other functions in popular packages (e.g <code>data.table</code>, <code>tidyverse</code> packages, etc.).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+<span class="screen-reader-only">Tip</span>How do I know if a function name is already used?
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The package <a href="https://docs.ropensci.org/pkgcheck/"><code>pkgcheck</code></a> allows us to quickly check whether a function name is already provided by a package on CRAN. For instance, <code>filter()</code> is exported by multiple packages:</p>
 <div class="cell">
@@ -446,6 +454,7 @@ Tip
 14   rjd3filters   2.4.0  filter
 15        vectra  0.14.1  filter
 16       poorman   0.3.0  filter</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -522,28 +531,99 @@ Tip
 </section>
 <section id="dependencies" class="level2">
 <h2 data-anchor-id="dependencies">Dependencies</h2>
+<section id="to-take-or-not-to-take-dependencies" class="level3">
+<h3 data-anchor-id="to-take-or-not-to-take-dependencies">To take or not to take dependencies</h3>
 <div style="text-align: center;">
 <p><img src="img/dependencies.png" height="400"></p>
 </div>
-<p>When you develop your package, you can import other packages, either because they provide essential features or simply because they make the development easier.</p>
-<p>However, these dependencies have a <strong>cost</strong>:</p>
-<ul>
-<li><p>they make your package more fragile: changes in these dependencies also affect your package;</p></li>
-<li><p>they force users to have these dependencies [IS IT REALLY A COST?]</p></li>
-</ul>
-<p>Therefore, you have to find the right balance:</p>
-<ul>
-<li><p>dependencies are not a bad thing <em>per se</em></p></li>
-<li><p>but they increase the maintenance burden and the risk of failure in the long run.</p></li>
-</ul>
-<p>This might seem abstract, so let’s take an example. Suppose that for one reason or another, your package uses the function <code>select_vars()</code> from the package <code>dplyr</code>.</p>
-<p>This function was removed in <code>dplyr</code> v. 1.1.0.</p>
-<p>This has implications for the user of your package:</p>
+<p>When we develop a package, we can import other packages, either because they provide essential features or simply because they make the development easier. These packages are now <strong>dependencies</strong> of our package, meaning that our package can be affected if any of these packages has some issues.</p>
+<p>The topic of dependencies is very important in software in general, not just in R packages. Taking dependencies is a tradeoff.</p>
+<p>On one hand, we can rely on the work and experience of others to use features that would be hard and/or time-consuming to implement ourselves. Splitting functionalities across packages can also be a good thing since each package can focus on some particular aspects instead of being a collection of hundreds of functions that is harder to properly document and test. It is also important to keep in mind that not all dependencies are equal. Depending on a small package that does one thing very well and that is actively maintained is often better than reinventing the wheel (maybe with a worse implementation) in our package.</p>
+<p>On the other hand, dependencies can make our package more fragile because changes in these dependencies also affect your package. For example, if a package that we depend on changes their function and argument names, then we need to update our package to take this into account, otherwise our code would break. This kind of changes is called <strong>breaking changes</strong>.</p>
+<p>This might seem a bit abstract, so let’s see a concrete example.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>About software security
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Whether to use external dependencies can be particularly important in terms of software security, but this is not our focus here. If you want to learn more about this topic, search for <a href="https://en.wikipedia.org/wiki/Software_supply_chain">software supply chain</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="an-example" class="level3">
+<h3 data-anchor-id="an-example">An example</h3>
+<p>Suppose that for some reason, our package uses the function <code>select_vars()</code> from the package <code>dplyr</code>. This function was removed in <code>dplyr</code> v.1.1.0, which has implications for the user of your package:</p>
 <ul>
 <li><p>if their version of <code>dplyr</code> is &lt; 1.1.0, it still works fine;</p></li>
 <li><p>if their version of <code>dplyr</code> is &gt;= 1.1.0, then the function in your package that uses <code>select_vars()</code> will error.</p></li>
 </ul>
-<p>Having dependencies forces you to stay aware of changes in these dependencies and this increase the maintenance burden.</p>
+<p>In this case, we could replace <code>select_vars()</code> by another function and indicate that the version of <code>dplyr</code> must be greater than or equal to 1.1.0, so that users would at least know why this function fails if they don’t have a supported version.</p>
+<p>Having dependencies forces us to stay aware of changes in these dependencies, and this increases the maintenance burden.</p>
+</section>
+<section id="how-to-use-dependencies" class="level3">
+<h3 data-anchor-id="how-to-use-dependencies">How to use dependencies</h3>
+<p>Information on dependencies is kept in <code>DESCRIPTION</code>. We can list dependencies in two fields: <code>Imports</code> or <code>Suggests</code>.</p>
+<p>Adding a package in <code>Imports</code> signals that it is essential for our package to work. Therefore, this dependency will be installed whenever a user installs our package.</p>
+<p>Adding a package in <code>Suggests</code> signals that some functionalities of our package require this dependency but it is not essential. For instance, <code>testthat</code> could be listed here because it is required for testing but not having installed doesn’t change anything for the end user of our package. Dependencies listed in <code>Suggests</code> will not be installed automatically when a user installs our package.</p>
+<p>We can either add a dependency by hand, or use <code>usethis::use_package()</code> to add it automatically. For example, if we choose to put <code>dplyr</code> and <code>sf</code> in <code>Imports</code>, and <code>testthat</code> in <code>Suggests</code>, then our <code>DESCRIPTION</code> file will look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[ manually truncated ]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Imports<span class="sc">:</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    dplyr,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    sf</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>Suggests<span class="sc">:</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">testthat</span> (<span class="sc">&gt;=</span> <span class="dv">3</span>.<span class="fl">0.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>As you can see, we can also specify minimum version requirements for our dependencies. Going back to our example with <code>dplyr</code> above, in addition to making the necessary fixes to handle breaking changes in <code>dplyr</code> 1.1.0, we should specify that <code>dplyr (&gt;= 1.1.0)</code> is required in our package.</p>
+<p>There are several ways to use dependencies in our code:</p>
+<ul>
+<li>using <code>::</code>, for instance <code>dplyr::select()</code>;</li>
+<li>importing a specific function by putting <code>#' @importFrom dplyr select</code> in the function documentation and then calling <code>devtools::document()</code>. This will add <code>importFrom(dplyr, select)</code> in <code>NAMESPACE</code>, meaning that we can use <code>select()</code> directly in our code.</li>
+</ul>
+<p>Note that <em>if a package is in <code>Suggests</code>, then we need to check whether it is installed before calling it in our code</em>. For instance, if our function depends on a function from the package <code>foo</code>, we can check its presence with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>my_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"foo"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Package </span><span class="sc">\"</span><span class="st">foo</span><span class="sc">\"</span><span class="st"> must be installed to use this function."</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">call. =</span> <span class="cn">FALSE</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># code that includes calls such as foo::some_function()</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="reverse-dependencies" class="level3">
+<h3 data-anchor-id="reverse-dependencies">Reverse dependencies</h3>
+<p>So far, our focus was on dependencies, i.e.&nbsp;packages that we depend on. If our package becomes useful enough, then maybe other developers will choose to depend on it. Packages that depend on our package are called “reverse dependencies”.</p>
+<p>This means that any change we make to our package might affect other packages. It is good practice to check these reverse dependencies before releasing a new version of our package:</p>
+<ul>
+<li>if we don’t find any new failure in these reverse dependencies, then we know that our new version won’t break them;</li>
+<li>if we find new failures then we should notify the maintainers of these dependencies. If the failures are not too big, we can also submit a patch ourselves, but this is not mandatory. In general, we should give these maintainers a couple of weeks notice before releasing our new version.</li>
+</ul>
+<p>We can use the package <a href="https://revdepcheck.r-lib.org/"><code>revdepcheck</code></a> to run reverse dependency checks.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How do reverse dependency checks work?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When we check reverse dependencies, we want to ensure that our changes do not cause <em>new</em> failures. A reverse dependency might already have failing tests which are not related to our changes.</p>
+<p>Tools to check reverse dependencies will install the latest version of our package and its development version (where we made new changes) and run the test suite of each reverse dependencies with both version. A failure happening only when the development version of our package is used means that our changes cause reverse dependency failures.</p>
+</div>
+</div>
+</div>
+<p>Note that if we eventually publish our package on CRAN (cf.&nbsp;next section), then the CRAN team will automatically run reverse dependency checks when we submit a new version. Failures in reverse dependencies will only be tolerated if we have notified maintainers in advance.</p>
 
 
 <hr><br><details>
@@ -558,7 +638,7 @@ Tip
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-02
+ date     2026-11-03
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -586,6 +666,7 @@ Tip
    curl           8.1.0   2026-10-14 [1] RSPM
    cyclocomp      1.1.2   2026-03-11 [1] RSPM
    desc           1.4.3   2023-12-10 [1] RSPM
+   diffobj        0.3.9   2026-09-11 [1] RSPM
    digest         0.6.39  2025-11-19 [1] RSPM
    dplyr          1.2.1   2026-04-03 [1] RSPM
    evaluate       1.0.5   2025-08-27 [1] RSPM
@@ -617,7 +698,7 @@ Tip
    Matrix         1.7-6   2026-07-25 [2] CRAN (R 4.6.2)
    memoise        2.0.1   2021-11-26 [1] RSPM
    mime           0.13    2025-03-17 [1] RSPM
-   openssl        2.4.2   2026-06-09 [1] RSPM
+   openssl        2.5.0   2026-11-02 [1] RSPM
    otel           0.2.0   2025-08-29 [1] RSPM
    pak            0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
    pillar         1.11.1  2025-09-17 [1] RSPM
@@ -653,6 +734,7 @@ Tip
    spelling       2.3.2   2025-08-18 [1] RSPM
    srr            1.0.0   2026-06-23 [1] RSPM
    sys            3.4.3   2024-10-04 [1] RSPM
+   testthat       3.3.2   2026-01-11 [1] RSPM
    tibble         3.3.1   2026-01-11 [1] RSPM
    tidyselect     1.2.1   2024-03-11 [1] RSPM
    tinytex        0.61    2026-09-17 [1] RSPM
@@ -664,6 +746,7 @@ Tip
    utf8           1.2.6   2025-06-08 [1] RSPM
    vctrs          0.7.3   2026-04-11 [1] RSPM
    vroom          1.7.1   2026-03-31 [1] RSPM
+   waldo          0.6.2   2025-07-11 [1] RSPM
    whisker        0.4.1   2022-12-05 [1] RSPM
    whoami         1.3.0   2019-03-19 [1] RSPM
    withr          3.0.3   2026-06-19 [1] RSPM
@@ -682,6 +765,7 @@ Tip
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </details>
+</section>
 </section>
 
 </main> <!-- /main -->
