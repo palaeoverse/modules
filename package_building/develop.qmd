@@ -185,7 +185,7 @@ There are several ways to use dependencies in our code:
 
 Note that *if a package is in `Suggests`, then we need to check whether it is installed before calling it in our code*. For instance, if our function depends on a function from the package `foo`, we can check its presence with:
 
-```{r}
+```r
 my_fun <- function(a, b) {
   if (!requireNamespace("foo", quietly = TRUE)) {
     stop(
