@@ -16,7 +16,6 @@ editor:
 Having a package is nice but it's much less useful if you keep it for you. There are two main, non-exclusive ways to share your package to the world:
 
 - put it on some version control system (e.g. GitHub, Gitlab, Codeberg);
-- put it on R-universe;
 - put it on CRAN.
 
 ## Publish your package
@@ -44,10 +43,6 @@ pak::pak("git::https://codeberg.org/<username>/my.pkg.git")
 :::
 
 
-### R-universe
-
-TODO?
-
 ### CRAN
 
 CRAN is the Comprehensive R Archive Network. It is a general repository where packages can be stored, and it is where packages are installed from by default. Currently, there are more than 25,000 packages on CRAN (you can see the entire list [here](https://cran.r-project.org/web/packages/available_packages_by_name.html)).
@@ -63,7 +58,7 @@ We recommend reading [this section](https://r-pkgs.org/release.html) of the "R p
 
 ## Make a package website
 
-Publishing a package on GitHub, R-universe, or CRAN makes it easy to install but not necessarily easy to discover. We can add something more: a website!
+Publishing a package on GitHub or on CRAN makes it easy to install but not necessarily easy to discover. We can add something more: a website!
 
 This might sound like a lot of work, but we are going to use a great package to build a package website in a few minutes: `pkgdown`.
 
@@ -78,3 +73,5 @@ We can create the website locally with `pkgdown::build_site()`. This takes care 
 This will automatically open a preview. Note that `pkgdown` uses all the information stored in `DESCRIPTION`, so you should ensure this is up to date!
 
 ### Publish the website
+
+The website can then be published via GitHub Pages, using a continuous integration workflow. To learn more about this, see the [GitHub Actions section]().
