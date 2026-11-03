@@ -159,6 +159,43 @@ Having dependencies forces us to stay aware of changes in these dependencies, an
 
 ### How to use dependencies
 
+Information on dependencies is kept in `DESCRIPTION`. We can list dependencies in two fields: `Imports` or `Suggests`. 
+
+Adding a package in `Imports` signals that it is essential for our package to work. Therefore, this dependency will be installed whenever a user installs our package. 
+
+Adding a package in `Suggests` signals that some functionalities of our package require this dependency but it is not essential. For instance, `testthat` could be listed here because it is required for testing but not having installed doesn't change anything for the end user of our package. Dependencies listed in `Suggests` will not be installed automatically when a user installs our package.
+
+We can either add a dependency by hand, or use `usethis::use_package()` to add it automatically. For example, if we choose to put `dplyr` and `sf` in `Imports`, and `testthat` in `Suggests`, then our `DESCRIPTION` file will look like this:
+
+```r
+[ manually truncated ]
+Imports: 
+    dplyr,
+    sf
+Suggests: 
+    testthat (>= 3.0.0)
+```
+
+As you can see, we can also specify minimum version requirements for our dependencies. Going back to our example with `dplyr` above, in addition to making the necessary fixes to handle breaking changes in `dplyr` 1.1.0, we should specify that `dplyr (>= 1.1.0)` is required in our package.
+
+There are several ways to use dependencies in our code:
+
+- using `::`, for instance `dplyr::select()`;
+- importing a specific function by putting `#' @importFrom dplyr select` in the function documentation and then calling `devtools::document()`. This will add `importFrom(dplyr, select)` in `NAMESPACE`, meaning that we can use `select()` directly in our code.
+
+Note that *if a package is in `Suggests`, then we need to check whether it is installed before calling it in our code*. For instance, if our function depends on a function from the package `foo`, we can check its presence with:
+
+```{r}
+my_fun <- function(a, b) {
+  if (!requireNamespace("foo", quietly = TRUE)) {
+    stop(
+      "Package \"foo\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
+  # code that includes calls such as foo::some_function()
+}
+```
 
 
 ### Reverse dependencies
