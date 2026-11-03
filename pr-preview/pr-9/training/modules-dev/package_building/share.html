@@ -314,14 +314,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Share</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/package_building/github-actions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Github Actions</span></a>
+  <a href="../../../training/modules-dev/package_building/ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous integration</span></a>
   </div>
 </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -335,7 +335,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#publish-your-package" id="toc-publish-your-package" class="nav-link active" data-scroll-target="#publish-your-package">Publish your package</a>
   <ul class="collapse">
   <li><a href="#version-control-system" id="toc-version-control-system" class="nav-link" data-scroll-target="#version-control-system">Version control system</a></li>
-  <li><a href="#r-universe" id="toc-r-universe" class="nav-link" data-scroll-target="#r-universe">R-universe</a></li>
   <li><a href="#cran" id="toc-cran" class="nav-link" data-scroll-target="#cran">CRAN</a></li>
   </ul></li>
   <li><a href="#make-a-package-website" id="toc-make-a-package-website" class="nav-link" data-scroll-target="#make-a-package-website">Make a package website</a>
@@ -380,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/share.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/share.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -397,7 +396,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Having a package is nice but it’s much less useful if you keep it for you. There are two main, non-exclusive ways to share your package to the world:</p>
 <ul>
 <li>put it on some version control system (e.g.&nbsp;GitHub, Gitlab, Codeberg);</li>
-<li>put it on R-universe;</li>
 <li>put it on CRAN.</li>
 </ul>
 <section id="publish-your-package" class="level2">
@@ -425,10 +423,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="r-universe" class="level3">
-<h3 data-anchor-id="r-universe">R-universe</h3>
-<p>TODO?</p>
-</section>
 <section id="cran" class="level3">
 <h3 data-anchor-id="cran">CRAN</h3>
 <p>CRAN is the Comprehensive R Archive Network. It is a general repository where packages can be stored, and it is where packages are installed from by default. Currently, there are more than 25,000 packages on CRAN (you can see the entire list <a href="https://cran.r-project.org/web/packages/available_packages_by_name.html">here</a>).</p>
@@ -440,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="make-a-package-website" class="level2">
 <h2 data-anchor-id="make-a-package-website">Make a package website</h2>
-<p>Publishing a package on GitHub, R-universe, or CRAN makes it easy to install but not necessarily easy to discover. We can add something more: a website!</p>
+<p>Publishing a package on GitHub or on CRAN makes it easy to install but not necessarily easy to discover. We can add something more: a website!</p>
 <p>This might sound like a lot of work, but we are going to use a great package to build a package website in a few minutes: <code>pkgdown</code>.</p>
 <section id="local-website" class="level3">
 <h3 data-anchor-id="local-website">Local website</h3>
@@ -454,6 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="publish-the-website" class="level3">
 <h3 data-anchor-id="publish-the-website">Publish the website</h3>
+<p>The website can then be published via GitHub Pages, using a continuous integration workflow. To learn more about this, see the <a href="">GitHub Actions section</a>.</p>
 
 
 <hr><br><details>
