@@ -129,13 +129,15 @@ Another way to know this is to use `sloop::is_s3_generic()`:
 <img src="img/dependencies.png" height=400>
 :::
 
-When we develop a package, we can import other packages, either because they provide essential features or simply because they make the development easier. These packages are now **dependencies** of our package, meaning that our package can be affected if any of these packages has some issues. 
+When we develop a package, we can import other packages, either because they provide essential features or simply because they make the development process easier. These packages are now **dependencies** of our package, meaning that our package can be affected if any of these packages has some issues. 
 
 The topic of dependencies is very important in software in general, not just in R packages. Taking dependencies is a tradeoff. 
 
 On one hand, we can rely on the work and experience of others to use features that would be hard and/or time-consuming to implement ourselves. Splitting functionalities across packages can also be a good thing since each package can focus on some particular aspects instead of being a collection of hundreds of functions that is harder to properly document and test. It is also important to keep in mind that not all dependencies are equal. Depending on a small package that does one thing very well and that is actively maintained is often better than reinventing the wheel (maybe with a worse implementation) in our package.
 
 On the other hand, dependencies can make our package more fragile because changes in these dependencies also affect your package. For example, if a package that we depend on changes their function and argument names, then we need to update our package to take this into account, otherwise our code would break. This kind of changes is called **breaking changes**.
+
+There are more aspects to consider when deciding whether to depend on other packages, and these are nicely summarised in [this blog post](https://tidyverse.org/blog/2019/05/itdepends/).
 
 This might seem a bit abstract, so let's see a concrete example.
 
@@ -146,7 +148,7 @@ Whether to use external dependencies can be particularly important in terms of s
 
 ### An example
 
-Suppose that for some reason, our package uses the function `select_vars()` from the package `dplyr`. This function was removed in `dplyr` v.1.1.0, which has implications for the user of your package:
+Suppose that for some reason, our package uses the function `select_vars()` from the package `dplyr`. This function was removed in `dplyr` v.1.1.0, which has implications for users of our package:
 
 - if their version of `dplyr` is < 1.1.0, it still works fine;
 
@@ -161,9 +163,9 @@ Having dependencies forces us to stay aware of changes in these dependencies, an
 
 Information on dependencies is kept in `DESCRIPTION`. We can list dependencies in two fields: `Imports` or `Suggests`. 
 
-Adding a package in `Imports` signals that it is essential for our package to work. Therefore, this dependency will be installed whenever a user installs our package. 
+Adding a package in `Imports` signals that it has to be present on the user's machine for our package to work. Therefore, this dependency will be installed whenever a user installs our package. 
 
-Adding a package in `Suggests` signals that some functionalities of our package require this dependency but it is not essential. For instance, `testthat` could be listed here because it is required for testing but not having installed doesn't change anything for the end user of our package. Dependencies listed in `Suggests` will not be installed automatically when a user installs our package.
+Adding a package in `Suggests` signals that some functionalities of our package require this dependency but it is not essential. For instance, `testthat` could be listed here because it is required for testing but not having it installed doesn't change anything for the end user of our package. Dependencies listed in `Suggests` will not be installed automatically when a user installs our package.
 
 We can either add a dependency by hand, or use `usethis::use_package()` to add it automatically. For example, if we choose to put `dplyr` and `sf` in `Imports`, and `testthat` in `Suggests`, then our `DESCRIPTION` file will look like this:
 
@@ -183,7 +185,7 @@ There are several ways to use dependencies in our code:
 - using `::`, for instance `dplyr::select()`;
 - importing a specific function by putting `#' @importFrom dplyr select` in the function documentation and then calling `devtools::document()`. This will add `importFrom(dplyr, select)` in `NAMESPACE`, meaning that we can use `select()` directly in our code.
 
-Note that *if a package is in `Suggests`, then we need to check whether it is installed before calling it in our code*. For instance, if our function depends on a function from the package `foo`, we can check its presence with:
+Note that if a package is in `Suggests`, then we need to check whether it is installed before calling it in our code. For instance, if our function depends on a function from the package `foo`, we can check its presence with:
 
 ```r
 my_fun <- function(a, b) {
@@ -212,7 +214,7 @@ We can use the package [`revdepcheck`](https://revdepcheck.r-lib.org/) to run re
 ::: {.callout-note title="How do reverse dependency checks work?" collapse="true"}
 When we check reverse dependencies, we want to ensure that our changes do not cause *new* failures. A reverse dependency might already have failing tests which are not related to our changes.
 
-Tools to check reverse dependencies will install the latest version of our package and its development version (where we made new changes) and run the test suite of each reverse dependencies with both version. A failure happening only when the development version of our package is used means that our changes cause reverse dependency failures.
+Tools to check reverse dependencies will install the latest version of our package and its development version (where we made new changes) and run the test suite of each reverse dependency with both versions. A failure happening only when the development version of our package is used means that our changes cause reverse dependency failures.
 :::
 
 Note that if we eventually publish our package on CRAN (cf. next section), then the CRAN team will automatically run reverse dependency checks when we submit a new version. Failures in reverse dependencies will only be tolerated if we have notified maintainers in advance.
