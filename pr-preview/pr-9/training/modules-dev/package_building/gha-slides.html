@@ -241,7 +241,7 @@ Etienne Bacher
 </section>
 <section id="github-actions" class="slide level2">
 <h2>GitHub Actions</h2>
-<p>GitHub Actions (sometimes abbreviated to “GHA”) is a service provided by GitHub to run CI workflows. We will demonstrate how to use it by adding a workflow to run <code>R CMD check</code> on every commit to <code>main</code>, on every commit to a PR, and on multiple operating systems.</p>
+<p>GitHub Actions (sometimes abbreviated to “GHA”) is a service provided by GitHub to run CI workflows. We will demonstrate how to use it by adding a workflow to run <code>R CMD check</code> on every commit to <code>main</code>, on every commit to a PR, and on multiple operating systems and R versions.</p>
 <p>Keep in mind that a CI workflow is not limited to checking R packages. It is essentially a list of steps where each step can run some code. Therefore, you can create workflows to check spelling in your repository, to run code stylers and linters, to check that all URLs are valid, and many other things.</p>
 <h3 id="a-basic-workflow-for-r-cmd-check">A basic workflow for R CMD check</h3>
 <p>We will start by creating a new basic workflow for <code>R CMD check</code>. This will run on a single OS and only when we push a change to <code>main</code>. In practice, we rarely create workflows for R package development from scratch. Instead, we use a collection of workflows maintained on another GitHub repository: <a href="https://github.com/r-lib/actions">r-lib/actions</a>. In particular, the <code>examples</code> folder contains many examples of useful workflows.</p>
@@ -280,10 +280,10 @@ Etienne Bacher
 <span id="cb1-28"><a aria-label="28"></a><span class="at">          </span><span class="fu">build_args</span><span class="kw">:</span><span class="at"> </span><span class="st">'c("--no-manual","--compact-vignettes=gs+qpdf")'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>There is a lot to unpack here! The <code>on</code> block tells GitHub when this workflow should be run. For now, we only want to run it when we push a new commit to <code>main</code>. We then have the <code>name</code> and <code>permissions</code> of the workflow. In some cases, we want to give some write access to workflows to make automated commits for instance, but here we can leave it as <code>read-all</code>.</p>
-<p>The <code>jobs</code> part is where we define the <code>steps</code> that will be run by our workflow. Note that one workflow can run multiple jobs, but here we have just one named <code>R-CMD-check</code>. This will run on <code>ubuntu-latest</code> (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: <code>actions/checkout</code>, <code>r-lib/actions/setup-r</code>, and <code>r-lib/actions/setup-r-dependencies</code>. These are here to install R and our package dependencies.</p>
-<p>Once this is done, the last step is to run <code>R CMD check</code>, which is done via <code>r-lib/actions/check-r-package</code>.</p>
+<p>The <code>jobs</code> part is where we define the <code>steps</code> that will be run by our workflow. Note that one workflow can run multiple jobs, but here we just have one named <code>R-CMD-check</code>. This will run on <code>ubuntu-latest</code> (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: <code>actions/checkout</code>, <code>r-lib/actions/setup-r</code>, and <code>r-lib/actions/setup-r-dependencies</code>, that are here to install R and our package dependencies.</p>
+<p>Once this is done, the last step is to run <code>R CMD check</code> via <code>r-lib/actions/check-r-package</code>.</p>
 <h3 id="run-this-workflow-in-more-cases">Run this workflow in more cases</h3>
-<p>This is a good start but for now it only runs when change <code>main</code>. This is a bit too late, we would like to run this in a PR so that test failures due to changes in a PR do not affect the “clean” development version. We can tweak the <code>on</code> block to run this in pull requests as well:</p>
+<p>This is a good start but for now it only runs when we push changes to <code>main</code>. This is a bit too late, we would like to run this in a PR so that test failures due to changes in a PR do not affect the “clean” development version. We can tweak the <code>on</code> block to run this in pull requests as well:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>.github/workflows/R-CMD-check.yaml</strong></pre>
@@ -293,17 +293,17 @@ Etienne Bacher
 <span id="cb2-3"><a aria-label="3"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
 <span id="cb2-4"><a aria-label="4"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
 <span id="cb2-5"><a aria-label="5"></a></span>
-<span id="cb2-6"><a aria-label="6"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a aria-label="6"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, this workflow will run on every change in every pull request.</p>
 <h3 id="expanding-r-versions-and-platforms">Expanding R versions and platforms</h3>
-<p>We now run this more frequently, which address the first drawback of running tests locally only (the developer might forget to run them), but it doesn’t fix the second drawback (depending too much on the developer environment). Let’s now run this workflow on more platforms and with more R versions!</p>
-<p>To avoid making adding one <code>jobs</code> per configuration option, we can create a <code>matrix</code> with all our desired inputs:</p>
+<p>We now run this more frequently, which addresses the first drawback of running tests locally (the developer might forget to run them), but it doesn’t fix the second drawback (depending too much on the developer environment). Let’s now run this workflow on more platforms and with more R versions!</p>
+<p>To avoid adding one <code>jobs</code> per configuration option, we can create a <code>matrix</code> with all our desired inputs:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>.github/workflows/R-CMD-check.yaml</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span>
 <span id="cb3-2"><a aria-label="2"></a></span>
 <span id="cb3-3"><a aria-label="3"></a><span class="fu">jobs</span><span class="kw">:</span></span>
 <span id="cb3-4"><a aria-label="4"></a><span class="at">  </span><span class="fu">R-CMD-check</span><span class="kw">:</span></span>
@@ -318,7 +318,7 @@ Etienne Bacher
 <span id="cb3-13"><a aria-label="13"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">os</span><span class="kw">:</span><span class="at"> macOS-latest</span><span class="kw">}</span></span>
 <span id="cb3-14"><a aria-label="14"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">os</span><span class="kw">:</span><span class="at"> windows-latest</span><span class="kw">}</span></span>
 <span id="cb3-15"><a aria-label="15"></a></span>
-<span id="cb3-16"><a aria-label="16"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-16"><a aria-label="16"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We have added a <code>matrix</code> of <code>config</code> options. For now, each <code>config</code> has a single key, <code>os</code>, that contains the operating system we want to use. We can retrieve this value with <code>${{ matrix.config.os }}</code>, which we use both in <code>runs-on</code> (to actually change the OS used by the workflow) and in <code>name</code> (so that we can easily distinguish the output of these CI workflows).</p>
 <p>We can add more keys to the <code>config</code>, such as an <code>r</code> key to define the R version we want to use.</p>
@@ -326,7 +326,7 @@ Etienne Bacher
 <div class="code-with-filename-file">
 <pre><strong>.github/workflows/R-CMD-check.yaml</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span>
 <span id="cb4-2"><a aria-label="2"></a></span>
 <span id="cb4-3"><a aria-label="3"></a><span class="fu">jobs</span><span class="kw">:</span></span>
 <span id="cb4-4"><a aria-label="4"></a><span class="at">  </span><span class="fu">R-CMD-check</span><span class="kw">:</span></span>
@@ -342,40 +342,40 @@ Etienne Bacher
 <span id="cb4-14"><a aria-label="14"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">os</span><span class="kw">:</span><span class="at"> windows-latest</span><span class="kw">,</span><span class="at"> </span><span class="fu">r</span><span class="kw">:</span><span class="at"> </span><span class="st">'release'</span><span class="kw">}</span></span>
 <span id="cb4-15"><a aria-label="15"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">os</span><span class="kw">:</span><span class="at"> windows-latest</span><span class="kw">,</span><span class="at"> </span><span class="fu">r</span><span class="kw">:</span><span class="at"> </span><span class="st">'oldrel-1'</span><span class="kw">}</span></span>
 <span id="cb4-16"><a aria-label="16"></a></span>
-<span id="cb4-17"><a aria-label="17"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span>
+<span id="cb4-17"><a aria-label="17"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span>
 <span id="cb4-18"><a aria-label="18"></a></span>
 <span id="cb4-19"><a aria-label="19"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-r@v2</span></span>
 <span id="cb4-20"><a aria-label="20"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
 <span id="cb4-21"><a aria-label="21"></a><span class="at">          </span><span class="fu">r-version</span><span class="kw">:</span><span class="at"> ${{ matrix.config.r }}</span></span>
 <span id="cb4-22"><a aria-label="22"></a></span>
-<span id="cb4-23"><a aria-label="23"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-23"><a aria-label="23"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We added <code>r: 'release'</code> to use the latest stable version of R, and <code>r: 'oldrel-1'</code> to use the previous R version. We use this <code>matrix.config.r</code> key in two places: in the <code>name</code> (for the same reason as before), and in the <code>setup-r</code> step, where we actually install R.</p>
 <p>We still have a single workflow, but it now runs four different jobs with various OS and R versions. Note that you could also add more ancient R versions.</p>
 <h3 id="some-changes-for-a-better-developer-experience">Some changes for a better developer experience</h3>
 <p>We could stop here, but instead I would like to highlight two changes that improve the efficiency and robustness of CI workflows.</p>
-<p>The first one is <code>timeout</code>. GitHub Actions is a very useful tool, but it depends on many external factors, starting from the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to longer than usual workflows that sometimes run for hours! Using the <code>timeout</code> parameter is an easy way to avoid this problem.</p>
+<p>The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting from the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to longer-than-usual workflows that sometimes run for hours! Using the <code>timeout-minutes</code> parameter is an easy way to avoid this problem.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>.github/workflows/R-CMD-check.yaml</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span>
 <span id="cb5-2"><a aria-label="2"></a></span>
 <span id="cb5-3"><a aria-label="3"></a><span class="fu">jobs</span><span class="kw">:</span></span>
 <span id="cb5-4"><a aria-label="4"></a><span class="at">  </span><span class="fu">R-CMD-check</span><span class="kw">:</span></span>
 <span id="cb5-5"><a aria-label="5"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ${{ matrix.config.os }}</span></span>
 <span id="cb5-6"><a aria-label="6"></a><span class="at">    </span><span class="fu">timeout-minutes</span><span class="kw">:</span><span class="at"> </span><span class="dv">20</span></span>
 <span id="cb5-7"><a aria-label="7"></a></span>
-<span id="cb5-8"><a aria-label="8"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-8"><a aria-label="8"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Using a 20-minute timeout is in general more than enough to check a standard R package.</p>
-<p>The second change is to use <code>concurrency</code>. When we work in a pull request, we may make several commits in a few minutes, and each of this commit triggers the workflows. The default behaviour is to queue workflows, which can significantly slow us down since we have to wait for workflows associated to early commits while we are only interested in the results for our last commit.</p>
+<p>The second change is to use <code>concurrency</code>. When we work in a pull request, we may push several commits in a few minutes, and each of these commits triggers the workflows. The default behaviour is to queue workflows, which can significantly slow us down since we have to wait for workflows associated to early commits while we are only interested in the results for our last commit.</p>
 <p>The <code>concurrency</code> parameter changes this by automatically cancelling workflows if a newer one is triggered:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>.github/workflows/R-CMD-check.yaml</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-filename=".github/workflows/R-CMD-check.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a aria-label="1"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span>
 <span id="cb6-2"><a aria-label="2"></a></span>
 <span id="cb6-3"><a aria-label="3"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> R-CMD-check</span></span>
 <span id="cb6-4"><a aria-label="4"></a></span>
@@ -385,7 +385,7 @@ Etienne Bacher
 <span id="cb6-8"><a aria-label="8"></a></span>
 <span id="cb6-9"><a aria-label="9"></a><span class="fu">jobs</span><span class="kw">:</span></span>
 <span id="cb6-10"><a aria-label="10"></a></span>
-<span id="cb6-11"><a aria-label="11"></a><span class="kw">[</span><span class="at"> truncated by hand </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-11"><a aria-label="11"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <h3 id="final-workflow">Final workflow</h3>
 <p>For reference, here is our final workflow:</p>
