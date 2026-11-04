@@ -1,0 +1,64 @@
+---
+title: "Package development"
+description: "Build an R package: why and how."
+author: "Etienne Bacher"
+date: "`r Sys.Date()`"
+categories: [r, package development]
+difficulty: Advanced
+toc: true
+format:
+  html:
+    toc: true
+language:
+  other-links-title: "Other Formats"
+execute:
+  eval: false
+  warning: false
+  message: false
+  freeze: auto
+editor:
+  markdown:
+    wrap: 72
+---
+
+<!-- TODO: add link to module on writing functions -->
+
+An R package is a way to convert a collection of functions into a well-organised, documented, and ideally well-tested piece of software that other people can easily install and use. A lot of the work goes into the creation of functions (for which we have a module!). 
+
+This module is will show you the multiple steps of R package development, from having a single standalone function, to creating, documenting, testing, and sharing a package.
+
+It is easy to expand on many of these aspects, and we will cover the most important ones, but entire books are written on package (and more generally, on software) development. This module is inspired from the ["R Packages" book](https://r-pkgs.org/), and we recommend exploring this book more if you want to dig deeper on the topic on general, or on specific aspects only.
+
+This module will cover three parts:
+
+1. **Create a package**: implement, document, export, and test functions
+
+2. **Share a package**: put your package on Github, CRAN, make a website
+
+3. **Maintain a package**: fix bugs, use Continuous Integration (CI)
+
+Before we start, we recommend installing these three packages:
+
+```{r}
+install.packages(c("devtools", "testthat", "usethis"))
+```
+
+::: {.columns .center}
+::::: {.column width="33%"}
+<img src="devtools.svg" height=150>
+<br>
+`devtools`
+:::::
+
+::::: {.column width="33%"}
+<img src="usethis.png" height=150>
+<br>
+`usethis`
+:::::
+
+::::: {.column width="33%"}
+<img src="testthat.png" height=150>
+<br>
+`testthat`
+:::::
+:::
