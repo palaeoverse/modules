@@ -245,24 +245,24 @@ Bethany J. Allen
 <section id="preamble" class="slide level2">
 <h2>Preamble</h2>
 <p>In this tutorial, you will use <strong>palaeoverse</strong> to explore latitudinal trends in Phanerozoic reefs.</p>
-<p>Along the way, you will meet the functions you need for a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.</p>
+<p>Along the way, you will meet many functions used in a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.</p>
 <p>To help cement your knowledge, there are multiple exercises throughout this tutorial for you to work through.</p>
 </section>
 <section class="slide level2">
 <h2>How exercises work</h2>
 <ul>
 <li><strong>Questions:</strong> work out your answer in R first, then click the “Answers” box beneath the questions to check it.</li>
-<li><strong>Hints and solutions:</strong> click the boxes labelled “Hint” or “Solution” to reveal them, but make sure to try the task yourself first!</li>
+<li><strong>Hints and solutions:</strong> click the boxes labelled “Hint” or “Solution” to reveal them, but do attempt the tasks yourself first!</li>
 <li><strong>Your turn:</strong> code chunks marked <code>___</code> are incomplete. Replace each <code>___</code> before running them locally.</li>
 </ul>
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<p>Coral reefs are highly sensitive to climate change, and their past distributions are thought to trace the latitudinal extent of tropical and subtropical conditions over geological timescales (Kiessling, 2001; Perrin &amp; Kiessling, 2010).</p>
-<p>However, interpreting this record is not straightforward. Continental drift means that the present-day location of a fossil reef does not reflect where it formed: occurrences now found at tropical latitudes may have been deposited in temperate settings, and vice versa.</p>
-<p>Tracing the latitudinal distribution of reefs through time therefore requires reconstructing their palaeogeographic positions with a Global Plate Model. Moreover, recent work shows that palaeogeographic reconstructions can differ substantially among plate models, and this source of uncertainty must also be accounted for (Buffan et al., 2023).</p>
+<p>Coral reefs are highly sensitive to climate change, and their past distributions are thought to represent the latitudinal extent of tropical and subtropical conditions over geological timescales (Kiessling, 2001; Perrin &amp; Kiessling, 2010).</p>
+<p>However, interpreting this record is not straightforward. Continental drift means that the present-day location of a fossil reef does not necessarily reflect where it formed: occurrences now found at temperate latitudes may have been deposited in tropical settings, and vice versa.</p>
+<p>Tracing the latitudinal distribution of reefs through time therefore requires reconstructing their palaeogeographic positions with a Global Plate Model. Moreover, recent work shows that palaeogeographic reconstructions can differ substantially among Global Plate Models, and this source of uncertainty must also be be considered (Buffan et al., 2023).</p>
 <p>Here, we will address the question “how did the latitudinal distribution of reefs change through time?” while also considering differences in palaeogeographic reconstructions.</p>
-<p>Let’s start by loading <strong>palaeoverse</strong>:</p>
+<p>Let’s start by loading the <strong>palaeoverse</strong> R package:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># Install palaeoverse (if required)</span></span>
 <span id="cb1-2"><a aria-label="2"></a><span class="co"># install.packages("palaeoverse")</span></span>
@@ -281,7 +281,7 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
 <div class="cell fold-output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load in-built dataset</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load built-in dataset</span></span>
 <span id="cb2-2" class="hljs-ln-code"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Load the <code>reefs</code> dataset:</p>
@@ -289,11 +289,11 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
 <div class="cell fold-output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load in-built dataset</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load built-in dataset</span></span>
 <span id="cb3-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fold-output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># View the first six rows</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># View first six rows</span></span>
 <span id="cb4-2"><a aria-label="2"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
@@ -334,7 +334,7 @@ Bethany J. Allen
 6 1979</code></pre>
 </div>
 </details>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Look at the structure of the dataset</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Inspect dataset structure</span></span>
 <span id="cb6-2"><a aria-label="2"></a><span class="fu">str</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
@@ -356,16 +356,16 @@ Bethany J. Allen
 </div>
 </details>
 </div>
-<p>Before conducting any analyses, it is always a good idea to explore your data and understand what you are working with. Let’s inspect our data:</p>
+<p>Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let’s inspect our data:</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">The <code>reefs</code> dataset</h2>
 <div class="cell fold-output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># Load in-built dataset</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># Load built-in dataset</span></span>
 <span id="cb8-2"><a aria-label="2"></a><span class="fu">data</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fold-output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="co"># View the first six rows</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="co"># View first six rows</span></span>
 <span id="cb9-2"><a aria-label="2"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
@@ -406,7 +406,7 @@ Bethany J. Allen
 6 1979</code></pre>
 </div>
 </details>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="co"># Look at the structure of the dataset</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="co"># Inspect dataset structure</span></span>
 <span id="cb11-2"><a aria-label="2"></a><span class="fu">str</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
@@ -429,12 +429,12 @@ Bethany J. Allen
 </details>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># Call documentation for dataset</span></span>
-<span id="cb13-2"><a aria-label="2"></a>?reefs</span>
-<span id="cb13-3"><a aria-label="3"></a><span class="co"># You can also use</span></span>
-<span id="cb13-4"><a aria-label="4"></a><span class="fu">help</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># Get dataset documentation</span></span>
+<span id="cb13-2"><a aria-label="2"></a><span class="fu">help</span>(reefs)</span>
+<span id="cb13-3"><a aria-label="3"></a><span class="co"># Or by shorthand</span></span>
+<span id="cb13-4"><a aria-label="4"></a>?reefs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;origin) are also available via the usual documentation call:</p>
+<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;source) are also available via the usual documentation call:</p>
 </section>
 <section class="slide level2">
 <h2>Exercise 1: Get to know <code>reefs</code></h2>
@@ -453,7 +453,7 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Answers</strong></p>
+<p><strong>Exercise 1: Answers</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -471,9 +471,10 @@ Bethany J. Allen
 <section class="slide level2">
 <h2>The <code>reefs</code> dataset</h2>
 <p>Not bad, that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the <code>tetrapods</code> dataset.</p>
-<p><strong>But how does the number of occurrences vary across time?</strong> We can make use of the <code>group_apply()</code> wrapper function to run a function across subsets of data:</p>
+<p><strong>But how does the number of occurrences vary across time?</strong></p>
+<p>We can make use of the <code>group_apply()</code> function to apply a function across subsets of data:</p>
 <div class="cell fold-output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># Group by the interval column to calculate nrow x interval</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># Group by the "interval" column</span></span>
 <span id="cb14-2"><a aria-label="2"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
 <span id="cb14-3"><a aria-label="3"></a><span class="fu">head</span>(reef_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
@@ -504,7 +505,7 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Hint</strong></p>
+<p><strong>Exercise 2: Hint</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -522,7 +523,7 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Answers</strong></p>
+<p><strong>Exercise 2: Answers</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -534,13 +535,12 @@ Bethany J. Allen
 </div>
 </div>
 </div>
-<p>Oh dear, we have just hit a common issue: our reef data do not conform to a common time scale. Some reefs are resolved to stage level, while others are resolved to a coarser or finer temporal resolution. In some instances, regional names are used (e.g.&nbsp;Abadehian), while international names are used in others (e.g.&nbsp;Bajocian). This makes comparisons through time challenging.</p>
+<p>Oh dear, we have just hit a common issue: our reef data do not conform to a common time scale. Some reefs are resolved to stage level, while others are resolved to a coarser or finer temporal resolution. In some instances, regional names are used (e.g.&nbsp;Abadehian), while international stage names are used in others (e.g.&nbsp;Bajocian). This makes comparisons through time challenging.</p>
 </section>
 <section id="assign-common-time-scale" class="slide level2">
 <h2>Assign common time scale</h2>
-<p>One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the <code>reefs</code> dataset (i.e.&nbsp;<code>max_age</code> and <code>min_age</code>). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the <a href="https://stratigraphy.org">International Commission on Stratigraphy (ICS)</a>.</p>
-<p>Fortunately, we can make use of the <code>look_up()</code> function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we can do the latter using the example built-in dataset <code>interval_key</code> in <strong>palaeoverse</strong>.</p>
-<p>Load <code>interval_key</code>:</p>
+<p>One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the <code>reefs</code> dataset (i.e.&nbsp;“max_age” and “min_age”). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the <a href="https://stratigraphy.org">International Commission on Stratigraphy (ICS)</a>.</p>
+<p>Fortunately, we can make use of the <code>look_up()</code> function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we will do the latter using the example built-in <code>interval_key</code> dataset:</p>
 <div class="cell fold-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># Load the interval key</span></span>
 <span id="cb16-2"><a aria-label="2"></a><span class="fu">data</span>(<span class="st">"interval_key"</span>)</span>
@@ -574,7 +574,7 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Answers</strong></p>
+<p><strong>Exercise 3: Answers</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -596,19 +596,45 @@ Bethany J. Allen
 <span id="cb18-3"><a aria-label="3"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
 <span id="cb18-4"><a aria-label="4"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
 <span id="cb18-5"><a aria-label="5"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb18-6"><a aria-label="6"></a><span class="co"># View "interval", "interval_max_ma", "interval_min_ma"</span></span>
-<span id="cb18-7"><a aria-label="7"></a>reefs <span class="sc">|&gt;</span></span>
-<span id="cb18-8"><a aria-label="8"></a>  <span class="fu">subset</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"interval"</span>, <span class="st">"interval_max_ma"</span>, <span class="st">"interval_min_ma"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb18-9"><a aria-label="9"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-6"><a aria-label="6"></a><span class="co"># View first six rows</span></span>
+<span id="cb18-7"><a aria-label="7"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
-<pre><code>        interval interval_max_ma interval_min_ma
-1   lower Norian        227.0000           208.5
-2  upper Carnian        237.0000           227.0
-3         Recent          0.0117             0.0
-4       Tuvalian        237.0000           227.0
-5 upper Rhaetian        208.5000           201.3
-6       Rhaetian        208.5000           201.3</code></pre>
+<pre><code>  r_number               name             formation   system         series
+1        1   Tilkideligi Tepe                       Triassic Upper Triassic
+2        2              Hydra Pantokrator Limestone Triassic Upper Triassic
+3        3 Shiraho, W-Pacific                        Neogene       Holocene
+4        4 Aksu-Terziler area                       Triassic Upper Triassic
+5        5    Adnet, Salzburg                       Triassic Upper Triassic
+6        6          Rotelwand                       Triassic Upper Triassic
+        interval   biota_main       biota_sec      lng     lat country
+1   lower Norian Calcisponges Stromatoporoids  30.3833 37.0333  Turkey
+2  upper Carnian       Corals    Calcisponges  23.6333 37.3833  Greece
+3         Recent       Corals           Algae 124.2500 24.3333 Pacific
+4       Tuvalian Calcisponges Stromatoporoids  31.0333 37.8000  Turkey
+5 upper Rhaetian       Corals    Calcisponges  13.1667 47.7000 Austria
+6       Rhaetian       Corals    Calcisponges  13.1833 47.7000 Austria
+                              authors
+1                          Riedel, P.
+2   Schafer, P., Senowbari-Daryan, B.
+3 Kayanne, H., Suzuki, A. &amp; Saito, H.
+4                          Riedel, P.
+5                         Schafer, P.
+6                         Schafer, P.
+                                                                                                                                                  title
+1                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+2                                                The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -
+3                                                                      Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+4                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+5  Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke, Salzburg)
+6 Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke,  Salzburg)
+  year early_stage late_stage interval_max_ma interval_mid_ma interval_min_ma
+1 1990      Norian     Norian        227.0000       217.75000           208.5
+2 1982     Carnian    Carnian        237.0000       232.00000           227.0
+3 1995    Holocene   Holocene          0.0117         0.00585             0.0
+4 1990     Carnian    Carnian        237.0000       232.00000           227.0
+5 1979    Rhaetian   Rhaetian        208.5000       204.90000           201.3
+6 1979    Rhaetian   Rhaetian        208.5000       204.90000           201.3</code></pre>
 </div>
 </details>
 </div>
@@ -616,10 +642,12 @@ Bethany J. Allen
 </section>
 <section id="temporal-binning" class="slide level2">
 <h2>Temporal binning</h2>
-<p>Let’s check out the <code>time_bins()</code> and <code>bin_time()</code> functions:</p>
+<p>Let’s check out the paired functions <code>time_bins()</code> and <code>bin_time()</code> that help you bin your data temporally.</p>
+<p>The <code>time_bins()</code> function allows you to create time bins for different intervals of time (e.g.&nbsp;Phanerozoic, Mesozoic, Miocene) and different time scales (e.g.&nbsp;international ages, North American land mammal ages, Conodont Zonation).</p>
+<p>Here, we’ll use Phanerozoic stage-level time bins from the Geological Time Scale 2020:</p>
 <div class="cell fold-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="co"># Extract Phanerozoic stage-level time bins</span></span>
-<span id="cb20-2"><a aria-label="2"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-2"><a aria-label="2"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>, <span class="at">scale =</span> <span class="st">"GTS2020"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">head</span>(bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
@@ -638,7 +666,7 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Temporal binning</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb23-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Now we have numeric ages for our data, we can easily</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb23-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Now we have numeric ages for our data, we can also</span></span>
 <span id="cb23-2" class="hljs-ln-code"><a aria-label="2"></a><span class="co"># remove pre-Phanerozoic data to focus our study</span></span>
 <span id="cb23-3" class="hljs-ln-code"><a aria-label="3"></a>reefs <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs, interval_max_ma <span class="sc">&lt;=</span> <span class="fu">max</span>(bins<span class="sc">$</span>max_ma))</span>
 <span id="cb23-4" class="hljs-ln-code"><a aria-label="4"></a><span class="co"># bin_time() defaults to "max_ma" and "min_ma" columns</span></span>
@@ -646,11 +674,12 @@ Bethany J. Allen
 <span id="cb23-6" class="hljs-ln-code"><a aria-label="6"></a><span class="fu">colnames</span>(reefs)[<span class="fu">which</span>(<span class="fu">colnames</span>(reefs) <span class="sc">==</span> <span class="st">"interval_max_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"max_ma"</span></span>
 <span id="cb23-7" class="hljs-ln-code"><a aria-label="7"></a><span class="fu">colnames</span>(reefs)[<span class="fu">which</span>(<span class="fu">colnames</span>(reefs) <span class="sc">==</span> <span class="st">"interval_min_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"min_ma"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Now we have our time bins, we can start to think about how we want to bin our data, but first, let’s do a little bit of housekeeping to streamline our subsequent code:</p>
 </section>
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Temporal binning</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="co"># Now we have numeric ages for our data, we can easily</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="co"># Now we have numeric ages for our data, we can also</span></span>
 <span id="cb24-2"><a aria-label="2"></a><span class="co"># remove pre-Phanerozoic data to focus our study</span></span>
 <span id="cb24-3"><a aria-label="3"></a>reefs <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs, interval_max_ma <span class="sc">&lt;=</span> <span class="fu">max</span>(bins<span class="sc">$</span>max_ma))</span>
 <span id="cb24-4"><a aria-label="4"></a><span class="co"># bin_time() defaults to "max_ma" and "min_ma" columns</span></span>
@@ -674,15 +703,15 @@ Bethany J. Allen
 </section>
 <section class="slide level2">
 <h2>Exercise 4: Choose a temporal binning method</h2>
-<p>Before we pick a method, let’s see how the choice affects the data.</p>
+<p>Before we pick a method, let’s see how the choice impacts the data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="co"># Your turn: bin the reefs using the "majority" method</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="co"># Your turn: bin `reefs` using different methods</span></span>
 <span id="cb26-2"><a aria-label="2"></a><span class="fu">bin_time</span>(reefs, <span class="at">max_ma =</span> ___, <span class="at">min_ma =</span> ___, <span class="at">bins =</span> ___, <span class="at">method =</span> ___)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="1">
 <li>Which method <em>increases</em> the number of rows?</li>
 <li>Which method(s) return a <code>list</code>?</li>
-<li>How many rows does <code>reefs</code> have if we use <code>method = "majority"</code> and filter “overlap_percentage” to more than 50%?</li>
+<li>How many occurrences remain if we use <code>method = "majority"</code> and filter “overlap_percentage” to more than 50%?</li>
 </ol>
 </section>
 <section class="slide level2">
@@ -693,7 +722,7 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Answers</strong></p>
+<p><strong>Exercise 4: Answers</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -709,7 +738,7 @@ Bethany J. Allen
 </section>
 <section class="slide level2">
 <h2>Temporal binning</h2>
-<p>We will go with <code>"all"</code> for this tutorial:</p>
+<p>For this tutorial, we will go with <code>"all"</code> for simplicity:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -738,9 +767,9 @@ Bethany J. Allen
 <div class="cell fold-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb28-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Count number of reefs per time bin</span></span>
 <span id="cb28-2" class="hljs-ln-code"><a aria-label="2"></a>reefs_time <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb28-3" class="hljs-ln-code"><a aria-label="3"></a><span class="co"># Make sure bins are in chronological order</span></span>
+<span id="cb28-3" class="hljs-ln-code"><a aria-label="3"></a><span class="co"># Order chronologically</span></span>
 <span id="cb28-4" class="hljs-ln-code"><a aria-label="4"></a>reefs_time <span class="ot">&lt;-</span> reefs_time[<span class="fu">order</span>(<span class="fu">as.numeric</span>(reefs_time<span class="sc">$</span>bin_midpoint)), ]</span>
-<span id="cb28-5" class="hljs-ln-code"><a aria-label="5"></a><span class="co"># Check output</span></span>
+<span id="cb28-5" class="hljs-ln-code"><a aria-label="5"></a><span class="co"># View first six rows</span></span>
 <span id="cb28-6" class="hljs-ln-code"><a aria-label="6"></a><span class="fu">head</span>(reefs_time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
@@ -761,9 +790,9 @@ Bethany J. Allen
 <div class="cell fold-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="co"># Count number of reefs per time bin</span></span>
 <span id="cb30-2"><a aria-label="2"></a>reefs_time <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb30-3"><a aria-label="3"></a><span class="co"># Make sure bins are in chronological order</span></span>
+<span id="cb30-3"><a aria-label="3"></a><span class="co"># Order chronologically</span></span>
 <span id="cb30-4"><a aria-label="4"></a>reefs_time <span class="ot">&lt;-</span> reefs_time[<span class="fu">order</span>(<span class="fu">as.numeric</span>(reefs_time<span class="sc">$</span>bin_midpoint)), ]</span>
-<span id="cb30-5"><a aria-label="5"></a><span class="co"># Check output</span></span>
+<span id="cb30-5"><a aria-label="5"></a><span class="co"># View first six rows</span></span>
 <span id="cb30-6"><a aria-label="6"></a><span class="fu">head</span>(reefs_time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
@@ -790,21 +819,24 @@ Bethany J. Allen
 <span id="cb32-10"><a aria-label="10"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="phanerozoic-reefs_files/figure-html/n-reefs-1.png" width="672" class="r-stretch quarto-figure-center"><p class="caption">Counts of the number of reefs per international geological stage.</p><p>That is more like it! But let’s not forget it is always useful to visualise our data. Why don’t we plot the number of reefs through time? We can make use of the <code>axis_geo()</code> function to add the geological time scale to our plot:</p>
+<img data-src="phanerozoic-reefs_files/figure-html/n-reefs-1.png" width="672" class="r-stretch quarto-figure-center"><p class="caption">Counts of the number of reefs per international geological stage.</p><p>That’s more like it! But let’s not forget it is always useful to visualise our data. Why don’t we plot the number of reefs through time? We can make use of the <code>axis_geo()</code> function to add the geological time scale to our plot:</p>
 </section>
 <section class="slide level2">
-<h2>Exercise 4: Reading the plot</h2>
+<h2>Exercise 5: Reading the plot</h2>
 <ol type="1">
 <li>What is the largest number of reefs found in a single time bin?</li>
 <li>What geological stage does the peak fall in?</li>
 </ol>
+</section>
+<section class="slide level2">
+<h2>Temporal binning</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Hint</strong></p>
+<p><strong>Exercise 5: Hint</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -813,13 +845,16 @@ Bethany J. Allen
 </div>
 </div>
 </div>
+</section>
+<section class="slide level2">
+<h2>Temporal binning</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Answers</strong></p>
+<p><strong>Exercise 5: Answers</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -831,13 +866,16 @@ Bethany J. Allen
 </div>
 </div>
 </div>
+</section>
+<section class="slide level2">
+<h2>Temporal binning</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Solution</strong></p>
+<p><strong>Exercise 5: Solution</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -929,24 +967,46 @@ Bethany J. Allen
 </div>
 <p>Note, the first time we use <code>palaeorotate()</code> in each new session, it will take a little longer as pre-generated palaeocoordinate grids need to be fetched from <a href="https://zenodo.org/records/13798790">Zenodo</a>.</p>
 </section>
-<section class="slide level2">
-<h2>Exercise 6: How far did the reefs move?</h2>
-<p>Reefs are tied to particular climatic conditions, so how much do their latitudes change once we account for plate motion? Let’s quantify it for the PALEOMAP model.</p>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Exercise 6: How far did the reefs move?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="co"># Your turn: absolute difference between modern latitude ("lat")</span></span>
-<span id="cb41-2"><a aria-label="2"></a><span class="co"># and PALEOMAP palaeolatitude, for each reef</span></span>
-<span id="cb41-3"><a aria-label="3"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___ <span class="sc">-</span> reefs<span class="sc">$</span>___)</span>
-<span id="cb41-4"><a aria-label="4"></a><span class="co"># Mean shift across all reefs (ignore missing values)</span></span>
-<span id="cb41-5"><a aria-label="5"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb41-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Your turn: absolute difference between modern latitude ("lat")</span></span>
+<span id="cb41-2" class="hljs-ln-code"><a aria-label="2"></a><span class="co"># and PALEOMAP palaeolatitude, for each reef</span></span>
+<span id="cb41-3" class="hljs-ln-code"><a aria-label="3"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___ <span class="sc">-</span> reefs<span class="sc">$</span>___)</span>
+<span id="cb41-4" class="hljs-ln-code"><a aria-label="4"></a><span class="co"># Mean shift across all reefs (ignore missing values)</span></span>
+<span id="cb41-5" class="hljs-ln-code"><a aria-label="5"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>What is the mean absolute latitudinal shift?</p>
+<p>Reefs are tied to particular climatic conditions, so how much do their latitudes change once we account for plate motion? Let’s quantify it for the PALEOMAP model.</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Exercise 6: How far did the reefs move?</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a><span class="co"># Your turn: absolute difference between modern latitude ("lat")</span></span>
+<span id="cb42-2"><a aria-label="2"></a><span class="co"># and PALEOMAP palaeolatitude, for each reef</span></span>
+<span id="cb42-3"><a aria-label="3"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___ <span class="sc">-</span> reefs<span class="sc">$</span>___)</span>
+<span id="cb42-4"><a aria-label="4"></a><span class="co"># Mean shift across all reefs (ignore missing values)</span></span>
+<span id="cb42-5"><a aria-label="5"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a><span class="co"># Plot data</span></span>
+<span id="cb43-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> reefs<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb43-3"><a aria-label="3"></a>     <span class="at">y =</span> reefs<span class="sc">$</span>p_lat_PALEOMAP,</span>
+<span id="cb43-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb43-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb43-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb43-7"><a aria-label="7"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb43-8"><a aria-label="8"></a>     <span class="at">type =</span> <span class="st">"p"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb43-9"><a aria-label="9"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="phanerozoic-reefs_files/figure-html/reefs-dist-1.png" width="672" class="r-stretch"><p>What is the mean absolute latitudinal shift?</p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Hint</strong></p>
+<p><strong>Exercise 6: Hint</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -961,7 +1021,7 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Answers</strong></p>
+<p><strong>Exercise 6: Answers</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -976,106 +1036,310 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Solution</strong></p>
+<p><strong>Exercise 6: Solution</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>lat <span class="sc">-</span> reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
-<span id="cb42-2"><a aria-label="2"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-label="1"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>lat <span class="sc">-</span> reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
+<span id="cb44-2"><a aria-label="2"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section class="slide level2">
-<h2>Palaeogeographic reconstruction</h2>
 <p>Now let’s plot that palaeolatitudinal distribution!</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a><span class="co"># Plot data</span></span>
-<span id="cb43-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> reefs<span class="sc">$</span>bin_midpoint,</span>
-<span id="cb43-3"><a aria-label="3"></a>     <span class="at">y =</span> reefs<span class="sc">$</span>p_lat_PALEOMAP,</span>
-<span id="cb43-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
-<span id="cb43-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
-<span id="cb43-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
-<span id="cb43-7"><a aria-label="7"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
-<span id="cb43-8"><a aria-label="8"></a>     <span class="at">type =</span> <span class="st">"p"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb43-9"><a aria-label="9"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="phanerozoic-reefs_files/figure-html/reefs-dist-1.png" width="672" class="r-stretch"></section>
-<section id="summarising-palaeolatitudinal-trends" class="slide level2">
-<h2>Summarising palaeolatitudinal trends</h2>
-<p>Neat! But it is hard to draw any trends from these data points (there are a lot of them!). We can do better by summarising this information. If we assume that reefs are broadly limited to tropical and subtropical climatic conditions, the most poleward reef in each time bin should give us an estimate of the palaeolatitudinal extent of those conditions.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-label="1"></a><span class="co"># Let's first assume hemispheric symmetry and convert</span></span>
-<span id="cb44-2"><a aria-label="2"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
-<span id="cb44-3"><a aria-label="3"></a>reefs<span class="sc">$</span>abs_p_lat_PALEOMAP <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
-<span id="cb44-4"><a aria-label="4"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
-<span id="cb44-5"><a aria-label="5"></a>paleomap_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
-<span id="cb44-6"><a aria-label="6"></a>  <span class="at">occdf =</span> reefs,</span>
-<span id="cb44-7"><a aria-label="7"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
-<span id="cb44-8"><a aria-label="8"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb44-9"><a aria-label="9"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb44-10"><a aria-label="10"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
-<span id="cb44-11"><a aria-label="11"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_PALEOMAP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb44-12"><a aria-label="12"></a>    )</span>
-<span id="cb44-13"><a aria-label="13"></a>  }</span>
-<span id="cb44-14"><a aria-label="14"></a>)</span>
-<span id="cb44-15"><a aria-label="15"></a><span class="co"># Plot data</span></span>
-<span id="cb44-16"><a aria-label="16"></a><span class="fu">plot</span>(<span class="at">x =</span> paleomap_max<span class="sc">$</span>bin_midpoint,</span>
-<span id="cb44-17"><a aria-label="17"></a>     <span class="at">y =</span> paleomap_max<span class="sc">$</span>abs_max_p_lat,</span>
-<span id="cb44-18"><a aria-label="18"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
-<span id="cb44-19"><a aria-label="19"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
-<span id="cb44-20"><a aria-label="20"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
-<span id="cb44-21"><a aria-label="21"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
-<span id="cb44-22"><a aria-label="22"></a>     <span class="at">type =</span> <span class="st">"b"</span>,</span>
-<span id="cb44-23"><a aria-label="23"></a>     <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb44-24"><a aria-label="24"></a><span class="co"># Add axis of the geological time scale</span></span>
-<span id="cb44-25"><a aria-label="25"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="phanerozoic-reefs_files/figure-html/reefs-max-1.png" width="672" class="r-stretch"><p>That is definitely much clearer!</p>
-<p>Should we stop there? Well, how about one last thing: let’s repeat what we did above and calculate the most poleward reef occurrence for each of our three models and compare.</p>
 </section>
-<section class="slide level2">
-<h2>Exercise 7: Compare palaeogeographic reconstructions</h2>
-<p>Complete the code to calculate the most poleward palaeolatitude per bin for each model.</p>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Exercise 6: How far did the reefs move?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a><span class="co"># Your turn: PALEOMAP has been done for you above. Now complete</span></span>
-<span id="cb45-2"><a aria-label="2"></a><span class="co"># the code for GOLONKA and MERDITH2021</span></span>
-<span id="cb45-3"><a aria-label="3"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
-<span id="cb45-4"><a aria-label="4"></a></span>
-<span id="cb45-5"><a aria-label="5"></a><span class="co"># GOLONKA Global Plate Model</span></span>
-<span id="cb45-6"><a aria-label="6"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
-<span id="cb45-7"><a aria-label="7"></a>reefs<span class="sc">$</span>___ <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___)</span>
-<span id="cb45-8"><a aria-label="8"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
-<span id="cb45-9"><a aria-label="9"></a>___ <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
-<span id="cb45-10"><a aria-label="10"></a>  reefs,</span>
-<span id="cb45-11"><a aria-label="11"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
-<span id="cb45-12"><a aria-label="12"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb45-13"><a aria-label="13"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb45-14"><a aria-label="14"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>___),</span>
-<span id="cb45-15"><a aria-label="15"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb45-16"><a aria-label="16"></a>    )</span>
-<span id="cb45-17"><a aria-label="17"></a>  }</span>
-<span id="cb45-18"><a aria-label="18"></a>)</span>
-<span id="cb45-19"><a aria-label="19"></a></span>
-<span id="cb45-20"><a aria-label="20"></a><span class="co"># MERDITH2021 Global Plate Model</span></span>
-<span id="cb45-21"><a aria-label="21"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
-<span id="cb45-22"><a aria-label="22"></a>reefs<span class="sc">$</span>___ <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___)</span>
-<span id="cb45-23"><a aria-label="23"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
-<span id="cb45-24"><a aria-label="24"></a>___ <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
-<span id="cb45-25"><a aria-label="25"></a>  reefs,</span>
-<span id="cb45-26"><a aria-label="26"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
-<span id="cb45-27"><a aria-label="27"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb45-28"><a aria-label="28"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb45-29"><a aria-label="29"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>___),</span>
-<span id="cb45-30"><a aria-label="30"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb45-31"><a aria-label="31"></a>    )</span>
-<span id="cb45-32"><a aria-label="32"></a>  }</span>
-<span id="cb45-33"><a aria-label="33"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a><span class="co"># Your turn: absolute difference between modern latitude ("lat")</span></span>
+<span id="cb45-2"><a aria-label="2"></a><span class="co"># and PALEOMAP palaeolatitude, for each reef</span></span>
+<span id="cb45-3"><a aria-label="3"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___ <span class="sc">-</span> reefs<span class="sc">$</span>___)</span>
+<span id="cb45-4"><a aria-label="4"></a><span class="co"># Mean shift across all reefs (ignore missing values)</span></span>
+<span id="cb45-5"><a aria-label="5"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-label="1"></a><span class="co"># Plot data</span></span>
+<span id="cb46-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> reefs<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb46-3"><a aria-label="3"></a>     <span class="at">y =</span> reefs<span class="sc">$</span>p_lat_PALEOMAP,</span>
+<span id="cb46-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb46-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb46-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb46-7"><a aria-label="7"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb46-8"><a aria-label="8"></a>     <span class="at">type =</span> <span class="st">"p"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb46-9"><a aria-label="9"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="phanerozoic-reefs_files/figure-html/reefs-dist-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a><span class="co"># Let's first assume hemispheric symmetry and convert</span></span>
+<span id="cb47-2"><a aria-label="2"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb47-3"><a aria-label="3"></a>reefs<span class="sc">$</span>abs_p_lat_PALEOMAP <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
+<span id="cb47-4"><a aria-label="4"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
+<span id="cb47-5"><a aria-label="5"></a>paleomap_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb47-6"><a aria-label="6"></a>  <span class="at">occdf =</span> reefs,</span>
+<span id="cb47-7"><a aria-label="7"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb47-8"><a aria-label="8"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb47-9"><a aria-label="9"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb47-10"><a aria-label="10"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
+<span id="cb47-11"><a aria-label="11"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_PALEOMAP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb47-12"><a aria-label="12"></a>    )</span>
+<span id="cb47-13"><a aria-label="13"></a>  }</span>
+<span id="cb47-14"><a aria-label="14"></a>)</span>
+<span id="cb47-15"><a aria-label="15"></a><span class="co"># Plot data</span></span>
+<span id="cb47-16"><a aria-label="16"></a><span class="fu">plot</span>(<span class="at">x =</span> paleomap_max<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb47-17"><a aria-label="17"></a>     <span class="at">y =</span> paleomap_max<span class="sc">$</span>max_p_lat,</span>
+<span id="cb47-18"><a aria-label="18"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb47-19"><a aria-label="19"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb47-20"><a aria-label="20"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb47-21"><a aria-label="21"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb47-22"><a aria-label="22"></a>     <span class="at">type =</span> <span class="st">"b"</span>,</span>
+<span id="cb47-23"><a aria-label="23"></a>     <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb47-24"><a aria-label="24"></a><span class="co"># Add axis of the geological time scale</span></span>
+<span id="cb47-25"><a aria-label="25"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="phanerozoic-reefs_files/figure-html/reefs-max-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<h3 id="summarising-palaeolatitudinal-trends">Summarising palaeolatitudinal trends</h3>
+<p>Neat! But it is hard to draw any trends from these data points (there are a lot of them!). We can do better by summarising this information. If we assume that reefs are broadly limited to tropical and subtropical climatic conditions, the most poleward reef in each time bin should give us an estimate of the palaeolatitudinal extent of those conditions.</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Exercise 6: How far did the reefs move?</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-label="1"></a><span class="co"># Your turn: absolute difference between modern latitude ("lat")</span></span>
+<span id="cb48-2"><a aria-label="2"></a><span class="co"># and PALEOMAP palaeolatitude, for each reef</span></span>
+<span id="cb48-3"><a aria-label="3"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___ <span class="sc">-</span> reefs<span class="sc">$</span>___)</span>
+<span id="cb48-4"><a aria-label="4"></a><span class="co"># Mean shift across all reefs (ignore missing values)</span></span>
+<span id="cb48-5"><a aria-label="5"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-label="1"></a><span class="co"># Plot data</span></span>
+<span id="cb49-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> reefs<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb49-3"><a aria-label="3"></a>     <span class="at">y =</span> reefs<span class="sc">$</span>p_lat_PALEOMAP,</span>
+<span id="cb49-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb49-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb49-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb49-7"><a aria-label="7"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb49-8"><a aria-label="8"></a>     <span class="at">type =</span> <span class="st">"p"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb49-9"><a aria-label="9"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="phanerozoic-reefs_files/figure-html/reefs-dist-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-label="1"></a><span class="co"># Let's first assume hemispheric symmetry and convert</span></span>
+<span id="cb50-2"><a aria-label="2"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb50-3"><a aria-label="3"></a>reefs<span class="sc">$</span>abs_p_lat_PALEOMAP <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
+<span id="cb50-4"><a aria-label="4"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
+<span id="cb50-5"><a aria-label="5"></a>paleomap_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb50-6"><a aria-label="6"></a>  <span class="at">occdf =</span> reefs,</span>
+<span id="cb50-7"><a aria-label="7"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb50-8"><a aria-label="8"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb50-9"><a aria-label="9"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb50-10"><a aria-label="10"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
+<span id="cb50-11"><a aria-label="11"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_PALEOMAP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-12"><a aria-label="12"></a>    )</span>
+<span id="cb50-13"><a aria-label="13"></a>  }</span>
+<span id="cb50-14"><a aria-label="14"></a>)</span>
+<span id="cb50-15"><a aria-label="15"></a><span class="co"># Plot data</span></span>
+<span id="cb50-16"><a aria-label="16"></a><span class="fu">plot</span>(<span class="at">x =</span> paleomap_max<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb50-17"><a aria-label="17"></a>     <span class="at">y =</span> paleomap_max<span class="sc">$</span>max_p_lat,</span>
+<span id="cb50-18"><a aria-label="18"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb50-19"><a aria-label="19"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb50-20"><a aria-label="20"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb50-21"><a aria-label="21"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb50-22"><a aria-label="22"></a>     <span class="at">type =</span> <span class="st">"b"</span>,</span>
+<span id="cb50-23"><a aria-label="23"></a>     <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb50-24"><a aria-label="24"></a><span class="co"># Add axis of the geological time scale</span></span>
+<span id="cb50-25"><a aria-label="25"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="phanerozoic-reefs_files/figure-html/reefs-max-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-label="1"></a><span class="co"># Your turn: PALEOMAP has been done for you above. Now complete</span></span>
+<span id="cb51-2"><a aria-label="2"></a><span class="co"># the code for GOLONKA and MERDITH2021</span></span>
+<span id="cb51-3"><a aria-label="3"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
+<span id="cb51-4"><a aria-label="4"></a></span>
+<span id="cb51-5"><a aria-label="5"></a><span class="co"># GOLONKA Global Plate Model</span></span>
+<span id="cb51-6"><a aria-label="6"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb51-7"><a aria-label="7"></a>reefs<span class="sc">$</span>___ <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___)</span>
+<span id="cb51-8"><a aria-label="8"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
+<span id="cb51-9"><a aria-label="9"></a>___ <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb51-10"><a aria-label="10"></a>  reefs,</span>
+<span id="cb51-11"><a aria-label="11"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb51-12"><a aria-label="12"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb51-13"><a aria-label="13"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb51-14"><a aria-label="14"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>___),</span>
+<span id="cb51-15"><a aria-label="15"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-16"><a aria-label="16"></a>    )</span>
+<span id="cb51-17"><a aria-label="17"></a>  }</span>
+<span id="cb51-18"><a aria-label="18"></a>)</span>
+<span id="cb51-19"><a aria-label="19"></a></span>
+<span id="cb51-20"><a aria-label="20"></a><span class="co"># MERDITH2021 Global Plate Model</span></span>
+<span id="cb51-21"><a aria-label="21"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb51-22"><a aria-label="22"></a>reefs<span class="sc">$</span>___ <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___)</span>
+<span id="cb51-23"><a aria-label="23"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
+<span id="cb51-24"><a aria-label="24"></a>___ <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb51-25"><a aria-label="25"></a>  reefs,</span>
+<span id="cb51-26"><a aria-label="26"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb51-27"><a aria-label="27"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb51-28"><a aria-label="28"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb51-29"><a aria-label="29"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>___),</span>
+<span id="cb51-30"><a aria-label="30"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-31"><a aria-label="31"></a>    )</span>
+<span id="cb51-32"><a aria-label="32"></a>  }</span>
+<span id="cb51-33"><a aria-label="33"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>That is definitely much clearer!</p>
+<p>Should we stop there? Well, how about one last thing: let’s repeat what we did above and calculate the most poleward reef occurrence for each of our three models and compare.</p>
+<h3 id="exercise-7-compare-palaeogeographic-reconstructions">Exercise 7: Compare palaeogeographic reconstructions</h3>
+<p>Complete the code to calculate the most poleward palaeolatitude per bin for each model.</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Exercise 6: How far did the reefs move?</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-label="1"></a><span class="co"># Your turn: absolute difference between modern latitude ("lat")</span></span>
+<span id="cb52-2"><a aria-label="2"></a><span class="co"># and PALEOMAP palaeolatitude, for each reef</span></span>
+<span id="cb52-3"><a aria-label="3"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___ <span class="sc">-</span> reefs<span class="sc">$</span>___)</span>
+<span id="cb52-4"><a aria-label="4"></a><span class="co"># Mean shift across all reefs (ignore missing values)</span></span>
+<span id="cb52-5"><a aria-label="5"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a><span class="co"># Plot data</span></span>
+<span id="cb53-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> reefs<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb53-3"><a aria-label="3"></a>     <span class="at">y =</span> reefs<span class="sc">$</span>p_lat_PALEOMAP,</span>
+<span id="cb53-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb53-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb53-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb53-7"><a aria-label="7"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb53-8"><a aria-label="8"></a>     <span class="at">type =</span> <span class="st">"p"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb53-9"><a aria-label="9"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="phanerozoic-reefs_files/figure-html/reefs-dist-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-label="1"></a><span class="co"># Let's first assume hemispheric symmetry and convert</span></span>
+<span id="cb54-2"><a aria-label="2"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb54-3"><a aria-label="3"></a>reefs<span class="sc">$</span>abs_p_lat_PALEOMAP <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
+<span id="cb54-4"><a aria-label="4"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
+<span id="cb54-5"><a aria-label="5"></a>paleomap_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb54-6"><a aria-label="6"></a>  <span class="at">occdf =</span> reefs,</span>
+<span id="cb54-7"><a aria-label="7"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb54-8"><a aria-label="8"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb54-9"><a aria-label="9"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb54-10"><a aria-label="10"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
+<span id="cb54-11"><a aria-label="11"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_PALEOMAP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb54-12"><a aria-label="12"></a>    )</span>
+<span id="cb54-13"><a aria-label="13"></a>  }</span>
+<span id="cb54-14"><a aria-label="14"></a>)</span>
+<span id="cb54-15"><a aria-label="15"></a><span class="co"># Plot data</span></span>
+<span id="cb54-16"><a aria-label="16"></a><span class="fu">plot</span>(<span class="at">x =</span> paleomap_max<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb54-17"><a aria-label="17"></a>     <span class="at">y =</span> paleomap_max<span class="sc">$</span>max_p_lat,</span>
+<span id="cb54-18"><a aria-label="18"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb54-19"><a aria-label="19"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb54-20"><a aria-label="20"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb54-21"><a aria-label="21"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb54-22"><a aria-label="22"></a>     <span class="at">type =</span> <span class="st">"b"</span>,</span>
+<span id="cb54-23"><a aria-label="23"></a>     <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb54-24"><a aria-label="24"></a><span class="co"># Add axis of the geological time scale</span></span>
+<span id="cb54-25"><a aria-label="25"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="phanerozoic-reefs_files/figure-html/reefs-max-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-label="1"></a><span class="co"># Your turn: PALEOMAP has been done for you above. Now complete</span></span>
+<span id="cb55-2"><a aria-label="2"></a><span class="co"># the code for GOLONKA and MERDITH2021</span></span>
+<span id="cb55-3"><a aria-label="3"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
+<span id="cb55-4"><a aria-label="4"></a></span>
+<span id="cb55-5"><a aria-label="5"></a><span class="co"># GOLONKA Global Plate Model</span></span>
+<span id="cb55-6"><a aria-label="6"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb55-7"><a aria-label="7"></a>reefs<span class="sc">$</span>___ <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___)</span>
+<span id="cb55-8"><a aria-label="8"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
+<span id="cb55-9"><a aria-label="9"></a>___ <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb55-10"><a aria-label="10"></a>  reefs,</span>
+<span id="cb55-11"><a aria-label="11"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb55-12"><a aria-label="12"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb55-13"><a aria-label="13"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb55-14"><a aria-label="14"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>___),</span>
+<span id="cb55-15"><a aria-label="15"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb55-16"><a aria-label="16"></a>    )</span>
+<span id="cb55-17"><a aria-label="17"></a>  }</span>
+<span id="cb55-18"><a aria-label="18"></a>)</span>
+<span id="cb55-19"><a aria-label="19"></a></span>
+<span id="cb55-20"><a aria-label="20"></a><span class="co"># MERDITH2021 Global Plate Model</span></span>
+<span id="cb55-21"><a aria-label="21"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb55-22"><a aria-label="22"></a>reefs<span class="sc">$</span>___ <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>___)</span>
+<span id="cb55-23"><a aria-label="23"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
+<span id="cb55-24"><a aria-label="24"></a>___ <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb55-25"><a aria-label="25"></a>  reefs,</span>
+<span id="cb55-26"><a aria-label="26"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb55-27"><a aria-label="27"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb55-28"><a aria-label="28"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb55-29"><a aria-label="29"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>___),</span>
+<span id="cb55-30"><a aria-label="30"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb55-31"><a aria-label="31"></a>    )</span>
+<span id="cb55-32"><a aria-label="32"></a>  }</span>
+<span id="cb55-33"><a aria-label="33"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-label="1"></a><span class="co"># Set up plot</span></span>
+<span id="cb56-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb56-3"><a aria-label="3"></a>     <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb56-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
+<span id="cb56-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb56-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
+<span id="cb56-7"><a aria-label="7"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>),</span>
+<span id="cb56-8"><a aria-label="8"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>)</span>
+<span id="cb56-9"><a aria-label="9"></a><span class="co"># Plot maximum palaeolatitudes for each model</span></span>
+<span id="cb56-10"><a aria-label="10"></a><span class="fu">lines</span>(<span class="at">x =</span> paleomap_max<span class="sc">$</span>bin_midpoint, <span class="at">y =</span> paleomap_max<span class="sc">$</span>max_p_lat,</span>
+<span id="cb56-11"><a aria-label="11"></a>      <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"#e41a1c"</span>, <span class="at">pch =</span> <span class="dv">15</span>)</span>
+<span id="cb56-12"><a aria-label="12"></a><span class="fu">lines</span>(<span class="at">x =</span> golonka_max<span class="sc">$</span>bin_midpoint, <span class="at">y =</span> golonka_max<span class="sc">$</span>max_p_lat,</span>
+<span id="cb56-13"><a aria-label="13"></a>      <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"#377eb8"</span>, <span class="at">pch =</span> <span class="dv">16</span>)</span>
+<span id="cb56-14"><a aria-label="14"></a><span class="fu">lines</span>(<span class="at">x =</span> merdith2021_max<span class="sc">$</span>bin_midpoint, <span class="at">y =</span> merdith2021_max<span class="sc">$</span>max_p_lat,</span>
+<span id="cb56-15"><a aria-label="15"></a>      <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"#4daf4a"</span>, <span class="at">pch =</span> <span class="dv">17</span>)</span>
+<span id="cb56-16"><a aria-label="16"></a><span class="co"># Add legend</span></span>
+<span id="cb56-17"><a aria-label="17"></a><span class="fu">legend</span>(<span class="dv">530</span>, <span class="dv">15</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"PALEOMAP"</span>, <span class="st">"GOLONKA"</span>, <span class="st">"MERDITH2021"</span>),</span>
+<span id="cb56-18"><a aria-label="18"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#e41a1c"</span>, <span class="st">"#377eb8"</span>, <span class="st">"#4daf4a"</span>),</span>
+<span id="cb56-19"><a aria-label="19"></a>       <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>), <span class="at">bty =</span> <span class="st">"n"</span>)</span>
+<span id="cb56-20"><a aria-label="20"></a><span class="co"># Add geological time scale axis</span></span>
+<span id="cb56-21"><a aria-label="21"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="phanerozoic-reefs_files/figure-html/reefs-max-plot-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1083,7 +1347,7 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Hint</strong></p>
+<p><strong>Exercise 7: Hint</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
@@ -1098,79 +1362,50 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Solution</strong></p>
+<p><strong>Exercise 7: Solution</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-label="1"></a><span class="co"># Calculate maximum palaeolatitude of reefs for each time bin for each model</span></span>
-<span id="cb46-2"><a aria-label="2"></a></span>
-<span id="cb46-3"><a aria-label="3"></a><span class="co"># GOLONKA Global Plate Model</span></span>
-<span id="cb46-4"><a aria-label="4"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
-<span id="cb46-5"><a aria-label="5"></a>reefs<span class="sc">$</span>abs_p_lat_GOLONKA <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_GOLONKA)</span>
-<span id="cb46-6"><a aria-label="6"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
-<span id="cb46-7"><a aria-label="7"></a>golonka_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
-<span id="cb46-8"><a aria-label="8"></a>  reefs,</span>
-<span id="cb46-9"><a aria-label="9"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
-<span id="cb46-10"><a aria-label="10"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb46-11"><a aria-label="11"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb46-12"><a aria-label="12"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
-<span id="cb46-13"><a aria-label="13"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_GOLONKA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-14"><a aria-label="14"></a>    )</span>
-<span id="cb46-15"><a aria-label="15"></a>  }</span>
-<span id="cb46-16"><a aria-label="16"></a>)</span>
-<span id="cb46-17"><a aria-label="17"></a></span>
-<span id="cb46-18"><a aria-label="18"></a><span class="co"># MERDITH2021 Global Plate Model</span></span>
-<span id="cb46-19"><a aria-label="19"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
-<span id="cb46-20"><a aria-label="20"></a>reefs<span class="sc">$</span>abs_p_lat_MERDITH2021 <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_MERDITH2021)</span>
-<span id="cb46-21"><a aria-label="21"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
-<span id="cb46-22"><a aria-label="22"></a>merdith2021_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
-<span id="cb46-23"><a aria-label="23"></a>  reefs,</span>
-<span id="cb46-24"><a aria-label="24"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
-<span id="cb46-25"><a aria-label="25"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb46-26"><a aria-label="26"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb46-27"><a aria-label="27"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
-<span id="cb46-28"><a aria-label="28"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_MERDITH2021, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-29"><a aria-label="29"></a>    )</span>
-<span id="cb46-30"><a aria-label="30"></a>  }</span>
-<span id="cb46-31"><a aria-label="31"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-label="1"></a><span class="co"># Calculate maximum palaeolatitude of reefs for each time bin for each model</span></span>
+<span id="cb57-2"><a aria-label="2"></a></span>
+<span id="cb57-3"><a aria-label="3"></a><span class="co"># GOLONKA Global Plate Model</span></span>
+<span id="cb57-4"><a aria-label="4"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb57-5"><a aria-label="5"></a>reefs<span class="sc">$</span>abs_p_lat_GOLONKA <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_GOLONKA)</span>
+<span id="cb57-6"><a aria-label="6"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
+<span id="cb57-7"><a aria-label="7"></a>golonka_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb57-8"><a aria-label="8"></a>  reefs,</span>
+<span id="cb57-9"><a aria-label="9"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb57-10"><a aria-label="10"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb57-11"><a aria-label="11"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb57-12"><a aria-label="12"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
+<span id="cb57-13"><a aria-label="13"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_GOLONKA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-14"><a aria-label="14"></a>    )</span>
+<span id="cb57-15"><a aria-label="15"></a>  }</span>
+<span id="cb57-16"><a aria-label="16"></a>)</span>
+<span id="cb57-17"><a aria-label="17"></a></span>
+<span id="cb57-18"><a aria-label="18"></a><span class="co"># MERDITH2021 Global Plate Model</span></span>
+<span id="cb57-19"><a aria-label="19"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
+<span id="cb57-20"><a aria-label="20"></a>reefs<span class="sc">$</span>abs_p_lat_MERDITH2021 <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_MERDITH2021)</span>
+<span id="cb57-21"><a aria-label="21"></a><span class="co"># Calculate the most poleward palaeolatitude</span></span>
+<span id="cb57-22"><a aria-label="22"></a>merdith2021_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
+<span id="cb57-23"><a aria-label="23"></a>  reefs,</span>
+<span id="cb57-24"><a aria-label="24"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb57-25"><a aria-label="25"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb57-26"><a aria-label="26"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb57-27"><a aria-label="27"></a>      <span class="at">bin_midpoint =</span> <span class="fu">unique</span>(x<span class="sc">$</span>bin_midpoint),</span>
+<span id="cb57-28"><a aria-label="28"></a>      <span class="at">max_p_lat =</span> <span class="fu">max</span>(x<span class="sc">$</span>abs_p_lat_MERDITH2021, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-29"><a aria-label="29"></a>    )</span>
+<span id="cb57-30"><a aria-label="30"></a>  }</span>
+<span id="cb57-31"><a aria-label="31"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section class="slide level2">
-<h2>Summarising palaeolatitudinal trends</h2>
 <p>Now, let’s plot to compare:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a><span class="co"># Set up plot</span></span>
-<span id="cb47-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb47-3"><a aria-label="3"></a>     <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb47-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
-<span id="cb47-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
-<span id="cb47-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
-<span id="cb47-7"><a aria-label="7"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>),</span>
-<span id="cb47-8"><a aria-label="8"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>)</span>
-<span id="cb47-9"><a aria-label="9"></a><span class="co"># Plot maximum palaeolatitudes for each model</span></span>
-<span id="cb47-10"><a aria-label="10"></a><span class="fu">lines</span>(<span class="at">x =</span> paleomap_max<span class="sc">$</span>bin_midpoint, <span class="at">y =</span> paleomap_max<span class="sc">$</span>max_p_lat,</span>
-<span id="cb47-11"><a aria-label="11"></a>      <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"#e41a1c"</span>, <span class="at">pch =</span> <span class="dv">15</span>)</span>
-<span id="cb47-12"><a aria-label="12"></a><span class="fu">lines</span>(<span class="at">x =</span> golonka_max<span class="sc">$</span>bin_midpoint, <span class="at">y =</span> golonka_max<span class="sc">$</span>max_p_lat,</span>
-<span id="cb47-13"><a aria-label="13"></a>      <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"#377eb8"</span>, <span class="at">pch =</span> <span class="dv">16</span>)</span>
-<span id="cb47-14"><a aria-label="14"></a><span class="fu">lines</span>(<span class="at">x =</span> merdith2021_max<span class="sc">$</span>bin_midpoint, <span class="at">y =</span> merdith2021_max<span class="sc">$</span>max_p_lat,</span>
-<span id="cb47-15"><a aria-label="15"></a>      <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"#4daf4a"</span>, <span class="at">pch =</span> <span class="dv">17</span>)</span>
-<span id="cb47-16"><a aria-label="16"></a><span class="co"># Add legend</span></span>
-<span id="cb47-17"><a aria-label="17"></a><span class="fu">legend</span>(<span class="dv">530</span>, <span class="dv">15</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"PALEOMAP"</span>, <span class="st">"GOLONKA"</span>, <span class="st">"MERDITH2021"</span>),</span>
-<span id="cb47-18"><a aria-label="18"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#e41a1c"</span>, <span class="st">"#377eb8"</span>, <span class="st">"#4daf4a"</span>),</span>
-<span id="cb47-19"><a aria-label="19"></a>       <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>), <span class="at">bty =</span> <span class="st">"n"</span>)</span>
-<span id="cb47-20"><a aria-label="20"></a><span class="co"># Add geological time scale axis</span></span>
-<span id="cb47-21"><a aria-label="21"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="st">"periods"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="phanerozoic-reefs_files/figure-html/reefs-max-plot-1.png" width="672" class="r-stretch"><p>We will leave you to make your own conclusions!</p>
-</section>
-<section id="wrap-up" class="slide level2">
-<h2>Wrap-up</h2>
+<p>We will leave you to make your own conclusions!</p>
+<h3 id="wrap-up">Wrap-up</h3>
 <p>Hopefully this tutorial has shown you the potential uses of some of <strong>palaeoverse</strong> functions and helped provide a workflow for your own analyses.</p>
 <p>In this tutorial, you have:</p>
 <ul>
@@ -1181,9 +1416,7 @@ Bethany J. Allen
 <li>compared how Global Plate Model choice affects your results</li>
 </ul>
 <p>If you have any questions about the package or its functionality, please feel free to join our <a href="https://palaeoverse.org/zulip/join-zulip/">Zulip community</a> and leave a question. We aim to answer it as soon as possible!</p>
-</section>
-<section id="references" class="slide level2">
-<h2>References</h2>
+<h3 id="references">References</h3>
 <p>Buffan, L., Jones, L. A., Domeier, M., Scotese, C. R., Zahirovic, S., &amp; Varela, S. (2023). Mind the uncertainty: Global plate model choice impacts deep‐time palaeobiological studies. <em>Methods in Ecology and Evolution</em>, 14(12), 3007-3019. DOI: <a href="https://doi.org/10.1111/2041-210X.14204">10.1111/2041-210X.14204</a>.</p>
 <p>Jones, L. A., Domeier, M. A Phanerozoic gridded dataset for palaeogeographic reconstructions. <strong>Scientific Data</strong> 11, 710 (2024). DOI: <a href="https://doi.org/10.1038/s41597-024-03468-w">10.1038/s41597-024-03468-w</a>.</p>
 <p>Kiessling, W. (2001). Paleoclimatic significance of Phanerozoic reefs. <em>Geology</em>, 29, 751–754. DOI: <a href="https://doi.org/10.1130/0091-7613(2001)029%3C0751:PSOPR%3E2.0.CO;2">10.1130/0091-7613(2001)029%3C0751:PSOPR%3E2.0.CO;2</a>.</p>
