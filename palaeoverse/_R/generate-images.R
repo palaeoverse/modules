@@ -8,18 +8,28 @@ res <- 300
 mar <- c(4, 4, 2, 1)
 
 # Latitudinal bins
-png(filename = "palaeoverse/img/lat-bins.png",
-    width = width, height = height, res = res,
-    bg = "transparent", type = "cairo")
+png(
+  filename = "palaeoverse/img/lat-bins.png",
+  width = width,
+  height = height,
+  res = res,
+  bg = "transparent",
+  type = "cairo"
+)
 par(mar = mar)
 lat_bins_area(n = 12, plot = TRUE)
 dev.off()
 
 # Temporal range
 data(tetrapods)
-png(filename = "palaeoverse/img/temporal-range.png",
-    width = width, height = height, res = res,
-    bg = "transparent", type = "cairo")
+png(
+  filename = "palaeoverse/img/temporal-range.png",
+  width = width,
+  height = height,
+  res = res,
+  bg = "transparent",
+  type = "cairo"
+)
 par(mar = mar)
 tetrapods |>
   subset(!is.na(order)) |>
@@ -27,14 +37,14 @@ tetrapods |>
 dev.off()
 
 # Time bins
-png(filename = "palaeoverse/img/time-bins.png",
-    width = width, height = height, res = res,
-    bg = "transparent", type = "cairo")
+png(
+  filename = "palaeoverse/img/time-bins.png",
+  width = width,
+  height = height,
+  res = res,
+  bg = "transparent",
+  type = "cairo"
+)
 par(mar = mar)
 time_bins(interval = "Phanerozoic", rank = "stage", plot = TRUE)
 dev.off()
-
-
-binned_reefs <- bin_time(reefs, max_ma = "interval_max_ma", min_ma = "interval_min_ma", bins = bins, method = "majority")
-n_reefs_majority <- nrow(binned_reefs)
-n_reefs_filtered <- subset(binned_reefs, overlap_percentage > 50)

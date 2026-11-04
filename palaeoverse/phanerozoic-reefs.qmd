@@ -54,7 +54,7 @@ knitr::opts_chunk$set(par = TRUE)
 
 In this tutorial, you will use **palaeoverse** to explore latitudinal trends in Phanerozoic reefs.
 
-Along the way, you will meet the functions you need for a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.
+Along the way, you will meet many functions used in a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.
 
 To help cement your knowledge, there are multiple exercises throughout this tutorial for you to work through.
 
@@ -62,21 +62,21 @@ To help cement your knowledge, there are multiple exercises throughout this tuto
 ## How exercises work
 
 - **Questions:** work out your answer in R first, then click the "Answers" box beneath the questions to check it.
-- **Hints and solutions:** click the boxes labelled "Hint" or "Solution" to reveal them, but make sure to try the task yourself first!
+- **Hints and solutions:** click the boxes labelled "Hint" or "Solution" to reveal them, but do attempt the tasks yourself first!
 - **Your turn:** code chunks marked `___` are incomplete. Replace each `___` before running them locally.
 :::
 
 ## Introduction
 
-Coral reefs are highly sensitive to climate change, and their past distributions are thought to trace the latitudinal extent of tropical and subtropical conditions over geological timescales (Kiessling, 2001; Perrin & Kiessling, 2010).
+Coral reefs are highly sensitive to climate change, and their past distributions are thought to represent the latitudinal extent of tropical and subtropical conditions over geological timescales (Kiessling, 2001; Perrin & Kiessling, 2010).
 
-However, interpreting this record is not straightforward. Continental drift means that the present-day location of a fossil reef does not reflect where it formed: occurrences now found at tropical latitudes may have been deposited in temperate settings, and vice versa.
+However, interpreting this record is not straightforward. Continental drift means that the present-day location of a fossil reef does not necessarily reflect where it formed: occurrences now found at temperate latitudes may have been deposited in tropical settings, and vice versa.
 
-Tracing the latitudinal distribution of reefs through time therefore requires reconstructing their palaeogeographic positions with a Global Plate Model. Moreover, recent work shows that palaeogeographic reconstructions can differ substantially among plate models, and this source of uncertainty must also be accounted for (Buffan et al., 2023).
+Tracing the latitudinal distribution of reefs through time therefore requires reconstructing their palaeogeographic positions with a Global Plate Model. Moreover, recent work shows that palaeogeographic reconstructions can differ substantially among Global Plate Models, and this source of uncertainty must also be be considered (Buffan et al., 2023).
 
 Here, we will address the question "how did the latitudinal distribution of reefs change through time?" while also considering differences in palaeogeographic reconstructions.
 
-Let's start by loading **palaeoverse**:
+Let's start by loading the **palaeoverse** R package:
 
 ```{r}
 #| label: load-palaeoverse
@@ -105,31 +105,31 @@ Load the `reefs` dataset:
 #| eval: true
 #| classes: fold-output
 
-# Load in-built dataset
+# Load built-in dataset
 data(reefs)
 ```
 
-Before conducting any analyses, it is always a good idea to explore your data and understand what you are working with. Let's inspect our data:
+Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let's inspect our data:
 
 ```{r}
 #| label: structure-reefs
 #| classes: fold-output
 
-# View the first six rows
+# View first six rows
 head(reefs)
-# Look at the structure of the dataset
+# Inspect dataset structure
 str(reefs)
 ```
 
-Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g. origin) are also available via the usual documentation call:
+Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g. source) are also available via the usual documentation call:
 
 ```{r}
 #| label: reefs-help
 
-# Call documentation for dataset
-?reefs
-# You can also use
+# Get dataset documentation
 help(reefs)
+# Or by shorthand
+?reefs
 ```
 
 ::: {.callout-caution}
@@ -141,7 +141,9 @@ help(reefs)
 4. True or false: the `reefs` dataset tells us how many species lived in each reef.
 :::
 
-::: {.callout-tip collapse="true" title="Answers"}
+::: {.callout-tip collapse="true"}
+## Exercise 1: Answers
+
 1. `nrow(reefs)`: `r nrow(reefs)`
 2. `ncol(reefs)`: `r ncol(reefs)`
 3. A whole reef (an ecosystem).
@@ -150,13 +152,15 @@ help(reefs)
 
 Not bad, that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the `tetrapods` dataset.
 
-**But how does the number of occurrences vary across time?** We can make use of the `group_apply()` wrapper function to run a function across subsets of data:
+**But how does the number of occurrences vary across time?**
+
+We can make use of the `group_apply()` function to apply a function across subsets of data:
 
 ```{r}
 #| label: group-apply-interval
 #| classes: fold-output
 
-# Group by the interval column to calculate nrow x interval
+# Group by the "interval" column
 reef_counts <- group_apply(reefs, group = "interval", fun = nrow)
 head(reef_counts)
 ```
@@ -169,27 +173,25 @@ head(reef_counts)
 :::
 
 ::: {.callout-tip collapse="true"}
-## Hint
+## Exercise 2: Hint
 
 `group_apply()` returns one row per group. How many groups did you get?
 :::
 
 ::: {.callout-tip collapse="true"}
-## Answers
+## Exercise 2: Answers
 
 1. `nrow(reef_counts)`: `r nrow(reef_counts)`
 2. Intervals differ in resolution and naming scheme, so counts are not comparable.
 :::
 
-Oh dear, we have just hit a common issue: our reef data do not conform to a common time scale. Some reefs are resolved to stage level, while others are resolved to a coarser or finer temporal resolution. In some instances, regional names are used (e.g. Abadehian), while international names are used in others (e.g. Bajocian). This makes comparisons through time challenging.
+Oh dear, we have just hit a common issue: our reef data do not conform to a common time scale. Some reefs are resolved to stage level, while others are resolved to a coarser or finer temporal resolution. In some instances, regional names are used (e.g. Abadehian), while international stage names are used in others (e.g. Bajocian). This makes comparisons through time challenging.
 
 ## Assign common time scale
 
-One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the `reefs` dataset (i.e. `max_age` and `min_age`). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the [International Commission on Stratigraphy (ICS)](https://stratigraphy.org).
+One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the `reefs` dataset (i.e. "max_age" and "min_age"). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the [International Commission on Stratigraphy (ICS)](https://stratigraphy.org).
 
-Fortunately, we can make use of the `look_up()` function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we can do the latter using the example built-in dataset `interval_key` in **palaeoverse**.
-
-Load `interval_key`:
+Fortunately, we can make use of the `look_up()` function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we will do the latter using the example built-in `interval_key` dataset:
 
 ```{r}
 #| label: interval-key
@@ -209,7 +211,7 @@ head(interval_key)
 :::
 
 ::: {.callout-tip collapse="true"}
-## Answers
+## Exercise 3: Answers
 
 1. `colnames(interval_key)`: `r colnames(interval_key)`
 2. `help(interval_key)` or `?interval_key`: geowhen
@@ -226,17 +228,19 @@ reefs <- look_up(reefs,
                  early_interval = "interval",
                  late_interval = "interval",
                  int_key = interval_key)
-# View "interval", "interval_max_ma", "interval_min_ma"
-reefs |>
-  subset(select = c("interval", "interval_max_ma", "interval_min_ma")) |>
-  head()
+# View first six rows
+head(reefs)
 ```
 
 Great! We now have a common time scale and numeric ages. However, some of our reefs seem to range through several stages, so we cannot simply count by the early or late stage. Our data still need to be binned.
 
 ## Temporal binning
 
-Let's check out the `time_bins()` and `bin_time()` functions:
+Let's check out the paired functions `time_bins()` and `bin_time()` that help you bin your data temporally.
+
+The `time_bins()` function allows you to create time bins for different intervals of time (e.g. Phanerozoic, Mesozoic, Miocene) and different time scales (e.g. international ages, North American land mammal ages, Conodont Zonation).
+
+Here, we'll use Phanerozoic stage-level time bins from the Geological Time Scale 2020:
 
 ```{r}
 #| label: time-bins
@@ -244,14 +248,16 @@ Let's check out the `time_bins()` and `bin_time()` functions:
 #| classes: fold-output
 
 # Extract Phanerozoic stage-level time bins
-bins <- time_bins(interval = "Phanerozoic", rank = "stage", plot = TRUE)
+bins <- time_bins(interval = "Phanerozoic", rank = "stage", scale = "GTS2020", plot = TRUE)
 head(bins)
 ```
+
+Now we have our time bins, we can start to think about how we want to bin our data, but first, let's do a little bit of housekeeping to streamline our subsequent code:
 
 ```{r}
 #| label: subset-reefs
 
-# Now we have numeric ages for our data, we can easily
+# Now we have numeric ages for our data, we can also
 # remove pre-Phanerozoic data to focus our study
 reefs <- subset(reefs, interval_max_ma <= max(bins$max_ma))
 # bin_time() defaults to "max_ma" and "min_ma" columns
@@ -281,13 +287,13 @@ bin_time(..., method = "point", reps = 100)
 ::: {.callout-caution}
 ## Exercise 4: Choose a temporal binning method
 
-Before we pick a method, let's see how the choice affects the data.
+Before we pick a method, let's see how the choice impacts the data.
 
 ```{r}
 #| label: exercise-4-time-bins
 #| eval: false
 
-# Your turn: bin the reefs using the "majority" method
+# Your turn: bin `reefs` using different methods
 bin_time(reefs, max_ma = ___, min_ma = ___, bins = ___, method = ___)
 ```
 
@@ -303,18 +309,18 @@ n_reefs_filtered <- nrow(binned_reefs[which(binned_reefs$overlap_percentage > 50
 
 1. Which method *increases* the number of rows?
 2. Which method(s) return a `list`?
-3. How many rows does `reefs` have if we use `method = "majority"` and filter "overlap_percentage" to more than 50%?
+3. How many occurrences remain if we use `method = "majority"` and filter "overlap_percentage" to more than 50%?
 :::
 
 ::: {.callout-tip collapse="true"}
-## Answers
+## Exercise 4: Answers
 
 1. `"all"`
 2. `"random"` and `"point"`
 3. `r n_reefs_filtered`
 :::
 
-We will go with `"all"` for this tutorial:
+For this tutorial, we will go with `"all"` for simplicity:
 
 ```{r}
 #| label: bin-all
@@ -338,13 +344,13 @@ Let's check those reef numbers through time again using our binned data:
 
 # Count number of reefs per time bin
 reefs_time <- group_apply(reefs, group = "bin_midpoint", fun = nrow)
-# Make sure bins are in chronological order
+# Order chronologically
 reefs_time <- reefs_time[order(as.numeric(reefs_time$bin_midpoint)), ]
-# Check output
+# View first six rows
 head(reefs_time)
 ```
 
-That is more like it! But let's not forget it is always useful to visualise our data. Why don't we plot the number of reefs through time? We can make use of the `axis_geo()` function to add the geological time scale to our plot:
+That's more like it! But let's not forget it is always useful to visualise our data. Why don't we plot the number of reefs through time? We can make use of the `axis_geo()` function to add the geological time scale to our plot:
 
 ```{r}
 #| label: n-reefs
@@ -363,7 +369,7 @@ axis_geo(side = 1, intervals = "periods")
 ```
 
 ```{r}
-#| label: exercise-4-hidden
+#| label: exercise-5-n-reefs-hidden
 #| include: false
 
 # Work out the peak bin and the period it falls in
@@ -374,16 +380,17 @@ peak_period <- periods$interval_name[periods$max_ma >= peak_mid &
 ```
 
 ::: {.callout-note icon=false}
-## Exercise 4: Reading the plot
+## Exercise 5: Reading the plot
 
 1. What is the largest number of reefs found in a single time bin?
 2. What geological stage does the peak fall in?
+:::
 
-::::: {.callout-tip collapse="true"}
-## Hint
+::: {.callout-tip collapse="true"}
+## Exercise 5: Hint
 
 Use `which.max()` to find the row with the highest count, then look up its `bin_midpoint`. Compare that age to the axis on your plot.
-:::::
+:::
 
 ```{r}
 #| label: exercise-4-solution-hidden
@@ -400,15 +407,15 @@ stage <- reefs_time |>
   subset(select = "interval_name")
 ```
 
-::::: {.callout-tip collapse="true"}
-## Answers
+::: {.callout-tip collapse="true"}
+## Exercise 5: Answers
 
 1. `r n`
 2. `r stage`
-:::::
+:::
 
-::::: {.callout-tip collapse="true"}
-## Solution
+::: {.callout-tip collapse="true"}
+## Exercise 5: Solution
 
 ```{r}
 #| label: exercise-4-solution
@@ -422,7 +429,6 @@ reefs_time |>
   # Subset
   subset(nrow == max(nrow))
 ```
-:::::
 :::
 
 You would (and should) of course want to explore your data a little more than this. However, for the sake of brevity, let's focus on our research theme: latitudinal trends in Phanerozoic reefs.
@@ -497,19 +503,19 @@ mean_shift <- mean(lat_shift, na.rm = TRUE)
 What is the mean absolute latitudinal shift?
 
 ::::: {.callout-tip collapse="true"}
-## Hint
+## Exercise 6: Hint
 
 The modern latitude column is called `lat`. The palaeolatitude column from the PALEOMAP model is `p_lat_PALEOMAP`.
 :::::
 
 ::::: {.callout-tip collapse="true"}
-## Answers
+## Exercise 6: Answers
 
 `r round(mean_shift, 2)` degrees
 :::::
 
 ::::: {.callout-tip collapse="true"}
-## Solution
+## Exercise 6: Solution
 
 ```{r}
 #| label: exercise-6-solution
@@ -519,7 +525,6 @@ lat_shift <- abs(reefs$lat - reefs$p_lat_PALEOMAP)
 mean(lat_shift, na.rm = TRUE)
 ```
 :::::
-:::
 
 Now let's plot that palaeolatitudinal distribution!
 
@@ -560,7 +565,7 @@ paleomap_max <- group_apply(
 )
 # Plot data
 plot(x = paleomap_max$bin_midpoint,
-     y = paleomap_max$abs_max_p_lat,
+     y = paleomap_max$max_p_lat,
      xlab = "Time (Ma)",
      ylab = "Palaeolatitude (º)",
      xlim = c(541, 0),
@@ -575,7 +580,7 @@ That is definitely much clearer!
 
 Should we stop there? Well, how about one last thing: let's repeat what we did above and calculate the most poleward reef occurrence for each of our three models and compare.
 
-::: {.callout-note}
+::::: {.callout-note}
 ## Exercise 7: Compare palaeogeographic reconstructions
 
 Complete the code to calculate the most poleward palaeolatitude per bin for each model.
@@ -619,14 +624,14 @@ ___ <- group_apply(
 )
 ```
 
-::::: {.callout-tip collapse="true"}
-## Hint
+::::::: {.callout-tip collapse="true"}
+## Exercise 7: Hint
 
 Use the column names `"p_lat_GOLONKA"` and `"p_lat_MERDITH2021"`. The full code is in the next chunk.
-:::::
+:::::::
 
-::::: {.callout-tip collapse="true"}
-## Solution
+::::::: {.callout-tip collapse="true"}
+## Exercise 7: Solution
 
 ```{r}
 #| label: reefs-max-multi
@@ -663,8 +668,7 @@ merdith2021_max <- group_apply(
   }
 )
 ```
-:::::
-:::
+:::::::
 
 Now, let's plot to compare:
 
@@ -727,3 +731,5 @@ Perrin, C. & Kiessling, W. (2010). Latitudinal trends in Cenozoic reef patterns 
 Scotese, C. & Wright, N. M. (2018). PALEOMAP Paleodigital Elevation Models (PaleoDEMs) for the Phanerozoic. [PALEOMAP Project](https://www.earthbyte.org/paleodem-resource-scotese-and-wright-2018/).
 
 Wright, N., Zahirovic, S., Müller, R. D., & Seton, M. (2013). Towards community-driven paleogeographic reconstructions: integrating open-access paleogeographic and paleobiology data with plate tectonics. *Biogeosciences*, 10(3), 1529--1541. DOI: [10.5194/bg-10-1529-2013](https://doi.org/10.5194/bg-10-1529-2013).
+:::::
+:::
