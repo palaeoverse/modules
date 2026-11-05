@@ -87,9 +87,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-bab30bc1bf989e6348fc405cf3b174dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-9d071a2d1b9528f8f459712b4dfc6d00.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -326,6 +326,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#temporal-binning" id="toc-temporal-binning" class="nav-link" data-scroll-target="#temporal-binning">Temporal binning</a></li>
   <li><a href="#palaeogeographic-reconstruction" id="toc-palaeogeographic-reconstruction" class="nav-link" data-scroll-target="#palaeogeographic-reconstruction">Palaeogeographic reconstruction</a></li>
   <li><a href="#summarising-palaeolatitudinal-trends" id="toc-summarising-palaeolatitudinal-trends" class="nav-link" data-scroll-target="#summarising-palaeolatitudinal-trends">Summarising palaeolatitudinal trends</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-up</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="phanerozoic-reefs-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
@@ -375,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/phanerozoic-reefs.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/phanerozoic-reefs.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -423,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let’s start by installing and loading the <strong>palaeoverse</strong> R package:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install palaeoverse</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>, <span class="at">repos =</span> <span class="st">"https://cloud.r-project.org"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load palaeoverse</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -445,12 +447,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Load the <code>reefs</code> dataset:</p>
-<div class="cell fold-output">
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load built-in dataset</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let’s inspect our data:</p>
-<div class="cell fold-output">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View first six rows</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
@@ -561,7 +563,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Not bad, that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the <code>tetrapods</code> dataset.</p>
 <p><strong>But how does the number of occurrences vary across time?</strong></p>
 <p>We can make use of the <code>group_apply()</code> function to apply a function across subsets of data:</p>
-<div class="cell fold-output">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by the "interval" column</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reef_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -634,7 +636,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-anchor-id="assign-common-time-scale">Assign common time scale</h2>
 <p>One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the <code>reefs</code> dataset (e.g.&nbsp;“max_age” and “min_age”). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the <a href="https://stratigraphy.org">International Commission on Stratigraphy (ICS)</a>.</p>
 <p>Fortunately, we can make use of the <code>look_up()</code> function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we will do the latter using the example built-in <code>interval_key</code> dataset:</p>
-<div class="cell fold-output">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the interval key</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"interval_key"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># View first six rows</span></span>
@@ -687,7 +689,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Using <code>interval_key</code>, we can now assign international geological stages and numeric ages to our <code>reefs</code> dataset, using <code>look_up</code>:</p>
-<div class="cell fold-output">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">look_up</span>(reefs,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
@@ -742,10 +744,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let’s check out the paired functions <code>time_bins()</code> and <code>bin_time()</code> that help you bin your data temporally.</p>
 <p>The <code>time_bins()</code> function allows you to create time bins for different intervals of time (e.g.&nbsp;Phanerozoic, Mesozoic, Miocene) and different time scales (e.g.&nbsp;international ages, North American land mammal ages, Conodont Zonation).</p>
 <p>Here, we’ll use Phanerozoic stage-level time bins from the Geological Time Scale 2020:</p>
-<div class="cell fold-output">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level time bins</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>, </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">scale =</span> <span class="st">"GTS2020"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -754,6 +757,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
+</details>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
@@ -854,7 +858,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Let’s check those reef numbers through time again using our binned data:</p>
-<div class="cell fold-output">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count number of reefs per time bin</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>reefs_time <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order chronologically</span></span>
@@ -1016,7 +1020,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">"grid"</span>, <span class="at">model =</span> models)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note, the first time we use <code>palaeorotate()</code> in each new session with <code>method = "grid"</code>, it will take a little longer as pre-generated palaeocoordinate grids need to be downloaded from <a href="https://zenodo.org/records/13798790">Zenodo</a>.</p>
-<div class="cell fold-output">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check palaeocoordinates</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
@@ -1258,20 +1262,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 7: Hint
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Use the column names <code>"p_lat_GOLONKA"</code> and <code>"p_lat_MERDITH2021"</code>.</p>
-</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1280,11 +1270,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 7: Solution
+<span class="screen-reader-only">Tip</span>Exercise 7: Hint
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use the column names <code>"p_lat_GOLONKA"</code> and <code>"p_lat_MERDITH2021"</code>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 7: Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate maximum palaeolatitude of reefs for each time bin for each model</span></span>
@@ -1361,6 +1367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>What could we do next with this data?</li>
 </ul>
 <p>We will leave you to make your own conclusions from here!</p>
+</section>
 <section id="wrap-up" class="level2">
 <h2 data-anchor-id="wrap-up">Wrap-up</h2>
 <p>Hopefully this tutorial has shown you some of the potential uses of <strong>palaeoverse</strong> functions and helped provide a workflow for your own analyses.</p>
@@ -1383,9 +1390,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Perrin, C. &amp; Kiessling, W. (2010). Latitudinal trends in Cenozoic reef patterns and their relationship to climate. <em>Carbonate Systems during the Oligocene–Miocene Climatic Transition</em>, 17–33. DOI: <a href="https://doi.org/10.1002/9781118398364.ch2">10.1002/9781118398364.ch2</a></p>
 <p>Scotese, C. &amp; Wright, N. M. (2018). PALEOMAP Paleodigital Elevation Models (PaleoDEMs) for the Phanerozoic. <a href="https://www.earthbyte.org/paleodem-resource-scotese-and-wright-2018/">PALEOMAP Project</a>.</p>
 <p>Wright, N., Zahirovic, S., Müller, R. D., &amp; Seton, M. (2013). Towards community-driven paleogeographic reconstructions: integrating open-access paleogeographic and paleobiology data with plate tectonics. <em>Biogeosciences</em>, 10(3), 1529–1541. DOI: <a href="https://doi.org/10.5194/bg-10-1529-2013">10.5194/bg-10-1529-2013</a>.</p>
-</section>
-</div>
-</div>
 
 
 <hr><br><details>
@@ -1433,7 +1437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    mime          0.13    2025-03-17 [1] RSPM
    nlme          3.1-171 2026-09-01 [2] CRAN (R 4.6.2)
    openssl       2.5.0   2026-11-02 [1] RSPM
-   palaeoverse   1.5.0   2026-06-11 [1] RSPM (R 4.6.0)
+   palaeoverse   1.5.0   2026-06-11 [1] CRAN (R 4.6.2)
    pbapply       1.7-5   2026-09-01 [1] RSPM
    pillar        1.11.1  2025-09-17 [1] RSPM
    pkgconfig     2.0.3   2019-09-22 [1] RSPM
