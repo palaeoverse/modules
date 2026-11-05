@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="Bethany J. Allen">
-<meta name="dcterms.date" content="2026-11-04">
+<meta name="dcterms.date" content="2026-11-05">
 <meta name="description" content="How did the latitudinal distribution of reefs change through time?">
 
 <title>Tutorial 2: Latitudinal trends in Phanerozoic reefs</title>
@@ -87,9 +87,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-bab30bc1bf989e6348fc405cf3b174dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-9d071a2d1b9528f8f459712b4dfc6d00.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -325,6 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#assign-common-time-scale" id="toc-assign-common-time-scale" class="nav-link" data-scroll-target="#assign-common-time-scale">Assign common time scale</a></li>
   <li><a href="#temporal-binning" id="toc-temporal-binning" class="nav-link" data-scroll-target="#temporal-binning">Temporal binning</a></li>
   <li><a href="#palaeogeographic-reconstruction" id="toc-palaeogeographic-reconstruction" class="nav-link" data-scroll-target="#palaeogeographic-reconstruction">Palaeogeographic reconstruction</a></li>
+  <li><a href="#summarising-palaeolatitudinal-trends" id="toc-summarising-palaeolatitudinal-trends" class="nav-link" data-scroll-target="#summarising-palaeolatitudinal-trends">Summarising palaeolatitudinal trends</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="phanerozoic-reefs-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
@@ -362,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 4, 2026</p>
+      <p class="date">November 5, 2026</p>
     </div>
   </div>
   
@@ -374,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/phanerozoic-reefs.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/phanerozoic-reefs.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -418,11 +419,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Coral reefs are highly sensitive to climate change, and their past distributions are thought to represent the latitudinal extent of tropical and subtropical conditions over geological timescales (Kiessling, 2001; Perrin &amp; Kiessling, 2010).</p>
 <p>However, interpreting this record is not straightforward. Continental drift means that the present-day location of a fossil reef does not necessarily reflect where it formed: occurrences now found at temperate latitudes may have been deposited in tropical settings, and vice versa.</p>
 <p>Tracing the latitudinal distribution of reefs through time therefore requires reconstructing their palaeogeographic positions with a Global Plate Model. Moreover, recent work shows that palaeogeographic reconstructions can differ substantially among Global Plate Models, and this source of uncertainty must also be be considered (Buffan et al., 2023).</p>
-<p>Here, we will address the question “how did the latitudinal distribution of reefs change through time?” while also considering differences in palaeogeographic reconstructions.</p>
-<p>Let’s start by loading the <strong>palaeoverse</strong> R package:</p>
+<p>Here, we will address the question “<strong>how did the latitudinal distribution of reefs change through time?</strong>” while also considering differences in palaeogeographic reconstructions.</p>
+<p>Let’s start by installing and loading the <strong>palaeoverse</strong> R package:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install palaeoverse (if required)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("palaeoverse")</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install palaeoverse</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load palaeoverse</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -516,9 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;source) are also available via the usual documentation call:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get dataset documentation</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(reefs)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Or by shorthand</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>?reefs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -553,8 +552,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><code>nrow(reefs)</code>: 4363</li>
 <li><code>ncol(reefs)</code>: 14</li>
-<li>A whole reef (an ecosystem).</li>
-<li>False. Each row describes a reef as a whole, not all the species within it.</li>
+<li>A whole reef (an ecosystem)</li>
+<li>False: each row describes a reef as a whole, not all the species within it</li>
 </ol>
 </div>
 </div>
@@ -633,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="assign-common-time-scale" class="level2">
 <h2 data-anchor-id="assign-common-time-scale">Assign common time scale</h2>
-<p>One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the <code>reefs</code> dataset (i.e.&nbsp;“max_age” and “min_age”). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the <a href="https://stratigraphy.org">International Commission on Stratigraphy (ICS)</a>.</p>
+<p>One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the <code>reefs</code> dataset (e.g.&nbsp;“max_age” and “min_age”). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the <a href="https://stratigraphy.org">International Commission on Stratigraphy (ICS)</a>.</p>
 <p>Fortunately, we can make use of the <code>look_up()</code> function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we will do the latter using the example built-in <code>interval_key</code> dataset:</p>
 <div class="cell fold-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the interval key</span></span>
@@ -745,7 +744,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Here, we’ll use Phanerozoic stage-level time bins from the Geological Time Scale 2020:</p>
 <div class="cell fold-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level time bins</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>, <span class="at">scale =</span> <span class="st">"GTS2020"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">scale =</span> <span class="st">"GTS2020"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -769,8 +769,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now we have our time bins, we can start to think about how we want to bin our data, but first, let’s do a little bit of housekeeping to streamline our subsequent code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we have numeric ages for our data, we can also</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remove pre-Phanerozoic data to focus our study</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we have numeric ages for our data, we can</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remove pre-Phanerozoic data to fit study scope</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs, interval_max_ma <span class="sc">&lt;=</span> <span class="fu">max</span>(bins<span class="sc">$</span>max_ma))</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># bin_time() defaults to "max_ma" and "min_ma" columns</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename columns in reefs</span></span>
@@ -807,8 +807,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <ol type="1">
 <li>Which method <em>increases</em> the number of rows?</li>
-<li>Which method(s) return a <code>list</code>?</li>
-<li>How many occurrences remain if we use <code>method = "majority"</code> and filter “overlap_percentage” to more than 50%?</li>
+<li>Which method(s) return a <code>list</code>? Why?</li>
+<li>How many occurrences remain if we use <code>method = "majority"</code> and filter overlap percentage to more than 50% (hint: “overlap_percentage” column)?</li>
 </ol>
 </div>
 </div>
@@ -832,7 +832,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>For this tutorial, we will go with <code>"all"</code> for simplicity:</p>
+<p>For this tutorial, we will go with <code>"all"</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -922,7 +922,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use <code>which.max()</code> to find the row with the highest count, then look up its <code>bin_midpoint</code>. Compare that age to the axis on your plot.</p>
+<ul>
+<li><code>max()</code> can be used to find the greatest value in a vector.</li>
+<li><code>which.max()</code> can be used to find the row with the greatest value.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -980,7 +983,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>You would (and should) of course want to explore your data a little more than this. However, for the sake of brevity, let’s focus on our research theme: latitudinal trends in Phanerozoic reefs.</p>
+<p>You would (and should) of course want to explore your data a little more than this. However, for brevity, let’s focus on our research theme: latitudinal trends in Phanerozoic reefs.</p>
 </section>
 <section id="palaeogeographic-reconstruction" class="level2">
 <h2 data-anchor-id="palaeogeographic-reconstruction">Palaeogeographic reconstruction</h2>
@@ -1001,44 +1004,83 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>"grid"</code> method is fast and efficient but spatially coarse (~119 km cells, so occurrences in the same cell share palaeocoordinates), while the <code>"point"</code> method via the GPlates Web Service gives higher-precision palaeocoordinates at the cost of speed, especially with many unique time intervals. The <code>"point"</code> method is generally preferred for fine-scale analyses or occurrences near plate boundaries.</p>
+<p>The <code>"grid"</code> method is fast and efficient but spatially coarse (~119 km cells, so occurrences in the same cell share palaeocoordinates), while the <code>"point"</code> method gives higher-precision palaeocoordinates at the cost of speed, especially with many unique time intervals. The <code>"point"</code> method is generally preferred for fine-scale analyses or occurrences near plate boundaries.</p>
 </div>
 </div>
 <p>The <code>palaeorotate()</code> model allows us to call multiple models at once. In this tutorial, we will use three, which lets us consider how Global Plate Model choice might impact our results: PALEOMAP, GOLONKA, and MERDITH2021 (Wright et al., 2013; Scotese &amp; Wright, 2018; Merdith et al., 2021). For the sake of this tutorial, we will also use the <code>"grid"</code> method to be kind to the <a href="https://gwsdoc.gplates.org">GPlates Web Service</a>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, let's define the models...</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the models</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"PALEOMAP"</span>, <span class="st">"GOLONKA"</span>, <span class="st">"MERDITH2021"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># And now palaeorotate!</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Palaeorotate</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">palaeorotate</span>(reefs, <span class="at">age =</span> <span class="st">"bin_midpoint"</span>,</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">"grid"</span>, <span class="at">model =</span> models)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note, the first time we use <code>palaeorotate()</code> in each new session, it will take a little longer as pre-generated palaeocoordinate grids need to be fetched from <a href="https://zenodo.org/records/13798790">Zenodo</a>.</p>
+<p>Note, the first time we use <code>palaeorotate()</code> in each new session with <code>method = "grid"</code>, it will take a little longer as pre-generated palaeocoordinate grids need to be downloaded from <a href="https://zenodo.org/records/13798790">Zenodo</a>.</p>
 <div class="cell fold-output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check palaeocoordinates</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># When multiple models are called, the name of the model</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># is added as a suffix to p_lng and p_lat</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reefs[, <span class="fu">c</span>(<span class="st">"p_lng_PALEOMAP"</span>, <span class="st">"p_lat_PALEOMAP"</span>,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">"p_lng_GOLONKA"</span>, <span class="st">"p_lat_GOLONKA"</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"p_lng_MERDITH2021"</span>, <span class="st">"p_lat_MERDITH2021"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
-<pre><code>  p_lng_PALEOMAP p_lat_PALEOMAP p_lng_GOLONKA p_lat_GOLONKA p_lng_MERDITH2021
-1        21.0520        10.0178       35.3480        8.1949           34.0895
-2        22.4745         2.0061       31.2992        4.3967           31.2485
-3             NA             NA            NA            NA          124.0687
-4             NA             NA            NA            NA          124.0687
-5             NA             NA            NA            NA          124.0687
-6        26.1948        -0.2111       37.9686        4.9978           36.2772
-  p_lat_MERDITH2021
-1           12.1226
-2            4.4610
-3           24.5367
-4           24.5367
-5           24.5367
-6            4.6626</code></pre>
+<pre><code>  r_number               name             formation   system         series
+1        1   Tilkideligi Tepe                       Triassic Upper Triassic
+2        2              Hydra Pantokrator Limestone Triassic Upper Triassic
+3        3 Shiraho, W-Pacific                        Neogene       Holocene
+4        3 Shiraho, W-Pacific                        Neogene       Holocene
+5        3 Shiraho, W-Pacific                        Neogene       Holocene
+6        4 Aksu-Terziler area                       Triassic Upper Triassic
+       interval   biota_main       biota_sec     lng    lat country
+1  lower Norian Calcisponges Stromatoporoids  30.383 37.033  Turkey
+2 upper Carnian       Corals    Calcisponges  23.633 37.383  Greece
+3        Recent       Corals           Algae 124.250 24.333 Pacific
+4        Recent       Corals           Algae 124.250 24.333 Pacific
+5        Recent       Corals           Algae 124.250 24.333 Pacific
+6      Tuvalian Calcisponges Stromatoporoids  31.033 37.800  Turkey
+                              authors
+1                          Riedel, P.
+2   Schafer, P., Senowbari-Daryan, B.
+3 Kayanne, H., Suzuki, A. &amp; Saito, H.
+4 Kayanne, H., Suzuki, A. &amp; Saito, H.
+5 Kayanne, H., Suzuki, A. &amp; Saito, H.
+6                          Riedel, P.
+                                                                                                   title
+1  Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+2 The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -
+3                       Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+4                       Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+5                       Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+6  Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+  year early_stage late_stage   max_ma interval_mid_ma min_ma id n_bins
+1 1990      Norian     Norian 227.0000       217.75000  208.5  1      1
+2 1982     Carnian    Carnian 237.0000       232.00000  227.0  2      1
+3 1995    Holocene   Holocene   0.0117         0.00585    0.0  3      3
+4 1995    Holocene   Holocene   0.0117         0.00585    0.0  3      3
+5 1995    Holocene   Holocene   0.0117         0.00585    0.0  3      3
+6 1990     Carnian    Carnian 237.0000       232.00000  227.0  4      1
+  bin_assignment bin_midpoint rot_age   rot_lng  rot_lat p_lng_PALEOMAP
+1             54      217.750     218  30.00423 36.90183        21.0520
+2             53      232.000     232  24.18991 37.27211        22.4745
+3            100        0.010       0 124.06871 24.53673             NA
+4            101        0.006       0 124.06871 24.53673             NA
+5            102        0.002       0 124.06871 24.53673             NA
+6             53      232.000     232  30.84884 37.82070        26.1948
+  p_lat_PALEOMAP p_lng_GOLONKA p_lat_GOLONKA p_lng_MERDITH2021
+1        10.0178       35.3480        8.1949           34.0895
+2         2.0061       31.2992        4.3967           31.2485
+3             NA            NA            NA          124.0687
+4             NA            NA            NA          124.0687
+5             NA            NA            NA          124.0687
+6        -0.2111       37.9686        4.9978           36.2772
+  p_lat_MERDITH2021 range_p_lat max_dist
+1           12.1226      3.9277 1584.205
+2            4.4610      2.4549 1015.764
+3           24.5367          NA       NA
+4           24.5367          NA       NA
+5           24.5367          NA       NA
+6            4.6626      5.2089 1430.176</code></pre>
 </div>
 </details>
 </div>
+<p>When multiple models are called, the name of the model is added as a suffix to “p_lng_<em>”” and ”p_lat_</em>”.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1058,20 +1100,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(lat_shift, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>What is the mean absolute latitudinal shift?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 6: Hint
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-19" class="callout-19-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The modern latitude column is called <code>lat</code>. The palaeolatitude column from the PALEOMAP model is <code>p_lat_PALEOMAP</code>.</p>
-</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1080,13 +1108,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 6: Answers
+<span class="screen-reader-only">Tip</span>Exercise 6: Hint
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>32.64 degrees</p>
+<p>The modern latitude column is called <code>lat</code>. The palaeolatitude column from the PALEOMAP model is <code>p_lat_PALEOMAP</code>.</p>
 </div>
 </div>
 </div>
@@ -1096,11 +1124,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 6: Solution
+<span class="screen-reader-only">Tip</span>Exercise 6: Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>32.64 degrees</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 6: Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>lat_shift <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>lat <span class="sc">-</span> reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
@@ -1128,16 +1172,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</section>
 <section id="summarising-palaeolatitudinal-trends" class="level2">
 <h2 data-anchor-id="summarising-palaeolatitudinal-trends">Summarising palaeolatitudinal trends</h2>
 <p>Neat! But it is hard to draw any trends from these data points (there are a lot of them!). We can do better by summarising this information. If we assume that reefs are broadly limited to tropical and subtropical climatic conditions, the most poleward reef in each time bin should give us an estimate of the palaeolatitudinal extent of those conditions.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's first assume hemispheric symmetry and convert</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume hemispheric symmetry and convert</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># palaeolatitudes to absolute palaeolatitudes</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>reefs<span class="sc">$</span>abs_p_lat_PALEOMAP <span class="ot">&lt;-</span> <span class="fu">abs</span>(reefs<span class="sc">$</span>p_lat_PALEOMAP)</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the most poleward palaeolatitude for each time bin</span></span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>paleomap_max <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">occdf =</span> reefs,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  reefs,</span>
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">"bin_midpoint"</span>,</span>
 <span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> <span class="cf">function</span>(x) {</span>
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
@@ -1214,7 +1259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1223,14 +1268,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use the column names <code>"p_lat_GOLONKA"</code> and <code>"p_lat_MERDITH2021"</code>. The full code is in the next chunk.</p>
+<p>Use the column names <code>"p_lat_GOLONKA"</code> and <code>"p_lat_MERDITH2021"</code>.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1239,7 +1284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate maximum palaeolatitude of reefs for each time bin for each model</span></span>
@@ -1295,7 +1340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> merdith2021_max<span class="sc">$</span>bin_midpoint, <span class="at">y =</span> merdith2021_max<span class="sc">$</span>max_p_lat,</span>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"#4daf4a"</span>, <span class="at">pch =</span> <span class="dv">17</span>)</span>
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">530</span>, <span class="dv">15</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"PALEOMAP"</span>, <span class="st">"GOLONKA"</span>, <span class="st">"MERDITH2021"</span>),</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">535</span>, <span class="dv">20</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"PALEOMAP"</span>, <span class="st">"GOLONKA"</span>, <span class="st">"MERDITH2021"</span>),</span>
 <span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#e41a1c"</span>, <span class="st">"#377eb8"</span>, <span class="st">"#4daf4a"</span>),</span>
 <span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>), <span class="at">bty =</span> <span class="st">"n"</span>)</span>
 <span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Add geological time scale axis</span></span>
@@ -1308,19 +1353,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>We will leave you to make your own conclusions!</p>
+<p>What can you observe from this plot? You may want to think about:</p>
+<ul>
+<li>Which intervals are most different?</li>
+<li>Where do trends converge and diverge?</li>
+<li>Can we reliably identify any long-term trends?</li>
+<li>What could we do next with this data?</li>
+</ul>
+<p>We will leave you to make your own conclusions from here!</p>
 <section id="wrap-up" class="level2">
 <h2 data-anchor-id="wrap-up">Wrap-up</h2>
-<p>Hopefully this tutorial has shown you the potential uses of some of <strong>palaeoverse</strong> functions and helped provide a workflow for your own analyses.</p>
+<p>Hopefully this tutorial has shown you some of the potential uses of <strong>palaeoverse</strong> functions and helped provide a workflow for your own analyses.</p>
 <p>In this tutorial, you have:</p>
 <ul>
 <li>explored an occurrence dataset and run functions across groups with <code>group_apply()</code></li>
 <li>linked interval names to a common time scale with <code>look_up()</code></li>
 <li>binned occurrences with <code>time_bins()</code> and <code>bin_time()</code></li>
 <li>estimated palaeocoordinates with <code>palaeorotate()</code></li>
-<li>compared how Global Plate Model choice affects your results</li>
+<li>compared how Global Plate Model choice impacts your results</li>
 </ul>
-<p>If you have any questions about the package or its functionality, please feel free to join our <a href="https://palaeoverse.org/zulip/join-zulip/">Zulip community</a> and leave a question. We aim to answer it as soon as possible!</p>
 </section>
 <section id="references" class="level2">
 <h2 data-anchor-id="references">References</h2>
@@ -1332,9 +1383,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Perrin, C. &amp; Kiessling, W. (2010). Latitudinal trends in Cenozoic reef patterns and their relationship to climate. <em>Carbonate Systems during the Oligocene–Miocene Climatic Transition</em>, 17–33. DOI: <a href="https://doi.org/10.1002/9781118398364.ch2">10.1002/9781118398364.ch2</a></p>
 <p>Scotese, C. &amp; Wright, N. M. (2018). PALEOMAP Paleodigital Elevation Models (PaleoDEMs) for the Phanerozoic. <a href="https://www.earthbyte.org/paleodem-resource-scotese-and-wright-2018/">PALEOMAP Project</a>.</p>
 <p>Wright, N., Zahirovic, S., Müller, R. D., &amp; Seton, M. (2013). Towards community-driven paleogeographic reconstructions: integrating open-access paleogeographic and paleobiology data with plate tectonics. <em>Biogeosciences</em>, 10(3), 1529–1541. DOI: <a href="https://doi.org/10.5194/bg-10-1529-2013">10.5194/bg-10-1529-2013</a>.</p>
-</section>
-</div>
-</div>
 </section>
 </div>
 </div>
@@ -1352,7 +1400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-04
+ date     2026-11-05
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -1385,7 +1433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    mime          0.13    2025-03-17 [1] RSPM
    nlme          3.1-171 2026-09-01 [2] CRAN (R 4.6.2)
    openssl       2.5.0   2026-11-02 [1] RSPM
-   palaeoverse   1.5.0   2026-06-11 [1] RSPM
+   palaeoverse   1.5.0   2026-06-11 [1] RSPM (R 4.6.0)
    pbapply       1.7-5   2026-09-01 [1] RSPM
    pillar        1.11.1  2025-09-17 [1] RSPM
    pkgconfig     2.0.3   2019-09-22 [1] RSPM
