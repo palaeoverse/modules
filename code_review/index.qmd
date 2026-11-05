@@ -78,7 +78,95 @@ A good way to assess your own understanding of the code is to prepare a list of 
 Note that the amount of tests or expectations to validate is also very context-dependent. In general, code written as part of a data analysis project is very specific to your use case and its purpose is not to run on completely different datasets. **Code that is part of a data analysis project still needs to be properly reviewed and tested**, but you have more control over how this code is used. If your project is a package meant to be used by other people, then you also need to think about all sorts of ways people might misuse your code in their own context.
 
 
-*Activity: Try out reviewing mini ‘bad code’ examples that we provide*
+*Activity: Try out reviewing mini "bad code" examples that we provide*
+
+::: {.callout-caution title="Exercise 1"}
+
+Without running these examples, do you see what is likely wrong or could be improved?
+
+```{r}
+#| eval: false
+
+x <- data.frame(a = c(1, 2), b = c(1, 2), c = c(3, 3))
+y <- data.frame(a = c(1, 2), b = c(1, 2), d = c(3, 3))
+out <- merge(x, y, by = "a")
+out[["b"]]
+```
+::::: {.callout-tip title="Solution" collapse="true"}
+
+`out[["b"]]` returns `NULL` because we have `"b.x"` and `"b.y"` in the output, because we forgot to merge on `"b"` as well:
+
+```diff
+x <- data.frame(a = c(1, 2), b = c(1, 2), c = c(3, 3))
+y <- data.frame(a = c(1, 2), b = c(1, 2), d = c(3, 3))
+- out <- merge(x, y, by = "a")
++ out <- merge(x, y, by = c("a", "b"))
+out[["b"]]
+```
+:::::
+
+```{r}
+#| eval: false
+
+x <- c(12.5, 80, 45.2, 150, 9.99)
+x_updated <- c()
+
+
+for (i in 1:length(x)) {
+  if (x[i] > 50) {
+    x_updated[i] <- x[i] * 0.9
+  } else {
+    x_updated[i] <- x[i]
+  }
+}
+
+```
+::::: {.callout-tip title="Solution" collapse="true"}
+
+In general, we should prefer vectorised code to `for` loops where possible. In this case, the function `ifelse()` is preferable to using an `if` condition in a loop because it can take the whole vector at once:
+
+```r
+x_updated <- ifelse(x > 50, x * 0.9, x)
+```
+:::::
+
+```{r}
+#| eval: false
+
+set.seed(1234)
+x <- sample(-1:10, 3)
+idx_to_remove <- x[x < 0]
+x[-idx_to_remove]
+```
+::::: {.callout-tip title="Solution" collapse="true"}
+
+In this case, we want to remove some values of `x` based on some index that we computed. 
+The problem here is that if `idx_to_remove` is of length 0 because `x` doesn't have negative values, then `x[-idx_to_remove]` returns an empty vector instead of returning the entire vector!
+
+```r
+x[-idx_to_remove]
+```
+```{r}
+#| eval: true
+#| echo: false
+
+set.seed(1234)
+x <- sample(-1:10, 3)
+idx_to_remove <- x[x < 0]
+x[-idx_to_remove]
+```
+
+A safer way to do that is to use an `if` condition:
+
+```r
+if (length(idx_to_remove) > 0) {
+  x[-idx_to_remove]
+}
+```
+:::::
+:::
+
+
 
 ## Where to review code (either yours or someone else’s)?
 
