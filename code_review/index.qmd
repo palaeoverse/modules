@@ -47,7 +47,7 @@ If needed, you can refer to our module on Git and GitHub: \<link\>
 
 ## Motivation
 
-We spend a lot of time writing code, but even more time reading it. This could be code that is part of a tutorial, a package, some analysis shared by a colleague, or even when we come back to our own code months later. Being able to read and understand code before running it is important, as we may not be able to immediately run code, or we may have to wait for minutes or hours before the execution ends.
+We spend a lot of time writing code, but even more time reading it. This could be code that is part of a tutorial, a package, some analysis shared by a colleague, or even when we come back to our own code months later. Being able to read and understand code before running it is important, as we may not be able to immediately run code (for instance if it requires an internet connection), or we may have to wait for minutes or hours before the execution ends.
 
 Being able to review code becomes even more important as the amount of AI-generated code keeps growing. We should be able to trust the output of AI models and this requires being able to critically review their output.
 
@@ -57,14 +57,20 @@ Finally, reviewing code is a good way to learn about new methods, new coding pra
 
 The main objectives of code review are i) to verify that the code aligns with what we expect it to do, ii) to find potential mistakes, and iii) to ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future. 
 
-The reviewer should start by asking the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g. code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?
+Depending on the setting, the reviewer might start by checking that the code actually runs, but this is not always possible or needed (for instance if there are already automated tests that ensured that the code was giving the correct results).
 
-Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break?
+The reviewer should then ask the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g. code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?
 
-::: {.callout-note title="Required level of knowledge to review code"}
-There is a distinction to be made between the requirements on the code author and the requirements on the code reviewer. The code author should follow good practices to ensure that other people can understand the code without asking, and to facilitate code review. This includes using informative variable names, providing clear documentation, and writing informative code comments to clarify why a piece of code is written how it is.
+Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? Are these cases realistic? Are these cases properly handled?
 
-However, the author does not have to explain everything the code does if this information is easily available in the documentation. For example, if the reviewer is not familiar with a particular base R function, then they may need to look for this information on their own. The author is not responsible for teaching the reviewer about this function, but they should ensure that the reviewer can easily retrieve all the required information to understand the code.
+::: {.callout-note title="Expectations for code authors and code reviewers"}
+Both authors and reviewers should have realistic expectations of each other’s roles. 
+
+The code author is responsible for the changes they propose. They should do their best to follow good practices in order to facilitate code review and to ensure that other people can understand the code without asking them. This includes using informative variable names, providing clear documentation, and writing informative code comments to clarify why a piece of code is written how it is. 
+
+The reviewer should check changes and provide opinions from an alternative point of view to the author. This might require gathering some external knowledge that the author doesn’t necessarily have to provide. For example, if the reviewer is not familiar with a particular base R function, then they may need to learn this information on their own. The author is not responsible for teaching the reviewer about this function, but they should ensure that the reviewer can easily retrieve all the required information to understand the code.  
+
+This may add too much burden on the reviewer, in which case it might be better to transparently acknowledge that they cannot review some code (and, if possible, they may request a review from someone else). This is not ideal but it’s also not the end of the world. Also, finding and resolving bugs can be a beneficial part of the review process, but remember that bugs can persist in code that has been reviewed by many people!
 :::
 
 A good way to assess your own understanding of the code is to prepare a list of expectations about what this code should do, and then compare these expectations to what the code actually does. This is not always convenient or possible, for example if the code to review is part of a pipeline that takes a long time to run, but it can uncover issues in many cases.
@@ -96,7 +102,7 @@ How to use the GitHub interface to review PRs?
 
 ![](demo_github_review.webm)
 
-Note that you can pull the branch locally to directly try it and explore more before making your review. However, depending on the amount and on the complexity of changes, reviewing on GitHub only without actually running code is completely fine.
+Note that you can pull the branch locally to directly try it and explore more before writing your review. However, depending on the amount and on the complexity of changes, reviewing on GitHub only without actually running code is completely fine.
 
 ## Self-reviewing your code
 
@@ -104,7 +110,7 @@ Before asking someone else to review the code, it is a good practice to review y
 
 You also need to ensure that your code is being tested. In an R package, this means that the test suite must not have any failures (and potentially that you must add new tests). In a data analysis project, this could be done via data validation (e.g. with [validate](https://github.com/data-cleaning/validate)), and with some tests as well.
 
-Finally, you should make sure your changes are as self-contained as possible. It is good practice to have one pull request (PR) per new feature or bug fix: it is easier and faster to review (which benefits both the author and the reviewer) and it helps debugging in the future, since it is easier to narrow down the change that caused a problem. In many cases, PRs should contain code changes, updated documentation, and new tests, but this depends a lot on the context.
+Finally, you should make sure your changes are as self-contained as possible. It is good practice to have one pull request (PR) per new analysis, feature or bug fix: it is easier and faster to review (which benefits both the author and the reviewer) and it helps debugging in the future, since it is easier to narrow down the change that caused a problem. In many cases, PRs should contain code changes, updated documentation, and new tests, but this depends a lot on the context.
 
 ## Review process
 
@@ -130,11 +136,13 @@ Note that positive comments are welcome to acknowledge good changes. Remember th
 
 ### Author side
 
+Before requesting a review, the author should make sure that automated checks pass. These can include package tests, data validation checks, and linting and styling checks, among other things. It is the author’s responsibility to ensure that these checks pass, the reviewer shouldn’t have to ask for them to be fixed (but the author can ask for help if they cannot fix some failures).
+
 On top of preparing a self-contained PR and doing some self-review of their code before requesting a review (see above), the author can take several actions to simplify the review process and make it more efficient.
 
 First, the author should succinctly describe the objective of the PR: does it improve the documentation? Does it fix a bug? Does it add a new feature? If so, is this feature a new function, a new argument, something else? And so on. This doesn’t have to be a long description, one or two sentences may be enough. Note that it is also good practice to link to the issue addressed by this PR. You can add "Closes \#1234" or "Fixes \#1234" so that issue 1234 is automatically closed when the PR is merged. 
 
-It can be helpful to describe specific goals for the review process, for instance if you want help with the efficiency of your code. The PR author can also add their own review comments using the GitHub interface before requesting a review. Some parts of a PR might be hard to understand without the context, so it is completely fine for the author to add a few comments to clarify some specific lines of code in advance. The author can also use these comments to inform the reviewer of specific lines for which they have doubts and would like feedback on some of their changes. Note that review comments on GitHub are not equivalent to writing comments directly in the file.
+It can be helpful to describe specific goals for the review process, for instance if you want help with the efficiency of your code. The PR author can also add their own review comments using the GitHub interface before requesting a review. Some parts of a PR might be hard to understand without the context, so it is completely fine for the author to add a few comments to clarify some specific lines of code in advance. The author can also use these comments to inform the reviewer of specific lines for which they have doubts and would like feedback on some of their changes. Note that review comments on GitHub can be displayed in a variety of ways, which can make them easier to identify and read than writing comments directly in the file.
 
 The author should address all comments and questions of the reviewer. This doesn’t mean agreeing with the reviewer all the time, but disagreements should be based on concrete arguments. Handling the reviewer’s comments can be a frustrating process, but it is important to stay polite and to ground opinions on facts and concrete examples regarding the code. The review process is asynchronous, so you usually don’t need to reply instantly to the reviewer and you can instead take some time to think more about their points. 
 
@@ -150,10 +158,23 @@ Another discussion point concerns who should push commits to the branch. Usually
 
 Finally, AI usage might be a point of contention, in which case it is important that both the author and the reviewer agree on the acceptable AI usage, both in code and in discussion. Sometimes, this is covered by a project-wide AI policy, but in any case it is worth being transparent about this.
 
+## Summary: a checklist for authors and reviewers
 
-*Activity: Write some bad code, make a pull request, swap with a partner and review, swap back to address review*
+Authors:
 
-*Activity: Discuss what makes a ‘good’ author and reviewer, and any barriers to this*
+- Is the PR description a clear summary of the changes included in the PR? Is this still the case after addressing all the review comments?  
+- Have you linked to related issues in the PR description? If relevant, have you added "auto-close" comments (e.g. "Close #1234")?  
+- Have you left some review comments "unresolved"? If so, have you explained why?
+
+Reviewers:
+
+- Do the code changes align with the description in the PR (or your understanding of what the changes aim to achieve)?  
+- Are changes properly documented, through code annotations and formal descriptions (e.g. repository README, roxygen function documentation)?  
+- Are changes properly and sufficiently tested?  
+- Are there changes that should be moved to a separate PR?  
+- Are there tests to cover corner cases?  
+- If relevant, are these changes documented in a user-facing document (e.g. a changelog)?  
+- Are all CI checks passing? If not, have you explained why this is acceptable?
 
 ## Conclusion
 
