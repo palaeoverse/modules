@@ -87,9 +87,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-9d071a2d1b9528f8f459712b4dfc6d00.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-bab30bc1bf989e6348fc405cf3b174dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -377,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/introduction.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/introduction.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 <section id="why-use-palaeoverse" class="level1" data-number="1">
@@ -481,7 +481,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="modular" class="level2" data-number="2.2">
 <h2 data-number="2.2" data-anchor-id="modular"><span class="header-section-number">2.2</span> Modular</h2>
 <p>Each function in <strong>palaeoverse</strong> does one job well. You can use one on its own, or chain several together into a full workflow.</p>
-<div class="cell">
+<div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
@@ -490,20 +490,103 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin data temporally</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># View first six rows</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
+<div class="cell-output cell-output-stdout">
+<pre><code>  occurrence_no collection_no                        identified_name
+1        146665         12943     n. gen. Anconastes n. sp. vesperus
+2        147090         13004                     Gorgonopsia indet.
+3        147521         13043 n. gen. Procolophon n. sp. trigoniceps
+4        147523         13044       n. gen. Ophiodeirus n. sp. casei
+5        147563         13046         Broiliellus n. sp. arroyoensis
+6        147564         13048              Broiliellus n. sp. olsoni
+  identified_rank           accepted_name accepted_rank early_interval
+1         species     Anconastes vesperus       species     Missourian
+2        suborder             Gorgonopsia      suborder     Capitanian
+3         species Procolophon trigoniceps       species         Induan
+4         species       Araeoscelis casei       species     Artinskian
+5         species Broiliellus arroyoensis       species      Kungurian
+6         species      Broiliellus olsoni       species       Wolfcamp
+  late_interval max_ma min_ma   phylum        class              order
+1      Gzhelian 305.90  298.9 Chordata Osteichthyes      Temnospondyli
+2          &lt;NA&gt; 265.10  259.9 Chordata Osteichthyes       Cotylosauria
+3     Olenekian 252.17  247.2 Chordata     Reptilia NO_ORDER_SPECIFIED
+4          &lt;NA&gt; 290.10  279.3 Chordata     Reptilia      Araeoscelidia
+5          &lt;NA&gt; 279.30  272.3 Chordata Osteichthyes      Temnospondyli
+6          &lt;NA&gt; 296.40  268.0 Chordata Osteichthyes      Temnospondyli
+           family       genus abund_value  abund_unit        lng       lat
+1    Trematopidae  Anconastes           2   specimens -106.34778  36.30444
+2            &lt;NA&gt;        &lt;NA&gt;           1   specimens   22.00000 -32.36667
+3 Procolophonidae Procolophon          10   specimens   26.50972 -32.10611
+4   Araeoscelidae Araeoscelis           2 individuals  -98.93361  33.61167
+5   Dissorophidae Broiliellus           6   specimens  -99.20000  33.80972
+6   Dissorophidae Broiliellus           2   specimens  -98.14778  33.82639
+                   collection_name cc     formation stratgroup member
+1                  El Cobre Canyon US        Cutler       &lt;NA&gt;   &lt;NA&gt;
+2            Hottentotsrivier Farm ZA Abrahamskraal   Beaufort   &lt;NA&gt;
+3 Donnybrook (Queenstown District) ZA       Katberg   Beaufort   &lt;NA&gt;
+4            Mouth of Godwin Creek US        Nocona    Wichita   &lt;NA&gt;
+5               Broiliellus pocket US        Arroyo Clear Fork   &lt;NA&gt;
+6                    Thaxton Ranch US          &lt;NA&gt;    Wichita   &lt;NA&gt;
+                       zone   lithology1        environment
+1                      &lt;NA&gt;    siltstone     dry floodplain
+2 Tapinocephalus Assemblage    sandstone       "floodplain"
+3                      &lt;NA&gt;     mudstone     fluvial indet.
+4                      &lt;NA&gt; conglomerate terrestrial indet.
+5                      &lt;NA&gt; not reported terrestrial indet.
+6                      &lt;NA&gt; not reported terrestrial indet.
+             pres_mode               taxon_environment        motility
+1                 body brackish,freshwater,terrestrial actively mobile
+2 body,mold/impression                     terrestrial actively mobile
+3                 body                     terrestrial actively mobile
+4                 body                     terrestrial actively mobile
+5                 body brackish,freshwater,terrestrial actively mobile
+6                 body brackish,freshwater,terrestrial actively mobile
+       life_habit      diet id n_bins bin_assignment bin_midpoint
+1 ground dwelling carnivore  1      2             39      301.300
+2            &lt;NA&gt; carnivore  2      1             46      262.100
+3            &lt;NA&gt;      &lt;NA&gt;  3      3             50      249.200
+4            &lt;NA&gt;      &lt;NA&gt;  4      2             42      286.800
+5 ground dwelling carnivore  5      2             43      278.225
+6 ground dwelling carnivore  6      6             43      278.225</code></pre>
+</div>
+</details>
 </div>
 </section>
 <section id="flexible" class="level2" data-number="2.3">
 <h2 data-number="2.3" data-anchor-id="flexible"><span class="header-section-number">2.3</span> Flexible</h2>
 <p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique species</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_unique</span>(tetrapods, <span class="at">genus =</span> <span class="st">"genus"</span>, <span class="at">family =</span> <span class="st">"family"</span>, </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">order =</span> <span class="st">"order"</span>, <span class="at">class =</span> <span class="st">"class"</span>, <span class="at">name =</span> <span class="st">"accepted_name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique species</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_unique</span>(<span class="at">genus =</span> <span class="st">"genus"</span>, <span class="at">family =</span> <span class="st">"family"</span>, <span class="at">order =</span> <span class="st">"order"</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">class =</span> <span class="st">"class"</span>, <span class="at">name =</span> <span class="st">"accepted_name"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># View first six rows</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
+<div class="cell-output cell-output-stdout">
+<pre><code>         class         order            family              genus
+1 Osteichthyes  Dicynodontia              &lt;NA&gt;           Abajudon
+2 Osteichthyes  Cotylosauria Charassognathidae          Abdalodon
+3     Reptilia          &lt;NA&gt;  Nyctiphruretidae        Abyssomedon
+4 Osteichthyes Temnospondyli      Zatracheidae   Acanthostomatops
+5 Osteichthyes Temnospondyli      Derwentiidae          Acerastea
+6     Reptilia      Eosuchia              &lt;NA&gt; Acerosodontosaurus
+                 genus_species                  unique_name
+1              Abajudon kaayai              Abajudon kaayai
+2      Abdalodon diastematicus      Abdalodon diastematicus
+3        Abyssomedon williamsi        Abyssomedon williamsi
+4       Acanthostomatops vorax       Acanthostomatops vorax
+5             Acerastea wadeae             Acerastea wadeae
+6 Acerosodontosaurus piveteaui Acerosodontosaurus piveteaui</code></pre>
+</div>
+</details>
 </div>
 </section>
 </section>
@@ -514,35 +597,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exploring-and-summarising-data" class="level2" data-number="3.1">
 <h2 data-number="3.1" data-anchor-id="exploring-and-summarising-data"><span class="header-section-number">3.1</span> Exploring and summarising data</h2>
 <p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate temporal range of taxa</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop NAs</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot temporal range</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate temporal range of taxa</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop NAs</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot temporal range</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># View first six rows</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
+<div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="img/temporal-range.png" class="img-fluid figure-img"></p>
+<p><img src="introduction_files/figure-html/temporal-range-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption>Temporal range of Carboniferous to Early Triassic tetrapods.</figcaption>
 </figure>
+</div>
+</div>
+</details>
+<details><summary>Output</summary>
+<div class="cell-output cell-output-stdout">
+<pre><code>            taxon taxon_id max_ma min_ma range_myr n_occ
+1  Trilophosauria        1  251.2  247.2       4.0     1
+2 Eosauropterygia        2  251.3  247.2       4.1     8
+3     Hupehsuchia        3  251.3  247.2       4.1     4
+4     Nothosauria        4  251.3  247.2       4.1     1
+5      Testudines        5  251.3  247.2       4.1     3
+6  Thalattosauria        6  251.3  247.2       4.1     3</code></pre>
+</div>
+</details>
 </div>
 </section>
 <section id="cleaning-and-harmonising-data" class="level2" data-number="3.2">
 <h2 data-number="3.2" data-anchor-id="cleaning-and-harmonising-data"><span class="header-section-number">3.2</span> Cleaning and harmonising data</h2>
 <p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates, standardising ages, and checking taxonomic names for potential misspellings:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for potential misspellings</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for potential misspellings</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>$synonyms
   group     greater     lesser count_greater count_lesser
@@ -555,26 +656,72 @@ NULL
 $non_letter_group
 NULL</code></pre>
 </div>
+</details>
 </div>
 </section>
 <section id="preparing-data-for-analyses" class="level2" data-number="3.3">
 <h2 data-number="3.3" data-anchor-id="preparing-data-for-analyses"><span class="header-section-number">3.3</span> Preparing data for analyses</h2>
 <p><strong>palaeoverse</strong> includes functions to help prepare data for downstream analyses, such as reconstructing palaeogeographic distributions or temporally and spatially binning data:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin data</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_lat</span>(<span class="at">occdf =</span> reefs, <span class="at">bins =</span> bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get example data</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
+<div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="img/lat-bins.png" class="img-fluid figure-img"></p>
+<p><img src="introduction_files/figure-html/bin-lat-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption>12 approximately equal-area latitudinal bins.</figcaption>
 </figure>
+</div>
+</div>
+</details>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>reefs <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_lat</span>(<span class="at">bins =</span> bins) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
+<div class="cell-output cell-output-stdout">
+<pre><code>  r_number               name             formation   system         series
+1        1   Tilkideligi Tepe                       Triassic Upper Triassic
+2        2              Hydra Pantokrator Limestone Triassic Upper Triassic
+3        3 Shiraho, W-Pacific                        Neogene       Holocene
+4        4 Aksu-Terziler area                       Triassic Upper Triassic
+5        5    Adnet, Salzburg                       Triassic Upper Triassic
+6        6          Rotelwand                       Triassic Upper Triassic
+        interval   biota_main       biota_sec      lng     lat country
+1   lower Norian Calcisponges Stromatoporoids  30.3833 37.0333  Turkey
+2  upper Carnian       Corals    Calcisponges  23.6333 37.3833  Greece
+3         Recent       Corals           Algae 124.2500 24.3333 Pacific
+4       Tuvalian Calcisponges Stromatoporoids  31.0333 37.8000  Turkey
+5 upper Rhaetian       Corals    Calcisponges  13.1667 47.7000 Austria
+6       Rhaetian       Corals    Calcisponges  13.1833 47.7000 Austria
+                              authors
+1                          Riedel, P.
+2   Schafer, P., Senowbari-Daryan, B.
+3 Kayanne, H., Suzuki, A. &amp; Saito, H.
+4                          Riedel, P.
+5                         Schafer, P.
+6                         Schafer, P.
+                                                                                                                                                  title
+1                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+2                                                The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -
+3                                                                      Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+4                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+5  Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke, Salzburg)
+6 Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke,  Salzburg)
+  year lat_bin  lat_max  lat_mid  lat_min
+1 1990       3 41.81031 35.90516 30.00000
+2 1982       3 41.81031 35.90516 30.00000
+3 1995       4 30.00000 24.73561 19.47122
+4 1990       3 41.81031 35.90516 30.00000
+5 1979       2 56.44269 49.12650 41.81031
+6 1979       2 56.44269 49.12650 41.81031</code></pre>
+</div>
+</details>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
