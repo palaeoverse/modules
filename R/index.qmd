@@ -5,7 +5,7 @@ author:
   - Lewis A. Jones
   - Erin M. Dillon
 date: "`r Sys.Date()`"
-categories: [r, tidyverse, dataviz]
+categories: [r, rstudio]
 difficulty: Beginner
 image: img/2d_density.png
 format:
@@ -35,104 +35,49 @@ editor:
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 
-## Introduction
+This module introduces you to R, RStudio, and R project management. R is a free, open-source programming language designed for data analysis and visualisation. RStudio is an integrated development environment (IDE) that makes working with R far more approachable. Together, they form one of the most widely used toolkits in palaeontology, ecology, and evolutionary biology.
 
-::: {.narration}
-Prose goes in a `.narration` block: it reads as a paragraph on the website, and
-becomes the speaker notes you talk from on the slides. Press `s` in the deck to
-see the notes view.
+**No prior coding experience is required for this module**, and by the end, you will be comfortable navigating RStudio, writing and running simple R code, and organising your work in a project that you (or a collaborator) can return to months later.
 
-Consecutive paragraphs can share one block; they stay separate paragraphs on
-the page and separate notes on the slide.
+## Learning objectives
+
+By the end of this module, you will be able to:
+
+- Explain what R and RStudio are and how they relate
+- Identify the main RStudio panels and what they do
+- Distinguish between the RStudio console and a script
+- Assign values to objects and manipulate them
+- Recognise common data types and structures
+- Install and load packages
+- Import a dataset, inspect it, and summarise it
+- Make a simple plot in base R
+- Interpret common errors and find help independently
+- Create an RStudio Project to organise your work
+- Code in R and RStudio with confidence
+
+## Prerequisites
+
+### Knowledge
+
+This module assumes no prior experience with R or programming. However, you should be comfortable with basic computer skills, such as downloading and installing software and managing files and folders.
+
+### Installation
+
+For this module, you will need to install R and RStudio. Install R first, as RStudio relies on it.
+
+1. **Install R.** Download the latest version for your operating system from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/) and follow the installation instructions.
+2. **Install RStudio Desktop.** Download the free version from the [Posit website](https://posit.co/download/rstudio-desktop/) and install it as you would any other application.
+
+::: {.callout-tip}
+## Trouble installing?
+
+If you cannot install software on your machine (e.g. a managed institutional laptop), you can run RStudio in your browser for free using [Posit Cloud](https://posit.cloud/). Alternatively, speak to your IT support team about installing R and RStudio.
 :::
 
-::: {.slides-only}
-- a bullet summary for the slide
-- which would be redundant on the page
-:::
+## Module structure
 
-::: {.html-only}
-Content that only makes sense in writing (e.g., a long aside, a table of options, a
-link dump) goes in an `.html-only` block and never reaches the deck.
-:::
+This module is designed to get you up and running with R and RStudio as quickly as possible and includes the following:
 
-## One plot per slide
-
-::: {.narration}
-Each `##` heading starts a slide, and the filter closes the slide after every
-figure, so two plots never share one slide. Prose after a figure introduces the next
-figure rather than trailing behind the old one.
-:::
-
-```{r}
-plot(mtcars$wt, mtcars$mpg)
-```
-
-::: {.narration}
-This narration belongs to the plot below, and lands on its slide as speaker notes.
-:::
-
-```{r}
-plot(mtcars$hp, mtcars$mpg)
-```
-
-## Deeper headings
-
-::: {.narration}
-`###` and deeper headings are promoted to slide level, so each becomes its own
-slide instead of piling onto the previous slide. On the website they stay a normal
-sub-heading.
-:::
-
-### A sub-heading
-
-::: {.narration}
-This is its own slide.
-:::
-
-## Building up a slide
-
-::: {.narration}
-When a slide holds two or more code chunks, the filter expands it into an
-auto-animate build-up: one step per chunk, earlier chunks staying on screen, and
-the narration advancing with each step/click.
-:::
-
-```{r}
-x <- mtcars$wt
-mean(x)
-```
-
-::: {.narration}
-The second chunk arrives on the next step, with the first still visible.
-:::
-
-```{r}
-round(sd(x), 3)
-```
-
-## Callouts
-
-::: {.narration}
-A callout gets a slide of its own. The content is un-boxed and the slide is titled by its own heading.
-:::
-
-::: {.callout-note}
-## A note
-
-This box is dropped on the slide, which lets a figure inside it stretch to fit.
-:::
-
-::: {.callout-caution collapse="true"}
-## An exercise solution
-
-A *collapsed* callout is the exception: it keeps its box. Since clicking on
-slides can be awkward, the collapsed content is held back as a fragment and
-revealed when you advance. On the website it stays a click-to-open box.
-:::
-
-## More info
-
-- [Quarto revealjs](https://quarto.org/docs/presentations/revealjs/)
-- [Callouts](https://quarto.org/docs/authoring/callouts.html)
-- the repo README, for the other two ways to build a module
+- [Introduction to R and RStudio](rstudio.qmd): Get to know the RStudio interface and understand how R and RStudio work together.
+- [R Basics](r-basics.qmd): Learn the fundamentals of the R language, including objects, data types, functions, packages, and importing data.
+- [Project Management with RStudio](project-management.qmd): Organise your files, data, and code with RStudio Projects, and adopt habits that make your analyses reproducible.
