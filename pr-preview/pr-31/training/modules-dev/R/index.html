@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.11.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="Erin M. Dillon">
-<meta name="dcterms.date" content="2026-10-23">
 <meta name="description" content="This is a description">
 
 <title>Getting started with R and RStudio</title>
@@ -30,41 +29,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -78,17 +42,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../_brand/logos/favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8574e35074353e5de839972ed73d34f7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-910b0c9c99883b2e35c5c024ee8da49f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-b7c8608876b328f493d4b0893a1c4819.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-d0e51c5c2cd3f34338f41fd71eb1dc89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-b7c8608876b328f493d4b0893a1c4819.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-9d071a2d1b9528f8f459712b4dfc6d00.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -126,11 +91,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:image:width" content="1344">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
@@ -138,8 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -265,15 +229,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
+            <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/R/index.html">Getting started with R and RStudio</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules-dev/R/index.html">Getting started with R and RStudio</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
@@ -281,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Section">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -314,32 +279,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#one-plot-per-slide" id="toc-one-plot-per-slide" class="nav-link" data-scroll-target="#one-plot-per-slide">One plot per slide</a></li>
-  <li><a href="#deeper-headings" id="toc-deeper-headings" class="nav-link" data-scroll-target="#deeper-headings">Deeper headings</a>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
   <ul class="collapse">
-  <li><a href="#a-sub-heading" id="toc-a-sub-heading" class="nav-link" data-scroll-target="#a-sub-heading">A sub-heading</a></li>
+  <li><a href="#knowledge" id="toc-knowledge" class="nav-link" data-scroll-target="#knowledge">Knowledge</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
   </ul></li>
-  <li><a href="#building-up-a-slide" id="toc-building-up-a-slide" class="nav-link" data-scroll-target="#building-up-a-slide">Building up a slide</a></li>
-  <li><a href="#callouts" id="toc-callouts" class="nav-link" data-scroll-target="#callouts">Callouts</a></li>
-  <li><a href="#more-info" id="toc-more-info" class="nav-link" data-scroll-target="#more-info">More info</a></li>
+  <li><a href="#module-structure" id="toc-module-structure" class="nav-link" data-scroll-target="#module-structure">Module structure</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Getting started with R and RStudio</h1>
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
-    <div class="quarto-category">tidyverse</div>
-    <div class="quarto-category">dataviz</div>
+    <div class="quarto-category">rstudio</div>
   </div>
   </div>
 
@@ -363,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 23, 2026</p>
+      <p class="date">Invalid Date</p>
     </div>
   </div>
   
@@ -378,102 +340,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/palaeoverse/modules/blob/intro-to-r/R/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
-<section id="introduction" class="level2">
-<h2 data-anchor-id="introduction">Introduction</h2>
-<p>Prose goes in a <code>.narration</code> block: it reads as a paragraph on the website, and becomes the speaker notes you talk from on the slides. Press <code>s</code> in the deck to see the notes view.</p>
-<p>Consecutive paragraphs can share one block; they stay separate paragraphs on the page and separate notes on the slide.</p>
-<p>Content that only makes sense in writing (e.g., a long aside, a table of options, a link dump) goes in an <code>.html-only</code> block and never reaches the deck.</p>
+<p>This module introduces you to R, RStudio, and R project management. R is a free, open-source programming language designed for data analysis and visualisation. RStudio is an integrated development environment (IDE) that makes working with R far more approachable. Together, they form one of the most widely used toolkits in palaeontology, ecology, and evolutionary biology.</p>
+<p><strong>No prior coding experience is required for this module</strong>, and by the end, you will be comfortable navigating RStudio, writing and running simple R code, and organising your work in a project that you (or a collaborator) can return to months later.</p>
+<section id="learning-objectives" class="level2">
+<h2 data-anchor-id="learning-objectives">Learning objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Explain what R and RStudio are and how they relate</li>
+<li>Identify the main RStudio panels and what they do</li>
+<li>Distinguish between the RStudio console and a script</li>
+<li>Assign values to objects and manipulate them</li>
+<li>Recognise common data types and structures</li>
+<li>Install and load packages</li>
+<li>Import a dataset, inspect it, and summarise it</li>
+<li>Make a simple plot in base R</li>
+<li>Interpret common errors and find help independently</li>
+<li>Create an RStudio Project to organise your work</li>
+<li>Code in R and RStudio with confidence</li>
+</ul>
 </section>
-<section id="one-plot-per-slide" class="level2">
-<h2 data-anchor-id="one-plot-per-slide">One plot per slide</h2>
-<p>Each <code>##</code> heading starts a slide, and the filter closes the slide after every figure, so two plots never share one slide. Prose after a figure introduces the next figure rather than trailing behind the old one.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This narration belongs to the plot below, and lands on its slide as speaker notes.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="prerequisites" class="level2">
+<h2 data-anchor-id="prerequisites">Prerequisites</h2>
+<section id="knowledge" class="level3">
+<h3 data-anchor-id="knowledge">Knowledge</h3>
+<p>This module assumes no prior experience with R or programming. However, you should be comfortable with basic computer skills, such as downloading and installing software and managing files and folders.</p>
 </section>
-<section id="deeper-headings" class="level2">
-<h2 data-anchor-id="deeper-headings">Deeper headings</h2>
-<p><code>###</code> and deeper headings are promoted to slide level, so each becomes its own slide instead of piling onto the previous slide. On the website they stay a normal sub-heading.</p>
-<section id="a-sub-heading" class="level3">
-<h3 data-anchor-id="a-sub-heading">A sub-heading</h3>
-<p>This is its own slide.</p>
-</section>
-</section>
-<section id="building-up-a-slide" class="level2">
-<h2 data-anchor-id="building-up-a-slide">Building up a slide</h2>
-<p>When a slide holds two or more code chunks, the filter expands it into an auto-animate build-up: one step per chunk, earlier chunks staying on screen, and the narration advancing with each step/click.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>wt</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.21725</code></pre>
-</div>
-</div>
-<p>The second chunk arrives on the next step, with the first still visible.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sd</span>(x), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.978</code></pre>
-</div>
-</div>
-</section>
-<section id="callouts" class="level2">
-<h2 data-anchor-id="callouts">Callouts</h2>
-<p>A callout gets a slide of its own. The content is un-boxed and the slide is titled by its own heading.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="installation" class="level3">
+<h3 data-anchor-id="installation">Installation</h3>
+<p>For this module, you will need to install R and RStudio. Install R first, as RStudio relies on it.</p>
+<ol type="1">
+<li><strong>Install R.</strong> Download the latest version for your operating system from the <a href="https://cran.r-project.org/">Comprehensive R Archive Network (CRAN)</a> and follow the installation instructions.</li>
+<li><strong>Install RStudio Desktop.</strong> Download the free version from the <a href="https://posit.co/download/rstudio-desktop/">Posit website</a> and install it as you would any other application.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>A note
+<span class="screen-reader-only">Tip</span>Trouble installing?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This box is dropped on the slide, which lets a figure inside it stretch to fit.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Caution</span>An exercise solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>A <em>collapsed</em> callout is the exception: it keeps its box. Since clicking on slides can be awkward, the collapsed content is held back as a fragment and revealed when you advance. On the website it stays a click-to-open box.</p>
-</div>
+<p>If you cannot install software on your machine (e.g.&nbsp;a managed institutional laptop), you can run RStudio in your browser for free using <a href="https://posit.cloud/">Posit Cloud</a>. Alternatively, speak to your IT support team about installing R and RStudio.</p>
 </div>
 </div>
 </section>
-<section id="more-info" class="level2">
-<h2 data-anchor-id="more-info">More info</h2>
+</section>
+<section id="module-structure" class="level2">
+<h2 data-anchor-id="module-structure">Module structure</h2>
+<p>This module is designed to get you up and running with R and RStudio as quickly as possible and includes the following:</p>
 <ul>
-<li><a href="https://quarto.org/docs/presentations/revealjs/">Quarto revealjs</a></li>
-<li><a href="https://quarto.org/docs/authoring/callouts.html">Callouts</a></li>
-<li>the repo README, for the other two ways to build a module</li>
+<li><a href="../../../training/modules-dev/R/rstudio.html">Introduction to R and RStudio</a>: Get to know the RStudio interface and understand how R and RStudio work together.</li>
+<li><a href="../../../training/modules-dev/R/r-basics.html">R Basics</a>: Learn the fundamentals of the R language, including objects, data types, functions, packages, and importing data.</li>
+<li><a href="../../../training/modules-dev/R/project-management.html">Project Management with RStudio</a>: Organise your files, data, and code with RStudio Projects, and adopt habits that make your analyses reproducible.</li>
 </ul>
 
 
@@ -481,17 +401,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Session info</summary>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
- version  R version 4.6.1 (2026-06-24)
- os       Ubuntu 24.04.5 LTS
+ version  R version 4.6.2 (2026-10-29)
+ os       Ubuntu 26.04.1 LTS
  system   x86_64, linux-gnu
  ui       X11
  language (EN)
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-23
- pandoc   3.1.3 @ /usr/bin/pandoc
- quarto   1.10.19 @ /usr/local/bin/quarto
+ date     2026-11-06
+ pandoc   3.7.0.2 @ /usr/bin/pandoc
+ quarto   1.11.9 @ /usr/local/bin/quarto
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
@@ -660,7 +580,8 @@ https://goatcounter.com/help/domains
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -669,8 +590,69 @@ https://goatcounter.com/help/domains
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -684,6 +666,7 @@ https://goatcounter.com/help/domains
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -846,44 +829,54 @@ https://goatcounter.com/help/domains
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -982,7 +975,10 @@ https://goatcounter.com/help/domains
     }
   });
   </script>
-<nav class="page-navigation">
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
@@ -999,6 +995,7 @@ https://goatcounter.com/help/domains
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
+<p>Supported by the <a class="footer-sponsor" href="https://www.software.ac.uk/" target="_blank">Institute for Research Software</a> (2026–2028)</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
