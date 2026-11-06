@@ -374,13 +374,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="prerequisites-and-related-modules" class="level2">
 <h2 data-anchor-id="prerequisites-and-related-modules">Prerequisites and related modules</h2>
-<p>There is no technical prerequisite for most of the content on the principles of code review. However, some content and some exercises will refer to the Git &amp; GitHub workflow. Therefore, you will need to have a GitHub account and to be familiar with working with git and GitHub to follow along.</p>
-<p>If needed, you can refer to our module on Git and GitHub: &lt;link&gt;</p>
+<p>There is no technical prerequisite for most of the content on the principles of code review. However, some content and some exercises will refer to the Git &amp; GitHub workflow. Therefore, you will need to have a GitHub account and to be familiar with working with Git and GitHub to follow along.</p>
+<p>If needed, you can refer to <a href="https://palaeoverse.org/modules/pr-preview/pr-21/training/modules-dev/github/index.html">our module</a>.</p>
 </section>
 <section id="motivation" class="level2">
 <h2 data-anchor-id="motivation">Motivation</h2>
 <p>We spend a lot of time writing code, but even more time reading it. This could be code that is part of a tutorial, a package, some analysis shared by a colleague, or even when we come back to our own code months later. Being able to read and understand code before running it is important, as we may not be able to immediately run code (for instance if it requires an internet connection), or we may have to wait for minutes or hours before the execution ends.</p>
-<p>Being able to review code becomes even more important as the amount of AI-generated code keeps growing. We should be able to trust the output of AI models and this requires being able to critically review their output.</p>
+<p>Being able to review code becomes even more important as the amount of AI-generated code keeps growing. As AI gets better at writing code, we spend more and more time reviewing code to ensure its correctness than writing it ourselves.</p>
 <p>Finally, reviewing code is a good way to learn about new methods, new coding practices, and new functions that you might not have known existed.</p>
 </section>
 <section id="how-to-review-code" class="level2">
@@ -450,14 +450,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="dv">80</span>, <span class="fl">45.2</span>, <span class="dv">150</span>, <span class="fl">9.99</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x_updated <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x[i] <span class="sc">&gt;</span> <span class="dv">50</span>) {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    x_updated[i] <span class="ot">&lt;-</span> x[i] <span class="sc">*</span> <span class="fl">0.9</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    x_updated[i] <span class="ot">&lt;-</span> x[i]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x[i] <span class="sc">&gt;</span> <span class="dv">50</span>) {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    x_updated[i] <span class="ot">&lt;-</span> x[i] <span class="sc">*</span> <span class="fl">0.9</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    x_updated[i] <span class="ot">&lt;-</span> x[i]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
