@@ -345,6 +345,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#how-to-use-dependencies" id="toc-how-to-use-dependencies" class="nav-link" data-scroll-target="#how-to-use-dependencies">How to use dependencies</a></li>
   <li><a href="#reverse-dependencies" id="toc-reverse-dependencies" class="nav-link" data-scroll-target="#reverse-dependencies">Reverse dependencies</a></li>
   </ul></li>
+  <li><a href="#more-documentation" id="toc-more-documentation" class="nav-link" data-scroll-target="#more-documentation">More documentation</a></li>
   </ul>
 </nav>
     </div>
@@ -382,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/develop.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/develop.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -628,6 +629,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Note that if we eventually publish our package on CRAN (cf.&nbsp;next section), then the CRAN team will automatically run reverse dependency checks when we submit a new version. Failures in reverse dependencies will only be tolerated if we have notified maintainers in advance.</p>
+</section>
+</section>
+<section id="more-documentation" class="level2">
+<h2 data-anchor-id="more-documentation">More documentation</h2>
+<p>So far, our documentation provides indications on what a specific function does and how to use it. A package can consist of a collection of unrelated functions, in which case this kind of documentation might be sufficient.</p>
+<p>However, a package can also be designed so that functions play particularly well together. In this case, we would like to provide more general documentation that describes the optimal workflow when using this package. In addition to documentation in the <code>man</code> folder, we can also store long-form documentation in the <code>vignettes</code> folder. A vignette</p>
+<p>As before, we can use <code>usethis</code> to create a vignette and generate the surrounding infrastructure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> usethis<span class="sc">::</span><span class="fu">use_vignette</span>(<span class="st">"my_vignette"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>✔ Adding knitr to Suggests field <span class="cf">in</span> DESCRIPTION.</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>✔ Adding <span class="st">"inst/doc"</span> to .gitignore.</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>✔ Adding rmarkdown to Suggests field <span class="cf">in</span> DESCRIPTION.</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>✔ Adding <span class="st">"knitr"</span> to VignetteBuilder.</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>✔ Creating vignettes<span class="sc">/</span>.</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>✔ Adding <span class="st">"*.html"</span> and <span class="st">"*.R"</span> to vignettes<span class="sc">/</span>.gitignore.</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>✔ Writing vignettes<span class="sc">/</span>my_vignette.Rmd.</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>☐ Modify vignettes<span class="sc">/</span>my_vignette.Rmd.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This creates a skeleton for our vignette:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "my_vignette"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> rmarkdown::html_vignette</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">vignette:</span><span class="co"> &gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteIndexEntry{my_vignette}</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEngine{knitr::rmarkdown}</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEncoding{UTF-8}</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include = FALSE}</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(my.pkg)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is an R Markdown document, which is why <code>usethis</code> automatically added the packages <code>knitr</code> and <code>rmarkdown</code> to the <code>Suggests</code> section of <code>DESCRIPTION</code>. We can now add content to this vignette:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">---</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">- title: "my_vignette"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="va">+ title: "My great vignette"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>output: rmarkdown::html_vignette</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>vignette: &gt;</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">-  %\VignetteIndexEntry{my_vignette}</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="va">+  %\VignetteIndexEntry{My great vignette}</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  %\VignetteEngine{knitr::rmarkdown}</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  %\VignetteEncoding{UTF-8}</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="kw">---</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>```{r, include = FALSE}</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  collapse = TRUE,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  comment = "#&gt;"</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>```{r setup}</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>library(my.pkg)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="va">+ We can get unique values of a vector with `n_unique()`:</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="va">+ </span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="va">+ ```{r}</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="va">+ n_unique(c(1, 2, 3, 1))</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="va">+ ```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>There are then multiple ways to view this vignette. One of them is to use <code>rmarkdown::render()</code> or the “Render” button in RStudio. Another approach is to install the package and to build the vignettes locally with <code>devtools::install(build_vignettes = TRUE)</code>. Once this is done, we can browse vignettes of our package with <code>browseVignettes("my.pkg")</code>, or view this one specifically with <code>vignette("my_vignette", package = "my.pkg")</code>:</p>
+<p><img src="img/vignette_preview.png" class="img-fluid"></p>
+<p>Finally, you can also build a vignette using <code>devtools::build_rmd("vignettes/my_vignette.Rmd")</code>. Note that this will temporarily install the package, so that the code in the vignette always includes the latest changes you may have made locally.</p>
 
 
 <hr><br><details>
@@ -769,7 +837,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </details>
-</section>
 </section>
 
 </main> <!-- /main -->
