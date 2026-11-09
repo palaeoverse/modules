@@ -9,7 +9,7 @@
 <meta name="author" content="Bethany Allen">
 <meta name="author" content="Etienne Bacher">
 <meta name="author" content="Lewis Jones">
-<meta name="dcterms.date" content="2026-11-06">
+<meta name="dcterms.date" content="2026-11-09">
 <meta name="description" content="Why it is important to read other people’s code and how to do it.">
 
 <title>Code review</title>
@@ -337,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 6, 2026</p>
+      <p class="date">November 9, 2026</p>
     </div>
   </div>
   
@@ -362,12 +362,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>After this module, you will:</p>
 <ul>
-<li>Understand what code review is and its benefits<br>
-</li>
-<li>Be able to perform self-code review<br>
-</li>
-<li>Be able to review other people’s code, and clearly and appropriately communicate your feedback<br>
-</li>
+<li>Understand what code review is and its benefits</li>
+<li>Be able to perform self-code review</li>
+<li>Be able to review other people’s code, and clearly and appropriately communicate your feedback</li>
 <li>Be able to use GitHub features for code review</li>
 </ul>
 </div>
@@ -450,7 +447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="dv">80</span>, <span class="fl">45.2</span>, <span class="dv">150</span>, <span class="fl">9.99</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x_updated <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) {</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x[i] <span class="sc">&gt;</span> <span class="dv">50</span>) {</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    x_updated[i] <span class="ot">&lt;-</span> x[i] <span class="sc">*</span> <span class="fl">0.9</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
@@ -529,18 +526,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>How to use the GitHub interface to review PRs?</p>
 <ul>
-<li>Go to the PR<br>
-</li>
-<li>Go to the tab “Files changed”. All changes are displayed there. Some files are collapsed (e.g.&nbsp;Rd files), indicating that they are automatically generated and shouldn’t be reviewed.<br>
-</li>
-<li>When you hover a line, a blue cross appears on the left. This is how you can select a line for which you want to add a comment.<br>
-</li>
-<li>Write your comment using the Markdown syntax. There is a button “Add a suggestion” that you can use to directly show the change you would like the author to apply.<br>
-</li>
-<li>All comments you make are “Pending”, meaning that they are not visible to the author until you submit your review. They are still saved, so you can leave without submitting your review and come back to it later if needed.<br>
-</li>
-<li>Once you have written all your comments, go to “Submit review”. There, you can decide whether you want to accept the PR, request changes (meaning that the author won’t be able to merge until you approve), or comment only. You can also write a general message regarding the PR.<br>
-</li>
+<li>Go to the PR</li>
+<li>Go to the tab “Files changed”. All changes are displayed there. Some files are collapsed (e.g.&nbsp;Rd files), indicating that they are automatically generated and shouldn’t be reviewed.</li>
+<li>When you hover a line, a blue cross appears on the left. This is how you can select a line for which you want to add a comment.</li>
+<li>Write your comment using the Markdown syntax. There is a button “Add a suggestion” that you can use to directly show the change you would like the author to apply.</li>
+<li>All comments you make are “Pending”, meaning that they are not visible to the author until you submit your review. They are still saved, so you can leave without submitting your review and come back to it later if needed.</li>
+<li>Once you have written all your comments, go to “Submit review”. There, you can decide whether you want to accept the PR, request changes (meaning that the author won’t be able to merge until you approve), or comment only. You can also write a general message regarding the PR.</li>
 <li>Once you are happy with your comments, you can submit your review.</li>
 </ul>
 </div>
@@ -566,14 +557,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Bad: “You shouldn’t use a for loop here, this is very slow.”
 <ul>
-<li>Uses “you”, so the author may feel directly attacked.<br>
-</li>
+<li>Uses “you”, so the author may feel directly attacked.</li>
 <li>Doesn’t suggest a solution.</li>
 </ul></li>
 <li>Better: “Can this for loop be replaced by a vectorised function? Vectorised code is often much faster than for loops.”
 <ul>
-<li>Gives the opportunity to the author to explain why they wrote the code as they did (maybe they made a mistake, maybe not).<br>
-</li>
+<li>Gives the opportunity to the author to explain why they wrote the code as they did (maybe they made a mistake, maybe not).</li>
 <li>Gives a potential alternative (but the exploration still needs to be done by the author)</li>
 </ul></li>
 </ul>
@@ -602,18 +591,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-anchor-id="authors">Authors</h3>
 <p>Before requesting a review:</p>
 <ul>
-<li>Does the PR contain multiple types of changes that should be in separate PRs instead?<br>
-</li>
-<li>Have you reviewed, tested, and documented the changes (if necessary)?<br>
-</li>
-<li>Do all automated checks pass?<br>
-</li>
+<li>Does the PR contain multiple types of changes that should be in separate PRs instead?</li>
+<li>Have you reviewed, tested, and documented the changes (if necessary)?</li>
+<li>Do all automated checks pass?</li>
 <li>Is the PR description a clear summary of the changes included in the PR? Have you linked to related issues in the PR description? If relevant, have you added “auto-close” comments (e.g.&nbsp;“Close #1234”)?</li>
 </ul>
 <p>If you are in charge of merging the PR after the review:</p>
 <ul>
-<li>Have you updated the PR description after addressing all the review comments (if needed)?<br>
-</li>
+<li>Have you updated the PR description after addressing all the review comments (if needed)?</li>
 <li>Have you left some review comments “unresolved”? If so, have you explained why?</li>
 </ul>
 </section>
@@ -621,14 +606,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-anchor-id="reviewers">Reviewers</h3>
 <p>Questions to consider and potentially to report during the review:</p>
 <ul>
-<li>Do the code changes align with the description in the PR (or your understanding of what the changes aim to achieve)?<br>
-</li>
-<li>Are changes properly documented, through code annotations and formal descriptions (e.g.&nbsp;repository README, roxygen function documentation)?<br>
-</li>
-<li>Are changes properly and sufficiently tested?<br>
-</li>
-<li>Are there changes that should be moved to a separate PR?<br>
-</li>
+<li>Do the code changes align with the description in the PR (or your understanding of what the changes aim to achieve)?</li>
+<li>Are changes properly documented, through code annotations and formal descriptions (e.g.&nbsp;repository README, roxygen function documentation)?</li>
+<li>Are changes properly and sufficiently tested?</li>
+<li>Are there changes that should be moved to a separate PR?</li>
 <li>If relevant, are these changes documented in a user-facing document (e.g.&nbsp;a changelog)?</li>
 </ul>
 </section>
@@ -651,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-06
+ date     2026-11-09
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
