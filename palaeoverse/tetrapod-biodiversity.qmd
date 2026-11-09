@@ -1,6 +1,6 @@
 ---
-title: "Exercise 1: Alpha diversity and geographic range size of Carboniferous and Permian tetrapods"
-description: "This is a description"
+title: "Exercise 1: Tracking the diversity of early tetrapods"
+description: "How diverse were tetrapods in the Palaeozoic, and how was this diversity structured through time and across space?"
 author:
   - Lewis A. Jones
   - Bethany J. Allen
@@ -35,30 +35,75 @@ editor:
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 
-## Heading 1
+```{r}
+#| label: setup
+#| include: false
 
-Text
-# Built-in datasets
+knitr::knit_hooks$set(par = function(before, options, envir) {
+  if (before && isTRUE(options$par)) {
+    par(mar = c(4, 4, 2, 1),   # bottom, left, top, right (lines)
+        bg = "transparent")         # figure background
+  }
+})
 
-*palaeoverse* includes a number of built-in datasets:
+knitr::opts_chunk$set(par = TRUE)
+```
 
-- `tetrapods`: early tetrapod occurrences from the [Paleobiology Database](https://paleobiodb.org/#/)
-- `reefs`: Phanerozoic reef occurrences from the [PaleoReefs Database](https://www.paleo-reefs.pal.uni-erlangen.de)
-- `GTS2012` and `GTS2020`: geological timescale data
-- `interval_key`: an example interval key for `look_up()`
+## Preamble
 
-Here, we'll focus on the two example occurrence datasets (`tetrapods` and `reefs`) which are provided so you can try out functions straight away. Let's load them:
+In this tutorial, you will use **palaeoverse** to explore the temporal and spatial diversity patterns of Palaeozoic tetrapods.
+
+Along the way, you will meet many functions used in a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.
+
+To help cement your knowledge, there are multiple exercises throughout this tutorial for you to work through.
+
+::: {.callout-note}
+## How exercises work
+
+- **Questions:** work out your answer in R first, then click the "Answers" box beneath the questions to check it.
+- **Hints and solutions:** click the boxes labelled "Hint" or "Solution" to reveal them, but do attempt the tasks yourself first!
+- **Your turn:** code chunks marked `___` are incomplete. Replace each `___` before running them locally.
+:::
+
+## Introduction
+
+The name **Tetrapoda** stems from the Ancient Greek words for 'four' and 'feet'. It is a clade which originated when chordates first evolved limbs and developed the ability to walk, gradually transitioning from aquatic to terrestrial environments. All terrestrial four-limbed animals are members of this clade, including amphibians, reptiles, and mammals. This major evolutionary transition has received a lot of attention, in part because this clade represents our ancestors.
+
+The fossil record of early tetrapods is considered relatively sparse, meaning that we do not have a clear picture of the timing and order of the acquisition of the different adaptations needed to thrive on land. But just how sparse is the record, and what does it indicate about how diverse the earliest tetrapods were? Here, we will address the question "**how did tetrapod diversity develop over the Palaeozoic?**" by quantifying and comparing temporal and spatial diversity patterns.
+
+Let's start by installing and loading the **palaeoverse** R package:
 
 ```{r}
-#| label: data-tetrapods
+#| label: load-palaeoverse
+#| eval: true
+#| output: false
+
+# Install palaeoverse
+install.packages("palaeoverse", repos = "https://cloud.r-project.org")
+# Load palaeoverse
+library(palaeoverse)
+```
+
+## The `tetrapods` dataset
+
+In this tutorial, we will be using `tetrapods` for our analyses, an occurrence database of early tetrapods (*n* = `r nrow(palaeoverse::tetrapods)`) drawn from the [Paleobiology Database](https://paleobiodb.org/#/).
+
+::: {.callout-note}
+## Built-in datasets
+
+Recall from the [introduction](introduction.qmd) that functions in **palaeoverse** are designed around the assumption that your data are stored in an occurrence `data.frame`, which is the expected input for almost all functions. The package includes two example occurrence datasets from different data sources: `tetrapods` and `reefs`.
+:::
+
+Load the `tetrapods` dataset:
+
+```{r}
+#| label: load-tetrapods
 #| eval: true
 
-# Load library
-library(palaeoverse)
-# Load data
+# Load built-in dataset
 data(tetrapods)
-data(reefs)
 ```
+
 
 ::: {.callout-warning}
 ## Exercise: Get to know `tetrapods`
