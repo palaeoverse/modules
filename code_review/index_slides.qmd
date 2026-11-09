@@ -26,3 +26,228 @@ editor:
   markdown:
     wrap: 72
 ---
+
+## Learning objectives
+
+<br>
+
+- Understand what code review is
+- Self-review your code
+- Review others' code and give clear feedback
+- Use GitHub's review features
+
+## Why review code?
+
+<br>
+
+- We read more code than we write
+- AI-generated code needs checking
+- Reviewing teaches new methods and functions
+
+# How to review code?
+
+## Objectives of a review
+
+<br>
+
+1. Does the code do what we expect?
+1. Can we find mistakes?
+1. Is it maintainable?
+
+## Questions to ask
+
+<br>
+
+- What does this code do?
+- What are the inputs and outputs?
+- What could go wrong?
+- Are the assumptions handled?
+
+## Who is responsible for what?
+
+<br>
+
+- **Author**: clear names, docs, and comments
+- **Reviewer**: a fresh point of view
+- It is fine to say "I can't review this"
+
+## Exercise 1
+
+::: {.callout-caution title="Exercise"}
+What is likely wrong?
+
+```{r}
+library(palaeoverse)
+
+x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
+y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")]
+out <- merge(x, y, by = "collection_no")
+out[["collection_name"]]
+```
+:::
+
+. . .
+
+::: {.callout-tip title="Solution"}
+`out[["collection_name"]]` is `NULL`: the columns are `collection_name.x` and `.y`.
+
+```diff
+- out <- merge(x, y, by = "collection_no")
++ out <- merge(x, y, by = c("collection_no", "collection_name"))
+```
+:::
+
+## Exercise 2
+
+::: {.callout-caution title="Exercise"}
+What could be improved?
+
+```{r}
+x <- head(tetrapods$max_ma)
+x_updated <- c()
+
+for (i in seq_along(x)) {
+  if (x[i] > 270) {
+    x_updated[i] <- x[i] * 0.9
+  } else {
+    x_updated[i] <- x[i]
+  }
+}
+```
+:::
+
+. . .
+
+::: {.callout-tip title="Solution"}
+Prefer vectorised code to `for` loops:
+
+```{r}
+x_updated <- ifelse(x > 270, x * 0.9, x)
+```
+:::
+
+## Exercise 3
+
+::: {.callout-caution title="Exercise"}
+What could go wrong?
+
+```{r}
+x <- head(tetrapods$min_ma, 3)
+idx_to_remove <- x[x < 0]
+x[-idx_to_remove]
+```
+:::
+
+. . .
+
+::: {.callout-tip title="Solution"}
+No negative values: `idx_to_remove` is empty, so `x[-idx_to_remove]` returns `numeric(0)`.
+
+```{r}
+if (length(idx_to_remove) > 0) {
+  x[-idx_to_remove]
+}
+```
+:::
+
+# Where to review code?
+
+## Use Git and GitHub
+
+<br>
+
+- Email and chat lose information
+- Pull requests keep feedback with the code
+- See our Git and GitHub module
+
+. . .
+
+**Demo time!**
+
+## Reviewing a PR on GitHub
+
+<br>
+
+1. Open the tab "Files changed"
+1. Click the blue cross to comment on a line
+1. Use "Add a suggestion" for code changes
+1. "Submit review": approve, comment, or request changes
+
+# Self-reviewing your code
+
+## Before asking for a review
+
+<br>
+
+- Read your code as a newcomer would
+- Make sure tests or data checks pass
+- One PR per analysis, feature, or fix
+
+# Review process
+
+## Reviewer side
+
+<br>
+
+- Critique the code, not the author
+- Explain why you suggest a change
+- Add positive comments too
+
+## Phrasing comments
+
+<br>
+
+- Bad: "You shouldn't use a for loop, this is obviously slow."
+- Better: "Can we use a vectorised function instead? It is often faster."
+
+## Author side
+
+<br>
+
+- Describe the goal of the PR briefly
+- Address every comment, politely and with arguments
+
+## Discuss upfront
+
+<br>
+
+- Who resolves comments?
+- Who pushes to the branch?
+- What AI usage is acceptable?
+
+# Checklist
+
+## For authors
+
+<br>
+
+- One type of change per PR?
+- Reviewed, tested, and documented?
+- Automated checks pass?
+- Clear PR description with linked issues?
+
+## For reviewers
+
+<br>
+
+- Do the changes match the PR description?
+- Documented and tested?
+- Anything to move to a separate PR?
+- Changelog updated if relevant?
+
+# Conclusion
+
+## Summary
+
+<br>
+
+- Review critically, communicate kindly
+- Self-review before requesting a review
+- Use GitHub's review tools
+
+## Further reading
+
+<br>
+
+- [Tidyverse code review principles](https://code-review.tidyverse.org)
+- [Google code review principles](https://google.github.io/eng-practices/review/reviewer/comments.html)
