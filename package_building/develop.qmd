@@ -218,3 +218,85 @@ Tools to check reverse dependencies will install the latest version of our packa
 :::
 
 Note that if we eventually publish our package on CRAN (cf. next section), then the CRAN team will automatically run reverse dependency checks when we submit a new version. Failures in reverse dependencies will only be tolerated if we have notified maintainers in advance.
+
+## More documentation
+
+So far, our documentation provides indications on what a specific function does and how to use it. A package can consist of a collection of unrelated functions, in which case this kind of documentation might be sufficient. 
+
+However, a package can also be designed so that functions play particularly well together. In this case, we would like to provide more general documentation that describes the optimal workflow when using this package. In addition to documentation in the `man` folder, we can also store long-form documentation in the `vignettes` folder. A vignette 
+
+As before, we can use `usethis` to create a vignette and generate the surrounding infrastructure:
+
+```r
+> usethis::use_vignette("my_vignette")
+✔ Adding knitr to Suggests field in DESCRIPTION.
+✔ Adding "inst/doc" to .gitignore.
+✔ Adding rmarkdown to Suggests field in DESCRIPTION.
+✔ Adding "knitr" to VignetteBuilder.
+✔ Creating vignettes/.
+✔ Adding "*.html" and "*.R" to vignettes/.gitignore.
+✔ Writing vignettes/my_vignette.Rmd.
+☐ Modify vignettes/my_vignette.Rmd.
+```
+
+This creates a skeleton for our vignette:
+
+````
+---
+title: "my_vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(my.pkg)
+```
+````
+
+This is an R Markdown document, which is why `usethis` automatically added the packages `knitr` and `rmarkdown` to the `Suggests` section of `DESCRIPTION`. We can now add content to this vignette:
+
+````diff
+---
+- title: "my_vignette"
++ title: "My great vignette"
+output: rmarkdown::html_vignette
+vignette: >
+-  %\VignetteIndexEntry{my_vignette}
++  %\VignetteIndexEntry{My great vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(my.pkg)
+```
+
++ We can get unique values of a vector with `n_unique()`:
++ 
++ ```{r}
++ n_unique(c(1, 2, 3, 1))
++ ```
+````
+
+There are then multiple ways to view this vignette. One of them is to use `rmarkdown::render()` or the "Render" button in RStudio. Another approach is to install the package and to build the vignettes locally with `devtools::install(build_vignettes = TRUE)`. Once this is done, we can browse vignettes of our package with `browseVignettes("my.pkg")`, or view this one specifically with `vignette("my_vignette", package = "my.pkg")`:
+
+![](img/vignette_preview.png)
+
+Finally, you can also build a vignette using `devtools::build_rmd("vignettes/my_vignette.Rmd")`. Note that this will temporarily install the package, so that the code in the vignette always includes the latest changes you may have made locally.
