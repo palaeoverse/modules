@@ -97,31 +97,33 @@ Without running these examples, do you see what is likely wrong or could be impr
 ```{r}
 #| eval: false
 
-x <- data.frame(a = c(1, 2), b = c(1, 2), c = c(3, 3))
-y <- data.frame(a = c(1, 2), b = c(1, 2), d = c(3, 3))
-out <- merge(x, y, by = "a")
-out[["b"]]
+library(palaeoverse)
+
+x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
+y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")]
+out <- merge(x, y, by = "collection_no")
+out[["collection_name"]]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
-`out[["b"]]` returns `NULL` because we have `"b.x"` and `"b.y"` in the output, because we forgot to merge on `"b"` as well:
+`out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output, because we forgot to merge on `"collection_name"` as well:
 
 ```diff
-x <- data.frame(a = c(1, 2), b = c(1, 2), c = c(3, 3))
-y <- data.frame(a = c(1, 2), b = c(1, 2), d = c(3, 3))
-- out <- merge(x, y, by = "a")
-+ out <- merge(x, y, by = c("a", "b"))
-out[["b"]]
+x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
+y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")]
+- out <- merge(x, y, by = "collection_no")
++ out <- merge(x, y, by = c("collection_no", "collection_name"))
+out[["collection_name"]]
 ```
 :::::
 
 ```{r}
 #| eval: false
 
-x <- c(12.5, 80, 45.2, 150, 9.99)
+x <- head(tetrapods$max_ma)
 x_updated <- c()
 
 for (i in seq_along(x)) {
-  if (x[i] > 50) {
+  if (x[i] > 270) {
     x_updated[i] <- x[i] * 0.9
   } else {
     x_updated[i] <- x[i]
@@ -132,15 +134,14 @@ for (i in seq_along(x)) {
 In general, we should prefer vectorised code to `for` loops where possible. In this case, the function `ifelse()` is preferable to using an `if` condition in a loop because it can take the whole vector at once:
 
 ```r
-x_updated <- ifelse(x > 50, x * 0.9, x)
+x_updated <- ifelse(x > 270, x * 0.9, x)
 ```
 :::::
 
 ```{r}
 #| eval: false
 
-set.seed(1234)
-x <- sample(-1:10, 3)
+x <- head(tetrapods$min_ma, 3)
 idx_to_remove <- x[x < 0]
 x[-idx_to_remove]
 ```
@@ -155,8 +156,9 @@ x[-idx_to_remove]
 #| eval: true
 #| echo: false
 
-set.seed(1234)
-x <- sample(-1:10, 3)
+library(palaeoverse)
+
+x <- head(tetrapods$min_ma, 3)
 idx_to_remove <- x[x < 0]
 x[-idx_to_remove]
 ```
