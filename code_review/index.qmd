@@ -176,7 +176,7 @@ Now that we know how to critically review code, we need to be able to communicat
 
 In this section, we assume that you are already familiar with the Git workflow to create and merge branches. We also assume that you have a Github account. The Git and GitHub module provides an introduction to these two tools.
 
-If needed, you can refer to our module on Git and GitHub: \<link\>
+If needed, you can refer to [our module on Git and GitHub](https://palaeoverse.org/modules/pr-preview/pr-21/training/modules-dev/github/index.html).
 
 ::: {.callout-note title="Steps to reproduce the video below" collapse="true"}
 How to use the GitHub interface to review PRs?
@@ -190,7 +190,7 @@ How to use the GitHub interface to review PRs?
 - Once you are happy with your comments, you can submit your review.
 :::
 
-![](demo_github_review.webm)
+![](demo_github_review.webm){fig-alt="This video shows the process to write review comments on a pull request opened on GitHub. The steps are detailed in the callout-note above."}
 
 Note that you can pull the branch locally to directly try it and explore more before writing your review. However, depending on the amount and on the complexity of changes, reviewing on GitHub only without actually running code is completely fine.
 
@@ -214,11 +214,12 @@ When the reviewer disagrees with the approach taken by the author in a part of t
 
 For example:
 
-- Bad: "You shouldn’t use a for loop here, this is very slow."
-  - Uses "you", so the author may feel directly attacked.
+- Bad: "You shouldn’t use a for loop here, this is obviously very slow."
+  - Diminishes the author by using "obviously"
   - Doesn’t suggest a solution.
 
-- Better: "Can this for loop be replaced by a vectorised function? Vectorised code is often much faster than for loops."
+- Better: "Can we use a vectorised function instead? This is often much faster than for loops."
+  - Uses "we" to emphasise team work
   - Gives the opportunity to the author to explain why they wrote the code as they did (maybe they made a mistake, maybe not).
   - Gives a potential alternative (but the exploration still needs to be done by the author)
 
