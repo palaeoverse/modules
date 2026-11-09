@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -395,25 +395,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>An R package is a way to convert a collection of functions into a well-organised, documented, and ideally well-tested piece of software that other people can easily install and use. A lot of the work goes into the creation of functions (for which we have <a href="https://palaeoverse.org/modules/pr-preview/pr-3/training/modules-dev/writing_functions/index.html">a module</a>!).</p>
-<p>This module is will show you the multiple steps of R package development, from having a single standalone function, to creating, documenting, testing, and sharing a package.</p>
-<p>It is easy to expand on many of these aspects, and we will cover the most important ones, but entire books are written on package (and more generally, on software) development. This module is inspired from the <a href="https://r-pkgs.org/">“R Packages” book</a>, and we recommend exploring this book more if you want to dig deeper on the topic on general, or on specific aspects only.</p>
-<p>This module will cover three parts:</p>
+<p>This module will show you the multiple steps of R package development, from having a single standalone function, to creating, documenting, testing, and sharing a package.</p>
+<p>It is easy to expand on many of these aspects, and we will cover the most important ones, but entire books are written on package development (and on software development in general). Therefore, we will purposely skip or not explore in depth some aspects of package development. This module is inspired by the <a href="https://r-pkgs.org/">“R Packages” book</a>, and we recommend exploring this book more if you want to dig deeper on the topic on general, or on specific aspects only.</p>
+<p>This module is divided in five parts:</p>
 <ol type="1">
-<li><p><strong>Create a package</strong>: implement, document, export, and test functions</p></li>
-<li><p><strong>Share a package</strong>: put your package on Github, CRAN, make a website</p></li>
-<li><p><strong>Maintain a package</strong>: fix bugs, use Continuous Integration (CI)</p></li>
+<li><p><strong>Create a package</strong>: how to create the minimal structure of an R package</p></li>
+<li><p><strong>Test a package</strong>: how to build a test suite.</p></li>
+<li><p><strong>Develop a package</strong>: some good practices and considerations to keep in mind when developing an R package</p></li>
+<li><p><strong>Share a package</strong>: how to make your package installable by anyone</p></li>
+<li><p><strong>Use continuous integration</strong>: how to use GitHub or other platforms to check your package on every change</p></li>
 </ol>
 <p>Before we start, we recommend installing these three packages:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="columns center">
 <div class="column" style="width:33%;">
-<p><img src="img/devtools.svg" height="150"> <br> <code>devtools</code></p>
+<p><img src="img/devtools.svg" height="150"></p>
 </div><div class="column" style="width:33%;">
-<p><img src="img/usethis.png" height="150"> <br> <code>usethis</code></p>
+<p><img src="img/usethis.png" height="150"></p>
 </div><div class="column" style="width:33%;">
-<p><img src="img/testthat.png" height="150"> <br> <code>testthat</code></p>
+<p><img src="img/testthat.png" height="150"></p>
 </div>
 </div>
 
