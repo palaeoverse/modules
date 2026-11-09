@@ -94,7 +94,14 @@ res <- sort_by(tmp2, ~ am)
 Run all calls at once:
 
 ```{r}
-res <- sort_by(subset(head(mtcars, 10), cyl >= 6), ~ am)
+#| code-line-numbers: "3|2-5|"
+res <- sort_by(
+  subset(
+    head(mtcars, 10),
+    cyl >= 6
+  ),
+  ~ am
+)
 ```
 
 . . .
@@ -115,7 +122,7 @@ No intermediate objects...
 
 <br>
 
-The pipe passes the output of the left-hand side to the right-hand side:
+The pipe passes the output of the left-hand side to the next call:
 
 ```{r}
 res <- head(mtcars, 10) |>
@@ -158,34 +165,9 @@ head(mtcars, 10) |>
   sort_by(~ am) -> res
 ```
 
-## A function call is required
-
-<br>
-
-The right-hand side must be a function call:
-
-<br>
-
-```{r}
-#| eval: true
-
-1:3 |> mean()
-```
-
-. . .
-
-<br>
-
-```{r}
-#| eval: true
-#| error: true
-
-1:3 |> mean
-```
-
 # Using `_`
 
-## Input not in first position
+## Piping to non-first arguments
 
 <br>
 
@@ -237,8 +219,6 @@ mtcars |> _$drat |> mean()
 
 ## Restrictions of `_`
 
-<br>
-
 Available since R 4.2 (2022).
 
 . . .
@@ -269,11 +249,29 @@ mtcars$drat |> cor(x = _, y = _)
 
 # Anonymous functions
 
+## Named functions
+
+<br>
+
+Named functions are defined first and can be used multiple times:
+
+<br>
+
+```{r}
+my_function <- function(x) {
+  (x - mean(x)) / sd(x)
+}
+
+lapply(my_list, my_function)
+
+my_function(1:3)
+```
+
 ## Anonymous functions
 
 <br>
 
-A function created on the fly, without a name:
+Anonymous functions are created on the fly and can only be used once:
 
 ```{r}
 lapply(my_list, function(x) {
@@ -313,4 +311,4 @@ For simple cases, both behave the same.
 
 <br>
 
-We recommend `|>`: always available, no extra package.
+We recommend `|>` since it is always available, and doesn't require an extra package.
