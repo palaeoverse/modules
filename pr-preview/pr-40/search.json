@@ -231,6 +231,139 @@
     "text": "Saving plots\n\nThe last big thing you’ll need to know about plotting is how to save your plots. ggplot2 comes with a nifty ggsave() function which you can use to save your plots in a number of different formats. Here we’ll save our most recent combined plot as both a PDF and a JPEG. The former is a vector format, meaning all of the elements of the figure as geometric shapes, and, because of this, none of the data is lost (aka “lossless”). The latter is a raster format, meaning the figure is converted to a 2-D array of colored pixels of a desired size, and because of this, some of the data is lost in the process (aka “lossy”). This results in the pixellation that you see when you zoom in on a JPEG. ggsave() detects what format you want based on the file extension, so we just need to specify the file location and the object to be saved (and optionally the dimensions of the output file). It’s usually a good idea to keep all figures in their own folder (which was already created for you).\n\n\ngg &lt;- (g1 | g2) / g3\nggsave(\"figures/penguins_1.pdf\", gg, height = 10, width = 10)\nggsave(\"figures/penguins_1.jpg\", gg, height = 10, width = 10)"
   },
   {
+    "objectID": "training/modules-dev/code_review/index-slides.html#learning-objectives",
+    "href": "training/modules-dev/code_review/index-slides.html#learning-objectives",
+    "title": "Code review",
+    "section": "Learning objectives",
+    "text": "Learning objectives\n\n\nUnderstand what code review is\nSelf-review your code\nReview others’ code and give clear feedback\nUse GitHub’s review features"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#why-review-code",
+    "href": "training/modules-dev/code_review/index-slides.html#why-review-code",
+    "title": "Code review",
+    "section": "Why review code?",
+    "text": "Why review code?\n\n\nWe read more code than we write\nAI-generated code needs checking\nReviewing teaches new methods and functions"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#objectives-of-a-review",
+    "href": "training/modules-dev/code_review/index-slides.html#objectives-of-a-review",
+    "title": "Code review",
+    "section": "Objectives of a review",
+    "text": "Objectives of a review\n\n\nDoes the code do what we expect?\nCan we find mistakes?\nIs it maintainable?"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#questions-to-ask",
+    "href": "training/modules-dev/code_review/index-slides.html#questions-to-ask",
+    "title": "Code review",
+    "section": "Questions to ask",
+    "text": "Questions to ask\n\n\nWhat does this code do?\nWhat are the inputs and outputs?\nWhat could go wrong?\nAre the assumptions handled?"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#who-is-responsible-for-what",
+    "href": "training/modules-dev/code_review/index-slides.html#who-is-responsible-for-what",
+    "title": "Code review",
+    "section": "Who is responsible for what?",
+    "text": "Who is responsible for what?\n\n\nAuthor: clear names, docs, and comments\nReviewer: a fresh point of view\nIt is fine to say “I can’t review this”"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#exercise-1",
+    "href": "training/modules-dev/code_review/index-slides.html#exercise-1",
+    "title": "Code review",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\n\n\n\n\n\nExercise\n\n\nWhat is likely wrong?\n\nlibrary(palaeoverse)\n\nx &lt;- tetrapods[1:3, c(\"collection_no\", \"collection_name\", \"lng\")]\ny &lt;- tetrapods[1:3, c(\"collection_no\", \"collection_name\", \"formation\")]\nout &lt;- merge(x, y, by = \"collection_no\")\nout[[\"collection_name\"]]\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\nout[[\"collection_name\"]] is NULL: the columns are collection_name.x and .y.\n- out &lt;- merge(x, y, by = \"collection_no\")\n+ out &lt;- merge(x, y, by = c(\"collection_no\", \"collection_name\"))"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#exercise-2",
+    "href": "training/modules-dev/code_review/index-slides.html#exercise-2",
+    "title": "Code review",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\n\n\n\n\n\nExercise\n\n\nWhat could be improved?\n\nx &lt;- head(tetrapods$max_ma)\nx_updated &lt;- c()\n\nfor (i in seq_along(x)) {\n  if (x[i] &gt; 270) {\n    x_updated[i] &lt;- x[i] * 0.9\n  } else {\n    x_updated[i] &lt;- x[i]\n  }\n}\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\nPrefer vectorised code to for loops:\n\nx_updated &lt;- ifelse(x &gt; 270, x * 0.9, x)"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#exercise-3",
+    "href": "training/modules-dev/code_review/index-slides.html#exercise-3",
+    "title": "Code review",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\n\n\n\n\n\nExercise\n\n\nWhat could go wrong?\n\nx &lt;- head(tetrapods$min_ma, 3)\nidx_to_remove &lt;- x[x &lt; 0]\nx[-idx_to_remove]\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\nNo negative values: idx_to_remove is empty, so x[-idx_to_remove] returns numeric(0).\n\nif (length(idx_to_remove) &gt; 0) {\n  x[-idx_to_remove]\n}"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#use-git-and-github",
+    "href": "training/modules-dev/code_review/index-slides.html#use-git-and-github",
+    "title": "Code review",
+    "section": "Use Git and GitHub",
+    "text": "Use Git and GitHub\n\n\nEmail and chat lose information\nPull requests keep feedback with the code\nSee our Git and GitHub module\n\n\nDemo time!"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#reviewing-a-pr-on-github",
+    "href": "training/modules-dev/code_review/index-slides.html#reviewing-a-pr-on-github",
+    "title": "Code review",
+    "section": "Reviewing a PR on GitHub",
+    "text": "Reviewing a PR on GitHub\n\n\nOpen the tab “Files changed”\nClick the blue cross to comment on a line\nUse “Add a suggestion” for code changes\n“Submit review”: approve, comment, or request changes"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#before-asking-for-a-review",
+    "href": "training/modules-dev/code_review/index-slides.html#before-asking-for-a-review",
+    "title": "Code review",
+    "section": "Before asking for a review",
+    "text": "Before asking for a review\n\n\nRead your code as a newcomer would\nMake sure tests or data checks pass\nOne PR per analysis, feature, or fix"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#reviewer-side",
+    "href": "training/modules-dev/code_review/index-slides.html#reviewer-side",
+    "title": "Code review",
+    "section": "Reviewer side",
+    "text": "Reviewer side\n\n\nCritique the code, not the author\nExplain why you suggest a change\nAdd positive comments too"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#phrasing-comments",
+    "href": "training/modules-dev/code_review/index-slides.html#phrasing-comments",
+    "title": "Code review",
+    "section": "Phrasing comments",
+    "text": "Phrasing comments\n\n\nBad: “You shouldn’t use a for loop, this is obviously slow.”\nBetter: “Can we use a vectorised function instead? It is often faster.”"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#author-side",
+    "href": "training/modules-dev/code_review/index-slides.html#author-side",
+    "title": "Code review",
+    "section": "Author side",
+    "text": "Author side\n\n\nDescribe the goal of the PR briefly\nAddress every comment, politely and with arguments"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#discuss-upfront",
+    "href": "training/modules-dev/code_review/index-slides.html#discuss-upfront",
+    "title": "Code review",
+    "section": "Discuss upfront",
+    "text": "Discuss upfront\n\n\nWho resolves comments?\nWho pushes to the branch?\nWhat AI usage is acceptable?"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#for-authors",
+    "href": "training/modules-dev/code_review/index-slides.html#for-authors",
+    "title": "Code review",
+    "section": "For authors",
+    "text": "For authors\n\n\nOne type of change per PR?\nReviewed, tested, and documented?\nAutomated checks pass?\nClear PR description with linked issues?"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#for-reviewers",
+    "href": "training/modules-dev/code_review/index-slides.html#for-reviewers",
+    "title": "Code review",
+    "section": "For reviewers",
+    "text": "For reviewers\n\n\nDo the changes match the PR description?\nDocumented and tested?\nAnything to move to a separate PR?\nChangelog updated if relevant?"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#summary",
+    "href": "training/modules-dev/code_review/index-slides.html#summary",
+    "title": "Code review",
+    "section": "Summary",
+    "text": "Summary\n\n\nReview critically, communicate kindly\nSelf-review before requesting a review\nUse GitHub’s review tools"
+  },
+  {
+    "objectID": "training/modules-dev/code_review/index-slides.html#further-reading",
+    "href": "training/modules-dev/code_review/index-slides.html#further-reading",
+    "title": "Code review",
+    "section": "Further reading",
+    "text": "Further reading\n\n\nTidyverse code review principles\nGoogle code review principles"
+  },
+  {
     "objectID": "training/modules/ggplot/index.html",
     "href": "training/modules/ggplot/index.html",
     "title": "Plotting in R with ggplot2",
