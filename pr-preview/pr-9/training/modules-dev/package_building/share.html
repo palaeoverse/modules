@@ -83,9 +83,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-bab30bc1bf989e6348fc405cf3b174dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-ca3725126d5a1da9daf9a30d8658d97b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-9d071a2d1b9528f8f459712b4dfc6d00.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -380,19 +380,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/share.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Packages used in this module
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"covr"</span>, <span class="st">"pkgcheck"</span>, <span class="st">"sloop"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
 <p>Having a package is nice but it’s much less useful if you keep it for you. There are two main, non-exclusive ways to share your package to the world:</p>
 <ul>
 <li>put it on some version control system (e.g.&nbsp;GitHub, Gitlab, Codeberg);</li>
@@ -404,8 +391,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-anchor-id="version-control-system">Version control system</h3>
 <p>In this section, we assume you are already familiar with Git and GitHub. If this is not the case, then you might be interested in our module on these tools: &lt;link&gt;.</p>
 <p>Supposing we put our package <code>my.pkg</code> on GitHub, R users can now install it with the following alternatives:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -418,8 +405,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>GitHub is the most famous platform to use Git features and store code. However, you could also use other platforms, such as Gitlab, Codeberg, or Forgejo.</p>
 <p>Using these platforms will not affect the ability to install your package. For instance, if your host your package on Codeberg, then it can be installed with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span>(<span class="st">"https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"git::https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span>(<span class="st">"https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"git::https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -463,7 +450,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-04
+ date     2026-11-09
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -524,8 +511,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    memoise        2.0.1   2021-11-26 [1] RSPM
    mime           0.13    2025-03-17 [1] RSPM
    openssl        2.5.0   2026-11-02 [1] RSPM
-   otel           0.2.0   2025-08-29 [1] RSPM
-   pak            0.11.1  2026-07-22 [1] RSPM (R 4.6.0)
+   otel           0.3.0   2026-11-07 [1] RSPM
+   pak            0.11.2  2026-11-07 [1] RSPM (R 4.6.0)
    pillar         1.11.1  2025-09-17 [1] RSPM
    pkgbuild       1.4.8   2025-05-26 [1] RSPM
    pkgcheck       0.3.4   2026-10-13 [1] RSPM
