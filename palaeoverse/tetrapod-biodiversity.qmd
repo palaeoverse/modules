@@ -104,99 +104,42 @@ Load the `tetrapods` dataset:
 data(tetrapods)
 ```
 
+Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let's inspect our data:
+
+```{r}
+#| label: structure-tetrapods
+#| output-fold: true
+#| output-summary: "Output"
+
+# View first six rows
+head(tetrapods)
+# Inspect dataset structure
+str(tetrapods)
+```
+
+Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g. source) are also available via the usual documentation call:
+
+```{r}
+#| label: reefs-tetrapods
+
+# Get dataset documentation
+help(tetrapods)
+```
 
 ::: {.callout-warning}
 ## Exercise: Get to know `tetrapods`
 
 - How many occurrences (observations/rows) are there?
-- How many variables (columns) are there? What are they?
-- What is the oldest occurrence?
-- Do you expect any missing coordinates?
-- What is the overall structure?
+- How many variables (columns) are there?
+- How old is the oldest tetrapod occurrence?
+- Are any of the occurrences missing coordinates?
 :::
 
 ::: {.callout-tip collapse="true"}
-## Solution
+## Exercise 1: Answers
 
-```{r}
-#| label: data-tetrapods-collapse
-#| eval: true
-
-# Number of rows
-nrow(tetrapods)
-# Number of columns
-ncol(tetrapods)
-# Oldest occurrence
-max(tetrapods$max_ma, na.rm = TRUE)
-# Number of occurrences without latitude
-sum(is.na(tetrapods$lat))
-# Inspect overall structure
-str(tetrapods)
-```
-:::
-
-Now, let's try with the `reefs` dataset:
-
-::: {.callout-warning}
-## Exercise: Get to know `reefs`
-
-- How many occurrences (observations/rows) are there?
-- How many variables (columns) are there? What are they?
-- What is the oldest occurrence?
-- Do you expect any missing coordinates?
-- What is the overall structure?
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-```{r}
-#| label: data-reefs
-#| eval: true
-
-# Number of rows
-nrow(reefs)
-# Number of columns
-ncol(reefs)
-# Oldest occurrence
-max(reefs$max_ma, na.rm = TRUE)
-# Number of occurrences without latitude
-sum(is.na(reefs$lat))
-# Inspect overall structure
-str(reefs)
-```
-
-Note that `reefs` does not contain any columns related to taxonomy (they are a whole ecosystem after all). This means any functions requiring taxonomic data cannot (rightly) be used with `reefs`.
-:::
-
-How do these occurrence datasets differ?
-
-::: {.callout-warning}
-## How do `tetrapods` and `reefs` compare?
-
-- Which columns do they share?
-- Which columns are specific to each?
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-Which column names match?
-
-```{r}
-#| label: intersect-data
-#| eval: true
-
-# Which column names match?
-intersect(names(tetrapods), names(reefs))
-```
-
-Which column names are different?
-
-```{r}
-#| label: setdiff-data
-#| eval: true
-
-setdiff(names(tetrapods), names(reefs))
-```
+1. `nrow(tetrapods)`: `r nrow(tetrapods)`
+2. `ncol(tetrapods)`: `r ncol(tetrapods)`
+3. `max(tetrapods$max_ma, na.rm = TRUE)`: `r max(tetrapods$max_ma, na.rm = TRUE)`
+4. `sum(is.na(tetrapods$lat))`: `r sum(is.na(tetrapods$lat))`
 :::
