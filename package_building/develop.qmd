@@ -241,7 +241,7 @@ As before, we can use `usethis` to create a vignette and generate the surroundin
 
 This creates a skeleton for our vignette:
 
-````
+````{filename="vignettes/my_vignette.Rmd"}
 ---
 title: "my_vignette"
 output: rmarkdown::html_vignette
@@ -265,14 +265,12 @@ library(my.pkg)
 
 This is an R Markdown document, which is why `usethis` automatically added the packages `knitr` and `rmarkdown` to the `Suggests` section of `DESCRIPTION`. We can now add content to this vignette:
 
-````diff
+````{filename="vignettes/my_vignette.Rmd"}
 ---
-- title: "my_vignette"
-+ title: "My great vignette"
+title: "My great vignette"
 output: rmarkdown::html_vignette
 vignette: >
--  %\VignetteIndexEntry{my_vignette}
-+  %\VignetteIndexEntry{My great vignette}
+  %\VignetteIndexEntry{My great vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -288,11 +286,11 @@ knitr::opts_chunk$set(
 library(my.pkg)
 ```
 
-+ We can get unique values of a vector with `n_unique()`:
-+ 
-+ ```{{r}}
-+ n_unique(c(1, 2, 3, 1))
-+ ```
+We can get unique values of a vector with `n_unique()`:
+
+```{{r}}
+n_unique(c(1, 2, 3, 1))
+```
 ````
 
 There are then multiple ways to view this vignette. One of them is to use `rmarkdown::render()` or the "Render" button in RStudio. Another approach is to install the package and to build the vignettes locally with `devtools::install(build_vignettes = TRUE)`. Once this is done, we can browse vignettes of our package with `browseVignettes("my.pkg")`, or view this one specifically with `vignette("my_vignette", package = "my.pkg")`:
