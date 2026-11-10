@@ -3,6 +3,7 @@
 #
 #   - "freeze: auto" must be used, not "freeze: true"
 #   - a "difficulty" field must exist with one of: Beginner, Intermediate, Advanced
+#   - a non-empty "description" field must exist
 #   - the difficulty values must not be used as post tags (categories)
 #
 # It then regenerates the per-module copies of web_and_slides.lua and fails if
@@ -77,6 +78,19 @@ jobs:
                   paste(difficulties, collapse = ", "),
                   deparse(difficulty)
                 )
+              )
+            }
+
+            # description field must exist and not be empty
+            description <- meta$description
+            if (
+              !is.character(description) ||
+                length(description) != 1 ||
+                !nzchar(trimws(description))
+            ) {
+              errors <- c(
+                errors,
+                sprintf("%s: missing or empty required field 'description'", path)
               )
             }
 
