@@ -138,7 +138,7 @@ help(tetrapods)
 Let's now generate some simple summary statistics, to help us understand the scope and scale of the dataset.
 
 ::: {.callout-warning}
-## Exercise: Get to know `tetrapods`
+## Exercise 1: Get to know `tetrapods`
 
 - How many occurrences (observations/rows) are there?
 - How old is the oldest tetrapod occurrence?
@@ -536,7 +536,92 @@ There are many things we could try, but here are some suggestions:
 
 ## Quantifying spatial patterns
 
+Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the `palaeoverse::tax_range_space()` function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we’ll use the method `con` which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space).
 
+We can use this in combination with `group_apply` to calculate the convex hull size for each genus in each time interval:
+
+```{r}
+#| label: convex-hulls
+#| output-fold: true
+#| output-summary: "Output"
+#| 
+# First, remove any occurrences without a genus
+space_tetrapods <- subset(mid_tetrapods, !is.na(genus))
+# Find temporal range of all genera
+space_tetrapods <- group_apply(occdf = space_tetrapods,
+                               group = c("bin_midpoint"),
+                               fun = tax_range_space,
+                               name = "genus",
+                               lng = "p_lng",
+                               lat = "p_lat",
+                               method = "con")
+# Have a look at the dataset
+head(space_tetrapods)
+```
+
+As you can see, the combination of `group_apply` and `tax_range_space` produces a dataset with the area of geographic range for each taxon in kilometers squared for each time interval.
+
+::: {.callout-caution}
+## Exercise 6: Area Zero
+
+What does it mean for a convex hull to have an area of `0`?
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 6: Answer
+
+A value of `0` means the convex hull has no volume, because it consists of a single point - i.e. there is only a single occurrence of that genus in that time bin.
+:::
+
+From this information we can now plot how the average range size of tetrapods changed throughout the Carboniferous and Permian:
+
+```{r}
+#| label: convex-hulls-plot
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Find the average geographic range size for each time interval
+space_tetrapods_mean <- group_apply(space_tetrapods, "bin_midpoint", function(df) mean(df$area))
+colnames(space_tetrapods_mean) <- c("mean_area", "bin_midpoint")
+# Create a plot of average range size through time
+plot(space_tetrapods_mean$bin_midpoint, space_tetrapods_mean$mean_area, # add the points
+     axes = FALSE,
+     xlim = rev(range(as.numeric(space_tetrapods_mean$bin_midpoint), na.rm = TRUE)), # reverse the x-axis
+     xlab = " ", ylab = expression("Average range size of tetrapod genera (km"^2~")"), # axes labels
+     pch = 19, col = "#0e826f") # point style and colour
+box()
+axis(2) # add a normal axis to the left side
+axis_geo(side = 1, intervals = list("epochs", "periods"))
+title(xlab = "Time (Ma)", line = 4)
+```
+
+From this plot it seems like the average geographic range size of tetrapods increased during the Permian. However, we first need to be sure we’re not picking up on another pattern. Remember how we calculated the number of unique geographic cells in each time interval earlier? This provides a measure of the spatial spread of the fossil record. It might be that we’re not picking up on an increased range size, but just a larger geographic spread of fossil bearing rocks within the Permian. To see if this is the case, we can run a simple correlation test between the average geographic range size of tetrapods and the number of unique grid cells in each time interval:
+
+```{r}
+#| label: convex-hulls-corr
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Run a correlation test between mean range size and the spatial spread of cells through time
+cor.test(log10(space_tetrapods_mean$mean_area), log10(spat.cov$nrow), method = "spearman")
+```
+
+The high rho value and a p-value less than our cut off for significance (0.05) indicate a strong and statistically significant correlation between average geographic range size and the spatial spread of data. Seems like this work is far from over…
+
+…but we’ll leave the rest to you!
+
+## Wrap-up
+
+Hopefully this tutorial has shown you some of the potential uses of **palaeoverse** functions and helped provide a workflow for your own analyses.
+
+In this tutorial, you have:
+
+- explored an occurrence dataset and run functions across groups with `group_apply()`
+- linked interval names to a common time scale with `look_up()`
+- binned occurrences by time with `time_bins()` and `bin_time()`
+- estimated palaeocoordinates with `palaeorotate()`, and binned them by space with `bin_space()`
+- determined unique occurrences using `tax_unique()`
+- quantified convex hull volumes using `tax_range_space()`
 
 ## References
 
