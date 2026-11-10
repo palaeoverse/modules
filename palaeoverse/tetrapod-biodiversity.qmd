@@ -418,8 +418,123 @@ We can see the additional occurrences retained at the end of our output table.
 #| output-summary: "Output"
 #|
 # View extra occurrence
-tet_genera[718, ]
+tet_genera[718:719, ]
 ```
+
+Now that we've seen what this function can do, let's apply it in a way that lets us check for unique genera in each collection (= locality) using `palaeoverse::group_apply()`:
+
+```{r}
+#| label: tax-unique-colls
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Use group_apply along with tax_unique:
+coll_genera <- group_apply(occdf = mid_tetrapods,
+                           group = c("collection_no"),
+                           fun = tax_unique,
+                           genus = "genus",
+                           family = "family",
+                           order = "order",
+                           class = "class",
+                           resolution = "genus")
+
+# See structure of the new dataframe:
+head(coll_genera)
+```
+
+In addition to the columns we had before, we have now gained a `collection_no` column. We are now able to count the unique number of genera per collection.
+
+```{r}
+#| label: colls-count
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Get the names of unique genera per collection
+unique_genera <- unique(coll_genera[, c("unique_name", "collection_no")])
+
+# Calculate the number of unique genera per collection
+coll_taxa <- group_apply(unique_genera, group = "collection_no", fun = nrow)
+
+# Rename column names:
+colnames(coll_taxa) <- c("n_taxa", "collection_no")
+
+# Take a quick look at the new dataframe
+head(coll_taxa)
+```
+
+In order to plot alpha diversity through time, we will also need to add interval age data to this table.
+
+```{r}
+#| label: colls-count-ages
+#| output-fold: true
+#| output-summary: "Output"
+#| 
+# Take the columns pertaining to collections and their ages in millions of years:
+coll_info <- mid_tetrapods[, c("collection_no", "max_ma", "interval_mid_ma", "min_ma")]
+
+# Remove duplicated collections based on the collection number (column 1)
+coll_info <- coll_info[!duplicated(coll_info[1]),]
+
+# Combine this dataframe with the dataframe from above
+alpha_data <- merge(coll_info, coll_taxa, by = "collection_no")
+
+# Take a look:
+head(alpha_data)
+```
+
+Great! Now we can plot our alpha diversity through time. Let's start with a simple scatterplot:
+
+```{r}
+#| label: alpha-scatter
+#| output-fold: true
+#| output-summary: "Output"
+#| 
+# Make a plot for alpha diversity in the Carboniferous and Permian
+plot(alpha_data$interval_mid_ma, alpha_data$n_taxa, # add the points
+     xlim = rev(range(alpha_data$interval_mid_ma, na.rm = TRUE)), # reverse the x-axis
+     xlab="Time (Ma)", ylab="No. taxa", # axes labels
+     pch = 19, col = "#0e826f") # point style and colour
+```
+
+It's a good start, but we would like to know which data points belong in which stages. We can use `palaeoverse::axis_geo()` to add a geological timescale to our plot.
+
+```{r}
+#| label: alpha-scatter
+#| output-fold: true
+#| output-summary: "Output"
+#| 
+# Set margins
+par(mar = c(7.1, 4.1, 4.1, 2.1)) # expand at bottom if adding more interval categories
+# Make the final alpha diversity plot
+plot(alpha_data$interval_mid_ma, alpha_data$n_taxa, # add the points
+     axes = FALSE,
+     xlim = rev(range(alpha_data$interval_mid_ma, na.rm = TRUE)), # reverse the x-axis
+     xlab = " ", ylab = "No. taxa", # axes labels
+     pch = 19, col = "#0e826f") # point style and colour
+box()
+axis(2) # add a normal axis to the elft side
+axis_geo(side = 1, intervals = list("epochs", "periods"), title = "Time (Ma)")
+```
+
+We can now see an overall increasing trend in maximum tetrapod alpha diversity over the Carboniferous and Permian, with a few extra-diverse outliers.
+
+::: {.callout-caution}
+## Exercise 5: Interrogating alpha diversity
+
+What steps could we take to investigate this trend in alpha diversity further?
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 5: Answer
+
+There are many things we could try, but here are some suggestions:
+- Fit a trend line, to see whether the average alpha richness really increased
+- Identify the overly-diverse (outlier) collections and look into why they were so diverse, do they represent Lagerstätten?
+- Look into the relationship between stage duration and alpha diversity
+- Explore the effect of the lower bound on this distribution - every locality contains at least one tetrapod, what impact does this have on the averages we might want to calculate?
+:::
+
+## Quantifying spatial patterns
 
 
 
