@@ -155,7 +155,7 @@ Let's now generate some simple summary statistics, to help us understand the sco
 4. `sum(is.na(tetrapods$lat))`: `r sum(is.na(tetrapods$lat))`
 :::
 
-## Unifying temporal data
+## Time binning
 
 In order to investigate diversity through time, we want to allocate each of our occurrences to a single time bin. First, we will generate stage-level bins spanning the Carboniferous and Permian, using `palaeoverse::time_bins()`.
 
@@ -236,7 +236,7 @@ sum(is.na(tetrapods$interval_max_ma))
 Now we are ready to allocate our occurrences to our time bins. We will do this using the `palaeoverse::bin_time()` function, with the 'mid' method.
 
 ```{r}
-#| label: time-bin-occs
+#| label: time-bin-occs-error
 #| output-fold: true
 #| output-summary: "Output"
 #|
@@ -307,6 +307,121 @@ table(mid_tetrapods$n_bins) / nrow(mid_tetrapods)
 
 We can see that around 70% of the occurrences can be allocated to a single stage, whereas the remaining 30% span between 2 and 8 geological stages. For this 30%, the `method` that we choose to bin the data becomes very important, as it determines which of these stages the occurrence will be placed within.
 
+## Spatial binning
+
+Remember at the start of the exercise, we saw that every occurrence has a latitude and longitude. However, this corresponds to the modern-day coordinates of the locality in which they were found. If we want to understand spatial patterns in deep time, we need to infer the palaeo-coordinates at which the fossils were deposited.
+
+We can use `palaeoverse::palaeorotate()` to use a global plate model (GPM) to infer how rocks on the Earth's surface have shifted over time due to continental drift. You can find more information about how this works using `help(palaeorotate)`. It's worth noting that different GPMs will produce different results (Buffan et al. 2023), but for now we will go ahead with using the PALEOMAP GPM (Scotese & Wright 2018).
+
+```{r}
+#| label: palaeorotate
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Palaeorotate occurrences
+mid_tetrapods <- palaeorotate(occdf = mid_tetrapods, age = "bin_midpoint",
+                              method = "point", model = "PALEOMAP")
+```
+
+Let's now take a look at our new columns containing the palaeocoordinates.
+
+```{r}
+#| label: check-coords
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# View new columns
+head(mid_tetrapods[, c("p_lng", "p_lat")])
+# Did any of the rotations fail?
+sum(is.na(mid_tetrapods$p_lng))
+```
+
+We can now generate our spatial bins and lace our occurrences into them based on their palaeo-coordinates. Here we will generate and bin into equal-area hexagonal grid cells (based on [Uber's H3 system](https://h3geo.org)).
+
+```{r}
+#| label: hex-cells
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Generate hex cells with diameter around 100km, and bin occurrences
+mid_tetrapods <- bin_space(occdf = mid_tetrapods,
+                           lng = "p_lng",
+                           lat = "p_lat",
+                           spacing = 100)
+# Show the first 6 rows of the new columns added using `bin_space()`.
+head(mid_tetrapods[, c("cell_ID", "cell_centroid_lng", "cell_centroid_lat")])
+```
+
+We can see that each occurrence has been placed into a grid cell, described using a unique ID, and with the centroid of the cell also provided.
+
+```{r}
+#| label: summarise-cells
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Extract unique interval midpoints
+#midpoints <- sort(unique(mid_tetrapods$bin_midpoint))
+
+# Calculate the number of unique cells in each time bin
+unique_cells <- unique(mid_tetrapods[, c("bin_midpoint", "cell_ID")])
+spat.cov <- group_apply(unique_cells, group = "bin_midpoint", fun = nrow)
+```
+
+## Taxonomic wrangling
+
+In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g. genera or species); however, this can result in some useful information being discarded. The tax_unique function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:
+
+- *Albertosaurus sarcophagus*
+- *Ankylosaurus* sp.
+- Ceratopsidae indet.
+- *Ornithominus* sp.
+- *Tyrannosaurus rex*
+
+A filter for species-level identifications would reduce the species richness to just two (*A. sarcophagus* and *T. rex*). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. `palaeoverse::tax_unique()` is designed to deal with such taxonomic data and would retain all five ‘species’ in this example. For further details see `help(tax_unique)`.
+
+This function can be especially helpful when we want to quantify alpha (local) diversity. Let's use this function to investigate the number of unique genera in our dataset.
+
+```{r}
+#| label: tax-unique
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Filter occurrences to unique genera
+tet_genera <- tax_unique(occdf = mid_tetrapods, genus = "genus", family = "family", order = "order", class = "class", resolution = "genus")
+# Get a preview of the output table
+head(tet_genera)
+```
+
+::: {.callout-caution}
+## Exercise 4: Save our cryptic diversity
+
+How many occurrences are retained in the dataset by `tax_unique()`, which would otherwise have been discarded?
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 4: Hint
+
+Remember that the `genus` column contains the genus name for each occurrence in both the original and generated data frames. In our original dataset, each row contains one occurrence, but in the output of `tax_unique()`, each row corresponds to a unique genus, labelled with its `unique_name`.
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 4: Answer
+
+We can find out the number of unique genera in our original dataset using `length(unique(mid_tetrapods$genus))`: `r length(unique(mid_tetrapods$genus))`. The number of unique genera after using `tax_unique` is `length(unique(tet_genera$unique_name))`: `r length(unique(tet_genera$unique_name))`. This shows us that there are two additional unique genera retained when we use `tax_unique`.
+:::
+
+We can see the additional occurrences retained at the end of our output table.
+
+```{r}
+#| label: tax-unique-extra
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# View extra occurrence
+tet_genera[718, ]
+```
+
+
 
 ## References
 
@@ -314,4 +429,8 @@ Buffan, L., Jones, L. A., Domeier, M., Scotese, C. R., Zahirovic, S., & Varela, 
 
 Dunne, E. M., Close, R. A., Button, D. J., Brocklehurst, N., Cashmore, D. D., Lloyd, G. T., & Butler, R. J. (2018). Diversity change during the rise of tetrapods and the impact of the 'Carboniferous rainforest collapse'. *Proceedings B*, 285(1872), 20172730. DOI: [10.1098/rspb.2017.2730](https://doi.org/10.1098/rspb.2017.2730).
 
+Scotese, C. & Wright, N. M. (2018). PALEOMAP Paleodigital Elevation Models (PaleoDEMs) for the Phanerozoic. [PALEOMAP Project](https://www.earthbyte.org/paleodem-resource-scotese-and-wright-2018/).
+
 Uhen, M. D., Allen, B. J., Clapham, M., Cohen, P., Dunne, E. M., Hendy, A., Holroyd, P. A., Hopkins, M., Jardine, P., Kocsis, Á, T., Mannion, P., Novack-Gottshall P., Pimiento, C., & Wagner, P. (2026). Paleobiology Database User Guide Version 2.0. *PaleoBios*, 43(1), 1-54. DOI: [10.5070/P9.62178](https://doi.org/10.5070/P9.62178).
+
+Wright, N., Zahirovic, S., Müller, R. D., & Seton, M. (2013). Towards community-driven paleogeographic reconstructions: integrating open-access paleogeographic and paleobiology data with plate tectonics. *Biogeosciences*, 10(3), 1529--1541. DOI: [10.5194/bg-10-1529-2013](https://doi.org/10.5194/bg-10-1529-2013).
