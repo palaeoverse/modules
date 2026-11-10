@@ -12,7 +12,7 @@
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="Bethany J. Allen">
-  <meta name="dcterms.date" content="2026-11-09">
+  <meta name="dcterms.date" content="2026-11-10">
   <title>Exercise 1: Tracking the diversity of early tetrapods</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -235,7 +235,7 @@ Bethany J. Allen
 </div>
 </div>
 
-  <p class="date">2026-11-09</p>
+  <p class="date">2026-11-10</p>
 </section>
 <section class="slide level2">
 
@@ -276,58 +276,189 @@ Bethany J. Allen
 <h2>Built-in datasets</h2>
 <p>Recall from the <a href="../../../training/modules-dev/palaeoverse/introduction.html">introduction</a> that functions in <strong>palaeoverse</strong> are designed around the assumption that your data are stored in an occurrence <code>data.frame</code>, which is the expected input for almost all functions. The package includes two example occurrence datasets from different data sources: <code>tetrapods</code> and <code>reefs</code>.</p>
 </section>
-<section class="slide level2">
-<h2>The <code>tetrapods</code> dataset</h2>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">The <code>tetrapods</code> dataset</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># Load built-in dataset</span></span>
+<span id="cb2-2" class="hljs-ln-code"><a aria-label="2"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>Load the <code>tetrapods</code> dataset:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># Load built-in dataset</span></span>
-<span id="cb2-2"><a aria-label="2"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </section>
-<section class="slide level2">
-<h2>Exercise: Get to know <code>tetrapods</code></h2>
-<ul>
-<li>How many occurrences (observations/rows) are there?</li>
-<li>How many variables (columns) are there? What are they?</li>
-<li>What is the oldest occurrence?</li>
-<li>Do you expect any missing coordinates?</li>
-<li>What is the overall structure?</li>
-</ul>
-</section>
-<section class="slide level2">
-<h2>The <code>tetrapods</code> dataset</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Solution</strong></p>
-</div>
-<div class="callout-content">
-<div class="fragment">
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">The <code>tetrapods</code> dataset</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Number of rows</span></span>
-<span id="cb3-2"><a aria-label="2"></a><span class="fu">nrow</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5270</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load built-in dataset</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># Number of columns</span></span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">ncol</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># View first six rows</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="fu">head</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 32</code></pre>
+<pre><code>  occurrence_no collection_no                        identified_name
+1        146665         12943     n. gen. Anconastes n. sp. vesperus
+2        147090         13004                     Gorgonopsia indet.
+3        147521         13043 n. gen. Procolophon n. sp. trigoniceps
+4        147523         13044       n. gen. Ophiodeirus n. sp. casei
+5        147563         13046         Broiliellus n. sp. arroyoensis
+6        147564         13048              Broiliellus n. sp. olsoni
+  identified_rank           accepted_name accepted_rank early_interval
+1         species     Anconastes vesperus       species     Missourian
+2        suborder             Gorgonopsia      suborder     Capitanian
+3         species Procolophon trigoniceps       species         Induan
+4         species       Araeoscelis casei       species     Artinskian
+5         species Broiliellus arroyoensis       species      Kungurian
+6         species      Broiliellus olsoni       species       Wolfcamp
+  late_interval max_ma min_ma   phylum        class              order
+1      Gzhelian 305.90  298.9 Chordata Osteichthyes      Temnospondyli
+2          &lt;NA&gt; 265.10  259.9 Chordata Osteichthyes       Cotylosauria
+3     Olenekian 252.17  247.2 Chordata     Reptilia NO_ORDER_SPECIFIED
+4          &lt;NA&gt; 290.10  279.3 Chordata     Reptilia      Araeoscelidia
+5          &lt;NA&gt; 279.30  272.3 Chordata Osteichthyes      Temnospondyli
+6          &lt;NA&gt; 296.40  268.0 Chordata Osteichthyes      Temnospondyli
+           family       genus abund_value  abund_unit        lng       lat
+1    Trematopidae  Anconastes           2   specimens -106.34778  36.30444
+2            &lt;NA&gt;        &lt;NA&gt;           1   specimens   22.00000 -32.36667
+3 Procolophonidae Procolophon          10   specimens   26.50972 -32.10611
+4   Araeoscelidae Araeoscelis           2 individuals  -98.93361  33.61167
+5   Dissorophidae Broiliellus           6   specimens  -99.20000  33.80972
+6   Dissorophidae Broiliellus           2   specimens  -98.14778  33.82639
+                   collection_name cc     formation stratgroup member
+1                  El Cobre Canyon US        Cutler       &lt;NA&gt;   &lt;NA&gt;
+2            Hottentotsrivier Farm ZA Abrahamskraal   Beaufort   &lt;NA&gt;
+3 Donnybrook (Queenstown District) ZA       Katberg   Beaufort   &lt;NA&gt;
+4            Mouth of Godwin Creek US        Nocona    Wichita   &lt;NA&gt;
+5               Broiliellus pocket US        Arroyo Clear Fork   &lt;NA&gt;
+6                    Thaxton Ranch US          &lt;NA&gt;    Wichita   &lt;NA&gt;
+                       zone   lithology1        environment
+1                      &lt;NA&gt;    siltstone     dry floodplain
+2 Tapinocephalus Assemblage    sandstone       "floodplain"
+3                      &lt;NA&gt;     mudstone     fluvial indet.
+4                      &lt;NA&gt; conglomerate terrestrial indet.
+5                      &lt;NA&gt; not reported terrestrial indet.
+6                      &lt;NA&gt; not reported terrestrial indet.
+             pres_mode               taxon_environment        motility
+1                 body brackish,freshwater,terrestrial actively mobile
+2 body,mold/impression                     terrestrial actively mobile
+3                 body                     terrestrial actively mobile
+4                 body                     terrestrial actively mobile
+5                 body brackish,freshwater,terrestrial actively mobile
+6                 body brackish,freshwater,terrestrial actively mobile
+       life_habit      diet
+1 ground dwelling carnivore
+2            &lt;NA&gt; carnivore
+3            &lt;NA&gt;      &lt;NA&gt;
+4            &lt;NA&gt;      &lt;NA&gt;
+5 ground dwelling carnivore
+6 ground dwelling carnivore</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="co"># Oldest occurrence</span></span>
-<span id="cb7-2"><a aria-label="2"></a><span class="fu">max</span>(tetrapods<span class="sc">$</span>max_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Inspect dataset structure</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="fu">str</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 358.9</code></pre>
+<pre><code>'data.frame':   5270 obs. of  32 variables:
+ $ occurrence_no    : num  146665 147090 147521 147523 147563 ...
+ $ collection_no    : num  12943 13004 13043 13044 13046 ...
+ $ identified_name  : chr  "n. gen. Anconastes n. sp. vesperus" "Gorgonopsia indet." "n. gen. Procolophon n. sp. trigoniceps" "n. gen. Ophiodeirus n. sp. casei" ...
+ $ identified_rank  : chr  "species" "suborder" "species" "species" ...
+ $ accepted_name    : chr  "Anconastes vesperus" "Gorgonopsia" "Procolophon trigoniceps" "Araeoscelis casei" ...
+ $ accepted_rank    : chr  "species" "suborder" "species" "species" ...
+ $ early_interval   : chr  "Missourian" "Capitanian" "Induan" "Artinskian" ...
+ $ late_interval    : chr  "Gzhelian" NA "Olenekian" NA ...
+ $ max_ma           : num  306 265 252 290 279 ...
+ $ min_ma           : num  299 260 247 279 272 ...
+ $ phylum           : chr  "Chordata" "Chordata" "Chordata" "Chordata" ...
+ $ class            : chr  "Osteichthyes" "Osteichthyes" "Reptilia" "Reptilia" ...
+ $ order            : chr  "Temnospondyli" "Cotylosauria" "NO_ORDER_SPECIFIED" "Araeoscelidia" ...
+ $ family           : chr  "Trematopidae" NA "Procolophonidae" "Araeoscelidae" ...
+ $ genus            : chr  "Anconastes" NA "Procolophon" "Araeoscelis" ...
+ $ abund_value      : num  2 1 10 2 6 2 1 39 56 2 ...
+ $ abund_unit       : chr  "specimens" "specimens" "specimens" "individuals" ...
+ $ lng              : num  -106.3 22 26.5 -98.9 -99.2 ...
+ $ lat              : num  36.3 -32.4 -32.1 33.6 33.8 ...
+ $ collection_name  : chr  "El Cobre Canyon" "Hottentotsrivier Farm" "Donnybrook (Queenstown District)" "Mouth of Godwin Creek" ...
+ $ cc               : chr  "US" "ZA" "ZA" "US" ...
+ $ formation        : chr  "Cutler" "Abrahamskraal" "Katberg" "Nocona" ...
+ $ stratgroup       : chr  NA "Beaufort" "Beaufort" "Wichita" ...
+ $ member           : chr  NA NA NA NA ...
+ $ zone             : chr  NA "Tapinocephalus Assemblage" NA NA ...
+ $ lithology1       : chr  "siltstone" "sandstone" "mudstone" "conglomerate" ...
+ $ environment      : chr  "dry floodplain" "\"floodplain\"" "fluvial indet." "terrestrial indet." ...
+ $ pres_mode        : chr  "body" "body,mold/impression" "body" "body" ...
+ $ taxon_environment: chr  "brackish,freshwater,terrestrial" "terrestrial" "terrestrial" "terrestrial" ...
+ $ motility         : chr  "actively mobile" "actively mobile" "actively mobile" "actively mobile" ...
+ $ life_habit       : chr  "ground dwelling" NA NA NA ...
+ $ diet             : chr  "carnivore" "carnivore" NA NA ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="co"># Number of occurrences without latitude</span></span>
-<span id="cb9-2"><a aria-label="2"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>lat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let’s inspect our data:</p>
+</section>
+<section class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">The <code>tetrapods</code> dataset</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># Load built-in dataset</span></span>
+<span id="cb8-2"><a aria-label="2"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="co"># View first six rows</span></span>
+<span id="cb9-2"><a aria-label="2"></a><span class="fu">head</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
+<pre><code>  occurrence_no collection_no                        identified_name
+1        146665         12943     n. gen. Anconastes n. sp. vesperus
+2        147090         13004                     Gorgonopsia indet.
+3        147521         13043 n. gen. Procolophon n. sp. trigoniceps
+4        147523         13044       n. gen. Ophiodeirus n. sp. casei
+5        147563         13046         Broiliellus n. sp. arroyoensis
+6        147564         13048              Broiliellus n. sp. olsoni
+  identified_rank           accepted_name accepted_rank early_interval
+1         species     Anconastes vesperus       species     Missourian
+2        suborder             Gorgonopsia      suborder     Capitanian
+3         species Procolophon trigoniceps       species         Induan
+4         species       Araeoscelis casei       species     Artinskian
+5         species Broiliellus arroyoensis       species      Kungurian
+6         species      Broiliellus olsoni       species       Wolfcamp
+  late_interval max_ma min_ma   phylum        class              order
+1      Gzhelian 305.90  298.9 Chordata Osteichthyes      Temnospondyli
+2          &lt;NA&gt; 265.10  259.9 Chordata Osteichthyes       Cotylosauria
+3     Olenekian 252.17  247.2 Chordata     Reptilia NO_ORDER_SPECIFIED
+4          &lt;NA&gt; 290.10  279.3 Chordata     Reptilia      Araeoscelidia
+5          &lt;NA&gt; 279.30  272.3 Chordata Osteichthyes      Temnospondyli
+6          &lt;NA&gt; 296.40  268.0 Chordata Osteichthyes      Temnospondyli
+           family       genus abund_value  abund_unit        lng       lat
+1    Trematopidae  Anconastes           2   specimens -106.34778  36.30444
+2            &lt;NA&gt;        &lt;NA&gt;           1   specimens   22.00000 -32.36667
+3 Procolophonidae Procolophon          10   specimens   26.50972 -32.10611
+4   Araeoscelidae Araeoscelis           2 individuals  -98.93361  33.61167
+5   Dissorophidae Broiliellus           6   specimens  -99.20000  33.80972
+6   Dissorophidae Broiliellus           2   specimens  -98.14778  33.82639
+                   collection_name cc     formation stratgroup member
+1                  El Cobre Canyon US        Cutler       &lt;NA&gt;   &lt;NA&gt;
+2            Hottentotsrivier Farm ZA Abrahamskraal   Beaufort   &lt;NA&gt;
+3 Donnybrook (Queenstown District) ZA       Katberg   Beaufort   &lt;NA&gt;
+4            Mouth of Godwin Creek US        Nocona    Wichita   &lt;NA&gt;
+5               Broiliellus pocket US        Arroyo Clear Fork   &lt;NA&gt;
+6                    Thaxton Ranch US          &lt;NA&gt;    Wichita   &lt;NA&gt;
+                       zone   lithology1        environment
+1                      &lt;NA&gt;    siltstone     dry floodplain
+2 Tapinocephalus Assemblage    sandstone       "floodplain"
+3                      &lt;NA&gt;     mudstone     fluvial indet.
+4                      &lt;NA&gt; conglomerate terrestrial indet.
+5                      &lt;NA&gt; not reported terrestrial indet.
+6                      &lt;NA&gt; not reported terrestrial indet.
+             pres_mode               taxon_environment        motility
+1                 body brackish,freshwater,terrestrial actively mobile
+2 body,mold/impression                     terrestrial actively mobile
+3                 body                     terrestrial actively mobile
+4                 body                     terrestrial actively mobile
+5                 body brackish,freshwater,terrestrial actively mobile
+6                 body brackish,freshwater,terrestrial actively mobile
+       life_habit      diet
+1 ground dwelling carnivore
+2            &lt;NA&gt; carnivore
+3            &lt;NA&gt;      &lt;NA&gt;
+4            &lt;NA&gt;      &lt;NA&gt;
+5 ground dwelling carnivore
+6 ground dwelling carnivore</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="co"># Inspect overall structure</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="co"># Inspect dataset structure</span></span>
 <span id="cb11-2"><a aria-label="2"></a><span class="fu">str</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   5270 obs. of  32 variables:
@@ -365,20 +496,19 @@ Bethany J. Allen
  $ diet             : chr  "carnivore" "carnivore" NA NA ...</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># Get dataset documentation</span></span>
+<span id="cb13-2"><a aria-label="2"></a><span class="fu">help</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</div>
-</div>
-<p>Now, let’s try with the <code>reefs</code> dataset:</p>
+<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;source) are also available via the usual documentation call:</p>
 </section>
 <section class="slide level2">
-<h2>Exercise: Get to know <code>reefs</code></h2>
+<h2>Exercise: Get to know <code>tetrapods</code></h2>
 <ul>
 <li>How many occurrences (observations/rows) are there?</li>
-<li>How many variables (columns) are there? What are they?</li>
-<li>What is the oldest occurrence?</li>
-<li>Do you expect any missing coordinates?</li>
-<li>What is the overall structure?</li>
+<li>How many variables (columns) are there?</li>
+<li>How old is the oldest tetrapod occurrence?</li>
+<li>Are any of the occurrences missing coordinates?</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -389,101 +519,16 @@ Bethany J. Allen
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Solution</strong></p>
+<p><strong>Exercise 1: Answers</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># Number of rows</span></span>
-<span id="cb13-2"><a aria-label="2"></a><span class="fu">nrow</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4363</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="co"># Number of columns</span></span>
-<span id="cb15-2"><a aria-label="2"></a><span class="fu">ncol</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 14</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="co"># Oldest occurrence</span></span>
-<span id="cb17-2"><a aria-label="2"></a><span class="fu">max</span>(reefs<span class="sc">$</span>max_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -Inf</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="co"># Number of occurrences without latitude</span></span>
-<span id="cb19-2"><a aria-label="2"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(reefs<span class="sc">$</span>lat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="co"># Inspect overall structure</span></span>
-<span id="cb21-2"><a aria-label="2"></a><span class="fu">str</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   4363 obs. of  14 variables:
- $ r_number  : chr  "1" "2" "3" "4" ...
- $ name      : chr  "Tilkideligi Tepe" "Hydra" "Shiraho, W-Pacific" "Aksu-Terziler area" ...
- $ formation : chr  "" "Pantokrator Limestone" "" "" ...
- $ system    : chr  "Triassic" "Triassic" "Neogene" "Triassic" ...
- $ series    : chr  "Upper Triassic" "Upper Triassic" "Holocene" "Upper Triassic" ...
- $ interval  : chr  "lower Norian" "upper Carnian" "Recent" "Tuvalian" ...
- $ biota_main: chr  "Calcisponges" "Corals" "Corals" "Calcisponges" ...
- $ biota_sec : chr  "Stromatoporoids" "Calcisponges" "Algae" "Stromatoporoids" ...
- $ lng       : num  30.4 23.6 124.2 31 13.2 ...
- $ lat       : num  37 37.4 24.3 37.8 47.7 ...
- $ country   : chr  "Turkey" "Greece" "Pacific" "Turkey" ...
- $ authors   : chr  "Riedel, P." "Schafer, P., Senowbari-Daryan, B." "Kayanne, H., Suzuki, A. &amp; Saito, H." "Riedel, P." ...
- $ title     : chr  "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" "The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -" "Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -" "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" ...
- $ year      : num  1990 1982 1995 1990 1979 ...</code></pre>
-</div>
-</div>
-<p>Note that <code>reefs</code> does not contain any columns related to taxonomy (they are a whole ecosystem after all). This means any functions requiring taxonomic data cannot (rightly) be used with <code>reefs</code>.</p>
-</div>
-</div>
-</div>
-</div>
-<p>How do these occurrence datasets differ?</p>
-</section>
-<section class="slide level2">
-<h2>How do <code>tetrapods</code> and <code>reefs</code> compare?</h2>
-<ul>
-<li>Which columns do they share?</li>
-<li>Which columns are specific to each?</li>
-</ul>
-</section>
-<section class="slide level2">
-<h2>The <code>tetrapods</code> dataset</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Solution</strong></p>
-</div>
-<div class="callout-content">
-<div class="fragment">
-<p>Which column names match?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="co"># Which column names match?</span></span>
-<span id="cb23-2"><a aria-label="2"></a><span class="fu">intersect</span>(<span class="fu">names</span>(tetrapods), <span class="fu">names</span>(reefs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "lng"       "lat"       "formation"</code></pre>
-</div>
-</div>
-<p>Which column names are different?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">setdiff</span>(<span class="fu">names</span>(tetrapods), <span class="fu">names</span>(reefs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "occurrence_no"     "collection_no"     "identified_name"  
- [4] "identified_rank"   "accepted_name"     "accepted_rank"    
- [7] "early_interval"    "late_interval"     "max_ma"           
-[10] "min_ma"            "phylum"            "class"            
-[13] "order"             "family"            "genus"            
-[16] "abund_value"       "abund_unit"        "collection_name"  
-[19] "cc"                "stratgroup"        "member"           
-[22] "zone"              "lithology1"        "environment"      
-[25] "pres_mode"         "taxon_environment" "motility"         
-[28] "life_habit"        "diet"             </code></pre>
-</div>
-</div>
+<ol type="1">
+<li><code>nrow(tetrapods)</code>: 5270</li>
+<li><code>ncol(tetrapods)</code>: 32</li>
+<li><code>max(tetrapods$max_ma, na.rm = TRUE)</code>: 358.9</li>
+<li><code>sum(is.na(tetrapods$lat))</code>: 0</li>
+</ol>
 </div>
 </div>
 </div>
