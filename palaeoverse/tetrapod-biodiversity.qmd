@@ -51,7 +51,7 @@ knitr::opts_chunk$set(par = TRUE)
 
 ## Preamble
 
-In this tutorial, you will use **palaeoverse** to explore the temporal and spatial diversity patterns of Palaeozoic tetrapods.
+In this tutorial, you will use **palaeoverse** to explore the temporal and spatial diversity patterns of Palaeozoic tetrapods, using data from the Paleobiology Database (Uhen et al. 2026).
 
 Along the way, you will meet many functions used in a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.
 
@@ -69,7 +69,7 @@ To help cement your knowledge, there are multiple exercises throughout this tuto
 
 The name **Tetrapoda** stems from the Ancient Greek words for 'four' and 'feet'. It is a clade which originated when chordates first evolved limbs and developed the ability to walk, gradually transitioning from aquatic to terrestrial environments. All terrestrial four-limbed animals are members of this clade, including amphibians, reptiles, and mammals. This major evolutionary transition has received a lot of attention, in part because this clade represents our ancestors.
 
-The fossil record of early tetrapods is considered relatively sparse, meaning that we do not have a clear picture of the timing and order of the acquisition of the different adaptations needed to thrive on land. But just how sparse is the record, and what does it indicate about how diverse the earliest tetrapods were? Here, we will address the question "**how did tetrapod diversity develop over the Palaeozoic?**" by quantifying and comparing temporal and spatial diversity patterns.
+The fossil record of early tetrapods is considered relatively sparse, meaning that we do not have a clear picture of the timing and order of the acquisition of the different adaptations needed to thrive on land (e.g. Dunne et al. 2018). But just how sparse is the record, and what does it indicate about how diverse the earliest tetrapods were? Here, we will address the question "**how did tetrapod diversity develop over the Palaeozoic?**" by quantifying and comparing temporal and spatial diversity patterns.
 
 Let's start by installing and loading the **palaeoverse** R package:
 
@@ -104,20 +104,29 @@ Load the `tetrapods` dataset:
 data(tetrapods)
 ```
 
-Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let's inspect our data:
+Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let's take a look at the data frame:
+
+```{r}
+#| label: view-tetrapods
+
+# View top left corner
+View(tetrapods)
+```
+
+Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Now we can get some more general information about what is contained in the dataset, such as the variable names and the types of data held for those variables:
 
 ```{r}
 #| label: structure-tetrapods
 #| output-fold: true
 #| output-summary: "Output"
-
-# View first six rows
-head(tetrapods)
+#| 
+# View column names
+colnames(tetrapods)
 # Inspect dataset structure
 str(tetrapods)
 ```
 
-Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g. source) are also available via the usual documentation call:
+Details on the dataset (e.g. source) are also available via the usual documentation call:
 
 ```{r}
 #| label: reefs-tetrapods
@@ -126,12 +135,14 @@ Note the structure of the dataset: each row contains a unique occurrence and eac
 help(tetrapods)
 ```
 
+Let's now generate some simple summary statistics, to help us understand the scope and scale of the dataset.
+
 ::: {.callout-warning}
 ## Exercise: Get to know `tetrapods`
 
 - How many occurrences (observations/rows) are there?
-- How many variables (columns) are there?
 - How old is the oldest tetrapod occurrence?
+- How young is the youngest occurrence in the dataset?
 - Are any of the occurrences missing coordinates?
 :::
 
@@ -139,11 +150,162 @@ help(tetrapods)
 ## Exercise 1: Answers
 
 1. `nrow(tetrapods)`: `r nrow(tetrapods)`
-2. `ncol(tetrapods)`: `r ncol(tetrapods)`
-3. `max(tetrapods$max_ma, na.rm = TRUE)`: `r max(tetrapods$max_ma, na.rm = TRUE)`
+2. `max(tetrapods$max_ma, na.rm = TRUE)`: `r max(tetrapods$max_ma, na.rm = TRUE)`
+3. `min(tetrapods$min_ma, na.rm = TRUE)`: `r min(tetrapods$min_ma, na.rm = TRUE)`
 4. `sum(is.na(tetrapods$lat))`: `r sum(is.na(tetrapods$lat))`
 :::
 
+## Unifying temporal data
+
+In order to investigate diversity through time, we want to allocate each of our occurrences to a single time bin. First, we will generate stage-level bins spanning the Carboniferous and Permian, using `palaeoverse::time_bins()`.
+
+```{r}
+#| label: Carbo-Perm-time-bins
+#| output-fold: true
+#| output-summary: "Output"
+#| 
+# Generate time bins
+bins <- time_bins(interval = c("Carboniferous", "Permian"),
+                  rank = "stage",
+                  scale = "GTS2020",
+                  plot = TRUE)
+
+# View first few rows
+head(bins)
+```
+
+The function gives us the option to generate a plot of our time bins - here we can see some variation in the duration of our different stages, with particularly long stages in the Early Carboniferous and shorter ones across the Carboniferous-Permian boundary. This is a form of structure inherent to our dataset, and something we should bear in mind for our downstream analyses.
+
+In the Paleobiology Database, occurrences are allocated to named temporal intervals, with the numeric dates filled in using the Database's internal timescale. We are going to generate numeric ages for these named intervals using `palaeoverse::look_up()`, to check whether these are up-to-date.
+
+```{r}
+#| label: check-occurrence-ages
+#| output-fold: true
+#| output-summary: "Output"
+#| 
+# Get new numeric ages for named intervals using the interval key that is supplied with palaeoverse
+tetrapods <- look_up(tetrapods, int_key = interval_key)
+# Look at the newly added columns
+tetrapods[1:5, 35:37]
+```
+
+::: {.callout-caution}
+## Exercise 2: Check for age inconsistencies
+
+1. How many different interval names are there in `tetrapods`?
+2. What proportion of interval names could be matched using `look_up()`?
+3. Of the interval names that could be matched, what proportion had different numerical ages compared to those in the original dataset?
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 2: Hint
+
+1. The `early_interval` and `late_interval` columns give the upper and lower boundary intervals for each occurrence.
+2. Intervals which cannot be matched will produce `NA` outputs.
+3. `max_ma` and `min_ma` contain the numerical ages in the orginal dataset, and `interval_max_ma` and `interval_min_ma` contain the numerical ages generated by `look_up()`. As not all intervals could be looked up, remember that you will also have to handle `NA` values in these latter columns.
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 2: Answers
+
+1. `length(unique(c(tetrapods$early_interval, tetrapods$late_interval)))`: `r length(unique(c(tetrapods$early_interval, tetrapods$late_interval)))`
+2. `(sum(is.na(tetrapods$interval_max_ma))/nrow(tetrapods))`: `r (sum(is.na(tetrapods$interval_max_ma))/nrow(tetrapods))`
+3. There are a few different ways to check this - for example, you could subtract the columns from one another and see what proportion of these values are 0. Alternatively, you can also test whether the values are equal using `tetrapods$max_ma == tetrapods$interval_max_ma`, and work out the proportion that are not: `((nrow(tetrapods) - sum(as.numeric(tetrapods$max_ma == tetrapods$interval_max_ma), na.rm = TRUE))/nrow(tetrapods))`: `r ((nrow(tetrapods) - sum(as.numeric(tetrapods$max_ma == tetrapods$interval_max_ma), na.rm = TRUE))/nrow(tetrapods))`
+:::
+
+Now that we have an understanding of the amount of uncertainty surrounding the age of some of our occurrences, let's tidy it up by filling in the ages of intervals not included in the `look_up()` table with those that they were allocated by the Paleobiology Database.
+
+```{r}
+#| label: fill-missing-occurrence-ages
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Make sure that any values which could not be matched contain their original values
+tetrapods$interval_max_ma <- ifelse(is.na(tetrapods$interval_max_ma),
+                                    tetrapods$max_ma,
+                                    tetrapods$interval_max_ma)
+tetrapods$interval_min_ma <- ifelse(is.na(tetrapods$interval_min_ma),
+                                    tetrapods$min_ma,
+                                    tetrapods$interval_min_ma)
+tetrapods$interval_mid_ma <- (tetrapods$min_ma + tetrapods$max_ma)/2
+
+# Check that there are no remaining NA values
+sum(is.na(tetrapods$interval_max_ma))
+```
+
+Now we are ready to allocate our occurrences to our time bins. We will do this using the `palaeoverse::bin_time()` function, with the 'mid' method.
+
+```{r}
+#| label: time-bin-occs
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Rename columns so that new intervals are used for binning
+colnames(tetrapods)[9:10] <- c("old_max_ma", "old_min_ma")
+colnames(tetrapods)[c(35, 37)] <- c("max_ma", "min_ma")
+
+# Generate time bins
+mid_tetrapods <- bin_time(occdf = tetrapods,
+                      bins = bins,
+                      method = "mid")
+```
+
+It seems we have hit an error!
+
+::: {.callout-caution}
+## Exercise 3: Spot the problem
+
+Why are we getting an error when we try to bin our occurrences?
+:::
+
+::: {.callout-tip collapse="true"}
+## Exercise 3: Answer
+
+If we remember back to our initial exploration of the data, the youngest occurrences in the dataset are Early Triassic in age. This sits outside of the Carboniferous-Permian interval across which we have generated our time bins. The function is giving us an error because these Early Triassic occurrences are too young to be placed into any of the provided time bins.
+:::
+
+We will remove these problematic occurrences and try again.
+
+```{r}
+#| label: time-bin-occs
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Remove occurrences that are younger than the time intervals we're interested in
+cp_tetrapods <- subset(tetrapods, min_ma > min(bins$min_ma))
+
+# Bin occurrences into chosen time bins
+mid_tetrapods <- bin_time(occdf = cp_tetrapods,
+                          bins = bins,
+                          method = "mid")
+```
+
+This time we have received a warning, but no error. Let's take a look at the new columns added to the dataset.
+
+```{r}
+#| label: bin-time-columns
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# View new columns
+mid_tetrapods[1:5, 38:41]
+```
+
+The second of these new columns is `n_bins`, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how `bin_time` has processed our data.
+
+```{r}
+#| label: summary-n-bins
+#| output-fold: true
+#| output-summary: "Output"
+#|
+# Make a table of potential number of bins
+table(mid_tetrapods$n_bins)
+
+# Convert counts into proportions
+table(mid_tetrapods$n_bins) / nrow(mid_tetrapods)
+```
+
+We can see that around 70% of the occurrences can be allocated to a single stage, whereas the remaining 30% span between 2 and 8 geological stages. For this 30%, the `method` that we choose to bin the data becomes very important, as it determines which of these stages the occurrence will be placed within.
 
 
 ## References
