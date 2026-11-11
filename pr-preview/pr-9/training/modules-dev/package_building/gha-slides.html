@@ -12,7 +12,7 @@
 
   <meta name="author" content="Etienne Bacher">
   <meta name="dcterms.date" content="2026-08-10">
-  <title>GitHub Actions</title>
+  <title>Continuous integration</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -207,7 +207,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">GitHub Actions</h1>
+  <h1 class="title">Continuous integration</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -238,8 +238,8 @@ Etienne Bacher
 
 <p>So far, we have been running various checks (e.g.&nbsp;<code>R CMD check</code>) locally. This has two main drawbacks.</p>
 <p>First, we may simply forget to run these checks, in which case we might discover bugs a long time after introducing them, making the debugging process more painful.</p>
-<p>Second, our check results only apply to our development environment. We might run these checks in a new R session, but our results may depend on our R version, on other dependencies in our system, or on our operating system!</p>
-<p>An essential tool in software development is <strong>continuous integration</strong>, often referred to as “CI”. The objective of CI is to run a battery of automated checks on every change in the repository, whether it be when we push a new commit to the <code>main</code> branch or when someone opens a pull request. In this section, we are going to explore some CI tools and workflows dedicated to R package development. Since GitHub is the most popular code hosting platform, we are going to focus on their own CI services, Github Actions, but the content of this section can be transposed to other platforms.</p>
+<p>Second, our check results only apply to our development environment. We can limit this by running these checks in a new R session, but our results may depend on our R version, on other dependencies in our system, or on our operating system!</p>
+<p>An essential tool in software development is <strong>continuous integration</strong>, often referred to as “CI”. At its core, CI is a tool to automatically run some code (aka “workflows”) on every change in the repository, whether it be when we push a new commit to the <code>main</code> branch or when someone opens a pull request. In this section, we are going to explore some CI tools and workflows dedicated to R package development. Since GitHub is the most popular code hosting platform, we are going to focus on their own CI services, Github Actions, but the content of this section can be transposed to other platforms.</p>
 </section>
 <section id="github-actions" class="slide level2">
 <h2>GitHub Actions</h2>
@@ -276,13 +276,10 @@ Etienne Bacher
 <span id="cb1-22"><a aria-label="22"></a><span class="at">          </span><span class="fu">extra-packages</span><span class="kw">:</span><span class="at"> any::rcmdcheck</span></span>
 <span id="cb1-23"><a aria-label="23"></a><span class="at">          </span><span class="fu">needs</span><span class="kw">:</span><span class="at"> check</span></span>
 <span id="cb1-24"><a aria-label="24"></a></span>
-<span id="cb1-25"><a aria-label="25"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb1-26"><a aria-label="26"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-27"><a aria-label="27"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-28"><a aria-label="28"></a><span class="at">          </span><span class="fu">build_args</span><span class="kw">:</span><span class="at"> </span><span class="st">'c("--no-manual","--compact-vignettes=gs+qpdf")'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-25"><a aria-label="25"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>There is a lot to unpack here! The <code>on</code> block tells GitHub when this workflow should be run. For now, we only want to run it when we push a new commit to <code>main</code>. We then have the <code>name</code> and <code>permissions</code> of the workflow. In some cases, we want to give some write access to workflows to make automated commits for instance, but here we can leave it as <code>read-all</code>.</p>
-<p>The <code>jobs</code> part is where we define the <code>steps</code> that will be run by our workflow. Note that one workflow can run multiple jobs, but here we just have one named <code>R-CMD-check</code>. This will run on <code>ubuntu-latest</code> (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: <code>actions/checkout</code>, <code>r-lib/actions/setup-r</code>, and <code>r-lib/actions/setup-r-dependencies</code>, that are here to install R and our package dependencies.</p>
+<p>There is a lot to unpack here! The <code>on</code> block tells GitHub when this workflow should run. For now, we only want to run it when we push a new commit to <code>main</code>. We then have the <code>name</code> and <code>permissions</code> of the workflow. In some cases, we want to give workflows some writing permissions (e.g.&nbsp;to make automated commits), but here we can leave it as <code>read-all</code>.</p>
+<p>The <code>jobs</code> part is where we define the <code>steps</code> that will be run by our workflow. Note that one workflow can run multiple jobs, but here we just have one named <code>R-CMD-check</code>. This will run on <code>ubuntu-latest</code> (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: <code>actions/checkout</code>, <code>r-lib/actions/setup-r</code>, and <code>r-lib/actions/setup-r-dependencies</code>, whose purpose is to install R and our package dependencies.</p>
 <p>Once this is done, the last step is to run <code>R CMD check</code> via <code>r-lib/actions/check-r-package</code>.</p>
 <h3 id="run-this-workflow-in-more-cases">Run this workflow in more cases</h3>
 <p>This is a good start but for now it only runs when we push changes to <code>main</code>. This is a bit too late, we would like to run this in a PR so that test failures due to changes in a PR do not affect the “clean” development version. We can tweak the <code>on</code> block to run this in pull requests as well:</p>
@@ -353,10 +350,10 @@ Etienne Bacher
 <span id="cb4-23"><a aria-label="23"></a><span class="kw">[</span><span class="at"> ... </span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We added <code>r: 'release'</code> to use the latest stable version of R, and <code>r: 'oldrel-1'</code> to use the previous R version. We use this <code>matrix.config.r</code> key in two places: in the <code>name</code> (for the same reason as before), and in the <code>setup-r</code> step, where we actually install R.</p>
-<p>We still have a single workflow, but it now runs four different jobs with various OS and R versions. Note that you could also add more ancient R versions.</p>
+<p>We still have a single workflow, but it now runs four different jobs with various OS and R versions. Note that you could also add more ancient R versions (see how to specify more R versions <a href="https://github.com/r-lib/actions/tree/v2/setup-r#inputs">here</a>).</p>
 <h3 id="some-changes-for-a-better-developer-experience">Some changes for a better developer experience</h3>
 <p>We could stop here, but instead I would like to highlight two changes that improve the efficiency and robustness of CI workflows.</p>
-<p>The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting from the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to longer-than-usual workflows that sometimes run for hours! Using the <code>timeout-minutes</code> parameter is an easy way to avoid this problem.</p>
+<p>The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting with the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to workflows that sometimes run for hours! Using the <code>timeout-minutes</code> parameter is an easy way to avoid this problem.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>.github/workflows/R-CMD-check.yaml</strong></pre>
@@ -438,10 +435,7 @@ Etienne Bacher
 <span id="cb7-41"><a aria-label="41"></a><span class="at">          </span><span class="fu">extra-packages</span><span class="kw">:</span><span class="at"> any::rcmdcheck</span></span>
 <span id="cb7-42"><a aria-label="42"></a><span class="at">          </span><span class="fu">needs</span><span class="kw">:</span><span class="at"> check</span></span>
 <span id="cb7-43"><a aria-label="43"></a></span>
-<span id="cb7-44"><a aria-label="44"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb7-45"><a aria-label="45"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb7-46"><a aria-label="46"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-47"><a aria-label="47"></a><span class="at">          </span><span class="fu">build_args</span><span class="kw">:</span><span class="at"> </span><span class="st">'c("--no-manual","--compact-vignettes=gs+qpdf")'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-44"><a aria-label="44"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

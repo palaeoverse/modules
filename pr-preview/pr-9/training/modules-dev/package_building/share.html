@@ -380,19 +380,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/share.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
-<p>Having a package is nice but it’s much less useful if you keep it for you. There are two main, non-exclusive ways to share your package to the world:</p>
+<p>Having a package is nice but it’s much less useful if you keep it to yourself. There are two main, non-exclusive ways to share your package to the world:</p>
 <ul>
 <li>put it on some version control system (e.g.&nbsp;GitHub, Gitlab, Codeberg);</li>
 <li>put it on CRAN.</li>
 </ul>
+<p>Another way to share it is via <a href="https://docs.r-universe.dev/">R-universe</a>, but this will not be covered in this module.</p>
 <section id="publish-your-package" class="level2">
 <h2 data-anchor-id="publish-your-package">Publish your package</h2>
 <section id="version-control-system" class="level3">
 <h3 data-anchor-id="version-control-system">Version control system</h3>
-<p>In this section, we assume you are already familiar with Git and GitHub. If this is not the case, then you might be interested in our module on these tools: &lt;link&gt;.</p>
+<p>In this section, we assume you are already familiar with Git and GitHub. If this is not the case, then you might be interested in <a href="https://palaeoverse.org/modules/pr-preview/pr-21/training/modules/github/">our module on these tools</a>.</p>
 <p>Supposing we put our package <code>my.pkg</code> on GitHub, R users can now install it with the following alternatives:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"&lt;username&gt;/my.pkg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -404,9 +407,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>GitHub is the most famous platform to use Git features and store code. However, you could also use other platforms, such as Gitlab, Codeberg, or Forgejo.</p>
-<p>Using these platforms will not affect the ability to install your package. For instance, if your host your package on Codeberg, then it can be installed with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span>(<span class="st">"https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"git::https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Using these platforms will not affect the ability to install your package. For instance, a package hosted on Codeberg can be installed with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"git::https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span>(<span class="st">"https://codeberg.org/&lt;username&gt;/my.pkg.git"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -414,15 +419,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-anchor-id="cran">CRAN</h3>
 <p>CRAN is the Comprehensive R Archive Network. It is a general repository where packages can be stored, and it is where packages are installed from by default. Currently, there are more than 25,000 packages on CRAN (you can see the entire list <a href="https://cran.r-project.org/web/packages/available_packages_by_name.html">here</a>).</p>
 <p>Puting a package on CRAN has several advantages. First, it gives your package more visibility, and it guarantees that it is easy to install it on almost all operating systems. Second, your package is constantly tested against new versions of R or with new versions of its dependencies. This guarantees that your package is compatible with the rest of the ecosystem at a given time.</p>
-<p>This last point comes at a cost, however. If your test suite starts failing because of changes in R or in some of its dependencies, it becomes at risk of removal from CRAN. Usually, the CRAN team gives the package maintainer two or three weeks to fix the errors and submit a new version (although an extension can be requested if needed). Therefore, putting your package on CRAN doesn’t guarantee it will stay there and it requires you to be available for maintenance if needed.</p>
-<p>Publishing a package on CRAN also means complying with a set of strict rules in terms of formatting or testing. This may sound intimidating but there exist many resources to make this process easier. For instance, there are a lot of packages to make your life easier (<a href="https://cran.r-project.org/web/packages/urlchecker/index.html">urlchecker</a> to check invalid URLs, <a href="https://cran.r-project.org/web/packages/spelling/index.html">spelling</a> to detect spelling mistakes, among others). There are also collaborative todo lists before submitting to CRAN, such as <a href="https://github.com/ThinkR-open/prepare-for-cran">this one</a>. Finally, the function <code>devtools::release()</code> provides a long checklist to ensure that your package is ready to be submitted.</p>
+<p>This last point comes at a cost, however. If your test suite starts failing because of changes in R or in some of its dependencies, it becomes at risk of removal from CRAN. Usually, the CRAN team gives the package maintainer two or three weeks to fix the errors and submit a new version (although an extension can be requested if needed). Therefore, putting your package on CRAN is not a guarantee it will stay there, and it requires you to be available for maintenance if needed.</p>
+<p>Publishing a package on CRAN also means complying with a set of strict rules in terms of formatting or testing. This may sound intimidating but there exist many resources to make this process easier. For instance, there are many packages to detect mistakes (<a href="https://cran.r-project.org/web/packages/urlchecker/index.html">urlchecker</a> to check invalid URLs, <a href="https://cran.r-project.org/web/packages/spelling/index.html">spelling</a> to detect spelling mistakes, among others). There are also collaborative todo lists before submitting to CRAN, such as <a href="https://github.com/ThinkR-open/prepare-for-cran">this one</a>. Finally, the function <code>devtools::release()</code> provides a long checklist to ensure that your package is ready to be submitted.</p>
 <p>We recommend reading <a href="https://r-pkgs.org/release.html">this section</a> of the “R packages” book for a list of good practices and things to do. This looks intimidating and it can be a non-negligible amount of work, but it becomes easier as you get more familiar with the package development process.</p>
 </section>
 </section>
 <section id="make-a-package-website" class="level2">
 <h2 data-anchor-id="make-a-package-website">Make a package website</h2>
 <p>Publishing a package on GitHub or on CRAN makes it easy to install but not necessarily easy to discover. We can add something more: a website!</p>
-<p>This might sound like a lot of work, but we are going to use a great package to build a package website in a few minutes: <code>pkgdown</code>.</p>
+<p>This might sound like a lot of work, but we are going to use a great package to build a package website in a few seconds: <code>pkgdown</code>.</p>
 <section id="local-website" class="level3">
 <h3 data-anchor-id="local-website">Local website</h3>
 <p>We can create the website locally with <code>pkgdown::build_site()</code>. This takes care of everything:</p>
@@ -435,7 +440,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="publish-the-website" class="level3">
 <h3 data-anchor-id="publish-the-website">Publish the website</h3>
-<p>The website can then be published via GitHub Pages, using a continuous integration workflow. To learn more about this, see the <a href="">GitHub Actions section</a>.</p>
+<p>The website can then be published via GitHub Pages, using a continuous integration workflow. We will talk more about continuous integration in <a href="../../../training/modules-dev/package_building/ci.html">the next section</a>, but in short you can run <code>usethis::use_pkgdown_github_pages()</code> to deploy the website at <code>https://www.&lt;username&gt;.github.io/my.pkg</code>.</p>
 
 
 <hr><br><details>
@@ -450,7 +455,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-10
+ date     2026-11-11
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -478,7 +483,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    curl           8.1.0   2026-10-14 [1] RSPM
    cyclocomp      1.1.2   2026-03-11 [1] RSPM
    desc           1.4.3   2023-12-10 [1] RSPM
-   diffobj        0.3.9   2026-09-11 [1] RSPM
+   diffobj        0.3.10  2026-11-10 [1] RSPM
    digest         0.6.39  2025-11-19 [1] RSPM
    dplyr          1.2.1   2026-04-03 [1] RSPM
    evaluate       1.0.5   2025-08-27 [1] RSPM

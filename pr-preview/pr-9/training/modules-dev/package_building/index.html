@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-11-10">
+<meta name="dcterms.date" content="2026-11-11">
 <meta name="description" content="Build an R package: why and how.">
 
 <title>Package development</title>
@@ -363,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 10, 2026</p>
+      <p class="date">November 11, 2026</p>
     </div>
   </div>
   
@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -399,11 +399,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It is easy to expand on many of these aspects, and we will cover the most important ones, but entire books are written on package development (and on software development in general). Therefore, we will purposely skip or not explore in depth some aspects of package development. This module is inspired by the <a href="https://r-pkgs.org/">“R Packages” book</a>, and we recommend exploring this book more if you want to dig deeper on the topic on general, or on specific aspects only.</p>
 <p>This module is divided in five parts:</p>
 <ol type="1">
-<li><p><strong>Create a package</strong>: how to create the minimal structure of an R package</p></li>
-<li><p><strong>Test a package</strong>: how to build a test suite.</p></li>
-<li><p><strong>Develop a package</strong>: some good practices and considerations to keep in mind when developing an R package</p></li>
-<li><p><strong>Share a package</strong>: how to make your package installable by anyone</p></li>
-<li><p><strong>Use continuous integration</strong>: how to use GitHub or other platforms to check your package on every change</p></li>
+<li><p><a href="../../../training/modules-dev/package_building/create.html"><strong>Create a package</strong></a>: how to create the minimal structure of an R package</p></li>
+<li><p><a href="../../../training/modules-dev/package_building/test.html"><strong>Test a package</strong></a>: how to build a test suite.</p></li>
+<li><p><a href="../../../training/modules-dev/package_building/develop.html"><strong>Develop a package</strong></a>: some good practices and considerations to keep in mind when developing an R package</p></li>
+<li><p><a href="../../../training/modules-dev/package_building/share.html"><strong>Share a package</strong></a>: how to make your package installable by anyone</p></li>
+<li><p><a href="../../../training/modules-dev/package_building/ci.html"><strong>Use continuous integration</strong></a>: how to use GitHub or other platforms to check your package on every change</p></li>
 </ol>
 <p>Before we start, we recommend installing these three packages:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>, <span class="st">"testthat"</span>, <span class="st">"usethis"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -430,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-10
+ date     2026-11-11
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -458,7 +458,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    curl           8.1.0   2026-10-14 [1] RSPM
    cyclocomp      1.1.2   2026-03-11 [1] RSPM
    desc           1.4.3   2023-12-10 [1] RSPM
-   diffobj        0.3.9   2026-09-11 [1] RSPM
+   diffobj        0.3.10  2026-11-10 [1] RSPM
    digest         0.6.39  2025-11-19 [1] RSPM
    dplyr          1.2.1   2026-04-03 [1] RSPM
    evaluate       1.0.5   2025-08-27 [1] RSPM

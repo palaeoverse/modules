@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Etienne Bacher">
-<meta name="dcterms.date" content="2026-11-10">
+<meta name="dcterms.date" content="2026-11-11">
 
 <title>Create a package</title>
 <style>
@@ -338,9 +338,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#create-the-package" id="toc-create-the-package" class="nav-link" data-scroll-target="#create-the-package">Create the package</a></li>
   <li><a href="#add-our-functions" id="toc-add-our-functions" class="nav-link" data-scroll-target="#add-our-functions">Add our functions</a></li>
-  </ul></li>
   <li><a href="#document-a-function" id="toc-document-a-function" class="nav-link" data-scroll-target="#document-a-function">Document a function</a></li>
   <li><a href="#build-the-package" id="toc-build-the-package" class="nav-link" data-scroll-target="#build-the-package">Build the package</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -366,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 10, 2026</p>
+      <p class="date">November 11, 2026</p>
     </div>
   </div>
   
@@ -378,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/create.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-package-building/package_building/create.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -455,6 +455,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] 4</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We only created these functions to illustrate the package development process.</p>
+</div>
+</div>
 <section id="create-the-package" class="level3">
 <h3 data-anchor-id="create-the-package">Create the package</h3>
 <p>Let’s create a package called <code>my.pkg</code>. We can do this in various ways:</p>
@@ -496,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>├── R</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>└── my.pkg.Rproj</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -505,7 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you have the package <code>fs</code> installed, you can use <code>fs::dir_tree()</code> with the path you want.</p>
 <p>For example, if <code>my.pkg</code> is your working directory then you can simply call <code>fs::dir_tree()</code>, but if it is a subfolder then you need to call <code>fs::dir_tree("my.pkg")</code>.</p>
@@ -561,11 +574,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ℹ Loading my.pkg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We are now be able to run our functions in the console! We have now populated one of the two mandatory folders (<code>R</code>), so let’s move on to the documentation process, which will lead to the creation of the <code>man</code> folder.</p>
 </section>
-</section>
-<section id="document-a-function" class="level2">
-<h2 data-anchor-id="document-a-function">Document a function</h2>
+<section id="document-a-function" class="level3">
+<h3 data-anchor-id="document-a-function">Document a function</h3>
 <p>The documentation of a function is done in the <code>.R</code> file: it will then automatically be converted to an <code>.Rd</code> file placed in the <code>man</code> folder. There is <em>no need</em> to create an <code>.Rd</code> file yourself!</p>
-<p>Writing the documentation is similar to writing comments, but you need to use <code>#'</code> (with an apostrophe) instead of <code>#</code>.</p>
+<p>Writing the documentation is similar to writing comments, but we need to use <code>#'</code> (with an apostrophe) instead of <code>#</code>.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R/n_unique.R</strong></pre>
@@ -582,23 +594,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' n_unique(c(1, 2, 1))</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>n_unique <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(x))</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">#' n_unique(c(NA, "a", "b"))</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>n_unique <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(x))</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s go through these changes:</p>
 <ul>
 <li><code>@description</code> contains the text that appears between the title and the “Usage” section in a function help page. Usually it contains a few sentences describing the general purpose of the function.</li>
 <li><code>@param</code> is the description of the expected input (there can be several <code>@param</code> tags);</li>
 <li><code>@return</code> is the description of what this function returns;</li>
-<li><code>@export</code> indicates that this function is exported, i.e is available to users of this package;</li>
+<li><code>@export</code> indicates that this function is exported, i.e.&nbsp;it is available to users of this package;</li>
 <li><code>@examples</code> gives some examples that show how the function works.</li>
 </ul>
-<p>These are <code>roxygen2</code> tags, and there are many more that you can find here: https://roxygen2.r-lib.org/articles/rd.html.</p>
+<p>These are <code>roxygen2</code> tags, and there are many more that you can find here: <a href="https://roxygen2.r-lib.org/articles/rd.html">https://roxygen2.r-lib.org/articles/rd.html</a>.</p>
 <p>Let’s now run <code>devtools::document()</code> to create the <code>.Rd</code> file.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -607,7 +620,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Maybe <code>devtools::document()</code> will print the following message:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ℹ Updating my.pkg documentation</span>
@@ -649,8 +662,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The help page is one of the first things users will check to learn about your functions. Give details and <em>examples</em>!</p>
 <p>We now have the most basic structure of a working R package. Let’s build it!</p>
 </section>
-<section id="build-the-package" class="level2">
-<h2 data-anchor-id="build-the-package">Build the package</h2>
+<section id="build-the-package" class="level3">
+<h3 data-anchor-id="build-the-package">Build the package</h3>
+<p>To install this local version of our package, we can run <code>devtools::install()</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> devtools<span class="sc">::</span><span class="fu">install</span>()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>[...]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> <span class="fu">DONE</span> (my.pkg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Once this is done, we can load our package with <code>library(my.pkg)</code> and use the functions that belong to it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(my.pkg)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">n_unique</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 <hr><br><details>
@@ -665,7 +688,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-10
+ date     2026-11-11
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -693,7 +716,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    curl           8.1.0   2026-10-14 [1] RSPM
    cyclocomp      1.1.2   2026-03-11 [1] RSPM
    desc           1.4.3   2023-12-10 [1] RSPM
-   diffobj        0.3.9   2026-09-11 [1] RSPM
+   diffobj        0.3.10  2026-11-10 [1] RSPM
    digest         0.6.39  2025-11-19 [1] RSPM
    dplyr          1.2.1   2026-04-03 [1] RSPM
    evaluate       1.0.5   2025-08-27 [1] RSPM
@@ -792,6 +815,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </details>
+</section>
 </section>
 
 </main> <!-- /main -->
