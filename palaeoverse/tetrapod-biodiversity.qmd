@@ -129,7 +129,7 @@ str(tetrapods)
 Details on the dataset (e.g. source) are also available via the usual documentation call:
 
 ```{r}
-#| label: reefs-tetrapods
+#| label: help-tetrapods
 
 # Get dataset documentation
 help(tetrapods)
@@ -199,7 +199,7 @@ tetrapods[1:5, 35:37]
 ## Exercise 2: Check for age inconsistencies
 
 1. How many different interval names are there in `tetrapods`?
-2. What proportion of interval names could be matched using `look_up()`?
+2. How many interval names could not be matched using `look_up()`?
 3. Of the interval names that could be matched, what proportion had different numerical ages compared to those in the original dataset?
 :::
 
@@ -215,7 +215,7 @@ tetrapods[1:5, 35:37]
 ## Exercise 2: Answers
 
 1. `length(unique(c(tetrapods$early_interval, tetrapods$late_interval)))`: `r length(unique(c(tetrapods$early_interval, tetrapods$late_interval)))`
-2. `(sum(is.na(tetrapods$interval_max_ma))/nrow(tetrapods))`: `r (sum(is.na(tetrapods$interval_max_ma))/nrow(tetrapods))`
+2. The warning message tells us that three interval names could not be matched: "Early Triassic, Late Pennsylvanian, Vokhmian". We can also calculate the proportion of occurrences for which a match could not be found: `(sum(is.na(tetrapods$interval_max_ma))/nrow(tetrapods))`: `r (sum(is.na(tetrapods$interval_max_ma))/nrow(tetrapods))`
 3. There are a few different ways to check this - for example, you could subtract the columns from one another and see what proportion of these values are 0. Alternatively, you can also test whether the values are equal using `tetrapods$max_ma == tetrapods$interval_max_ma`, and work out the proportion that are not: `((nrow(tetrapods) - sum(as.numeric(tetrapods$max_ma == tetrapods$interval_max_ma), na.rm = TRUE))/nrow(tetrapods))`: `r ((nrow(tetrapods) - sum(as.numeric(tetrapods$max_ma == tetrapods$interval_max_ma), na.rm = TRUE))/nrow(tetrapods))`
 :::
 
@@ -488,7 +488,7 @@ plot(alpha_data$interval_mid_ma, alpha_data$n_taxa, # add the points
 It's a good start, but we would like to know which data points belong in which stages. We can use `palaeoverse::axis_geo()` to add a geological timescale to our plot.
 
 ```{r}
-#| label: alpha-scatter
+#| label: alpha-scatter-geol
 #| 
 # Set margins
 par(mar = c(7.1, 4.1, 4.1, 2.1)) # expand at bottom if adding more interval categories
