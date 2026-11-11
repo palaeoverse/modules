@@ -160,21 +160,27 @@ Let's now generate some simple summary statistics, to help us understand the sco
 In order to investigate diversity through time, we want to allocate each of our occurrences to a single time bin. First, we will generate stage-level bins spanning the Carboniferous and Permian, using `palaeoverse::time_bins()`.
 
 ```{r}
-#| label: Carbo-Perm-time-bins
-#| output-fold: true
-#| output-summary: "Output"
+#| label: Carbo-Perm-time-bins-graph
 #| 
 # Generate time bins
 bins <- time_bins(interval = c("Carboniferous", "Permian"),
                   rank = "stage",
                   scale = "GTS2020",
                   plot = TRUE)
-
-# View first few rows
-head(bins)
 ```
 
 The function gives us the option to generate a plot of our time bins - here we can see some variation in the duration of our different stages, with particularly long stages in the Early Carboniferous and shorter ones across the Carboniferous-Permian boundary. This is a form of structure inherent to our dataset, and something we should bear in mind for our downstream analyses.
+
+We can also take a look at the structure of the outputted table which describes the time bins.
+
+```{r}
+#| label: Carbo-Perm-time-bins-summary
+#| output-fold: true
+#| output-summary: "Output"
+#| 
+# View first few rows
+head(bins)
+```
 
 In the Paleobiology Database, occurrences are allocated to named temporal intervals, with the numeric dates filled in using the Database's internal timescale. We are going to generate numeric ages for these named intervals using `palaeoverse::look_up()`, to check whether these are up-to-date.
 
@@ -315,8 +321,6 @@ We can use `palaeoverse::palaeorotate()` to use a global plate model (GPM) to in
 
 ```{r}
 #| label: palaeorotate
-#| output-fold: true
-#| output-summary: "Output"
 #|
 # Palaeorotate occurrences
 mid_tetrapods <- palaeorotate(occdf = mid_tetrapods, age = "bin_midpoint",
@@ -353,19 +357,6 @@ head(mid_tetrapods[, c("cell_ID", "cell_centroid_lng", "cell_centroid_lat")])
 ```
 
 We can see that each occurrence has been placed into a grid cell, described using a unique ID, and with the centroid of the cell also provided.
-
-```{r}
-#| label: summarise-cells
-#| output-fold: true
-#| output-summary: "Output"
-#|
-# Extract unique interval midpoints
-#midpoints <- sort(unique(mid_tetrapods$bin_midpoint))
-
-# Calculate the number of unique cells in each time bin
-unique_cells <- unique(mid_tetrapods[, c("bin_midpoint", "cell_ID")])
-spat.cov <- group_apply(unique_cells, group = "bin_midpoint", fun = nrow)
-```
 
 ## Taxonomic wrangling
 
@@ -486,8 +477,6 @@ Great! Now we can plot our alpha diversity through time. Let's start with a simp
 
 ```{r}
 #| label: alpha-scatter
-#| output-fold: true
-#| output-summary: "Output"
 #| 
 # Make a plot for alpha diversity in the Carboniferous and Permian
 plot(alpha_data$interval_mid_ma, alpha_data$n_taxa, # add the points
@@ -500,8 +489,6 @@ It's a good start, but we would like to know which data points belong in which s
 
 ```{r}
 #| label: alpha-scatter
-#| output-fold: true
-#| output-summary: "Output"
 #| 
 # Set margins
 par(mar = c(7.1, 4.1, 4.1, 2.1)) # expand at bottom if adding more interval categories
@@ -577,8 +564,6 @@ From this information we can now plot how the average range size of tetrapods ch
 
 ```{r}
 #| label: convex-hulls-plot
-#| output-fold: true
-#| output-summary: "Output"
 #|
 # Find the average geographic range size for each time interval
 space_tetrapods_mean <- group_apply(space_tetrapods, "bin_midpoint", function(df) mean(df$area))
@@ -602,6 +587,9 @@ From this plot it seems like the average geographic range size of tetrapods incr
 #| output-fold: true
 #| output-summary: "Output"
 #|
+# Calculate the number of unique cells in each time bin
+unique_cells <- unique(mid_tetrapods[, c("bin_midpoint", "cell_ID")])
+spat.cov <- group_apply(unique_cells, group = "bin_midpoint", fun = nrow)
 # Run a correlation test between mean range size and the spatial spread of cells through time
 cor.test(log10(space_tetrapods_mean$mean_area), log10(spat.cov$nrow), method = "spearman")
 ```
