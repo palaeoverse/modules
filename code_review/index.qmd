@@ -32,10 +32,10 @@ comments:
 ::: {.callout}
 ## Learning Objectives
 
-After this module, you will:
+After completing this module, you will:
 
 - Understand what code review is and its benefits
-- Be able to perform self-code review
+- Be able to perform self code review
 - Be able to review other people’s code, and clearly and appropriately communicate your feedback
 - Be able to use GitHub features for code review
 :::
@@ -53,7 +53,7 @@ solution and next exercise */
 
 ## Prerequisites and related modules
 
-There is no technical prerequisite for most of the content on the principles of code review. However, some content and some exercises will refer to the Git & GitHub workflow. Therefore, you will need to have a GitHub account and to be familiar with working with Git and GitHub to follow along.
+There is no technical prerequisite for the content on the principles of code review. However, some content and exercises will refer to the Git & GitHub workflow. Therefore, you will need to have a GitHub account, and be familiar with working with Git and GitHub, to follow along.
 
 If needed, you can refer to [our module on Git and GitHub](https://palaeoverse.org/modules/pr-preview/pr-21/training/modules-dev/github/index.html).
 
@@ -65,7 +65,7 @@ Being able to review code becomes even more important as the amount of AI-genera
 
 Finally, reviewing code is a good way to learn about new methods, new coding practices, and new functions that you might not have known existed.
 
-## How to review code?
+## How to review code
 
 The main objectives of code review are i) to verify that the code aligns with what we expect it to do, ii) to find potential mistakes, and iii) to ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future.
 
@@ -78,9 +78,9 @@ Once the reviewer is more familiar with the code, they can follow up with questi
 ::: {.callout-note title="Expectations for code authors and code reviewers"}
 Both authors and reviewers should have realistic expectations of each other's roles.
 
-**The code author is responsible for the changes they propose.** They should do their best to follow good practices in order to facilitate code review and to ensure that other people can understand the code without asking them. This includes using informative variable names, providing clear documentation, and writing informative code comments to clarify why a piece of code is written how it is.
+**The code author is responsible for the code they are requesting to be reviewed, including enacting any change proposed during the process.** They should do their best to follow good practices in order to facilitate code review and to ensure that other people can understand the code without asking them. This includes using informative variable names, providing clear documentation, and writing informative code comments to clarify why a piece of code is written how it is.
 
-**The reviewer should check changes and provide opinions from an alternative point of view to the author.** This might require gathering some external knowledge that the author doesn't necessarily have to provide. For example, if the reviewer is not familiar with a particular base R function, then they may need to learn this information on their own. The author is not responsible for teaching the reviewer about this function, but they should ensure that the reviewer can easily retrieve all the required information to understand the code.
+**The reviewer's role is to give opinions on the code from an alternative point of view to the author.** This might require gathering some external knowledge that the author doesn't necessarily have to provide. For example, if the reviewer is not familiar with a base R function that has been used, then they may need to learn this information on their own. The author is not responsible for teaching the reviewer about this function, but they should ensure that the reviewer can easily retrieve all the required information to understand the code.
 
 This may add too much burden on the reviewer, in which case it might be better to transparently acknowledge that they cannot review some code (and, if possible, they may request a review from someone else). This is not ideal but it's also not the end of the world. Also, finding and resolving bugs can be a beneficial part of the review process, but remember that bugs can persist in code that has been reviewed by many people!
 :::
@@ -173,20 +173,19 @@ if (length(idx_to_remove) > 0) {
 :::::
 :::
 
-## Where to review code (either yours or someone else's)?
+## Where to review code
 
-Now that we know how to critically review code, we need to be able to communicate our findings to the author. One obvious way would be to talk to the author directly or via email, but that quickly leads to information being lost, which increases the chances of these issues reappearing later. Instead, we should use tools that are dedicated to collaborative coding, such as Git and GitHub.
+Now that we know how to critically review code, we need to be able to communicate our findings. We could talk directly, or via email or a messaging service, but that quickly leads to information being lost, which increases the chances of these issues reappearing later. Instead, we should use tools that are dedicated to collaborative coding, such as Git and GitHub.
 
-In this section, we assume that you are already familiar with the Git workflow to create and merge branches. We also assume that you have a GitHub account. The Git and GitHub module provides an introduction to these two tools.
+In this section, we assume that you are already familiar with the Git workflow to create and merge branches. We also assume that you have a GitHub account. The [Git and GitHub module](https://palaeoverse.org/modules/pr-preview/pr-21/training/modules-dev/github/index.html) provides an introduction to these two tools.
 
-If needed, you can refer to [our module on Git and GitHub](https://palaeoverse.org/modules/pr-preview/pr-21/training/modules-dev/github/index.html).
 
 ::: {.callout-note title="Steps to reproduce the video below" collapse="true"}
-How to use the GitHub interface to review PRs?
+How to use the GitHub interface to review pull requests (PRs)
 
 - Go to the PR
 - Go to the tab "Files changed". All changes are displayed there. Some files are collapsed (e.g. Rd files), indicating that they are automatically generated and shouldn’t be reviewed.
-- When you hover a line, a blue cross appears on the left. This is how you can select a line for which you want to add a comment.
+- When you hover over a line, a blue cross appears on the left. This is how you can select the line for which you want to add a comment.
 - Write your comment using the Markdown syntax. There is a button "Add a suggestion" that you can use to directly show the change you would like the author to apply.
 - All comments you make are "Pending", meaning that they are not visible to the author until you submit your review. They are still saved, so you can leave without submitting your review and come back to it later if needed.
 - Once you have written all your comments, go to "Submit review". There, you can decide whether you want to accept the PR, request changes (meaning that the author won’t be able to merge until you approve), or comment only. You can also write a general message regarding the PR.
@@ -199,17 +198,17 @@ Note that you can pull the branch locally to directly try it and explore more be
 
 ## Self-reviewing your code
 
-Before asking someone else to review the code, it is a good practice to review your code yourself. This largely overlaps with what a reviewer would do, meaning that you need to be able to answer the questions detailed in the "How to review code?" above. Try to put yourself in the position of someone who knows less about your project than you do, is everything clearly explained?
+Before asking someone else to review the code, it is a good practice to review your code yourself. This largely overlaps with what a reviewer would do, meaning that you need to be able to answer the questions detailed in the section "How to review code?" above. Try to put yourself in the position of someone who knows less about your project than you do, is everything clearly explained?
 
-You also need to ensure that your code is being tested. In an R package, this means that the test suite must not have any failures (and potentially that you must add new tests). In a data analysis project, this could be done via data validation (e.g. with [validate](https://github.com/data-cleaning/validate)), and with some tests as well.
+You also need to ensure that your code is being tested. In an R package, this means that the test suite must not have any failures (you may also need to add new tests). In a data analysis project, this could be done via data validation (e.g. with [validate](https://github.com/data-cleaning/validate)), as well as with tests.
 
-Finally, you should make sure your changes are as self-contained as possible. It is good practice to have one pull request (PR) per new analysis, feature or bug fix: it is easier and faster to review (which benefits both the author and the reviewer) and it helps debugging in the future, since it is easier to narrow down the change that caused a problem. In many cases, PRs should contain code changes, updated documentation, and new tests, but this depends a lot on the context.
+Finally, you should make sure your code to be reviewed is as self-contained as possible. It is good practice to have one pull request (PR) per new analysis, feature or bug fix: it is easier and faster to review (which benefits both the author and the reviewer) and it helps debugging in the future, since it is easier to narrow down the change that caused a problem. In many cases, PRs should contain code changes, updated documentation, and new tests, but this depends a lot on the context.
 
 ## Review process
 
 ### Reviewer side
 
-Communicating comments to the author in a constructive way can be hard. The reviewer should remember the overarching goal of the code they are reviewing: is this something to improve code readability? Is it a change to improve the performance at the expense of readability? This will determine the scope and relevance of the comments needed.
+Communicating comments to the author in a constructive way can be hard. At the outset, the reviewer should remember the overarching goal of the code they are reviewing. For example, a suggestion which improves performance at the expense of readability may conflict with the goals of the PR or project. This context will determine the scope and relevance of the comments needed.
 
 It is important that the reviewer focuses on critiquing the code and not the author. Alienating the author has no benefit in terms of output and morale: either the discussion becomes more aggressive and the code isn't properly written or reviewed anymore, or one of the parties involved simply stops spending time on the PR, and maybe will stop contributing altogether.
 
