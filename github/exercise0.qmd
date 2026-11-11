@@ -74,11 +74,11 @@ When you work on your own on only one laptop, this is usually not a problem beca
 
 ## Branches
 
-So far, we used self-contained commits as examples, e.g. a commit that creates a plot. Sometimes, the changes we want to make rely on several commits. For example, we may want to add a new function in a package, but we work on this over several days and we want to get feedback from collaborators on the design of this function. 
+So far, we used self-contained commits as examples, e.g. a commit that creates a plot. Sometimes, the changes we want to make rely on several commits. For example, we may want to add a new function in a package, but we work on this over several days and we need to address feedback from collaborators on the design of this function. 
 
 Pushing a lot of intermediate commits to the `main` branch would have three downsides. First, it would make the commit history more complex because we now have commits that are not self-contained anymore. Second, regularly pushing commits means that all our collaborators would have to pull these (incomplete) changes. Finally, it makes it easier to leave an incomplete feature in the main branch without ever finishing it.
 
-To address this issue, we can use **branches**. A branch is a way to create a parallel environment where we can push our commits. Anyone can create a branch and a git project can have as many branches as you want. 
+To address this issue, we can use **branches**. A branch is a sort of parallel environment where we can push our commits. Anyone can create a branch and a git project can have as many branches as you want. 
 
 ### Creating and merging a branch
 
@@ -99,7 +99,7 @@ gitGraph
 </pre>
 ```
 
-We have created a branch `create-my-arg` and added three commits there to create the function and add documentation and tests. As you can see, our changes related to `bar()` are not on `main` so none of the concerns raised above exist here. Once everyone is happy with the changes in our branch, we can **merge** it to our `main` branch. 
+We have created a branch `create-my-arg` and added three commits there to create this new argument, and to add documentation and tests. As you can see, our changes related to `my_arg` are not on `main` so none of the concerns raised above exist here. Once everyone is happy with the changes in our branch, we can **merge** it to our `main` branch. 
 
 ```{=html}
 <pre class="mermaid">
