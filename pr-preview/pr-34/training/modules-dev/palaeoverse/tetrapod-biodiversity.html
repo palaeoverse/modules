@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="Bethany J. Allen">
-<meta name="dcterms.date" content="2026-11-10">
+<meta name="dcterms.date" content="2026-11-11">
 <meta name="description" content="How diverse were tetrapods in the Palaeozoic, and how was this diversity structured through time and across space?">
 
 <title>Exercise 1: Tracking the diversity of early tetrapods</title>
@@ -323,6 +323,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#preamble" id="toc-preamble" class="nav-link active" data-scroll-target="#preamble">Preamble</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#the-tetrapods-dataset" id="toc-the-tetrapods-dataset" class="nav-link" data-scroll-target="#the-tetrapods-dataset">The <code>tetrapods</code> dataset</a></li>
+  <li><a href="#time-binning" id="toc-time-binning" class="nav-link" data-scroll-target="#time-binning">Time binning</a></li>
+  <li><a href="#spatial-binning" id="toc-spatial-binning" class="nav-link" data-scroll-target="#spatial-binning">Spatial binning</a></li>
+  <li><a href="#taxonomic-wrangling" id="toc-taxonomic-wrangling" class="nav-link" data-scroll-target="#taxonomic-wrangling">Taxonomic wrangling</a></li>
+  <li><a href="#quantifying-spatial-patterns" id="toc-quantifying-spatial-patterns" class="nav-link" data-scroll-target="#quantifying-spatial-patterns">Quantifying spatial patterns</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-up</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="tetrapod-biodiversity-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
@@ -361,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 10, 2026</p>
+      <p class="date">November 11, 2026</p>
     </div>
   </div>
   
@@ -373,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/tetrapod-biodiversity.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/tetrapod-biodiversity.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -394,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 <section id="preamble" class="level2">
 <h2 data-anchor-id="preamble">Preamble</h2>
-<p>In this tutorial, you will use <strong>palaeoverse</strong> to explore the temporal and spatial diversity patterns of Palaeozoic tetrapods.</p>
+<p>In this tutorial, you will use <strong>palaeoverse</strong> to explore the temporal and spatial diversity patterns of Palaeozoic tetrapods, using data from the Paleobiology Database (Uhen et al.&nbsp;2026).</p>
 <p>Along the way, you will meet many functions used in a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.</p>
 <p>To help cement your knowledge, there are multiple exercises throughout this tutorial for you to work through.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -418,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level2">
 <h2 data-anchor-id="introduction">Introduction</h2>
 <p>The name <strong>Tetrapoda</strong> stems from the Ancient Greek words for ‘four’ and ‘feet’. It is a clade which originated when chordates first evolved limbs and developed the ability to walk, gradually transitioning from aquatic to terrestrial environments. All terrestrial four-limbed animals are members of this clade, including amphibians, reptiles, and mammals. This major evolutionary transition has received a lot of attention, in part because this clade represents our ancestors.</p>
-<p>The fossil record of early tetrapods is considered relatively sparse, meaning that we do not have a clear picture of the timing and order of the acquisition of the different adaptations needed to thrive on land. But just how sparse is the record, and what does it indicate about how diverse the earliest tetrapods were? Here, we will address the question “<strong>how did tetrapod diversity develop over the Palaeozoic?</strong>” by quantifying and comparing temporal and spatial diversity patterns.</p>
+<p>The fossil record of early tetrapods is considered relatively sparse, meaning that we do not have a clear picture of the timing and order of the acquisition of the different adaptations needed to thrive on land (e.g.&nbsp;Dunne et al.&nbsp;2018). But just how sparse is the record, and what does it indicate about how diverse the earliest tetrapods were? Here, we will address the question “<strong>how did tetrapod diversity develop over the Palaeozoic?</strong>” by quantifying and comparing temporal and spatial diversity patterns.</p>
 <p>Let’s start by installing and loading the <strong>palaeoverse</strong> R package:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install palaeoverse</span></span>
@@ -448,70 +453,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load built-in dataset</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let’s inspect our data:</p>
-<div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View first six rows</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  occurrence_no collection_no                        identified_name
-1        146665         12943     n. gen. Anconastes n. sp. vesperus
-2        147090         13004                     Gorgonopsia indet.
-3        147521         13043 n. gen. Procolophon n. sp. trigoniceps
-4        147523         13044       n. gen. Ophiodeirus n. sp. casei
-5        147563         13046         Broiliellus n. sp. arroyoensis
-6        147564         13048              Broiliellus n. sp. olsoni
-  identified_rank           accepted_name accepted_rank early_interval
-1         species     Anconastes vesperus       species     Missourian
-2        suborder             Gorgonopsia      suborder     Capitanian
-3         species Procolophon trigoniceps       species         Induan
-4         species       Araeoscelis casei       species     Artinskian
-5         species Broiliellus arroyoensis       species      Kungurian
-6         species      Broiliellus olsoni       species       Wolfcamp
-  late_interval max_ma min_ma   phylum        class              order
-1      Gzhelian 305.90  298.9 Chordata Osteichthyes      Temnospondyli
-2          &lt;NA&gt; 265.10  259.9 Chordata Osteichthyes       Cotylosauria
-3     Olenekian 252.17  247.2 Chordata     Reptilia NO_ORDER_SPECIFIED
-4          &lt;NA&gt; 290.10  279.3 Chordata     Reptilia      Araeoscelidia
-5          &lt;NA&gt; 279.30  272.3 Chordata Osteichthyes      Temnospondyli
-6          &lt;NA&gt; 296.40  268.0 Chordata Osteichthyes      Temnospondyli
-           family       genus abund_value  abund_unit        lng       lat
-1    Trematopidae  Anconastes           2   specimens -106.34778  36.30444
-2            &lt;NA&gt;        &lt;NA&gt;           1   specimens   22.00000 -32.36667
-3 Procolophonidae Procolophon          10   specimens   26.50972 -32.10611
-4   Araeoscelidae Araeoscelis           2 individuals  -98.93361  33.61167
-5   Dissorophidae Broiliellus           6   specimens  -99.20000  33.80972
-6   Dissorophidae Broiliellus           2   specimens  -98.14778  33.82639
-                   collection_name cc     formation stratgroup member
-1                  El Cobre Canyon US        Cutler       &lt;NA&gt;   &lt;NA&gt;
-2            Hottentotsrivier Farm ZA Abrahamskraal   Beaufort   &lt;NA&gt;
-3 Donnybrook (Queenstown District) ZA       Katberg   Beaufort   &lt;NA&gt;
-4            Mouth of Godwin Creek US        Nocona    Wichita   &lt;NA&gt;
-5               Broiliellus pocket US        Arroyo Clear Fork   &lt;NA&gt;
-6                    Thaxton Ranch US          &lt;NA&gt;    Wichita   &lt;NA&gt;
-                       zone   lithology1        environment
-1                      &lt;NA&gt;    siltstone     dry floodplain
-2 Tapinocephalus Assemblage    sandstone       "floodplain"
-3                      &lt;NA&gt;     mudstone     fluvial indet.
-4                      &lt;NA&gt; conglomerate terrestrial indet.
-5                      &lt;NA&gt; not reported terrestrial indet.
-6                      &lt;NA&gt; not reported terrestrial indet.
-             pres_mode               taxon_environment        motility
-1                 body brackish,freshwater,terrestrial actively mobile
-2 body,mold/impression                     terrestrial actively mobile
-3                 body                     terrestrial actively mobile
-4                 body                     terrestrial actively mobile
-5                 body brackish,freshwater,terrestrial actively mobile
-6                 body brackish,freshwater,terrestrial actively mobile
-       life_habit      diet
-1 ground dwelling carnivore
-2            &lt;NA&gt; carnivore
-3            &lt;NA&gt;      &lt;NA&gt;
-4            &lt;NA&gt;      &lt;NA&gt;
-5 ground dwelling carnivore
-6 ground dwelling carnivore</code></pre>
+<p>Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let’s take a look at the data frame:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View top left corner</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect dataset structure</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Now we can get some more general information about what is contained in the dataset, such as the variable names and the types of data held for those variables:</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View column names</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "occurrence_no"     "collection_no"     "identified_name"  
+ [4] "identified_rank"   "accepted_name"     "accepted_rank"    
+ [7] "early_interval"    "late_interval"     "max_ma"           
+[10] "min_ma"            "phylum"            "class"            
+[13] "order"             "family"            "genus"            
+[16] "abund_value"       "abund_unit"        "lng"              
+[19] "lat"               "collection_name"   "cc"               
+[22] "formation"         "stratgroup"        "member"           
+[25] "zone"              "lithology1"        "environment"      
+[28] "pres_mode"         "taxon_environment" "motility"         
+[31] "life_habit"        "diet"             </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect dataset structure</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   5270 obs. of  32 variables:
  $ occurrence_no    : num  146665 147090 147521 147523 147563 ...
@@ -548,25 +513,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  $ diet             : chr  "carnivore" "carnivore" NA NA ...</code></pre>
 </div>
 </div>
-<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;source) are also available via the usual documentation call:</p>
+<p>Details on the dataset (e.g.&nbsp;source) are also available via the usual documentation call:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get dataset documentation</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get dataset documentation</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Let’s now generate some simple summary statistics, to help us understand the scope and scale of the dataset.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Exercise: Get to know <code>tetrapods</code>
+<span class="screen-reader-only">Warning</span>Exercise 1: Get to know <code>tetrapods</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
 <li>How many occurrences (observations/rows) are there?</li>
-<li>How many variables (columns) are there?</li>
 <li>How old is the oldest tetrapod occurrence?</li>
+<li>How young is the youngest occurrence in the dataset?</li>
 <li>Are any of the occurrences missing coordinates?</li>
 </ul>
 </div>
@@ -585,19 +551,638 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><code>nrow(tetrapods)</code>: 5270</li>
-<li><code>ncol(tetrapods)</code>: 32</li>
 <li><code>max(tetrapods$max_ma, na.rm = TRUE)</code>: 358.9</li>
+<li><code>min(tetrapods$min_ma, na.rm = TRUE)</code>: 247.2</li>
 <li><code>sum(is.na(tetrapods$lat))</code>: 0</li>
 </ol>
 </div>
 </div>
 </div>
 </section>
+<section id="time-binning" class="level2">
+<h2 data-anchor-id="time-binning">Time binning</h2>
+<p>In order to investigate diversity through time, we want to allocate each of our occurrences to a single time bin. First, we will generate stage-level bins spanning the Carboniferous and Permian, using <code>palaeoverse::time_bins()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate time bins</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"Carboniferous"</span>, <span class="st">"Permian"</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rank =</span> <span class="st">"stage"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">scale =</span> <span class="st">"GTS2020"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tetrapod-biodiversity_files/figure-html/Carbo-Perm-time-bins-graph-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The function gives us the option to generate a plot of our time bins - here we can see some variation in the duration of our different stages, with particularly long stages in the Early Carboniferous and shorter ones across the Carboniferous-Permian boundary. This is a form of structure inherent to our dataset, and something we should bear in mind for our downstream analyses.</p>
+<p>We can also take a look at the structure of the outputted table which describes the time bins.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View first few rows</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  bin interval_name  rank max_ma mid_ma min_ma duration_myr abbr  colour  font
+1   1   Tournaisian stage  358.9 352.80  346.7         12.2    T #8CB06C black
+2   2        Visean stage  346.7 338.80  330.9         15.8    V #A6B96C black
+3   3  Serpukhovian stage  330.9 327.05  323.2          7.7   Se #BFC26B black
+4   4    Bashkirian stage  323.2 319.20  315.2          8.0    B #99C2B5 black
+5   5     Moscovian stage  315.2 311.10  307.0          8.2    M #B3CBB9 black
+6   6    Kasimovian stage  307.0 305.35  303.7          3.3   Ka #BFD0C5 black</code></pre>
+</div>
+</div>
+<p>In the Paleobiology Database, occurrences are allocated to named temporal intervals, with the numeric dates filled in using the Database’s internal timescale. We are going to generate numeric ages for these named intervals using <code>palaeoverse::look_up()</code>, to check whether these are up-to-date.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get new numeric ages for named intervals using the interval key that is supplied with palaeoverse</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="ot">&lt;-</span> <span class="fu">look_up</span>(tetrapods, <span class="at">int_key =</span> interval_key)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the newly added columns</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>tetrapods[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">35</span><span class="sc">:</span><span class="dv">37</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  interval_max_ma interval_mid_ma interval_min_ma
+1         307.000         302.950          298.90
+2         265.100         262.100          259.10
+3         251.902         249.551          247.20
+4         290.100         286.800          283.50
+5         283.500         278.225          272.95</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 2: Check for age inconsistencies
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>How many different interval names are there in <code>tetrapods</code>?</li>
+<li>How many interval names could not be matched using <code>look_up()</code>?</li>
+<li>Of the interval names that could be matched, what proportion had different numerical ages compared to those in the original dataset?</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 2: Hint
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>The <code>early_interval</code> and <code>late_interval</code> columns give the upper and lower boundary intervals for each occurrence.</li>
+<li>Intervals which cannot be matched will produce <code>NA</code> outputs.</li>
+<li><code>max_ma</code> and <code>min_ma</code> contain the numerical ages in the orginal dataset, and <code>interval_max_ma</code> and <code>interval_min_ma</code> contain the numerical ages generated by <code>look_up()</code>. As not all intervals could be looked up, remember that you will also have to handle <code>NA</code> values in these latter columns.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 2: Answers
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><code>length(unique(c(tetrapods$early_interval, tetrapods$late_interval)))</code>: 74</li>
+<li>The warning message tells us that three interval names could not be matched: “Early Triassic, Late Pennsylvanian, Vokhmian”. We can also calculate the proportion of occurrences for which a match could not be found: <code>(sum(is.na(tetrapods$interval_max_ma))/nrow(tetrapods))</code>: 0.0301708</li>
+<li>There are a few different ways to check this - for example, you could subtract the columns from one another and see what proportion of these values are 0. Alternatively, you can also test whether the values are equal using <code>tetrapods$max_ma == tetrapods$interval_max_ma</code>, and work out the proportion that are not: <code>((nrow(tetrapods) - sum(as.numeric(tetrapods$max_ma == tetrapods$interval_max_ma), na.rm = TRUE))/nrow(tetrapods))</code>: 0.7060721</li>
+</ol>
+</div>
+</div>
+</div>
+<p>Now that we have an understanding of the amount of uncertainty surrounding the age of some of our occurrences, let’s tidy it up by filling in the ages of intervals not included in the <code>look_up()</code> table with those that they were allocated by the Paleobiology Database.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure that any values which could not be matched contain their original values</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_max_ma <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_max_ma),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>max_ma,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>interval_max_ma)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_min_ma <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_min_ma),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>min_ma,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>interval_min_ma)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_mid_ma <span class="ot">&lt;-</span> (tetrapods<span class="sc">$</span>min_ma <span class="sc">+</span> tetrapods<span class="sc">$</span>max_ma)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that there are no remaining NA values</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_max_ma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>Now we are ready to allocate our occurrences to our time bins. We will do this using the <code>palaeoverse::bin_time()</code> function, with the ‘mid’ method.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename columns so that new intervals are used for binning</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"old_max_ma"</span>, <span class="st">"old_min_ma"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">37</span>)] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"max_ma"</span>, <span class="st">"min_ma"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate time bins</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> tetrapods,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">bins =</span> bins,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>It seems we have hit an error!</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 3: Spot the problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why are we getting an error when we try to bin our occurrences?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 3: Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If we remember back to our initial exploration of the data, the youngest occurrences in the dataset are Early Triassic in age. This sits outside of the Carboniferous-Permian interval across which we have generated our time bins. The function is giving us an error because these Early Triassic occurrences are too young to be placed into any of the provided time bins.</p>
+</div>
+</div>
+</div>
+<p>We will remove these problematic occurrences and try again.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove occurrences that are younger than the time intervals we're interested in</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>cp_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(tetrapods, min_ma <span class="sc">&gt;</span> <span class="fu">min</span>(bins<span class="sc">$</span>min_ma))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin occurrences into chosen time bins</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> cp_tetrapods,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">bins =</span> bins,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This time we have received a warning, but no error. Let’s take a look at the new columns added to the dataset.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># View new columns</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mid_tetrapods[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">38</span><span class="sc">:</span><span class="dv">41</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id n_bins bin_assignment bin_midpoint
+1  1      2              7      301.300
+2  2      1             14      262.100
+4  3      2             10      286.800
+5  4      2             11      278.225
+6  5      6             11      278.225</code></pre>
+</div>
+</div>
+<p>The second of these new columns is <code>n_bins</code>, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how <code>bin_time</code> has processed our data.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a table of potential number of bins</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mid_tetrapods<span class="sc">$</span>n_bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4    5    6    7    8    9 
+ 703 2084  854  162   31  190   24    2   59 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert counts into proportions</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mid_tetrapods<span class="sc">$</span>n_bins) <span class="sc">/</span> <span class="fu">nrow</span>(mid_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+           1            2            3            4            5            6 
+0.1710878559 0.5071793624 0.2078364566 0.0394256510 0.0075444147 0.0462399611 
+           7            8            9 
+0.0058408372 0.0004867364 0.0143587248 </code></pre>
+</div>
+</div>
+<p>We can see that around 70% of the occurrences can be allocated to a single stage, whereas the remaining 30% span between 2 and 8 geological stages. For this 30%, the <code>method</code> that we choose to bin the data becomes very important, as it determines which of these stages the occurrence will be placed within.</p>
+</section>
+<section id="spatial-binning" class="level2">
+<h2 data-anchor-id="spatial-binning">Spatial binning</h2>
+<p>Remember at the start of the exercise, we saw that every occurrence has a latitude and longitude. However, this corresponds to the modern-day coordinates of the locality in which they were found. If we want to understand spatial patterns in deep time, we need to infer the palaeo-coordinates at which the fossils were deposited.</p>
+<p>We can use <code>palaeoverse::palaeorotate()</code> to use a global plate model (GPM) to infer how rocks on the Earth’s surface have shifted over time due to continental drift. You can find more information about how this works using <code>help(palaeorotate)</code>. It’s worth noting that different GPMs will produce different results (Buffan et al.&nbsp;2023), but for now we will go ahead with using the PALEOMAP GPM (Scotese &amp; Wright 2018).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Palaeorotate occurrences</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">palaeorotate</span>(<span class="at">occdf =</span> mid_tetrapods, <span class="at">age =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">method =</span> <span class="st">"point"</span>, <span class="at">model =</span> <span class="st">"PALEOMAP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let’s now take a look at our new columns containing the palaeocoordinates.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># View new columns</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"p_lng"</span>, <span class="st">"p_lat"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     p_lng    p_lat
+1 -39.1618   2.9214
+2 -33.9023 -59.1946
+4 -30.1811  -0.9483
+5 -28.4255   2.7177
+6 -27.6584   2.2973
+7 -16.5579  -6.0513</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Did any of the rotations fail?</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(mid_tetrapods<span class="sc">$</span>p_lng))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>We can now generate our spatial bins and lace our occurrences into them based on their palaeo-coordinates. Here we will generate and bin into equal-area hexagonal grid cells (based on <a href="https://h3geo.org">Uber’s H3 system</a>).</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate hex cells with diameter around 100km, and bin occurrences</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_space</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">spacing =</span> <span class="dv">100</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the first 6 rows of the new columns added using `bin_space()`.</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"cell_ID"</span>, <span class="st">"cell_centroid_lng"</span>, <span class="st">"cell_centroid_lat"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          cell_ID cell_centroid_lng cell_centroid_lat
+1 8380d4fffffffff         -38.83199          3.041113
+2 83dd68fffffffff         -34.66666        -59.098482
+4 837d4bfffffffff         -29.87896         -1.198269
+5 837c45fffffffff         -28.90252          2.777952
+6 837c44fffffffff         -27.94209          2.183584
+7 837da3fffffffff         -16.16673         -6.154225</code></pre>
+</div>
+</div>
+<p>We can see that each occurrence has been placed into a grid cell, described using a unique ID, and with the centroid of the cell also provided.</p>
+</section>
+<section id="taxonomic-wrangling" class="level2">
+<h2 data-anchor-id="taxonomic-wrangling">Taxonomic wrangling</h2>
+<p>In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g.&nbsp;genera or species); however, this can result in some useful information being discarded. The tax_unique function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:</p>
+<ul>
+<li><em>Albertosaurus sarcophagus</em></li>
+<li><em>Ankylosaurus</em> sp.</li>
+<li>Ceratopsidae indet.</li>
+<li><em>Ornithominus</em> sp.</li>
+<li><em>Tyrannosaurus rex</em></li>
+</ul>
+<p>A filter for species-level identifications would reduce the species richness to just two (<em>A. sarcophagus</em> and <em>T. rex</em>). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. <code>palaeoverse::tax_unique()</code> is designed to deal with such taxonomic data and would retain all five ‘species’ in this example. For further details see <code>help(tax_unique)</code>.</p>
+<p>This function can be especially helpful when we want to quantify alpha (local) diversity. Let’s use this function to investigate the number of unique genera in our dataset.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter occurrences to unique genera</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>tet_genera <span class="ot">&lt;-</span> <span class="fu">tax_unique</span>(<span class="at">occdf =</span> mid_tetrapods, <span class="at">genus =</span> <span class="st">"genus"</span>, <span class="at">family =</span> <span class="st">"family"</span>, <span class="at">order =</span> <span class="st">"order"</span>, <span class="at">class =</span> <span class="st">"class"</span>, <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a preview of the output table</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tet_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         class         order            family              genus
+1 Osteichthyes  Dicynodontia              &lt;NA&gt;           Abajudon
+2 Osteichthyes  Cotylosauria Charassognathidae          Abdalodon
+3     Reptilia          &lt;NA&gt;  Nyctiphruretidae        Abyssomedon
+4 Osteichthyes Temnospondyli      Zatracheidae   Acanthostomatops
+5     Reptilia      Eosuchia              &lt;NA&gt; Acerosodontosaurus
+6 Osteichthyes Temnospondyli      Trematopidae           Acheloma
+             unique_name
+1           Abajudon sp.
+2          Abdalodon sp.
+3        Abyssomedon sp.
+4   Acanthostomatops sp.
+5 Acerosodontosaurus sp.
+6           Acheloma sp.</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 4: Save our cryptic diversity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How many occurrences are retained in the dataset by <code>tax_unique()</code>, which would otherwise have been discarded?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 4: Hint
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Remember that the <code>genus</code> column contains the genus name for each occurrence in both the original and generated data frames. In our original dataset, each row contains one occurrence, but in the output of <code>tax_unique()</code>, each row corresponds to a unique genus, labelled with its <code>unique_name</code>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 4: Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We can find out the number of unique genera in our original dataset using <code>length(unique(mid_tetrapods$genus))</code>: 804. The number of unique genera after using <code>tax_unique</code> is <code>length(unique(tet_genera$unique_name))</code>: 807. This shows us that there are two additional unique genera retained when we use <code>tax_unique</code>.</p>
+</div>
+</div>
+</div>
+<p>We can see the additional occurrences retained at the end of our output table.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># View extra occurrence</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tet_genera[<span class="dv">718</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           class        order          family       genus     unique_name
+718 Osteichthyes Cotylosauria    Gorgonopidae Suchogorgon Suchogorgon sp.
+719 Osteichthyes         &lt;NA&gt; Chroniosuchidae   Suchonica   Suchonica sp.</code></pre>
+</div>
+</div>
+<p>Now that we’ve seen what this function can do, let’s apply it in a way that lets us check for unique genera in each collection (= locality) using <code>palaeoverse::group_apply()</code>:</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fun =</span> tax_unique,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co"># See structure of the new dataframe:</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         class         order           family      genus         unique_name
+1 Osteichthyes          &lt;NA&gt;             &lt;NA&gt;       &lt;NA&gt; Osteichthyes indet.
+2 Osteichthyes Temnospondyli    Dissorophidae   Parioxys        Parioxys sp.
+3 Osteichthyes  Cotylosauria             &lt;NA&gt;   Archeria        Archeria sp.
+4     Reptilia          &lt;NA&gt;     Bolosauridae Bolosaurus      Bolosaurus sp.
+5 Osteichthyes  Cotylosauria      Diadectidae  Diadectes       Diadectes sp.
+6 Osteichthyes  Cotylosauria Sphenacodontidae Dimetrodon      Dimetrodon sp.
+  collection_no
+1         11149
+2         11152
+3         11165
+4         11165
+5         11165
+6         11165</code></pre>
+</div>
+</div>
+<p>In addition to the columns we had before, we have now gained a <code>collection_no</code> column. We are now able to count the unique number of genera per collection.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the names of unique genera per collection</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename column names:</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a quick look at the new dataframe</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  n_taxa collection_no
+1      1        104796
+2      1        106270
+3      3        106558
+4      8        108766
+5      3        109702
+6      1         11149</code></pre>
+</div>
+</div>
+<p>In order to plot alpha diversity through time, we will also need to add interval age data to this table.</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take the columns pertaining to collections and their ages in millions of years:</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"min_ma"</span>)]</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>coll_info <span class="ot">&lt;-</span> coll_info[<span class="sc">!</span><span class="fu">duplicated</span>(coll_info[<span class="dv">1</span>]),]</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine this dataframe with the dataframe from above</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>alpha_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(coll_info, coll_taxa, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look:</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(alpha_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  collection_no max_ma interval_mid_ma min_ma n_taxa
+1         11149  290.1          284.70  279.3      1
+2         11152  295.5          283.90  272.3      1
+3         11165  298.9          294.50  290.1      9
+4         11323  303.4          301.15  298.9      1
+5         12943  305.9          302.40  298.9      1
+6         12976  279.3          275.80  272.3      7</code></pre>
+</div>
+</div>
+<p>Great! Now we can plot our alpha diversity through time. Let’s start with a simple scatterplot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a plot for alpha diversity in the Carboniferous and Permian</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Time (Ma)"</span>, <span class="at">ylab=</span><span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tetrapod-biodiversity_files/figure-html/alpha-scatter-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It’s a good start, but we would like to know which data points belong in which stages. We can use <code>palaeoverse::axis_geo()</code> to add a geological timescale to our plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set margins</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">7.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>)) <span class="co"># expand at bottom if adding more interval categories</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the final alpha diversity plot</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the elft side</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>), <span class="at">title =</span> <span class="st">"Time (Ma)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tetrapod-biodiversity_files/figure-html/alpha-scatter-geol-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can now see an overall increasing trend in maximum tetrapod alpha diversity over the Carboniferous and Permian, with a few extra-diverse outliers.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 5: Interrogating alpha diversity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What steps could we take to investigate this trend in alpha diversity further?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 5: Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are many things we could try, but here are some suggestions: - Fit a trend line, to see whether the average alpha richness really increased - Identify the overly-diverse (outlier) collections and look into why they were so diverse, do they represent Lagerstätten? - Look into the relationship between stage duration and alpha diversity - Explore the effect of the lower bound on this distribution - every locality contains at least one tetrapod, what impact does this have on the averages we might want to calculate?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="quantifying-spatial-patterns" class="level2">
+<h2 data-anchor-id="quantifying-spatial-patterns">Quantifying spatial patterns</h2>
+<p>Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the <code>palaeoverse::tax_range_space()</code> function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we’ll use the method <code>con</code> which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space).</p>
+<p>We can use this in combination with <code>group_apply</code> to calculate the convex hull size for each genus in each time interval:</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, remove any occurrences without a genus</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(mid_tetrapods, <span class="sc">!</span><span class="fu">is.na</span>(genus))</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Find temporal range of all genera</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> space_tetrapods,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>),</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">fun =</span> tax_range_space,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">name =</span> <span class="st">"genus"</span>,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">method =</span> <span class="st">"con"</span>)</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Have a look at the dataset</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(space_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          taxon taxon_id area bin_midpoint
+1     Brontopus        1    0      253.021
+2    Bunostegos        2    0      253.021
+3   Cyonosaurus        3    0      253.021
+4    Dalongkoua        4    0      253.021
+5 Daptocephalus        5    0      253.021
+6     Diictodon        6    0      253.021</code></pre>
+</div>
+</div>
+<p>As you can see, the combination of <code>group_apply</code> and <code>tax_range_space</code> produces a dataset with the area of geographic range for each taxon in kilometers squared for each time interval.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 6: Area Zero
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What does it mean for a convex hull to have an area of <code>0</code>?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 6: Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A value of <code>0</code> means the convex hull has no volume, because it consists of a single point - i.e.&nbsp;there is only a single occurrence of that genus in that time bin.</p>
+</div>
+</div>
+</div>
+<p>From this information we can now plot how the average range size of tetrapods changed throughout the Carboniferous and Permian:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the average geographic range size for each time interval</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>space_tetrapods_mean <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(space_tetrapods, <span class="st">"bin_midpoint"</span>, <span class="cf">function</span>(df) <span class="fu">mean</span>(df<span class="sc">$</span>area))</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(space_tetrapods_mean) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean_area"</span>, <span class="st">"bin_midpoint"</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot of average range size through time</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint, space_tetrapods_mean<span class="sc">$</span>mean_area, <span class="co"># add the points</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(<span class="fu">as.numeric</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"Average range size of tetrapod genera (km"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">")"</span>), <span class="co"># axes labels</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>))</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tetrapod-biodiversity_files/figure-html/convex-hulls-plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From this plot it seems like the average geographic range size of tetrapods increased during the Permian. However, we first need to be sure we’re not picking up on another pattern. Remember how we calculated the number of unique geographic cells in each time interval earlier? This provides a measure of the spatial spread of the fossil record. It might be that we’re not picking up on an increased range size, but just a larger geographic spread of fossil bearing rocks within the Permian. To see if this is the case, we can run a simple correlation test between the average geographic range size of tetrapods and the number of unique grid cells in each time interval:</p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of unique cells in each time bin</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>unique_cells <span class="ot">&lt;-</span> <span class="fu">unique</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>, <span class="st">"cell_ID"</span>)])</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>spat.cov <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_cells, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a correlation test between mean range size and the spatial spread of cells through time</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="fu">log10</span>(space_tetrapods_mean<span class="sc">$</span>mean_area), <span class="fu">log10</span>(spat.cov<span class="sc">$</span>nrow), <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Spearman's rank correlation rho
+
+data:  log10(space_tetrapods_mean$mean_area) and log10(spat.cov$nrow)
+S = 58.796, p-value = 7.69e-07
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.9135346 </code></pre>
+</div>
+</div>
+<p>The high rho value and a p-value less than our cut off for significance (0.05) indicate a strong and statistically significant correlation between average geographic range size and the spatial spread of data. Seems like this work is far from over…</p>
+<p>…but we’ll leave the rest to you!</p>
+</section>
+<section id="wrap-up" class="level2">
+<h2 data-anchor-id="wrap-up">Wrap-up</h2>
+<p>Hopefully this tutorial has shown you some of the potential uses of <strong>palaeoverse</strong> functions and helped provide a workflow for your own analyses.</p>
+<p>In this tutorial, you have:</p>
+<ul>
+<li>explored an occurrence dataset and run functions across groups with <code>group_apply()</code></li>
+<li>linked interval names to a common time scale with <code>look_up()</code></li>
+<li>binned occurrences by time with <code>time_bins()</code> and <code>bin_time()</code></li>
+<li>estimated palaeocoordinates with <code>palaeorotate()</code>, and binned them by space with <code>bin_space()</code></li>
+<li>determined unique occurrences using <code>tax_unique()</code></li>
+<li>quantified convex hull volumes using <code>tax_range_space()</code></li>
+</ul>
+</section>
 <section id="references" class="level2">
 <h2 data-anchor-id="references">References</h2>
 <p>Buffan, L., Jones, L. A., Domeier, M., Scotese, C. R., Zahirovic, S., &amp; Varela, S. (2023). Mind the uncertainty: Global plate model choice impacts deep‐time palaeobiological studies. <em>Methods in Ecology and Evolution</em>, 14(12), 3007-3019. DOI: <a href="https://doi.org/10.1111/2041-210X.14204">10.1111/2041-210X.14204</a>.</p>
 <p>Dunne, E. M., Close, R. A., Button, D. J., Brocklehurst, N., Cashmore, D. D., Lloyd, G. T., &amp; Butler, R. J. (2018). Diversity change during the rise of tetrapods and the impact of the ‘Carboniferous rainforest collapse’. <em>Proceedings B</em>, 285(1872), 20172730. DOI: <a href="https://doi.org/10.1098/rspb.2017.2730">10.1098/rspb.2017.2730</a>.</p>
+<p>Scotese, C. &amp; Wright, N. M. (2018). PALEOMAP Paleodigital Elevation Models (PaleoDEMs) for the Phanerozoic. <a href="https://www.earthbyte.org/paleodem-resource-scotese-and-wright-2018/">PALEOMAP Project</a>.</p>
 <p>Uhen, M. D., Allen, B. J., Clapham, M., Cohen, P., Dunne, E. M., Hendy, A., Holroyd, P. A., Hopkins, M., Jardine, P., Kocsis, Á, T., Mannion, P., Novack-Gottshall P., Pimiento, C., &amp; Wagner, P. (2026). Paleobiology Database User Guide Version 2.0. <em>PaleoBios</em>, 43(1), 1-54. DOI: <a href="https://doi.org/10.5070/P9.62178">10.5070/P9.62178</a>.</p>
+<p>Wright, N., Zahirovic, S., Müller, R. D., &amp; Seton, M. (2013). Towards community-driven paleogeographic reconstructions: integrating open-access paleogeographic and paleobiology data with plate tectonics. <em>Biogeosciences</em>, 10(3), 1529–1541. DOI: <a href="https://doi.org/10.5194/bg-10-1529-2013">10.5194/bg-10-1529-2013</a>.</p>
 
 
 <hr><br><details>
@@ -612,7 +1197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-10
+ date     2026-11-11
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
