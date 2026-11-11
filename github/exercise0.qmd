@@ -76,7 +76,7 @@ When you work on your own on only one laptop, this is usually not a problem beca
 
 So far, we used self-contained commits as examples, e.g. a commit that creates a plot. Sometimes, the changes we want to make rely on several commits. For example, we may want to add a new function in a package, but we work on this over several days and we want to get feedback from collaborators on the design of this function. 
 
-Pushing a lot of intermediate commits to the `main` branch would have three downsides. First, it would make the commit history more complex because we now have commits that are not self-contained anymore. Second, regularly pushing commits means that all our collaborators would have to pull these (incomplete changes). Finally, it makes it easier to leave an incomplete feature in the main branch without ever finishing it.
+Pushing a lot of intermediate commits to the `main` branch would have three downsides. First, it would make the commit history more complex because we now have commits that are not self-contained anymore. Second, regularly pushing commits means that all our collaborators would have to pull these (incomplete) changes. Finally, it makes it easier to leave an incomplete feature in the main branch without ever finishing it.
 
 To address this issue, we can use **branches**. A branch is a way to create a parallel environment where we can push our commits. Anyone can create a branch and a git project can have as many branches as you want. 
 
@@ -118,13 +118,13 @@ gitGraph
 </pre>
 ```
 
-Now, anyone working on the project can pull the unique commit `` Add arg `my_arg` `` and benefit from the complete implementation of this function without having to pull several intermediate commits.
+Now, anyone working on the project can pull the unique commit `` Add arg `my_arg` `` and benefit from the complete implementation of this new argument without having to pull several intermediate commits.
 
 ### Updating a branch
 
 The scenario above was ideal for us, the developer of `my_arg`: we took the `main` branch at a given point, created a branch, made several commits there, and then merged it back into `main`. This is the easiest branch workflow that exists and it is enough in some cases.
 
-However, if several people can modify the `main` branch, or if we open several branches to work on independent changes in parallel, then our branch could before outdated!
+However, if several people can modify the `main` branch, or if we open several branches to work on independent changes in parallel, then our branch could become outdated!
 
 ```{=html}
 <pre class="mermaid">
@@ -221,6 +221,8 @@ Another "good practice debate" between git users is about the moment when we mer
 - if we squash, all the commits from our branch will be condensed into a single commit, and only this commit will appear in the history of `main`.
 
 The former can make it easier to find when a bug was introduced because we still have all these small commits so it can be easier to see which one contains the bug. The downside is that the author must be careful that all commits in the merged branch have a good name and description, otherwise it can make the commit history very hard to parse.
+
+In the examples above, we chose to follow the "squashing" approach so that the final commit history contains one commit per new feature, or per bug fix for instance.
 :::
 
 
