@@ -194,7 +194,7 @@ We are now be able to run our functions in the console! We have now populated on
 
 The documentation of a function is done in the `.R` file: it will then automatically be converted to an `.Rd` file placed in the `man` folder. There is *no need* to create an `.Rd` file yourself!
 
-Writing the documentation is similar to writing comments, but you need to use `#'` (with an apostrophe) instead of `#`.
+Writing the documentation is similar to writing comments, but we need to use `#'` (with an apostrophe) instead of `#`.
 
 ```{.r filename="R/n_unique.R"}
 #' Title
@@ -209,7 +209,8 @@ Writing the documentation is similar to writing comments, but you need to use `#
 #'
 #' @examples
 #' n_unique(c(1, 2, 1))
-
+#' 
+#' n_unique(c(NA, "a", "b"))
 n_unique <- function(x) {
   length(unique(x))
 }
@@ -220,10 +221,10 @@ Let's go through these changes:
 - `@description` contains the text that appears between the title and the "Usage" section in a function help page. Usually it contains a few sentences describing the general purpose of the function.
 - `@param` is the description of the expected input (there can be several `@param` tags);
 - `@return` is the description of what this function returns;
-- `@export` indicates that this function is exported, i.e is available to users of this package;
+- `@export` indicates that this function is exported, i.e. it is available to users of this package;
 - `@examples` gives some examples that show how the function works.
 
-These are `roxygen2` tags, and there are many more that you can find here: https://roxygen2.r-lib.org/articles/rd.html.
+These are `roxygen2` tags, and there are many more that you can find here: [https://roxygen2.r-lib.org/articles/rd.html](https://roxygen2.r-lib.org/articles/rd.html).
 
 Let's now run `devtools::document()` to create the `.Rd` file.
 
@@ -273,3 +274,20 @@ We now have the most basic structure of a working R package. Let's build it!
 
 ## Build the package
 
+To install this local version of our package, we can run `devtools::install()`.
+
+```r
+> devtools::install()
+
+[...]
+
+* DONE (my.pkg)
+```
+
+Once this is done, we can load our package with `library(my.pkg)` and use the functions that belong to it:
+
+```r
+library(my.pkg)
+n_unique(c(1, 2, 2))
+#> [1] 2
+```
