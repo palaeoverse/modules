@@ -190,7 +190,29 @@ gitGraph
 
 Should we choose merging or rebasing? This is one of the few debates among git users, but generally it is not worth fighting about this. Both have pros and cons, starting with the ease of use. Merging is in general easier to manage when there are conflicts to resolve, e.g. if the commit from `main` that we want to integrate in our branch modifies some files that our branch also modifies.
 
-No matter which approach you use, if everything went well then we can merge our branch into `main` once it is ready:
+No matter which approach you use, if everything went well then we can merge our branch into `main` once it is ready.
+
+After rebasing:
+
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
+gitGraph
+   commit id: "start using\n git"
+   commit id: "add a plot to \n view time bins"
+   commit id: "remove \nfunction `foo()`" type: HIGHLIGHT
+   commit id: "fix typo \nin the README"
+   commit id: "fix typo \nin docs" type: HIGHLIGHT
+   branch create-my-arg
+   commit id: "basic \nimplementation"
+   commit id: "add docs"
+   commit id: "add tests"
+   checkout main
+   merge create-my-arg id: "Add arg `my_arg`"
+</pre>
+```
+
+After merging:
 
 ```{=html}
 <pre class="mermaid">
