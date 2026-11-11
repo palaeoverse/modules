@@ -349,7 +349,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-code-review/code_review/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-code-review/code_review/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -406,10 +406,12 @@ solution and next exercise */
 </section>
 <section id="how-to-review-code" class="level2">
 <h2 data-anchor-id="how-to-review-code">How to review code</h2>
-<p>The main objectives of code review are i) to verify that the code aligns with what we expect it to do, ii) to find potential mistakes, and iii) to ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future.</p>
-<p>Depending on the setting, the reviewer might start by checking that the code actually runs, but this is not always possible or needed (for instance if there are already automated tests that ensured that the code was giving the correct results).</p>
-<p>The reviewer should then ask the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g.&nbsp;code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?</p>
-<p>Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? Are these cases realistic? Are these cases properly handled?</p>
+<p>The main objectives of code review are to:</p>
+<ol type="1">
+<li>verify that the code aligns with what we expect it to do;</li>
+<li>find potential mistakes;</li>
+<li>ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future.</li>
+</ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -426,6 +428,9 @@ solution and next exercise */
 <p>This may add too much burden on the reviewer, in which case it might be better to transparently acknowledge that they cannot review some code (and, if possible, they may request a review from someone else). This is not ideal but it’s also not the end of the world. Also, finding and resolving bugs can be a beneficial part of the review process, but remember that bugs can persist in code that has been reviewed by many people!</p>
 </div>
 </div>
+<p>Depending on the setting, the reviewer might start by checking that the code actually runs, but this is not always possible or needed (for instance if there are already automated tests that ensured that the code was giving the correct results).</p>
+<p>The reviewer should then ask the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g.&nbsp;code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?</p>
+<p>Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? Are these cases realistic? Are these cases properly handled?</p>
 <p>A good way to assess your own understanding of the code is to prepare a list of expectations about what this code should do, and then compare these expectations to what the code actually does. This is not always convenient or possible, for example if the code to review is part of a pipeline that takes a long time to run, but it can uncover issues in many cases.</p>
 <p>Note that the amount of tests or expectations to validate is also very context-dependent. In general, code written as part of a data analysis project is very specific to your use case and its purpose is not to run on completely different datasets. <strong>Code that is part of a data analysis project still needs to be properly reviewed and tested</strong>, but you have more control over how this code is used. If your project is a package meant to be used by other people, then you also need to think about all sorts of ways people might misuse your code in their own context.</p>
 <p><em>Activity: Try out reviewing mini “bad code” examples that we provide</em></p>
@@ -607,7 +612,7 @@ solution and next exercise */
 <p>Some practices vary across developers and it’s hard to tell whether some are better than others. Usually, these can be cleared up by asking the other person directly what they prefer, or they can be integrated in a pull request template or a project-wide policy that the author has to follow.</p>
 <p>One of these discussion points is about “resolving comments”. On GitHub, one can hide a comment by “resolving” it, but it is not clear whether both the author and the reviewer should resolve comments, or if only the reviewer should do this. A reviewer might want to check that all their comments are properly addressed before marking them as resolved, but some reviewers are also fine with letting PR authors resolve comments themselves.</p>
 <p>Another discussion point concerns who should push commits to the branch. Usually, both the author and the reviewer have the permissions to push to the same branch, but this can lead to conflicts. This is also worth clarifying upfront, particularly as a reviewer who pushes to the branch technically also becomes a co-author of the code, and this may have implications for how credit is attributed. It can be tiring for the PR author to go through multiple rounds of review, so in this case it is often acceptable (but not required) for the reviewer to fix the few remaining minor changes to make (e.g.&nbsp;typos) before merging the PR to avoid another round of review.</p>
-<p>Finally, AI usage might be a point of contention, in which case it is important that both the author and the reviewer agree on the acceptable AI usage, both in code and in discussion. Sometimes, this is covered by a project-wide AI policy, but in any case it is worth being transparent about this.</p>
+<p>Finally, AI usage might be a point of contention, in which case it is important that both the author and the reviewer agree on the acceptable AI usage, both in code and in discussion. Sometimes, this is covered by a <a href="https://github.com/melissawm/open-source-ai-contribution-policies">project-wide AI policy</a>, but in any case it is worth being transparent about this.</p>
 </section>
 </section>
 <section id="summary-a-checklist-for-authors-and-reviewers" class="level2">
