@@ -201,9 +201,9 @@ gitGraph
 </section>
 <section id="branches" class="slide level2">
 <h2>Branches</h2>
-<p>So far, we used self-contained commits as examples, e.g.&nbsp;a commit that creates a plot. Sometimes, the changes we want to make rely on several commits. For example, we may want to add a new function in a package, but we work on this over several days and we want to get feedback from collaborators on the design of this function.</p>
+<p>So far, we used self-contained commits as examples, e.g.&nbsp;a commit that creates a plot. Sometimes, the changes we want to make rely on several commits. For example, we may want to add a new function in a package, but we work on this over several days and we need to address feedback from collaborators on the design of this function.</p>
 <p>Pushing a lot of intermediate commits to the <code>main</code> branch would have three downsides. First, it would make the commit history more complex because we now have commits that are not self-contained anymore. Second, regularly pushing commits means that all our collaborators would have to pull these (incomplete) changes. Finally, it makes it easier to leave an incomplete feature in the main branch without ever finishing it.</p>
-<p>To address this issue, we can use <strong>branches</strong>. A branch is a way to create a parallel environment where we can push our commits. Anyone can create a branch and a git project can have as many branches as you want.</p>
+<p>To address this issue, we can use <strong>branches</strong>. A branch is a sort of parallel environment where we can push our commits. Anyone can create a branch and a git project can have as many branches as you want.</p>
 </section>
 <section id="creating-and-merging-a-branch" class="slide level2">
 <h2>Creating and merging a branch</h2>
@@ -219,7 +219,7 @@ gitGraph
    commit id: "add docs"
    commit id: "add tests"
 </pre>
-<p>We have created a branch <code>create-my-arg</code> and added three commits there to create the function and add documentation and tests. As you can see, our changes related to <code>bar()</code> are not on <code>main</code> so none of the concerns raised above exist here. Once everyone is happy with the changes in our branch, we can <strong>merge</strong> it to our <code>main</code> branch.</p>
+<p>We have created a branch <code>create-my-arg</code> and added three commits there to create this new argument, and to add documentation and tests. As you can see, our changes related to <code>my_arg</code> are not on <code>main</code> so none of the concerns raised above exist here. Once everyone is happy with the changes in our branch, we can <strong>merge</strong> it to our <code>main</code> branch.</p>
 <pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
 gitGraph
    commit id: "start using\n git"
@@ -285,7 +285,23 @@ gitGraph
    merge main id: "merge main\nin our branch"
 </pre>
 <p>Should we choose merging or rebasing? This is one of the few debates among git users, but generally it is not worth fighting about this. Both have pros and cons, starting with the ease of use. Merging is in general easier to manage when there are conflicts to resolve, e.g.&nbsp;if the commit from <code>main</code> that we want to integrate in our branch modifies some files that our branch also modifies.</p>
-<p>No matter which approach you use, if everything went well then we can merge our branch into <code>main</code> once it is ready:</p>
+<p>No matter which approach you use, if everything went well then we can merge our branch into <code>main</code> once it is ready.</p>
+<p>After rebasing:</p>
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
+gitGraph
+   commit id: "start using\n git"
+   commit id: "add a plot to \n view time bins"
+   commit id: "remove \nfunction `foo()`" type: HIGHLIGHT
+   commit id: "fix typo \nin the README"
+   commit id: "fix typo \nin docs" type: HIGHLIGHT
+   branch create-my-arg
+   commit id: "basic \nimplementation"
+   commit id: "add docs"
+   commit id: "add tests"
+   checkout main
+   merge create-my-arg id: "Add arg `my_arg`"
+</pre>
+<p>After merging:</p>
 <pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
 gitGraph
    commit id: "start using\n git"
