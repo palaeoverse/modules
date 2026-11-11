@@ -67,13 +67,11 @@ Finally, reviewing code is a good way to learn about new methods, new coding pra
 
 ## How to review code
 
-The main objectives of code review are i) to verify that the code aligns with what we expect it to do, ii) to find potential mistakes, and iii) to ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future.
+The main objectives of code review are to:
 
-Depending on the setting, the reviewer might start by checking that the code actually runs, but this is not always possible or needed (for instance if there are already automated tests that ensured that the code was giving the correct results).
-
-The reviewer should then ask the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g. code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?
-
-Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? Are these cases realistic? Are these cases properly handled?
+1. verify that the code aligns with what we expect it to do;
+1. find potential mistakes;
+1. ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future.
 
 ::: {.callout-note title="Expectations for code authors and code reviewers"}
 Both authors and reviewers should have realistic expectations of each other's roles.
@@ -84,6 +82,12 @@ Both authors and reviewers should have realistic expectations of each other's ro
 
 This may add too much burden on the reviewer, in which case it might be better to transparently acknowledge that they cannot review some code (and, if possible, they may request a review from someone else). This is not ideal but it's also not the end of the world. Also, finding and resolving bugs can be a beneficial part of the review process, but remember that bugs can persist in code that has been reviewed by many people!
 :::
+
+Depending on the setting, the reviewer might start by checking that the code actually runs, but this is not always possible or needed (for instance if there are already automated tests that ensured that the code was giving the correct results).
+
+The reviewer should then ask the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g. code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?
+
+Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? Are these cases realistic? Are these cases properly handled?
 
 A good way to assess your own understanding of the code is to prepare a list of expectations about what this code should do, and then compare these expectations to what the code actually does. This is not always convenient or possible, for example if the code to review is part of a pipeline that takes a long time to run, but it can uncover issues in many cases.
 
