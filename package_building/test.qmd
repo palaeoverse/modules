@@ -23,7 +23,7 @@ An essential step in package development is to **build a test suite** that can r
 
 - the user: it shows that you (the developer) have checked that your function produces the correct results, at least in basic cases.
 
-- yourself: it ensures you can add functionalities to your package or fix bugs without breaking your existing code.
+- yourself: it helps making sure you can add functionalities to your package or fix bugs without breaking your existing code.
 
 ## How to write a test suite?
 
@@ -31,7 +31,7 @@ An essential step in package development is to **build a test suite** that can r
 
 There exist several packages to create and manage a test suite. The most famous one is [`testthat`](https://testthat.r-lib.org/), but you might also be interested in [`tinytest`](https://github.com/markvanderloo/tinytest/).
 
-To start using this package, run:
+To start using `testthat`, run:
 
 <!-- This chunk is only here so that `pak::scan_deps()` detects `testthat`.  -->
 ```{r}
@@ -74,7 +74,7 @@ If you have the R file you want to test opened in the editor, you can run `useth
 
 ### Getting started with tests
 
-When using `testthat`, a test is composed of a `test_that()` call that contains the title of the test and the code for the test, and one or several `expect_*()` calls that define your expectations, i.e. what the code should do.
+With `testthat`, a test is composed of a `test_that()` call that contains the description and the code for the test, and one or several `expect_*()` calls that define your expectations, i.e. what the code should do.
 
 Let's see how we could test `n_unique()`. This function counts unique values in a vector, so it should work with any type of vector, e.g. `numeric`, `character`, `logical`, etc. We can start by writing some cases that are easy for us to check:
 
@@ -88,6 +88,7 @@ test_that("n_unique works with all types of vector", {
     n_unique(c("a", "b", "c", "c", "c")),
     3
   )
+  # ... and we can test more input types
 })
 ```
 
@@ -107,7 +108,7 @@ test_that("n_unique works with all types of vector", {
   )
 })
 
-Test passed with 2 successes 🥇.
+#> Test passed with 2 successes 🥇.
 ```
 
 Our tests pass! This approach is fine when we want to test one or two `test_that()` blocks, but it would quickly become annoying when we have more tests. We can use `devtools::test()` to run the entire test suite instead:
@@ -137,7 +138,7 @@ In both cases, our tests depend on the global environment, which is not ideal be
 
 Testing the behaviour of our functions in reasonable use cases is an essential first step, and it already gives us a lot of confidence when we will modify the package in the future.
 
-However, keep in mind that users will always find ~~annoying~~ interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a little bit of extra time on this when we create the test suite can save a lot of time in the future.
+However, keep in mind that users will always find ~~annoying~~ interesting bugs in your software. When writing tests, it is important to think of all the ways your functions might be misused. In practice, we will never be able to catch all these cases, but trying to address as many as possible early on already leads to massive improvements in user experience! Spending a little bit of extra time on this when we create the test suite can also save a lot of time in the future.
 
 Let's try to make sure our function covers corner cases!
 
@@ -174,9 +175,9 @@ and indeed these tests also pass:
 ```
 
 ::: {.callout-note title="Writing tests first?"}
-In this module, we defined the function before starting on tests. An alternative approach to software development is called **"test-driven development"** (TDD). It stems from the idea that writing the function first gives an incentive to only write tests that will pass, because we don't want to go back to modify the function in case we find something that goes wrong.
+In this module, we defined the function before writing tests. An alternative approach to software development is called [**"test-driven development"**](https://en.wikipedia.org/wiki/Test-driven_development) (TDD). 
 
-TDD reverses the order of development: we write tests first, laying out all our expectations about how the function *should* behave ideally, both in simple cases and in more complex cases. Only when this is done, we start writing and refining the function until it passes all of our expectations.
+TDD reverses the order of development: we write tests first, laying out all our expectations about how the function *should* behave, both in simple cases and in more complex cases. Only when this is done do we start writing and refining the function until it passes all of our expectations.
 :::
 
 So far, we have only used `expect_equal()`, but there are many other functions to describe our expectations:
@@ -315,11 +316,11 @@ At some point, depending on the features of your package, you might want to skip
   })
   ```
 
-- cannot work on macOS, using `skip_if_os()`
+- cannot work on a particular OS, using `skip_on_os()`
 
   ```{r}
   test_that("...", {
-    skip_if_os("mac")
+    skip_on_os("windows")
     ...
   })
   ```
@@ -340,26 +341,26 @@ Here, we only cover 20% of the package because `safe_log()` is still untested.
 ::: {.callout-caution}
 Code coverage gives information on which parts of the code are never tested, but it doesn't mean that the covered parts are correctly tested! 
 
-For example, our `n_unique()` would get a 100% coverage with our first `expect_equal()`, which is by no means enough to ensure that this function works correctly.
+For example, our `n_unique()` would get a 100% coverage with our first `expect_equal()`, which is by no means sufficient to ensure that this function works correctly.
 :::
 
 ### More on tests
 
-Testing software is not trivial and there is a lot of literature on this topic. We list below some other testing practices that may be worth exploring but won't be covered in this module:
+Testing software is hard and there is a lot of literature on this topic. We list below some other testing practices that may be worth exploring but won't be covered in this module:
 
-- parametrised testing: a way to deduplicate tests by defining a lot of input combinations. See the R package [`patrick`](https://github.com/google/patrick).
+- parametrised testing: a way to deduplicate tests by defining a lot of input combinations and running the same test on all these combinations. See the R package [`patrick`](https://github.com/google/patrick).
 
-- property-based testing: a testing framework where we define a property that the code should respect, and we test this property by generating many random inputs and checking whether this property is respected. An example of application is a package that implements a known method in a faster way (or with other features). Property-based testing can help ensuring that the old and new softwares give the same results. See the R package [`quickcheck`](https://armcn.github.io/quickcheck/) and [this blog post](https://www.etiennebacher.com/posts/2024-10-01-using-property-testing-in-r/).
+- property-based testing: a testing framework where we define a property that the code should respect, and we check whether this property is respected with many randomly generated inputs. An example of application is a package that implements an existing method in a faster way (or with other features). Property-based testing can help ensuring that the old and new softwares give the same results. See the R package [`quickcheck`](https://armcn.github.io/quickcheck/) and [this blog post](https://www.etiennebacher.com/posts/2024-10-01-using-property-testing-in-r/).
 
-- fuzzy testing: a testing framework where inputs are generated randomly. This encompasses property-based testing. See the R package [`CBTF`](https://mcol.github.io/caught-by-the-fuzz/).
+- fuzzy testing: a testing framework where inputs are randomly generated. This encompasses property-based testing. See the R package [`CBTF`](https://mcol.github.io/caught-by-the-fuzz/).
 
-- mutation testing: a framework to complement test coverage. It helps ensuring that our tests actually check the function's behaviour. It modifies small pieces of code in our functions, e.g. replacing `>` by `<`, and then runs the test suite. If these changes do not lead to any test failures, then it means that our test suite isn't robust enough, even if the code coverage is high. See the R packages [`mutator`](https://prl-prg.github.io/mutator/index.html) and [`muttest`](https://jakubsob.github.io/muttest/).
+- mutation testing: a framework to complement test coverage by ensuring that our tests actually check the function's behaviour. It modifies small pieces of code in our functions, e.g. replacing `>` by `<`, and then runs the test suite. These changes should lead to test failures, so if tests don't fail then it means that our test suite isn't robust enough, even if the code coverage is high. See the R packages [`mutator`](https://prl-prg.github.io/mutator/index.html) and [`muttest`](https://jakubsob.github.io/muttest/).
 
 ## Check a package
 
 We have seen how to run tests, but we can now perform a more thorough check with `devtools::check()` (or the button "Check" next to "Test" in RStudio).
 
-This is more comprehensive since it will perform a number of additional checks (on top of running the test suite), such as ensuring that you use all of your dependencies, that all examples in the documentation can run, and much more.
+This is more comprehensive since it will perform a number of additional checks (on top of running the test suite), such as ensuring that we use all of the dependencies listed in `DESCRIPTION`, that all examples in the documentation can run, and much more.
 
 ## Conclusion
 
