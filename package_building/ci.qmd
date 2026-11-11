@@ -1,5 +1,5 @@
 ---
-title: "GitHub Actions"
+title: "Continuous integration"
 description: ""
 author: "Etienne Bacher"
 date: "2026-08-10"
@@ -24,9 +24,9 @@ So far, we have been running various checks (e.g. `R CMD check`) locally. This h
 
 First, we may simply forget to run these checks, in which case we might discover bugs a long time after introducing them, making the debugging process more painful. 
 
-Second, our check results only apply to our development environment. We might run these checks in a new R session, but our results may depend on our R version, on other dependencies in our system, or on our operating system!
+Second, our check results only apply to our development environment. We can limit this by running these checks in a new R session, but our results may depend on our R version, on other dependencies in our system, or on our operating system!
 
-An essential tool in software development is **continuous integration**, often referred to as "CI". The objective of CI is to run a battery of automated checks on every change in the repository, whether it be when we push a new commit to the `main` branch or when someone opens a pull request. In this section, we are going to explore some CI tools and workflows dedicated to R package development. Since GitHub is the most popular code hosting platform, we are going to focus on their own CI services, Github Actions, but the content of this section can be transposed to other platforms.
+An essential tool in software development is **continuous integration**, often referred to as "CI". At its core, CI is a tool to automatically run some code (aka "workflows") on every change in the repository, whether it be when we push a new commit to the `main` branch or when someone opens a pull request. In this section, we are going to explore some CI tools and workflows dedicated to R package development. Since GitHub is the most popular code hosting platform, we are going to focus on their own CI services, Github Actions, but the content of this section can be transposed to other platforms.
 
 ## GitHub Actions
 
@@ -66,14 +66,11 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
-        with:
-          upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 ```
 
-There is a lot to unpack here! The `on` block tells GitHub when this workflow should be run. For now, we only want to run it when we push a new commit to `main`. We then have the `name` and `permissions` of the workflow. In some cases, we want to give some write access to workflows to make automated commits for instance, but here we can leave it as `read-all`.
+There is a lot to unpack here! The `on` block tells GitHub when this workflow should run. For now, we only want to run it when we push a new commit to `main`. We then have the `name` and `permissions` of the workflow. In some cases, we want to give workflows some writing permissions (e.g. to make automated commits), but here we can leave it as `read-all`.
 
-The `jobs` part is where we define the `steps` that will be run by our workflow. Note that one workflow can run multiple jobs, but here we just have one named `R-CMD-check`. This will run on `ubuntu-latest` (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: `actions/checkout`, `r-lib/actions/setup-r`, and `r-lib/actions/setup-r-dependencies`, that are here to install R and our package dependencies.
+The `jobs` part is where we define the `steps` that will be run by our workflow. Note that one workflow can run multiple jobs, but here we just have one named `R-CMD-check`. This will run on `ubuntu-latest` (the most popular Linux distribution). In most R-related workflows, we will find the next three steps: `actions/checkout`, `r-lib/actions/setup-r`, and `r-lib/actions/setup-r-dependencies`, whose purpose is to install R and our package dependencies.
 
 Once this is done, the last step is to run `R CMD check` via `r-lib/actions/check-r-package`.
 
@@ -149,14 +146,14 @@ jobs:
 
 We added `r: 'release'` to use the latest stable version of R, and `r: 'oldrel-1'` to use the previous R version. We use this `matrix.config.r` key in two places: in the `name` (for the same reason as before), and in the `setup-r` step, where we actually install R.
 
-We still have a single workflow, but it now runs four different jobs with various OS and R versions. Note that you could also add more ancient R versions. 
+We still have a single workflow, but it now runs four different jobs with various OS and R versions. Note that you could also add more ancient R versions (see how to specify more R versions [here](https://github.com/r-lib/actions/tree/v2/setup-r#inputs)). 
 
 
 ### Some changes for a better developer experience
 
 We could stop here, but instead I would like to highlight two changes that improve the efficiency and robustness of CI workflows.
 
-The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting from the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to longer-than-usual workflows that sometimes run for hours! Using the `timeout-minutes` parameter is an easy way to avoid this problem. 
+The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting with the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to workflows that sometimes run for hours! Using the `timeout-minutes` parameter is an easy way to avoid this problem. 
 
 ```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
 [ ... ]
@@ -238,7 +235,4 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
-        with:
-          upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 ```
