@@ -13,32 +13,38 @@ editor:
     wrap: 72
 ---
 
-Having a package is nice but it's much less useful if you keep it for you. There are two main, non-exclusive ways to share your package to the world:
+Having a package is nice but it's much less useful if you keep it to yourself. There are two main, non-exclusive ways to share your package to the world:
 
 - put it on some version control system (e.g. GitHub, Gitlab, Codeberg);
 - put it on CRAN.
+
+Another way to share it is via [R-universe](https://docs.r-universe.dev/), but this will not be covered in this module.
 
 ## Publish your package
 
 ### Version control system
 
-In this section, we assume you are already familiar with Git and GitHub. If this is not the case, then you might be interested in our module on these tools: \<link\>.
+In this section, we assume you are already familiar with Git and GitHub. If this is not the case, then you might be interested in [our module on these tools](https://palaeoverse.org/modules/pr-preview/pr-21/training/modules/github/).
 
 Supposing we put our package `my.pkg` on GitHub, R users can now install it with the following alternatives:
 
 ```r
-remotes::install_github("<username>/my.pkg")
 pak::pak("<username>/my.pkg")
+
+# Alternative:
+remotes::install_github("<username>/my.pkg")
 ```
 
 ::: {.callout-note title="Can I install packages from other platforms?"}
 GitHub is the most famous platform to use Git features and store code. However, you could also use other platforms, such as Gitlab, Codeberg, or Forgejo.
 
-Using these platforms will not affect the ability to install your package. For instance, if your host your package on Codeberg, then it can be installed with:
+Using these platforms will not affect the ability to install your package. For instance, a package hosted on Codeberg can be installed with:
 
 ```r
-remotes::install_git("https://codeberg.org/<username>/my.pkg.git")
 pak::pak("git::https://codeberg.org/<username>/my.pkg.git")
+
+# Alternative:
+remotes::install_git("https://codeberg.org/<username>/my.pkg.git")
 ```
 :::
 
@@ -49,9 +55,9 @@ CRAN is the Comprehensive R Archive Network. It is a general repository where pa
 
 Puting a package on CRAN has several advantages. First, it gives your package more visibility, and it guarantees that it is easy to install it on almost all operating systems. Second, your package is constantly tested against new versions of R or with new versions of its dependencies. This guarantees that your package is compatible with the rest of the ecosystem at a given time.
 
-This last point comes at a cost, however. If your test suite starts failing because of changes in R or in some of its dependencies, it becomes at risk of removal from CRAN. Usually, the CRAN team gives the package maintainer two or three weeks to fix the errors and submit a new version (although an extension can be requested if needed). Therefore, putting your package on CRAN doesn't guarantee it will stay there and it requires you to be available for maintenance if needed. 
+This last point comes at a cost, however. If your test suite starts failing because of changes in R or in some of its dependencies, it becomes at risk of removal from CRAN. Usually, the CRAN team gives the package maintainer two or three weeks to fix the errors and submit a new version (although an extension can be requested if needed). Therefore, putting your package on CRAN is not a guarantee it will stay there, and it requires you to be available for maintenance if needed. 
 
-Publishing a package on CRAN also means complying with a set of strict rules in terms of formatting or testing. This may sound intimidating but there exist many resources to make this process easier. For instance, there are a lot of packages to make your life easier ([urlchecker](https://cran.r-project.org/web/packages/urlchecker/index.html) to check invalid URLs, [spelling](https://cran.r-project.org/web/packages/spelling/index.html) to detect spelling mistakes, among others). There are also collaborative todo lists before submitting to CRAN, such as [this one](https://github.com/ThinkR-open/prepare-for-cran). Finally, the function `devtools::release()` provides a long checklist to ensure that your package is ready to be submitted.
+Publishing a package on CRAN also means complying with a set of strict rules in terms of formatting or testing. This may sound intimidating but there exist many resources to make this process easier. For instance, there are many packages to detect mistakes ([urlchecker](https://cran.r-project.org/web/packages/urlchecker/index.html) to check invalid URLs, [spelling](https://cran.r-project.org/web/packages/spelling/index.html) to detect spelling mistakes, among others). There are also collaborative todo lists before submitting to CRAN, such as [this one](https://github.com/ThinkR-open/prepare-for-cran). Finally, the function `devtools::release()` provides a long checklist to ensure that your package is ready to be submitted.
 
 We recommend reading [this section](https://r-pkgs.org/release.html) of the "R packages" book for a list of good practices and things to do. This looks intimidating and it can be a non-negligible amount of work, but it becomes easier as you get more familiar with the package development process.
 
@@ -60,7 +66,7 @@ We recommend reading [this section](https://r-pkgs.org/release.html) of the "R p
 
 Publishing a package on GitHub or on CRAN makes it easy to install but not necessarily easy to discover. We can add something more: a website!
 
-This might sound like a lot of work, but we are going to use a great package to build a package website in a few minutes: `pkgdown`.
+This might sound like a lot of work, but we are going to use a great package to build a package website in a few seconds: `pkgdown`.
 
 ### Local website
 
@@ -74,4 +80,4 @@ This will automatically open a preview. Note that `pkgdown` uses all the informa
 
 ### Publish the website
 
-The website can then be published via GitHub Pages, using a continuous integration workflow. To learn more about this, see the [GitHub Actions section]().
+The website can then be published via GitHub Pages, using a continuous integration workflow. We will talk more about continuous integration in [the next section](ci.qmd), but in short you can run `usethis::use_pkgdown_github_pages()` to deploy the website at `https://www.<username>.github.io/my.pkg`.
