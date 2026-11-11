@@ -19,7 +19,7 @@ We now know the basics of a package: how to create one, document it, and test it
 - what dependencies should my package have?
 - should I add support for popular plotting packages?
 
-In this section, we are going to cover some of these questions and define some good practices when developing a package. 
+In this section, we are going to cover some of these questions and define some good practices when developing a package.
 
 ## Namespace
 
@@ -46,7 +46,6 @@ library(dplyr)
 
 While some tools are available on the user's side to fix such conflicts (e.g. the package [`conflicted`](https://conflicted.r-lib.org/)), it is good practice to try to avoid them. In particular, you should be very careful that your functions don't have the same names as other functions in popular packages (such as `data.table`, `tidyverse` packages, among others).
 
-
 ::: {.callout-tip title="How do I know if a function name is already used?" collapse="true"}
 The package [`pkgcheck`](https://docs.ropensci.org/pkgcheck/) allows us to quickly check whether a function name is already provided by a package on CRAN. For instance, `filter()` is exported by several packages:
 
@@ -56,7 +55,6 @@ The package [`pkgcheck`](https://docs.ropensci.org/pkgcheck/) allows us to quick
 pkgcheck::fn_names_on_cran("filter")
 ```
 :::
-
 
 ### S3 methods
 
@@ -100,7 +98,6 @@ In this case, our call to `summary(res)` found two relevant methods: `summary.lm
 
 Implementing methods for well-known generics such as `summary()`, `plot()`, `mean()`, `quantile()`, and many others, is a good way to reduce namespace conflicts while ensuring a good user experience.
 
-
 ::: {.callout-note title="How do I know which functions are generic?"}
 You can check whether a function is generic by printing it in the console, as it will call `UseMethod()` internally:
 
@@ -120,18 +117,17 @@ Another way to know this is to use `sloop::is_s3_generic()`:
 ```
 :::
 
-
 ## Dependencies
 
-### To take or not to take dependencies 
+### To take or not to take dependencies
 
 ::: {style="text-align: center;"}
 <img src="img/dependencies.png" height=400>
 :::
 
-When we develop a package, we can import other packages, either because they provide essential features or simply because they make the development process easier. These packages are now **dependencies** of our package, meaning that our package can be affected if any of these packages has some issues. 
+When we develop a package, we can import other packages, either because they provide essential features or simply because they make the development process easier. These packages are now **dependencies** of our package, meaning that our package can be affected if any of these packages has some issues.
 
-The topic of dependencies is very important in software in general, not just in R packages. Taking dependencies is a tradeoff. 
+The topic of dependencies is very important in software in general, not just in R packages. Taking dependencies is a tradeoff.
 
 On one hand, we can rely on the work and experience of others to use features that would be hard and/or time-consuming to implement ourselves. Splitting functionalities across packages can also be a good thing since each package can focus on some particular aspects instead of being a collection of hundreds of functions that is harder to properly document and test. It is also important to keep in mind that not all dependencies are equal. Depending on a small package that does one thing very well and that is actively maintained is often better than reinventing the wheel (maybe with a worse implementation) in our package.
 
@@ -145,7 +141,6 @@ This might seem a bit abstract, so let's see a concrete example.
 Whether to use external dependencies can be particularly important in terms of software security, but this is not our focus here. If you want to learn more about this topic, search for [software supply chain](https://en.wikipedia.org/wiki/Software_supply_chain).
 :::
 
-
 ### An example
 
 Suppose that for some reason, our package uses the function `select_vars()` from the package `dplyr`. This function was removed in `dplyr` v.1.1.0, which has implications for users of our package:
@@ -154,16 +149,15 @@ Suppose that for some reason, our package uses the function `select_vars()` from
 
 - if their version of `dplyr` is >= 1.1.0, then the function in your package that uses `select_vars()` will error.
 
-In this case, we could replace `select_vars()` by another function and indicate that the version of `dplyr` must be greater than or equal to 1.1.0, so that users would at least know why this function fails if they don't have a supported version. 
+In this case, we could replace `select_vars()` by another function and indicate that the version of `dplyr` must be greater than or equal to 1.1.0, so that users would at least know why this function fails if they don't have a supported version.
 
 Having dependencies forces us to stay aware of changes in these dependencies, and this increases the maintenance burden.
 
-
 ### How to use dependencies
 
-Information on dependencies is kept in `DESCRIPTION`. We can list dependencies in two fields: `Imports` or `Suggests`. 
+Information on dependencies is kept in `DESCRIPTION`. We can list dependencies in two fields: `Imports` or `Suggests`.
 
-Adding a package in `Imports` signals that it has to be present on the user's machine for our package to work. Therefore, this dependency will be installed whenever a user installs our package. 
+Adding a package in `Imports` signals that it has to be present on the user's machine for our package to work. Therefore, this dependency will be installed whenever a user installs our package.
 
 Adding a package in `Suggests` signals that some functionalities of our package require this dependency but it is not essential. For instance, `testthat` could be listed here because it is required for testing but not having it installed doesn't change anything for the end user of our package. Dependencies listed in `Suggests` will not be installed automatically when a user installs our package.
 
@@ -199,7 +193,6 @@ my_fun <- function(a, b) {
 }
 ```
 
-
 ### Reverse dependencies
 
 So far, our focus was on dependencies, i.e. packages that we depend on. If our package becomes useful enough, then maybe other developers will choose to depend on it. Packages that depend on our package are called "reverse dependencies".
@@ -221,9 +214,9 @@ Note that if we eventually publish our package on CRAN (cf. next section), then 
 
 ## More documentation
 
-So far, our documentation provides indications on what a specific function does and how to use it. A package can consist of a collection of unrelated functions, in which case this kind of documentation might be sufficient. 
+So far, our documentation provides indications on what a specific function does and how to use it. A package can consist of a collection of unrelated functions, in which case this kind of documentation might be sufficient.
 
-However, a package can also be designed so that functions play particularly well together. In this case, we would like to provide more general documentation that describes the optimal workflow when using this package. In addition to documentation in the `man` folder, we can also store long-form documentation in the `vignettes` folder. A vignette 
+However, a package can also be designed so that functions play particularly well together. In this case, we would like to provide more general documentation that describes the optimal workflow when using this package. In addition to documentation in the `man` folder, we can also store long-form documentation in the `vignettes` folder. A vignette
 
 As before, we can use `usethis` to create a vignette and generate the surrounding infrastructure:
 
@@ -299,7 +292,6 @@ There are then multiple ways to view this vignette. One of them is to use `rmark
 
 Finally, you can also build a vignette using `devtools::build_rmd("vignettes/my_vignette.Rmd")`. Note that this will temporarily install the package, so that the code in the vignette always includes the latest changes you may have made locally.
 
-
 ## Versioning
 
 Releasing a new version of our package allows users to have access to new features and/or bug fixes. In addition to ensuring that all tests pass, there are many things to check before releasing a new version, such as checking that all changes that may affect users are documented in the changelog (usually named `CHANGELOG.md`). If your package is stored on GitHub, you can run `usethis::use_release_issue()` to create a GitHub issue with a checklist to complete before releasing a new version. Note that some of these items are only relevant to packages submitted to CRAN (see the next section on "Sharing a package").
@@ -315,11 +307,13 @@ There can be a fourth component to indicate that the current version is the deve
 How to increment version numbers is not a solved discussion. The component to update usually depends on the importance of changes between two versions, and in particular regarding **backwards-incompatible changes**, i.e. changes that would break existing code. A popular (but not universal) policy is ["Semantic Versioning"](https://semver.org/) (also known as "semver"), which is summarised as:
 
 > Given a version number MAJOR.MINOR.PATCH, increment the:
-> 
->     MAJOR version when you make incompatible API changes
->     MINOR version when you add functionality in a backward compatible manner
->     PATCH version when you make backward compatible bug fixes
-> 
+>
+> ```
+> MAJOR version when you make incompatible API changes
+> MINOR version when you add functionality in a backward compatible manner
+> PATCH version when you make backward compatible bug fixes
+> ```
+>
 > Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 
 We also recommend reading the ["Lifecycle" section](https://r-pkgs.org/lifecycle.html) in the "R Packages" book.

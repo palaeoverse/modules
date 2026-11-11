@@ -48,19 +48,17 @@ remotes::install_git("https://codeberg.org/<username>/my.pkg.git")
 ```
 :::
 
-
 ### CRAN
 
 CRAN is the Comprehensive R Archive Network. It is a general repository where packages can be stored, and it is where packages are installed from by default. Currently, there are more than 25,000 packages on CRAN (you can see the entire list [here](https://cran.r-project.org/web/packages/available_packages_by_name.html)).
 
 Puting a package on CRAN has several advantages. First, it gives your package more visibility, and it guarantees that it is easy to install it on almost all operating systems. Second, your package is constantly tested against new versions of R or with new versions of its dependencies. This guarantees that your package is compatible with the rest of the ecosystem at a given time.
 
-This last point comes at a cost, however. If your test suite starts failing because of changes in R or in some of its dependencies, it becomes at risk of removal from CRAN. Usually, the CRAN team gives the package maintainer two or three weeks to fix the errors and submit a new version (although an extension can be requested if needed). Therefore, putting your package on CRAN is not a guarantee it will stay there, and it requires you to be available for maintenance if needed. 
+This last point comes at a cost, however. If your test suite starts failing because of changes in R or in some of its dependencies, it becomes at risk of removal from CRAN. Usually, the CRAN team gives the package maintainer two or three weeks to fix the errors and submit a new version (although an extension can be requested if needed). Therefore, putting your package on CRAN is not a guarantee it will stay there, and it requires you to be available for maintenance if needed.
 
 Publishing a package on CRAN also means complying with a set of strict rules in terms of formatting or testing. This may sound intimidating but there exist many resources to make this process easier. For instance, there are many packages to detect mistakes ([urlchecker](https://cran.r-project.org/web/packages/urlchecker/index.html) to check invalid URLs, [spelling](https://cran.r-project.org/web/packages/spelling/index.html) to detect spelling mistakes, among others). There are also collaborative todo lists before submitting to CRAN, such as [this one](https://github.com/ThinkR-open/prepare-for-cran). Finally, the function `devtools::release()` provides a long checklist to ensure that your package is ready to be submitted.
 
 We recommend reading [this section](https://r-pkgs.org/release.html) of the "R packages" book for a list of good practices and things to do. This looks intimidating and it can be a non-negligible amount of work, but it becomes easier as you get more familiar with the package development process.
-
 
 ## Make a package website
 

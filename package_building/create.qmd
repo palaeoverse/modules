@@ -72,11 +72,9 @@ n_unique(1:10)
 n_unique(c(1, 1, 2, 3, 4, 4))
 ```
 
-
 ::: {.callout-caution}
 We only created these functions to illustrate the package development process.
 :::
-
 
 ### Create the package
 
@@ -152,13 +150,13 @@ The `R` folder is where we are going to store our functions.
 
 Let's create two files in the `R` folder: `n_unique.R` and `safe_log.R`. We don't *need* to create one file per function, we could just bundle everything in a single file. However, it is generally good practice to keep those separated, especially when we start creating more exported functions. We can now move the functions we created to each of these files:
 
-```{.r filename="R/n_unique.R"}
+```r {filename="R/n_unique.R"}
 n_unique <- function(x) {
   length(unique(x))
 }
 ```
 
-```{.r filename="R/safe_log.R"}
+```r {filename="R/safe_log.R"}
 safe_log <- function(x) {
   if (is.numeric(x)) {
     log(x)
@@ -196,7 +194,7 @@ The documentation of a function is done in the `.R` file: it will then automatic
 
 Writing the documentation is similar to writing comments, but we need to use `#'` (with an apostrophe) instead of `#`.
 
-```{.r filename="R/n_unique.R"}
+```r {filename="R/n_unique.R"}
 #' Title
 #'
 #' @description
@@ -256,7 +254,6 @@ You should then be able to access the documentation of our function with `?n_uni
 :::
 
 We have the minimal documentation but you can make it much bigger. Note that we can also use [Markdown syntax](https://roxygen2.r-lib.org/articles/rd-formatting.html) in the text.
-
 
 ::: {.callout-caution title="Exercise"}
 Your turn! Improve the documentation:

@@ -36,6 +36,7 @@ To start using `testthat`, run:
 <!-- This chunk is only here so that `pak::scan_deps()` detects `testthat`.  -->
 ```{r}
 #| echo: false
+
 library(testthat)
 ```
 ```{r}
@@ -67,7 +68,6 @@ my.pkg
 
 We can now add tests files in `tests/testthat`. By convention, we name test files `test-<name of the file to test>.R`, such as `test-n_unique.R`.
 
-
 ::: {.callout-tip}
 If you have the R file you want to test opened in the editor, you can run `usethis::use_test()` to automatically create and open the corresponding test file.
 :::
@@ -78,7 +78,7 @@ With `testthat`, a test is composed of a `test_that()` call that contains the de
 
 Let's see how we could test `n_unique()`. This function counts unique values in a vector, so it should work with any type of vector, e.g. `numeric`, `character`, `logical`, etc. We can start by writing some cases that are easy for us to check:
 
-```{.r filename="tests/testthat/test-n_unique.R"}
+```r {filename="tests/testthat/test-n_unique.R"}
 test_that("n_unique works with all types of vector", {
   expect_equal(
     n_unique(c(1, 2, 3, 1, 3)), # The function we want to test.
@@ -133,7 +133,6 @@ In both cases, our tests depend on the global environment, which is not ideal be
 
 ![](img/rstudio_test_button.png)
 
-
 ### Being imaginative when writing tests
 
 Testing the behaviour of our functions in reasonable use cases is an essential first step, and it already gives us a lot of confidence when we will modify the package in the future.
@@ -143,6 +142,7 @@ However, keep in mind that users will always find ~~annoying~~ interesting bugs 
 Let's try to make sure our function covers corner cases!
 
 For instance, we should make sure that missing values, `NaN`, and empty vectors are properly handled:
+
 ```{r}
 test_that("n_unique works with missing values", {
   expect_equal(n_unique(c(NA, 1)), 2)
@@ -175,7 +175,7 @@ and indeed these tests also pass:
 ```
 
 ::: {.callout-note title="Writing tests first?"}
-In this module, we defined the function before writing tests. An alternative approach to software development is called [**"test-driven development"**](https://en.wikipedia.org/wiki/Test-driven_development) (TDD). 
+In this module, we defined the function before writing tests. An alternative approach to software development is called [**"test-driven development"**](https://en.wikipedia.org/wiki/Test-driven_development) (TDD).
 
 TDD reverses the order of development: we write tests first, laying out all our expectations about how the function *should* behave, both in simple cases and in more complex cases. Only when this is done do we start writing and refining the function until it passes all of our expectations.
 :::
@@ -187,7 +187,6 @@ So far, we have only used `expect_equal()`, but there are many other functions t
 - `expect_named()`
 - `expect_warning()`
 - and [more...](https://testthat.r-lib.org/reference/index.html)
-
 
 ### Testing errors
 
@@ -214,11 +213,10 @@ Still, this only ensures that our message matches this expression, but maybe som
 
 The best way to test error messages is to use a snapshot test to capture the entirety of the user-visible output.
 
-
 ::: {.callout-note title="A snapshot test?" collapse="true"}
 Snapshot tests are tests that capture the output as users see it. They are very useful to check side effects of function calls, such as printing messages and warnings, or when the output appearance is key, e.g. for functions that produce plots.
 
-We can define snapshot tests with `expect_snapshot()`. See [this vignette](https://testthat.r-lib.org/articles/snapshotting.html) on snapshot tests for more information. 
+We can define snapshot tests with `expect_snapshot()`. See [this vignette](https://testthat.r-lib.org/articles/snapshotting.html) on snapshot tests for more information.
 :::
 
 ```{r}
@@ -288,11 +286,9 @@ test_that("n_unique errors if no input is provided", {
 
 </details>
 
-
 ::: {.callout-caution title="Exercise"}
 Your turn! Add some tests for `safe_log()`.
 :::
-
 
 ### Skipping tests
 
@@ -325,7 +321,6 @@ At some point, depending on the features of your package, you might want to skip
   })
   ```
 
-
 ### Do we have enough tests?
 
 We now have some tests in our package, but do they cover all function arguments? All possible use cases? We can use the package `covr` to see how much of our package is covered by tests:
@@ -339,7 +334,7 @@ covr::report()
 Here, we only cover 20% of the package because `safe_log()` is still untested.
 
 ::: {.callout-caution}
-Code coverage gives information on which parts of the code are never tested, but it doesn't mean that the covered parts are correctly tested! 
+Code coverage gives information on which parts of the code are never tested, but it doesn't mean that the covered parts are correctly tested!
 
 For example, our `n_unique()` would get a 100% coverage with our first `expect_equal()`, which is by no means sufficient to ensure that this function works correctly.
 :::

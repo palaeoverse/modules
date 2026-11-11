@@ -20,9 +20,9 @@ editor:
     wrap: 72
 ---
 
-So far, we have been running various checks (e.g. `R CMD check`) locally. This has two main drawbacks. 
+So far, we have been running various checks (e.g. `R CMD check`) locally. This has two main drawbacks.
 
-First, we may simply forget to run these checks, in which case we might discover bugs a long time after introducing them, making the debugging process more painful. 
+First, we may simply forget to run these checks, in which case we might discover bugs a long time after introducing them, making the debugging process more painful.
 
 Second, our check results only apply to our development environment. We can limit this by running these checks in a new R session, but our results may depend on our R version, on other dependencies in our system, or on our operating system!
 
@@ -30,7 +30,7 @@ An essential tool in software development is **continuous integration**, often r
 
 ## GitHub Actions
 
-GitHub Actions (sometimes abbreviated to "GHA") is a service provided by GitHub to run CI workflows. We will demonstrate how to use it by adding a workflow to run `R CMD check` on every commit to `main`, on every commit to a PR, and on multiple operating systems and R versions. 
+GitHub Actions (sometimes abbreviated to "GHA") is a service provided by GitHub to run CI workflows. We will demonstrate how to use it by adding a workflow to run `R CMD check` on every commit to `main`, on every commit to a PR, and on multiple operating systems and R versions.
 
 Keep in mind that a CI workflow is not limited to checking R packages. It is essentially a list of steps where each step can run some code. Therefore, you can create workflows to check spelling in your repository, to run code stylers and linters, to check that all URLs are valid, and many other things.
 
@@ -40,7 +40,7 @@ We will start by creating a new basic workflow for `R CMD check`. This will run 
 
 We will start by adapting the workflow named `check-release.yml`. For clarity, we will rename this file `R-CMD-check.yaml`. All GHA workflows need to be stored in the `.github/workflows` folder. Hence, we end up with the following file:
 
-```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
+```yaml {filename=".github/workflows/R-CMD-check.yaml"}
 on:
   push:
     branches: [main]
@@ -78,7 +78,7 @@ Once this is done, the last step is to run `R CMD check` via `r-lib/actions/chec
 
 This is a good start but for now it only runs when we push changes to `main`. This is a bit too late, we would like to run this in a PR so that test failures due to changes in a PR do not affect the "clean" development version. We can tweak the `on` block to run this in pull requests as well:
 
-```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
+```yaml {filename=".github/workflows/R-CMD-check.yaml"}
 on:
   push:
     branches: [main]
@@ -95,7 +95,7 @@ We now run this more frequently, which addresses the first drawback of running t
 
 To avoid adding one `jobs` per configuration option, we can create a `matrix` with all our desired inputs:
 
-```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
+```yaml {filename=".github/workflows/R-CMD-check.yaml"}
 [ ... ]
 
 jobs:
@@ -118,7 +118,7 @@ We have added a `matrix` of `config` options. For now, each `config` has a singl
 
 We can add more keys to the `config`, such as an `r` key to define the R version we want to use.
 
-```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
+```yaml {filename=".github/workflows/R-CMD-check.yaml"}
 [ ... ]
 
 jobs:
@@ -146,16 +146,15 @@ jobs:
 
 We added `r: 'release'` to use the latest stable version of R, and `r: 'oldrel-1'` to use the previous R version. We use this `matrix.config.r` key in two places: in the `name` (for the same reason as before), and in the `setup-r` step, where we actually install R.
 
-We still have a single workflow, but it now runs four different jobs with various OS and R versions. Note that you could also add more ancient R versions (see how to specify more R versions [here](https://github.com/r-lib/actions/tree/v2/setup-r#inputs)). 
-
+We still have a single workflow, but it now runs four different jobs with various OS and R versions. Note that you could also add more ancient R versions (see how to specify more R versions [here](https://github.com/r-lib/actions/tree/v2/setup-r#inputs)).
 
 ### Some changes for a better developer experience
 
 We could stop here, but instead I would like to highlight two changes that improve the efficiency and robustness of CI workflows.
 
-The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting with the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to workflows that sometimes run for hours! Using the `timeout-minutes` parameter is an easy way to avoid this problem. 
+The first one is about timeout. GitHub Actions is a very useful tool, but it depends on many external factors, starting with the fact that if GitHub has some issues then GHA might be affected. On top of that, issues in R versions or R dependencies can lead to workflows that sometimes run for hours! Using the `timeout-minutes` parameter is an easy way to avoid this problem.
 
-```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
+```yaml {filename=".github/workflows/R-CMD-check.yaml"}
 [ ... ]
 
 jobs:
@@ -172,7 +171,7 @@ The second change is to use `concurrency`. When we work in a pull request, we ma
 
 The `concurrency` parameter changes this by automatically cancelling workflows if a newer one is triggered:
 
-```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
+```yaml {filename=".github/workflows/R-CMD-check.yaml"}
 [ ... ]
 
 name: R-CMD-check
@@ -190,7 +189,7 @@ jobs:
 
 For reference, here is our final workflow:
 
-```{.yaml filename=".github/workflows/R-CMD-check.yaml"}
+```yaml {filename=".github/workflows/R-CMD-check.yaml"}
 on:
   push:
     branches: [main]
