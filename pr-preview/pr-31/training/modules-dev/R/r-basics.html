@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="Erin M. Dillon">
-<meta name="dcterms.date" content="2026-11-06">
+<meta name="dcterms.date" content="2026-11-12">
 <meta name="description" content="This is a description">
 
 <title>R Basics</title>
@@ -74,8 +74,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../training/modules-dev/R/rstudio.html" rel="next">
-<link href="../../../training/modules-dev/R/index.html" rel="prev">
+<link href="../../../training/modules-dev/R/project-management.html" rel="next">
+<link href="../../../training/modules-dev/R/rstudio.html" rel="prev">
 <link href="../../../_brand/logos/favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -88,9 +88,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-9d071a2d1b9528f8f459712b4dfc6d00.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-cf1afee80d78be7fbe0c58f940f7d9f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-9db65d10a2b792157aff071f1296cc0f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-cf1afee80d78be7fbe0c58f940f7d9f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
-<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/training/modules-dev/R/img/r-logo.png">
+<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/training/modules-dev/R/_img/r-logo.png">
 <meta property="og:locale" content="en_GB">
 <meta property="og:image:height" content="388">
 <meta property="og:image:width" content="500">
@@ -289,19 +289,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/R/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R, RStudio, and Project Management for beginners</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/R/r-basics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">R Basics</span></a>
+ <span class="menu-text">R, RStudio, and Project Management</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/R/rstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction to RStudio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../training/modules-dev/R/r-basics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">R Basics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -320,15 +320,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#one-plot-per-slide" id="toc-one-plot-per-slide" class="nav-link" data-scroll-target="#one-plot-per-slide">One plot per slide</a></li>
-  <li><a href="#deeper-headings" id="toc-deeper-headings" class="nav-link" data-scroll-target="#deeper-headings">Deeper headings</a>
+  <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link active" data-scroll-target="#what-is-r"><span class="header-section-number">1</span> What is R?</a>
   <ul class="collapse">
-  <li><a href="#a-sub-heading" id="toc-a-sub-heading" class="nav-link" data-scroll-target="#a-sub-heading">A sub-heading</a></li>
+  <li><a href="#r-and-rstudio" id="toc-r-and-rstudio" class="nav-link" data-scroll-target="#r-and-rstudio"><span class="header-section-number">1.1</span> R and RStudio</a></li>
   </ul></li>
-  <li><a href="#building-up-a-slide" id="toc-building-up-a-slide" class="nav-link" data-scroll-target="#building-up-a-slide">Building up a slide</a></li>
-  <li><a href="#callouts" id="toc-callouts" class="nav-link" data-scroll-target="#callouts">Callouts</a></li>
-  <li><a href="#more-info" id="toc-more-info" class="nav-link" data-scroll-target="#more-info">More info</a></li>
+  <li><a href="#why-use-r" id="toc-why-use-r" class="nav-link" data-scroll-target="#why-use-r"><span class="header-section-number">2</span> Why use R?</a>
+  <ul class="collapse">
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility"><span class="header-section-number">2.1</span> Reproducibility</a></li>
+  <li><a href="#transparency-and-trust" id="toc-transparency-and-trust" class="nav-link" data-scroll-target="#transparency-and-trust"><span class="header-section-number">2.2</span> Transparency and trust</a></li>
+  <li><a href="#scale-and-speed" id="toc-scale-and-speed" class="nav-link" data-scroll-target="#scale-and-speed"><span class="header-section-number">2.3</span> Scale and speed</a></li>
+  <li><a href="#flexibility" id="toc-flexibility" class="nav-link" data-scroll-target="#flexibility"><span class="header-section-number">2.4</span> Flexibility</a></li>
+  <li><a href="#a-huge-community" id="toc-a-huge-community" class="nav-link" data-scroll-target="#a-huge-community"><span class="header-section-number">2.5</span> A huge community</a></li>
+  <li><a href="#it-is-a-career-skill" id="toc-it-is-a-career-skill" class="nav-link" data-scroll-target="#it-is-a-career-skill"><span class="header-section-number">2.6</span> It is a career skill</a></li>
+  </ul></li>
+  <li><a href="#basic-syntax-functions-and-object-classes" id="toc-basic-syntax-functions-and-object-classes" class="nav-link" data-scroll-target="#basic-syntax-functions-and-object-classes"><span class="header-section-number">3</span> Basic syntax, functions, and object classes</a>
+  <ul class="collapse">
+  <li><a href="#objects-and-assignment" id="toc-objects-and-assignment" class="nav-link" data-scroll-target="#objects-and-assignment"><span class="header-section-number">3.1</span> Objects and assignment</a></li>
+  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors"><span class="header-section-number">3.2</span> Vectors</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">3.3</span> Functions</a></li>
+  <li><a href="#object-classes" id="toc-object-classes" class="nav-link" data-scroll-target="#object-classes"><span class="header-section-number">3.4</span> Object classes</a></li>
+  <li><a href="#data-frames-and-lists" id="toc-data-frames-and-lists" class="nav-link" data-scroll-target="#data-frames-and-lists"><span class="header-section-number">3.5</span> Data frames and lists</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values"><span class="header-section-number">3.6</span> Missing values</a></li>
+  </ul></li>
+  <li><a href="#import-and-view-datasets" id="toc-import-and-view-datasets" class="nav-link" data-scroll-target="#import-and-view-datasets"><span class="header-section-number">4</span> Import and view datasets</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="r-basics-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
@@ -340,6 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="title">R Basics</h1>
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
+    <div class="quarto-category">2hr</div>
   </div>
   </div>
 
@@ -363,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 6, 2026</p>
+      <p class="date">November 12, 2026</p>
     </div>
   </div>
   
@@ -378,103 +393,531 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/palaeoverse/modules/blob/intro-to-r/R/r-basics.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
-<section id="introduction" class="level2">
-<h2 data-anchor-id="introduction">Introduction</h2>
-<p>Prose goes in a <code>.narration</code> block: it reads as a paragraph on the website, and becomes the speaker notes you talk from on the slides. Press <code>s</code> in the deck to see the notes view.</p>
-<p>Consecutive paragraphs can share one block; they stay separate paragraphs on the page and separate notes on the slide.</p>
-<p>Content that only makes sense in writing (e.g., a long aside, a table of options, a link dump) goes in an <code>.html-only</code> block and never reaches the deck.</p>
-</section>
-<section id="one-plot-per-slide" class="level2">
-<h2 data-anchor-id="one-plot-per-slide">One plot per slide</h2>
-<p>Each <code>##</code> heading starts a slide, and the filter closes the slide after every figure, so two plots never share one slide. Prose after a figure introduces the next figure rather than trailing behind the old one.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="r-basics_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This narration belongs to the plot below, and lands on its slide as speaker notes.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="r-basics_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="deeper-headings" class="level2">
-<h2 data-anchor-id="deeper-headings">Deeper headings</h2>
-<p><code>###</code> and deeper headings are promoted to slide level, so each becomes its own slide instead of piling onto the previous slide. On the website they stay a normal sub-heading.</p>
-<section id="a-sub-heading" class="level3">
-<h3 data-anchor-id="a-sub-heading">A sub-heading</h3>
-<p>This is its own slide.</p>
+<section id="what-is-r" class="level2" data-number="1">
+<h2 data-number="1" data-anchor-id="what-is-r"><span class="header-section-number">1</span> What is R?</h2>
+<p><a href="https://www.r-project.org">R</a> is a programming language designed for working with data. You use it to import, clean, analyse, and visualise data, and to report your results, all by writing code.</p>
+<p>A few things worth knowing:</p>
+<ul>
+<li>R is a language, not a program with menus - you tell R what to do by typing commands, which you can save, edit, and rerun.</li>
+<li>R is free and open source - anyone can download it, read how it works, and contribute to it.</li>
+<li>R was built by statisticians - it grew out of the S language and was created in the 1990s at the University of Auckland (it is now maintained by a global community).</li>
+<li>R is extended by packages - Researchers share tools for specialised tasks, from fossil range analysis to phylogenetics, as add-on packages.</li>
+</ul>
+<section id="r-and-rstudio" class="level3" data-number="1.1">
+<h3 data-number="1.1" data-anchor-id="r-and-rstudio"><span class="header-section-number">1.1</span> R and RStudio</h3>
+<p>R and RStudio are two separate things, and it helps to know the differences. <a href="https://www.r-project.org">R</a> is the language and engine that runs your code while <a href="https://posit.co/products/open-source/rstudio">RStudio</a> is a workspace that makes R easier to use.</p>
+<blockquote class="blockquote">
+<p><em>R is like as a car’s engine while RStudio is the car’s dashboard and controls.</em></p>
+</blockquote>
+<p>In this module, you will be typing into RStudio, but R does the work.</p>
 </section>
 </section>
-<section id="building-up-a-slide" class="level2">
-<h2 data-anchor-id="building-up-a-slide">Building up a slide</h2>
-<p>When a slide holds two or more code chunks, the filter expands it into an auto-animate build-up: one step per chunk, earlier chunks staying on screen, and the narration advancing with each step/click.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>wt</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.21725</code></pre>
-</div>
-</div>
-<p>The second chunk arrives on the next step, with the first still visible.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sd</span>(x), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.978</code></pre>
-</div>
-</div>
+<section id="why-use-r" class="level2" data-number="2">
+<h2 data-number="2" data-anchor-id="why-use-r"><span class="header-section-number">2</span> Why use R?</h2>
+<p>You may already analyse data in a spreadsheet. Spreadsheets are fine for storing and eyeballing small tables, but R offers several advantages for research.</p>
+<section id="reproducibility" class="level3" data-number="2.1">
+<h3 data-number="2.1" data-anchor-id="reproducibility"><span class="header-section-number">2.1</span> Reproducibility</h3>
+<p>Every step of your analysis is written down. Anyone, including you in six months, can rerun your script and get the same result. With point-and-click tools, the steps live only in your memory.</p>
 </section>
-<section id="callouts" class="level2">
-<h2 data-anchor-id="callouts">Callouts</h2>
-<p>A callout gets a slide of its own. The content is un-boxed and the slide is titled by its own heading.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="transparency-and-trust" class="level3" data-number="2.2">
+<h3 data-number="2.2" data-anchor-id="transparency-and-trust"><span class="header-section-number">2.2</span> Transparency and trust</h3>
+<p>Code records exactly what you did to your data: what you removed, what you transformed, and which model you ran. Reviewers and collaborators can check it, and mistakes are easier to spot and fix.</p>
+</section>
+<section id="scale-and-speed" class="level3" data-number="2.3">
+<h3 data-number="2.3" data-anchor-id="scale-and-speed"><span class="header-section-number">2.3</span> Scale and speed</h3>
+<p>Once you have written code for one dataset, you can run it on a hundred. Repetitive tasks that take hours by hand take seconds, and rerunning an analysis after you add new data costs nothing.</p>
+</section>
+<section id="flexibility" class="level3" data-number="2.4">
+<h3 data-number="2.4" data-anchor-id="flexibility"><span class="header-section-number">2.4</span> Flexibility</h3>
+<p>R can handle almost any analysis or plot you can imagine. You are not limited to the options someone else put in a menu.</p>
+</section>
+<section id="a-huge-community" class="level3" data-number="2.5">
+<h3 data-number="2.5" data-anchor-id="a-huge-community"><span class="header-section-number">2.5</span> A huge community</h3>
+<ul>
+<li>There are &gt;25,000 packages available on <a href="https://cran.r-project.org">CRAN</a>, the main package repository</li>
+<li>Most methods in palaeontology, ecology, and evolution have an R implementation</li>
+<li>Help is easy to find, from documentation and tutorials to forums and colleagues</li>
+</ul>
+</section>
+<section id="it-is-a-career-skill" class="level3" data-number="2.6">
+<h3 data-number="2.6" data-anchor-id="it-is-a-career-skill"><span class="header-section-number">2.6</span> It is a career skill</h3>
+<p>Familiarity with R is valued across academia, conservation, government, and industry, and the skills you build transfer to other languages (e.g.&nbsp;Python).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>A note
+<span class="screen-reader-only">Tip</span>The Trade-Off
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This box is dropped on the slide, which lets a figure inside it stretch to fit.</p>
+<p>R has a learning curve. Expect to make typos, see error messages, and feel slow at first. This is normal for everyone, but the payoff comes quickly as the basics become second nature.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Caution</span>An exercise solution
+<span class="screen-reader-only">Caution</span>Exercise 1: Think about the last time you analysed or plotted data
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A <em>collapsed</em> callout is the exception: it keeps its box. Since clicking on slides can be awkward, the collapsed content is held back as a fragment and revealed when you advance. On the website it stays a click-to-open box.</p>
+<ol type="1">
+<li>Could someone else have repeated exactly what you did?</li>
+<li>How long would it take you to rerun the whole analysis on a new dataset?</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="basic-syntax-functions-and-object-classes" class="level2" data-number="3">
+<h2 data-number="3" data-anchor-id="basic-syntax-functions-and-object-classes"><span class="header-section-number">3</span> Basic syntax, functions, and object classes</h2>
+<p>At its simplest, R is a very powerful calculator. Type an expression into the console (or run it from a script) and R returns the result.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">/</span> <span class="dv">4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.5</code></pre>
+</div>
+</div>
+<section id="objects-and-assignment" class="level3" data-number="3.1">
+<h3 data-number="3.1" data-anchor-id="objects-and-assignment"><span class="header-section-number">3.1</span> Objects and assignment</h3>
+<p>In R, we use <code>&lt;-</code> to store a value in an object. Once stored, you can reuse the object by name.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n_species <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>n_species <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>R is case-sensitive
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>age_ma</code> and <code>Age_Ma</code> are different objects, so choose short, descriptive names without spaces.</p>
+</div>
+</div>
+</section>
+<section id="vectors" class="level3" data-number="3.2">
+<h3 data-number="3.2" data-anchor-id="vectors"><span class="header-section-number">3.2</span> Vectors</h3>
+<p>A vector is a collection of values of the same type. You can create one with <code>c()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.3</span>, <span class="fl">11.6</span>, <span class="fl">23.0</span>, <span class="fl">33.9</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ages</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5.3 11.6 23.0 33.9</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Comments
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Anything after <code>#</code> is a comment. R ignores comments, so use them to explain your code to your future self.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the age of a fossil (in millions of years)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>age_ma <span class="ot">&lt;-</span> <span class="fl">23.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </section>
-<section id="more-info" class="level2">
-<h2 data-anchor-id="more-info">More info</h2>
-<ul>
-<li><a href="https://quarto.org/docs/presentations/revealjs/">Quarto revealjs</a></li>
-<li><a href="https://quarto.org/docs/authoring/callouts.html">Callouts</a></li>
-<li>the repo README, for the other two ways to build a module</li>
-</ul>
+<section id="functions" class="level3" data-number="3.3">
+<h3 data-number="3.3" data-anchor-id="functions"><span class="header-section-number">3.3</span> Functions</h3>
+<p>A function is a reusable set of instructions that takes an input, does something with it, and returns a result. You have already used one <code>c()</code> when creating a vector.</p>
+<p>To use (or “call”) a function, type its name followed by parentheses. The values you put inside the parentheses are its <strong>arguments</strong>, which are the inputs the function works on.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="at">x =</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>Here, <code>sqrt</code> is the function and <code>16</code> is the argument. A function can take several arguments, separated by commas. You can supply them by position or by name.</p>
+</section>
+<section id="object-classes" class="level3" data-number="3.4">
+<h3 data-number="3.4" data-anchor-id="object-classes"><span class="header-section-number">3.4</span> Object classes</h3>
+<p>Every object has a class, which tells R how to treat it. Check it with <code>class()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Numeric</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fl">23.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Integer</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="dv">5</span>L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Character</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="st">"Acropora"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logical</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "logical"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"reef-building"</span>, <span class="st">"non-reef-building"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Class</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>numeric</code></td>
+<td style="text-align: left;"><code>23.5</code></td>
+<td style="text-align: left;">Measurements, ages</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;"><code>5L</code></td>
+<td style="text-align: left;">Counts</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>character</code></td>
+<td style="text-align: left;"><code>"Acropora"</code></td>
+<td style="text-align: left;">Names, labels</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>logical</code></td>
+<td style="text-align: left;"><code>TRUE</code></td>
+<td style="text-align: left;">Yes/no conditions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>factor</code></td>
+<td style="text-align: left;"><code>"reef"</code></td>
+<td style="text-align: left;">Categories with fixed levels</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Mixing classes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mixing classes in one vector forces R to convert everything to the most flexible class.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Everything becomes character</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="st">"two"</span>, <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-frames-and-lists" class="level3" data-number="3.5">
+<h3 data-number="3.5" data-anchor-id="data-frames-and-lists"><span class="header-section-number">3.5</span> Data frames and lists</h3>
+<p>A <strong>data frame</strong> is a table where each column is a vector and all columns have the same length. A <strong>list</strong> can hold objects of different types and sizes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>corals <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">genus =</span> <span class="fu">c</span>(<span class="st">"Acropora"</span>, <span class="st">"Porites"</span>, <span class="st">"Pocillopora"</span>, <span class="st">"Caryophyllia"</span>, <span class="st">"Balanophyllia"</span>),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">age_ka =</span> <span class="fu">c</span>(<span class="fl">23.0</span>, <span class="fl">15.9</span>, <span class="fl">11.6</span>, <span class="fl">5.3</span>, <span class="fl">2.6</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_specimens  =</span> <span class="fu">c</span>(<span class="dv">12</span>L, <span class="dv">30</span>L, <span class="dv">8</span>L, <span class="dv">5</span>L, <span class="dv">3</span>L)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>corals</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          genus age_ka n_specimens
+1      Acropora   23.0          12
+2       Porites   15.9          30
+3   Pocillopora   11.6           8
+4  Caryophyllia    5.3           5
+5 Balanophyllia    2.6           3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(corals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+</div>
+<p>You can use <code>$</code> and <code>[[ ]]</code> to extract a whole column as a <strong>vector</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>corals<span class="sc">$</span>genus</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Acropora"      "Porites"       "Pocillopora"   "Caryophyllia" 
+[5] "Balanophyllia"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>corals[[<span class="st">"genus"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Acropora"      "Porites"       "Pocillopora"   "Caryophyllia" 
+[5] "Balanophyllia"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>corals[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Acropora"      "Porites"       "Pocillopora"   "Caryophyllia" 
+[5] "Balanophyllia"</code></pre>
+</div>
+</div>
+<p>Single square brackets <code>[ ]</code> also select columns, but what you get back depends on how you use them. With one index, you get a <strong>data frame</strong>. With a comma, you are using <code>[rows, columns]</code>, and leaving the rows blank returns every row.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>corals[<span class="st">"genus"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          genus
+1      Acropora
+2       Porites
+3   Pocillopora
+4  Caryophyllia
+5 Balanophyllia</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>corals[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          genus
+1      Acropora
+2       Porites
+3   Pocillopora
+4  Caryophyllia
+5 Balanophyllia</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>corals[, <span class="st">"genus"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Acropora"      "Porites"       "Pocillopora"   "Caryophyllia" 
+[5] "Balanophyllia"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>corals[, <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Acropora"      "Porites"       "Pocillopora"   "Caryophyllia" 
+[5] "Balanophyllia"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>corals[<span class="fu">c</span>(<span class="st">"genus"</span>, <span class="st">"age_ka"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          genus age_ka
+1      Acropora   23.0
+2       Porites   15.9
+3   Pocillopora   11.6
+4  Caryophyllia    5.3
+5 Balanophyllia    2.6</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 2: Select the second row and “genus” column
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use single square brackets <code>[rows, columns]</code> with the <code>corals</code> data frame.</p>
+<ol type="1">
+<li>Select the value in the second row of the <code>genus</code> column, first by column name and then by column position.</li>
+<li>Select the whole second row (all columns).</li>
+<li>Select the first three rows of the <code>genus</code> and <code>age_ka</code> columns.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Second row, genus column</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>corals[<span class="dv">2</span>, <span class="st">"genus"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Porites"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>corals[<span class="dv">2</span>, <span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Porites"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Whole second row</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>corals[<span class="dv">2</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    genus age_ka n_specimens
+2 Porites   15.9          30</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. First three rows, two columns</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>corals[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">c</span>(<span class="st">"genus"</span>, <span class="st">"age_ka"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        genus age_ka
+1    Acropora   23.0
+2     Porites   15.9
+3 Pocillopora   11.6</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Create a list with <code>list()</code>. Each element can be a different class and length, and can even be a whole data frame.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>coral_specimens <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">institution =</span> <span class="st">"Natural History Museum"</span>,</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">collection =</span> <span class="st">"Fossil Cnidaria"</span>,</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">genera =</span> corals<span class="sc">$</span>genera,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> corals</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>coral_specimens</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$institution
+[1] "Natural History Museum"
+
+$collection
+[1] "Fossil Cnidaria"
+
+$genera
+NULL
+
+$data
+          genus age_ka n_specimens
+1      Acropora   23.0          12
+2       Porites   15.9          30
+3   Pocillopora   11.6           8
+4  Caryophyllia    5.3           5
+5 Balanophyllia    2.6           3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(coral_specimens)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(coral_specimens)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>Use <code>$</code> or double square brackets <code>[[ ]]</code> to extract an element by name or position.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>coral_specimens<span class="sc">$</span>site</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>coral_specimens[[<span class="st">"genera"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>coral_specimens[[<span class="dv">4</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          genus age_ka n_specimens
+1      Acropora   23.0          12
+2       Porites   15.9          30
+3   Pocillopora   11.6           8
+4  Caryophyllia    5.3           5
+5 Balanophyllia    2.6           3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>coral_specimens<span class="sc">$</span>data<span class="sc">$</span>age_ka</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.0 15.9 11.6  5.3  2.6</code></pre>
+</div>
+</div>
+<p>Use <code>str()</code> for a compact overview of any list.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coral_specimens)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ institution: chr "Natural History Museum"
+ $ collection : chr "Fossil Cnidaria"
+ $ genera     : NULL
+ $ data       :'data.frame':    5 obs. of  3 variables:
+  ..$ genus      : chr [1:5] "Acropora" "Porites" "Pocillopora" "Caryophyllia" ...
+  ..$ age_ka     : num [1:5] 23 15.9 11.6 5.3 2.6
+  ..$ n_specimens: int [1:5] 12 30 8 5 3</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A data frame is really just a list in which every element is a vector of the same length. Check with <code>is.list(corals)</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 3: Add a new element
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Add a new element called <code>observer</code> to <code>coral_specimens</code>, holding your name. Then extract the <code>genus</code> column of the data frame stored inside the list.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>coral_specimens<span class="sc">$</span>observer <span class="ot">&lt;-</span> <span class="st">"Your name"</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>coral_specimens<span class="sc">$</span>data<span class="sc">$</span>genus</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Acropora"      "Porites"       "Pocillopora"   "Caryophyllia" 
+[5] "Balanophyllia"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="missing-values" class="level3" data-number="3.6">
+<h3 data-number="3.6" data-anchor-id="missing-values"><span class="header-section-number">3.6</span> Missing values</h3>
+<p>R represents missing data as <code>NA</code>. Most summary functions return <code>NA</code> if any value is missing, unless you tell them otherwise.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.333333</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="import-and-view-datasets" class="level2" data-number="4">
+<h2 data-number="4" data-anchor-id="import-and-view-datasets"><span class="header-section-number">4</span> Import and view datasets</h2>
 
 
 <hr><br><details>
@@ -489,7 +932,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-06
+ date     2026-11-12
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -1060,13 +1503,13 @@ https://goatcounter.com/help/domains
   </script>
 <nav class="page-navigation" aria-label="Page">
   <div class="nav-page nav-page-previous">
-      <a href="../../../training/modules-dev/R/index.html" class="pagination-link" aria-label="R, RStudio, and Project Management for beginners">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">R, RStudio, and Project Management for beginners</span>
+      <a href="../../../training/modules-dev/R/rstudio.html" class="pagination-link" aria-label="Introduction to RStudio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction to RStudio</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../training/modules-dev/R/rstudio.html" class="pagination-link" aria-label="Introduction to RStudio">
-        <span class="nav-page-text">Introduction to RStudio</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../training/modules-dev/R/project-management.html" class="pagination-link" aria-label="Project Management with RStudio">
+        <span class="nav-page-text">Project Management with RStudio</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

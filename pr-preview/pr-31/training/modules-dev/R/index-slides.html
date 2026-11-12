@@ -12,7 +12,7 @@
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="Erin M. Dillon">
-  <title>R, RStudio, and Project Management for beginners</title>
+  <title>R, RStudio, and Project Management</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -133,17 +133,17 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
-<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/training/modules-dev/R/img/2d_density.png">
+<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/training/modules-dev/R/_img/r-rstudio.png">
 <meta property="og:locale" content="en_GB">
-<meta property="og:image:height" content="960">
-<meta property="og:image:width" content="1344">
+<meta property="og:image:height" content="978">
+<meta property="og:image:width" content="1230">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">R, RStudio, and Project Management for beginners</h1>
+  <h1 class="title">R, RStudio, and Project Management</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -164,46 +164,46 @@ Erin M. Dillon
 
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
-<p>This module introduces you to R, RStudio, and R project management: the free, open-source toolkit behind much of modern palaeontology, ecology, and evolutionary biology. <a href="https://www.r-project.org">R</a> is a programming language built for data analysis and visualisation, and <a href="https://posit.co/products/open-source/rstudio">RStudio</a> makes it far friendlier to use.</p>
-<p><strong>No prior coding experience required is required for this module</strong>, and by the end, you will be navigating RStudio with confidence, writing and running your first R code, and organising your work in a project that you (or a collaborator) can pick up again months later.</p>
+<p>This module introduces <a href="https://www.r-project.org">R</a>, <a href="https://posit.co/products/open-source/rstudio">RStudio</a>, and project management, the free, open-source tools behind much of modern palaeontology, ecology, and evolutionary biology.</p>
+<p><strong>No prior coding experience is required for this module</strong>, and by the end, you’ll be navigating RStudio with confidence, running your first R code, and organising your work in a project that you or a collaborator can pick up again months later.</p>
 </section>
-<section id="learning-objectives" class="slide level2">
-<h2>Learning objectives</h2>
+<section id="learning-objectives" class="slide level2" data-number="1">
+<h2><span class="header-section-number">1</span> Learning objectives</h2>
 <p>By the end of this module, you will be able to:</p>
 <ul>
 <li>Explain what R and RStudio are, how they relate, and how to navigate the main RStudio panels, including the difference between the console and a script</li>
 <li>Assign values to objects, manipulate them, and recognise common data types and structures</li>
-<li>Install and load packages to extend what R can do</li>
 <li>Import a dataset, inspect it, summarise it, and make a simple plot in base R</li>
+<li>Install and load packages to extend what R can do</li>
 <li>Create an RStudio Project to keep your files, data, and code organised</li>
 <li>Interpret common errors and find help independently, so you can code in R and RStudio with confidence</li>
 </ul>
 </section>
-<section id="prerequisites" class="slide level2">
-<h2>Prerequisites</h2>
+<section id="prerequisites" class="slide level2" data-number="2">
+<h2><span class="header-section-number">2</span> Prerequisites</h2>
 </section>
-<section id="knowledge" class="slide level2">
-<h2>Knowledge</h2>
+<section id="knowledge" class="slide level2" data-number="3">
+<h2><span class="header-section-number">3</span> Knowledge</h2>
 <p>This module assumes no prior experience with R or programming. However, you should be comfortable with basic computer skills, such as downloading and installing software and managing files and folders.</p>
 </section>
-<section id="installation" class="slide level2">
-<h2>Installation</h2>
+<section id="installation" class="slide level2" data-number="4">
+<h2><span class="header-section-number">4</span> Installation</h2>
 <p>For this module, you will need to install <a href="https://www.r-project.org">R</a> and <a href="https://posit.co/products/open-source/rstudio">RStudio</a>.</p>
 <ol type="1">
 <li><strong>Install R.</strong> Download the latest version for your operating system from the <a href="https://cran.r-project.org/">Comprehensive R Archive Network (CRAN)</a> and follow the installation instructions.</li>
 <li><strong>Install RStudio Desktop.</strong> Download the free version from the <a href="https://posit.co/download/rstudio-desktop/">Posit website</a> and install it as you would any other application.</li>
 </ol>
 </section>
-<section class="slide level2">
-<h2>Trouble installing?</h2>
+<section class="slide level2" data-number="5">
+<h2><span class="header-section-number">5</span> Trouble installing?</h2>
 <p>If you cannot install software on your machine (e.g.&nbsp;a managed institutional laptop), you can run RStudio in your browser for free using <a href="https://posit.cloud/">Posit Cloud</a>. Alternatively, speak to your IT support team about installing R and RStudio.</p>
 </section>
-<section id="module-structure" class="slide level2">
-<h2>Module structure</h2>
+<section id="module-structure" class="slide level2" data-number="6">
+<h2><span class="header-section-number">6</span> Module structure</h2>
 <p>This module is designed to get you up and running with R and RStudio as quickly as possible and includes the following:</p>
 <ul>
 <li><a href="../../../training/modules-dev/R/rstudio.html">Introduction to R and RStudio</a>: Get to know R and the RStudio interface, and understand how R and RStudio work together.</li>
-<li><a href="../../../training/modules-dev/R/r-basics.html">R Basics</a>: Learn the fundamentals of the R language, including objects, data types, functions, packages, and importing data.</li>
+<li><a href="../../../training/modules-dev/R/r-basics.html">R Basics</a>: Learn the fundamentals of the R language, including objects, data types, functions, importing data, and packages.</li>
 <li><a href="../../../training/modules-dev/R/project-management.html">Project Management with RStudio</a>: Organise your files, data, and code with RStudio Projects, and adopt habits that make your analyses reproducible.</li>
 </ul>
 
