@@ -108,12 +108,14 @@ Without running these examples, do you see what is likely wrong or could be impr
 library(palaeoverse)
 
 x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
-y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")]
+y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")
 out <- merge(x, y, by = "collection_no")
 out[["collection_name"]]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
-`out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output, because we forgot to merge on `"collection_name"` as well:
+One of the issues above is that the second line is missing the `]` at the end.
+
+But a bigger problem is that `out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output. This is because we forgot to merge on `"collection_name"` as well:
 
 ```diff
 x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
@@ -121,6 +123,38 @@ y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")]
 - out <- merge(x, y, by = "collection_no")
 + out <- merge(x, y, by = c("collection_no", "collection_name"))
 out[["collection_name"]]
+```
+:::::
+
+```{r}
+#| eval: false
+
+library(palaeoverse)
+
+# Only keep the first 6 observations
+small_tetra <- head(tetrapods, n = 6)
+# Create a new variable "env_is_channel" that is TRUE if the value in
+# column "environment" is equal to "channel"
+small_tetra[["env_is_channel"]] <- small_tetra[["environment"]] == "channel"
+# Remove the column "environment" from the data
+small_tetra[, "environment"] <- NULL
+# Keep only observations whose latitude is above 45
+small_tetra <- subset(small_tetra, lat >= 45)
+```
+::::: {.callout-tip title="Solution" collapse="true"}
+The code itself doesn't have obvious issues, the problem lies in the comments surrounding it. These comments are redundant because they describe *what* the code does instead of *why* it does it. This is fine in some contexts (e.g. teaching), but we usually prefer the code itself to be clear enough that it doesn't need a comment to explain what it does.
+
+These comments should explain the "why" instead:
+```r
+# Test the procedure on a smaller dataset since processing the entire dataset
+# takes hours.
+small_tetra <- head(tetrapods, n = 6)
+# We only want to compare channels to non-channels, we don't need all the other
+# environments.
+small_tetra[["env_is_channel"]] <- small_tetra[["environment"]] == "channel"
+small_tetra[, "environment"] <- NULL
+# Our study focuses on small_tetrapods found above the 45th parallel north
+small_tetra <- subset(small_tetra, lat >= 45)
 ```
 :::::
 
