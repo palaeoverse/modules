@@ -517,7 +517,7 @@ Note
 <p>Now type <code>ls</code>. The <code>title.txt</code> file is gone! To see why, type <code>git log</code>. Your last commit is no longer in your history; you just have the first two commits. This is because your last commit (and the file it created, <code>title.txt</code>) only exists on the <code>title-dev</code> branch. To verify that it’s still there, you check the history of the <code>title-dev</code> branch by running:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In graph form, your repository currently looks like this:</p>
-<p><img src="figures/git_graphs.001.png" height="300"></p>
+<p><img src="../figures/git_graphs.001.png" height="300"></p>
 <p>Here, each dot represents a commit, and the different lines represent a different branch. Following a line illustrates the history as seen by that branch. Since the commits on title-dev live on their own branch, changes you make on <code>main</code> won’t affect <code>title-dev</code> and vice versa (at least not until we merge the branches; more on that below).</p></li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -558,7 +558,7 @@ Tip
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"update title"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Type <code>git log</code> to check your history. Note that there are 4 commits here: the first two from <code>main</code> (before you branched off), and the last two on <code>title-dev</code>. In graph form, your repo looks like this:</p>
-<p><img src="figures/git_graphs.002.png" height="300"></p></li>
+<p><img src="../figures/git_graphs.002.png" height="300"></p></li>
 <li><p>Satisfied that your title is perfect, you no longer feel the need to keep the title development on a separate branch. It’s ready to be <em>merged</em> on to the <code>main</code> branch. To do that, switch to the main branch:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and merge in the changes on <code>title-dev</code> by typing:</p>
@@ -568,7 +568,7 @@ Tip
 <p>If you type:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>you’ll see that both <code>story.txt</code> and <code>title.txt</code> are in your directory (on the main branch), and if you look in them, you’ll see the most up-to-date versions of both. In graph form, your main branch now looks like:</p>
-<p><img src="figures/git_graphs.003.png" height="300"></p></li>
+<p><img src="../figures/git_graphs.003.png" height="300"></p></li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -807,16 +807,16 @@ Note
 <h3 data-anchor-id="appendix-rebasing">Appendix: Rebasing</h3>
 <p>Before merging <code>title-dev</code> into master in step 8 above, we could have first done a <em>rebase</em>. If you rebase a development branch against its parent branch (in this case <code>main</code>) it will incorporate all the commits that were made on the parent after the development branch was originally created. To do so, the development branch’s history is rearranged so that the additional commits from the parent are placed before all commits that were made on the development branch.</p>
 <p>For example, if we had run <code>git rebase main</code> while on the <code>title-dev</code> branch in Part 3, step 8 above, <code>title-dev</code>’s history would have been rearranged from:</p>
-<p><img src="figures/git_graphs.002.png" height="300"></p>
+<p><img src="../figures/git_graphs.002.png" height="300"></p>
 <p>to:</p>
-<p><img src="figures/git_graphs.004.png" height="300"></p>
+<p><img src="../figures/git_graphs.004.png" height="300"></p>
 <p>The <strong>advantage</strong> to rebasing is that when we merge a rebased development branch back into main no “Merge” commit is created, and the history on main is much simpler. So, in our story example, if we had done the following in step 8:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout title-dev</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase main</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
 <span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then main’s history would have looked like:</p>
-<p><img src="figures/git_graphs.005.png" height="250"></p>
+<p><img src="../figures/git_graphs.005.png" height="250"></p>
 <p>rather than the more complicated graph above.</p>
 <p>The <strong>disadvantage</strong> to rebasing is it can be more challenging to handle merge conflicts. When rebasing, conflicts need to be handled at the point they are created in the development branch, rather once at the end when the merge occurs. If resolving a conflict affects a later commit on the development branch, it can cause a cascading series of conflicts that can be a challenge to untangle. The other challenge with rebasing is it can cause issues when collaborating with others on a development branch. Since rebasing changes the history of the branch, it can make it a challenge for your colleagues to keep their clones in sync with yours. For these reasons, rebasing is best for more advanced users.</p>
 <p>For more on rebasing, see this article by the Atlassian corporation: <a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">Merging vs.&nbsp;rebasing</a>.</p>
@@ -834,7 +834,7 @@ Note
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-11
+ date     2026-11-12
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
