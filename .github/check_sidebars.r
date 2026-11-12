@@ -8,6 +8,7 @@
 #     (sync_sidebars.r only rewrites explicit paths, so these would resolve
 #     against the website root rather than the module)
 #   - a listed page doesn't exist in the module
+#   - several .qmd files in a module render their slides to the same file
 #
 # Warnings (reported, but don't fail the check):
 #   - a module with a _sidebar.yml has a web page that the sidebar doesn't list
@@ -97,6 +98,18 @@ for (m in modules) {
   qmds <- qmds[!grepl("(^|/)_", qmds)]
   web  <- qmds[vapply(file.path(m, qmds), is_web_page, logical(1))]
   sb   <- file.path(m, "_sidebar.yml")
+
+  # slides output-file of each .qmd (relative to the module), NA if none
+  slides <- vapply(qmds, function(q) {
+    fmt <- front_matter(file.path(m, q))$format
+    out <- unlist(lapply(Filter(is.list, fmt[grepl("revealjs$", names(fmt))]), `[[`, "output-file"))
+    if (length(out)) file.path(dirname(q), out[[1]]) else NA_character_
+  }, character(1))
+  slides <- sub("^[.]/", "", slides[!is.na(slides)])
+  for (o in unique(slides[duplicated(slides)])) {
+    report("error", file.path(m, names(slides)[match(o, slides)]), sprintf(
+      "%s all render their slides to %s", paste(names(slides)[slides == o], collapse = ", "), o))
+  }
 
   if (!file.exists(sb)) {
     if (length(web) > 1) {
