@@ -107,9 +107,13 @@ Without running these examples, do you see what is likely wrong or could be impr
 
 library(palaeoverse)
 
-x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
-y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")
-out <- merge(x, y, by = "collection_no")
+dat_pbdb <- read.csv("my_PBDB_data.csv")
+dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")]
+
+dat_darwin <- read.csv("my_DarwinCore_data.csv")
+dat_darwin <- dat_darwin[, c("collection_no", "collection_name", "life_habit")]
+
+out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
 out[["collection_name"]]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
