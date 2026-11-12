@@ -5,11 +5,11 @@
 #   https://palaeoverse.github.io/modules/pr-preview/pr-<N>/
 #
 # Rendering a module executes the R code it contains, so we only do this for PRs
-# whose author is a member of the palaeoverse org (see the `if` on the `preview`
-# job).
+# that come from a branch of this repo, i.e. from someone with write access (see
+# the `if` on the `preview` job).
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened, closed]
 
 name: PR preview
@@ -20,17 +20,15 @@ permissions:
 
 jobs:
   preview:
-    # Only members of the palaeoverse org (which owns this repo) get a preview.
-    # The job — including the checkout of PR code — is skipped entirely for
-    # outside contributors, so their code never runs here.
+    # Only PRs from branches of this repo get a preview. Fork PRs get a
+    # read-only token under `pull_request`, so they couldn't publish anyway.
     if: >
       github.event.action != 'closed' &&
-      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
-               github.event.pull_request.author_association)
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: "Check out PR head (trusted: author is an org member)"
+      - name: "Check out PR head (trusted: same-repo branch)"
         uses: actions/checkout@v7
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
@@ -62,7 +60,7 @@ jobs:
           # upstream modules are the top-level directories of this repo (loose
           # files such as README.md / LICENSE.md and .git/.github are ignored).
           src_root <- "modules"
-          dest <- "site/training/modules"
+          dest <- "site/training/modules-dev"
 
           upstream <- setdiff(
             list.dirs(src_root, full.names = FALSE, recursive = FALSE),
@@ -106,7 +104,7 @@ jobs:
         run: |
           deps <- pak::scan_deps(".")
           pkgs <- setdiff(unique(deps$package), "R")
-          pak::pak(pkgs)
+          pak::pak(c(pkgs, "sessioninfo"))
         shell: Rscript {0}
 
       - name: Set up Quarto
@@ -114,6 +112,9 @@ jobs:
 
       - name: Render the website
         uses: quarto-dev/quarto-actions/render@v2
+        env:
+          # make source_link.lua link to the PR's branch instead of main
+          SOURCE_LINK_REF: ${{ github.event.pull_request.head.ref }}
         with:
           path: site
 
@@ -130,7 +131,7 @@ jobs:
         with:
           script: |
             const pr = context.payload.pull_request.number;
-            const url = `https://palaeoverse.github.io/modules/pr-preview/pr-${pr}/training/modules`;
+            const url = `https://palaeoverse.github.io/modules/pr-preview/pr-${pr}/training/modules-dev`;
             const marker = '<!-- pr-preview -->';
             const body = `${marker}\nSee preview at ${url}`;
 

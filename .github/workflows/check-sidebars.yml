@@ -1,0 +1,39 @@
+# This workflow checks each module's _sidebar.yml with .github/check_sidebars.r:
+#
+#   - errors (fail): invalid YAML, `auto` entries, or listed pages that don't exist
+#   - warnings (annotations only): web pages a sidebar doesn't list, and
+#     multi-page modules with no _sidebar.yml
+#
+# It then runs sync_sidebars.r, the same script the website runs at render
+# time, and prints the combined sidebar config it would produce.
+
+on:
+  push:
+    branches: main
+  pull_request:
+
+name: Check sidebars
+
+permissions:
+  contents: read
+
+jobs:
+  check-sidebars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install yaml
+        run: Rscript -e 'install.packages("yaml")'
+
+      - name: Check each module's _sidebar.yml
+        run: Rscript .github/check_sidebars.r
+
+      - name: Show the generated sidebars
+        run: |
+          Rscript sync_sidebars.r
+          cat _sidebars.yml
