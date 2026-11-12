@@ -235,7 +235,7 @@ You want to start working on titles for your stories, but you want to do it inde
 
    In graph form, your repository currently looks like this:
 
-   ![](figures/git_graphs.001.png){height=300}
+   ![](../figures/git_graphs.001.png){height=300}
 
    Here, each dot represents a commit, and the different lines represent a different branch. Following a line illustrates the history as seen by that branch. Since the commits on title-dev live on their own branch, changes you make on `main` won't affect `title-dev` and vice versa (at least not until we merge the branches; more on that below).
 
@@ -292,7 +292,7 @@ git log --graph
 
    Type `git log` to check your history. Note that there are 4 commits here: the first two from `main` (before you branched off), and the last two on `title-dev`. In graph form, your repo looks like this:
 
-   ![](figures/git_graphs.002.png){height=300}
+   ![](../figures/git_graphs.002.png){height=300}
 
 8. Satisfied that your title is perfect, you no longer feel the need to keep the title development on a separate branch. It's ready to be *merged* on to the `main` branch. To do that, switch to the main branch:
 
@@ -318,7 +318,7 @@ git log --graph
 
    you'll see that both `story.txt` and `title.txt` are in your directory (on the main branch), and if you look in them, you'll see the most up-to-date versions of both. In graph form, your main branch now looks like:
 
-   ![](figures/git_graphs.003.png){height=300}
+   ![](../figures/git_graphs.003.png){height=300}
 
 ::: {.callout-note}
 There is another way to merge branches called *rebasing*. Rebasing changes the history of the development branch to make it look like all the commits came after the last commit on main. This makes for a cleaner history when merging, but can be more challenging to do correctly. See the Appendix (below) for more information.
@@ -590,11 +590,11 @@ Before merging `title-dev` into master in step 8 above, we could have first done
 
 For example, if we had run `git rebase main` while on the `title-dev` branch in Part 3, step 8 above, `title-dev`'s history would have been rearranged from:
 
-![](figures/git_graphs.002.png){height=300}
+![](../figures/git_graphs.002.png){height=300}
 
 to:
 
-![](figures/git_graphs.004.png){height=300}
+![](../figures/git_graphs.004.png){height=300}
 
 The **advantage** to rebasing is that when we merge a rebased development branch back into main no "Merge" commit is created, and the history on main is much simpler. So, in our story example, if we had done the following in step 8:
 
@@ -607,7 +607,7 @@ git merge title-dev
 
 Then main's history would have looked like:
 
-![](figures/git_graphs.005.png){height=250}
+![](../figures/git_graphs.005.png){height=250}
 
 rather than the more complicated graph above.
 
