@@ -61,7 +61,7 @@ If needed, you can refer to [our module on Git and GitHub](https://palaeoverse.o
 
 In addition to writing code, we spend a lot of time reading it. This could be code that is part of a tutorial, a package, some analysis shared by a colleague, or even when we come back to our own code months later. Being able to review code is important for several reasons.
 
-First, reviewing each other's code can uncover some issues missed by the author. These issues can be actual bugs, but they can also be related to code that currently works but is not robust enough and could break in the future. Having someone else's perspective often helps improving code quality. 
+First, reviewing each other's code can uncover some issues missed by the author. These issues can be actual bugs, but they can also be related to code that currently works but is not robust enough and could break in the future. Having someone else's perspective often helps improving code quality.
 
 Second, we may not be able to immediately run code (for instance if it requires an internet connection), or we may have to wait for minutes or hours before the execution ends. Being able to understand what some code does (or is supposed to do) before running it forces us to think about how it might fail, and therefore gives us an incentive to write more robust code from the start.
 
@@ -149,6 +149,7 @@ small_tetra <- subset(small_tetra, lat >= 45)
 The code itself doesn't have obvious issues, the problem lies in the comments surrounding it. These comments are redundant because they describe *what* the code does instead of *why* it does it. This is fine in some contexts (e.g. teaching), but we usually prefer the code itself to be clear enough that it doesn't need a comment to explain what it does.
 
 These comments should explain the "why" instead:
+
 ```r
 # Test the procedure on a smaller dataset since processing the entire dataset
 # takes hours.
@@ -225,7 +226,6 @@ Now that we know how to critically review code, we need to be able to communicat
 
 In this section, we assume that you are already familiar with the Git workflow to create and merge branches. We also assume that you have a GitHub account. The [Git and GitHub module](https://palaeoverse.org/modules/pr-preview/pr-21/training/modules-dev/github/index.html) provides an introduction to these two tools.
 
-
 ::: {.callout-note title="Steps to reproduce the video below" collapse="true"}
 How to use the GitHub interface to review pull requests (PRs)
 
@@ -300,7 +300,6 @@ One of these discussion points is about "resolving comments". On GitHub, one can
 Another discussion point concerns who should push commits to the branch. Usually, both the author and the reviewer have the permissions to push to the same branch, but this can lead to conflicts. This is also worth clarifying upfront, particularly as a reviewer who pushes to the branch technically also becomes a co-author of the code, and this may have implications for how credit is attributed. It can be tiring for the PR author to go through multiple rounds of review, so in this case it is often acceptable (but not required) for the reviewer to fix the few remaining minor changes to make (e.g. typos) before merging the PR to avoid another round of review.
 
 Finally, AI usage might be a point of contention, in which case it is important that both the author and the reviewer agree on the acceptable AI usage, both in code and in discussion. Sometimes, this is covered by a [project-wide AI policy](https://github.com/melissawm/open-source-ai-contribution-policies), but in any case it is worth being transparent about this.
-
 
 ## Summary: a checklist for authors and reviewers
 
