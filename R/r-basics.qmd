@@ -5,9 +5,10 @@ author:
   - Lewis A. Jones
   - Erin M. Dillon
 date: "`r Sys.Date()`"
-categories: [r]
+categories: [r, 2hr]
 difficulty: Beginner
-image: img/r-logo.png
+image: _img/r-logo.png
+number-sections: true
 format:
   html:
     toc: true
@@ -35,104 +36,290 @@ editor:
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 
-## Introduction
+## What is R?
 
-::: {.narration}
-Prose goes in a `.narration` block: it reads as a paragraph on the website, and
-becomes the speaker notes you talk from on the slides. Press `s` in the deck to
-see the notes view.
+[R](https://www.r-project.org) is a programming language designed for working with data. You use it to import, clean, analyse, and visualise data, and to report your results, all by writing code.
 
-Consecutive paragraphs can share one block; they stay separate paragraphs on
-the page and separate notes on the slide.
+A few things worth knowing:
+
+- R is a language, not a program with menus - you tell R what to do by typing commands, which you can save, edit, and rerun.
+- R is free and open source - anyone can download it, read how it works, and contribute to it.
+- R was built by statisticians - it grew out of the S language and was created in the 1990s at the University of Auckland (it is now maintained by a global community).
+- R is extended by packages - Researchers share tools for specialised tasks, from fossil range analysis to phylogenetics, as add-on packages.
+
+### R and RStudio
+
+R and RStudio are two separate things, and it helps to know the differences. [R](https://www.r-project.org) is the language and engine that runs your code while [RStudio](https://posit.co/products/open-source/rstudio) is a workspace that makes R easier to use.
+
+> *R is like as a car's engine while RStudio is the car's dashboard and controls.*
+
+In this module, you will be typing into RStudio, but R does the work.
+
+## Why use R?
+
+You may already analyse data in a spreadsheet. Spreadsheets are fine for storing and eyeballing small tables, but R offers several advantages for research.
+
+### Reproducibility
+
+Every step of your analysis is written down. Anyone, including you in six months, can rerun your script and get the same result. With point-and-click tools, the steps live only in your memory.
+
+### Transparency and trust
+
+Code records exactly what you did to your data: what you removed, what you transformed, and which model you ran. Reviewers and collaborators can check it, and mistakes are easier to spot and fix.
+
+### Scale and speed
+
+Once you have written code for one dataset, you can run it on a hundred. Repetitive tasks that take hours by hand take seconds, and rerunning an analysis after you add new data costs nothing.
+
+### Flexibility
+
+R can handle almost any analysis or plot you can imagine. You are not limited to the options someone else put in a menu.
+
+### A huge community
+
+- There are >25,000 packages available on [CRAN](https://cran.r-project.org), the main package repository
+- Most methods in palaeontology, ecology, and evolution have an R implementation
+- Help is easy to find, from documentation and tutorials to forums and colleagues
+
+### It is a career skill
+
+Familiarity with R is valued across academia, conservation, government, and industry, and the skills you build transfer to other languages (e.g. Python).
+
+::: {.callout-tip}
+## The Trade-Off
+
+R has a learning curve. Expect to make typos, see error messages, and feel slow at first. This is normal for everyone, but the payoff comes quickly as the basics become second nature.
 :::
 
-::: {.slides-only}
-- a bullet summary for the slide
-- which would be redundant on the page
+::: {.callout-caution}
+## Exercise 1: Think about the last time you analysed or plotted data
+
+1. Could someone else have repeated exactly what you did?
+2. How long would it take you to rerun the whole analysis on a new dataset?
 :::
 
-::: {.html-only}
-Content that only makes sense in writing (e.g., a long aside, a table of options, a
-link dump) goes in an `.html-only` block and never reaches the deck.
-:::
+## Basic syntax and object classes
 
-## One plot per slide
-
-::: {.narration}
-Each `##` heading starts a slide, and the filter closes the slide after every
-figure, so two plots never share one slide. Prose after a figure introduces the next
-figure rather than trailing behind the old one.
-:::
+At its simplest, R is a very powerful calculator. Type an expression into the console (or run it from a script) and R returns the result.
 
 ```{r}
-plot(mtcars$wt, mtcars$mpg)
+#| label: basic-syntax
+
+2 + 3
+10 / 4
 ```
 
-::: {.narration}
-This narration belongs to the plot below, and lands on its slide as speaker notes.
-:::
+### Objects and assignment
+
+In R, we use `<-` to store a value in an object. Once stored, you can reuse the object by name.
 
 ```{r}
-plot(mtcars$hp, mtcars$mpg)
+#| label: object-assignment
+
+n_species <- 25
+n_species * 2
 ```
 
-## Deeper headings
+::: {.callout-tip}
+## R is case-sensitive
 
-::: {.narration}
-`###` and deeper headings are promoted to slide level, so each becomes its own
-slide instead of piling onto the previous slide. On the website they stay a normal
-sub-heading.
+`age_ma` and `Age_Ma` are different objects, so choose short, descriptive names without spaces.
 :::
 
-### A sub-heading
+### Vectors
 
-::: {.narration}
-This is its own slide.
-:::
-
-## Building up a slide
-
-::: {.narration}
-When a slide holds two or more code chunks, the filter expands it into an
-auto-animate build-up: one step per chunk, earlier chunks staying on screen, and
-the narration advancing with each step/click.
-:::
+A vector is a collection of values of the same type. You can create one with `c()`.
 
 ```{r}
-x <- mtcars$wt
+#| label: vectors
+
+ages <- c(5.3, 11.6, 23.0, 33.9)
+ages
+```
+
+::: {.callout-tip}
+### Comments
+
+Anything after `#` is a comment. R ignores comments, so use them to explain your code to your future self.
+
+```{r}
+#| label: comments
+
+# Store the age of a fossil (in millions of years)
+age_ma <- 23.5
+```
+:::
+
+### Object classes
+
+Every object has a class, which tells R how to treat it. Check it with `class()`.
+
+```{r}
+#| label: classes
+
+# Numeric
+class(23.5)
+# Integer
+class(5L)
+# Character
+class("Acropora")
+# Logical
+class(TRUE)
+# Factor
+class(factor(c("reef-building", "non-reef-building")))
+```
+
+  | Class       | Example      | Used for                     |
+  | :---------- | :----------- | :--------------------------- |
+  | `numeric`   | `23.5`       | Measurements, ages           |
+  | `integer`   | `5L`         | Counts                       |
+  | `character` | `"Acropora"` | Names, labels                |
+  | `logical`   | `TRUE`       | Yes/no conditions            |
+  | `factor`    | `"reef"`     | Categories with fixed levels |
+
+::: {.callout-tip}
+## Mixing classes
+
+Mixing classes in one vector forces R to convert everything to the most flexible class.
+
+```{r}
+#| label: mixing-classes
+
+# Everything becomes character
+class(c(1, "two", TRUE))
+```
+:::
+
+### Data frames and lists
+
+A **data frame** is a table where each column is a vector and all columns have the same length. A **list** can hold objects of different types and sizes.
+
+```{r}
+#| label: dataframe
+
+corals <- data.frame(
+  genus = c("Acropora", "Porites", "Pocillopora", "Caryophyllia", "Balanophyllia"),
+  age_ka = c(23.0, 15.9, 11.6, 5.3, 2.6),
+  n_specimens  = c(12L, 30L, 8L, 5L, 3L)
+)
+corals
+class(corals)
+```
+
+You can use `$` and `[[ ]]` to extract a whole column as a **vector**.
+
+```{r}
+#| label: dataframe-access
+
+corals$genus
+corals[["genus"]]
+corals[[1]]
+```
+
+Single square brackets `[ ]` also select columns, but what you get back depends on how you use them. With one index, you get a **data frame**. With a comma, you are using `[rows, columns]`, and leaving the rows blank returns every row.
+
+```{r}
+#| label: dataframe-single-brackets
+
+corals["genus"]
+corals[1]
+corals[, "genus"]
+corals[, 1]
+corals[c("genus", "age_ma")]
+```
+
+::: {.callout-caution}
+## Exercise 2: Select the second row and "genus" column
+
+Use single square brackets `[rows, columns]` with the `corals` data frame.
+
+1. Select the value in the second row of the `genus` column, first by column name and then by column position.
+2. Select the whole second row (all columns).
+3. Select the first three rows of the `genus` and `age_ka` columns.
+:::
+
+::: {.callout-note collapse="true"}
+## Solution
+
+```{r}
+#| label: exercise-2-solution
+
+# 1. Second row, genus column
+corals[2, "genus"]
+corals[2, 2 - 1]
+
+# 2. Whole second row
+corals[2, ]
+
+# 3. First three rows, two columns
+corals[1:3, c("genus", "age_ma")]
+```
+:::
+
+Create a list with `list()`. Each element can be a different class and length, and can even be a whole data frame.
+
+```{r}
+#| label: list
+
+coral_specimens <- list(
+  institution = "Natural History Museum",
+  collection = "Fossil Cnidaria",
+  genera = corals$genera,
+  data = corals
+)
+coral_specimens
+class(coral_specimens)
+length(coral_specimens)
+```
+
+Use `$` or double square brackets `[[ ]]` to extract an element by name or position.
+
+```{r}
+#| label: list-access
+
+coral_specimens$site
+coral_specimens[["genera"]]
+coral_specimens[[4]]
+coral_specimens$data$age_ka
+```
+
+Use `str()` for a compact overview of any list.
+
+```{r}
+#| label: list-str
+
+str(coral_specimens)
+```
+
+::: {.callout-tip}
+A data frame is really just a list in which every element is a vector of the same length. Check with `is.list(corals)`.
+:::
+
+::: {.callout-caution}
+## Exercise 3: Add a new element
+
+Add a new element called `observer` to `coral_specimens`, holding your name. Then extract the `genus` column of the data frame stored inside the list.
+:::
+
+::: {.callout-note collapse="true"}
+## Answer
+
+```{r}
+#| label: list-answer
+
+coral_specimens$observer <- "Your name"
+coral_specimens$data$genus
+```
+:::
+
+### Missing values
+
+R represents missing data as `NA`. Most summary functions return `NA` if any value is missing, unless you tell them otherwise.
+
+```{r}
+x <- c(1, 2, NA, 4)
 mean(x)
+mean(x, na.rm = TRUE)
 ```
 
-::: {.narration}
-The second chunk arrives on the next step, with the first still visible.
-:::
-
-```{r}
-round(sd(x), 3)
-```
-
-## Callouts
-
-::: {.narration}
-A callout gets a slide of its own. The content is un-boxed and the slide is titled by its own heading.
-:::
-
-::: {.callout-note}
-## A note
-
-This box is dropped on the slide, which lets a figure inside it stretch to fit.
-:::
-
-::: {.callout-caution collapse="true"}
-## An exercise solution
-
-A *collapsed* callout is the exception: it keeps its box. Since clicking on
-slides can be awkward, the collapsed content is held back as a fragment and
-revealed when you advance. On the website it stays a click-to-open box.
-:::
-
-## More info
-
-- [Quarto revealjs](https://quarto.org/docs/presentations/revealjs/)
-- [Callouts](https://quarto.org/docs/authoring/callouts.html)
-- the repo README, for the other two ways to build a module
+## Import and view datasets
