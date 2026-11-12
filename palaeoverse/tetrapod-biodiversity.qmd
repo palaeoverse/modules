@@ -226,7 +226,7 @@ Now that we have an understanding of the amount of uncertainty surrounding the a
 #| label: fill-missing-occurrence-ages
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Make sure that any values which could not be matched contain their original values
 tetrapods$interval_max_ma <- ifelse(is.na(tetrapods$interval_max_ma),
                                     tetrapods$max_ma,
@@ -245,7 +245,7 @@ Now we are ready to allocate our occurrences to our time bins. We will do this u
 ```{r}
 #| label: time-bin-occs-error
 #| eval: false
-#|
+
 # Rename columns so that new intervals are used for binning
 colnames(tetrapods)[9:10] <- c("old_max_ma", "old_min_ma")
 colnames(tetrapods)[c(35, 37)] <- c("max_ma", "min_ma")
@@ -276,7 +276,7 @@ We will remove these problematic occurrences and try again.
 #| label: time-bin-occs
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Remove occurrences that are younger than the time intervals we're interested in
 cp_tetrapods <- subset(tetrapods, min_ma > min(bins$min_ma))
 
@@ -292,7 +292,7 @@ This time we have received a warning, but no error. Let's take a look at the new
 #| label: bin-time-columns
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # View new columns
 mid_tetrapods[1:5, 38:41]
 ```
@@ -303,7 +303,7 @@ The second of these new columns is `n_bins`, which tells us how many stages are 
 #| label: summary-n-bins
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Make a table of potential number of bins
 table(mid_tetrapods$n_bins)
 
@@ -321,7 +321,7 @@ We can use `palaeoverse::palaeorotate()` to use a global plate model (GPM) to in
 
 ```{r}
 #| label: palaeorotate
-#|
+
 # Palaeorotate occurrences
 mid_tetrapods <- palaeorotate(occdf = mid_tetrapods, age = "bin_midpoint",
                               method = "point", model = "PALEOMAP")
@@ -333,7 +333,7 @@ Let's now take a look at our new columns containing the palaeocoordinates.
 #| label: check-coords
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # View new columns
 head(mid_tetrapods[, c("p_lng", "p_lat")])
 # Did any of the rotations fail?
@@ -346,7 +346,7 @@ We can now generate our spatial bins and lace our occurrences into them based on
 #| label: hex-cells
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Generate hex cells with diameter around 100km, and bin occurrences
 mid_tetrapods <- bin_space(occdf = mid_tetrapods,
                            lng = "p_lng",
@@ -368,7 +368,7 @@ In many cases, palaeobiologists count unique taxa by retaining only unique occur
 - *Ornithominus* sp.
 - *Tyrannosaurus rex*
 
-A filter for species-level identifications would reduce the species richness to just two (*A. sarcophagus* and *T. rex*). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. `palaeoverse::tax_unique()` is designed to deal with such taxonomic data and would retain all five ‘species’ in this example. For further details see `help(tax_unique)`.
+A filter for species-level identifications would reduce the species richness to just two (*A. sarcophagus* and *T. rex*). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. `palaeoverse::tax_unique()` is designed to deal with such taxonomic data and would retain all five 'species' in this example. For further details see `help(tax_unique)`.
 
 This function can be especially helpful when we want to quantify alpha (local) diversity. Let's use this function to investigate the number of unique genera in our dataset.
 
@@ -376,7 +376,7 @@ This function can be especially helpful when we want to quantify alpha (local) d
 #| label: tax-unique
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Filter occurrences to unique genera
 tet_genera <- tax_unique(occdf = mid_tetrapods, genus = "genus", family = "family", order = "order", class = "class", resolution = "genus")
 # Get a preview of the output table
@@ -407,7 +407,7 @@ We can see the additional occurrences retained at the end of our output table.
 #| label: tax-unique-extra
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # View extra occurrence
 tet_genera[718:719, ]
 ```
@@ -418,7 +418,7 @@ Now that we've seen what this function can do, let's apply it in a way that lets
 #| label: tax-unique-colls
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Use group_apply along with tax_unique:
 coll_genera <- group_apply(occdf = mid_tetrapods,
                            group = c("collection_no"),
@@ -439,7 +439,7 @@ In addition to the columns we had before, we have now gained a `collection_no` c
 #| label: colls-count
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Get the names of unique genera per collection
 unique_genera <- unique(coll_genera[, c("unique_name", "collection_no")])
 
@@ -523,7 +523,7 @@ There are many things we could try, but here are some suggestions:
 
 ## Quantifying spatial patterns
 
-Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the `palaeoverse::tax_range_space()` function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we’ll use the method `con` which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space).
+Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the `palaeoverse::tax_range_space()` function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we'll use the method `con` which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space).
 
 We can use this in combination with `group_apply` to calculate the convex hull size for each genus in each time interval:
 
@@ -564,7 +564,7 @@ From this information we can now plot how the average range size of tetrapods ch
 
 ```{r}
 #| label: convex-hulls-plot
-#|
+
 # Find the average geographic range size for each time interval
 space_tetrapods_mean <- group_apply(space_tetrapods, "bin_midpoint", function(df) mean(df$area))
 colnames(space_tetrapods_mean) <- c("mean_area", "bin_midpoint")
@@ -580,13 +580,13 @@ axis_geo(side = 1, intervals = list("epochs", "periods"))
 title(xlab = "Time (Ma)", line = 4)
 ```
 
-From this plot it seems like the average geographic range size of tetrapods increased during the Permian. However, we first need to be sure we’re not picking up on another pattern. Remember how we calculated the number of unique geographic cells in each time interval earlier? This provides a measure of the spatial spread of the fossil record. It might be that we’re not picking up on an increased range size, but just a larger geographic spread of fossil bearing rocks within the Permian. To see if this is the case, we can run a simple correlation test between the average geographic range size of tetrapods and the number of unique grid cells in each time interval:
+From this plot it seems like the average geographic range size of tetrapods increased during the Permian. However, we first need to be sure we're not picking up on another pattern. Remember how we calculated the number of unique geographic cells in each time interval earlier? This provides a measure of the spatial spread of the fossil record. It might be that we're not picking up on an increased range size, but just a larger geographic spread of fossil bearing rocks within the Permian. To see if this is the case, we can run a simple correlation test between the average geographic range size of tetrapods and the number of unique grid cells in each time interval:
 
 ```{r}
 #| label: convex-hulls-corr
 #| output-fold: true
 #| output-summary: "Output"
-#|
+
 # Calculate the number of unique cells in each time bin
 unique_cells <- unique(mid_tetrapods[, c("bin_midpoint", "cell_ID")])
 spat.cov <- group_apply(unique_cells, group = "bin_midpoint", fun = nrow)
@@ -594,9 +594,9 @@ spat.cov <- group_apply(unique_cells, group = "bin_midpoint", fun = nrow)
 cor.test(log10(space_tetrapods_mean$mean_area), log10(spat.cov$nrow), method = "spearman")
 ```
 
-The high rho value and a p-value less than our cut off for significance (0.05) indicate a strong and statistically significant correlation between average geographic range size and the spatial spread of data. Seems like this work is far from over…
+The high rho value and a p-value less than our cut off for significance (0.05) indicate a strong and statistically significant correlation between average geographic range size and the spatial spread of data. Seems like this work is far from over...
 
-…but we’ll leave the rest to you!
+...but we'll leave the rest to you!
 
 ## Wrap-up
 
