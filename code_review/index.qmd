@@ -87,7 +87,7 @@ Depending on the setting, the reviewer might start by checking that the code act
 
 The reviewer should then ask the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g. code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?
 
-Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? Are these cases realistic? Are these cases properly handled?
+Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? For example, our code might expect a column in an Excel file to be of class "Date", but what would happen if an update to this file changes this column to be of class "numeric" instead? Is this realistic? Would we be able to detect this change early on?
 
 A good way to assess your own understanding of the code is to prepare a list of expectations about what this code should do, and then compare these expectations to what the code actually does. This is not always convenient or possible, for example if the code to review is part of a pipeline that takes a long time to run, but it can uncover issues in many cases.
 
