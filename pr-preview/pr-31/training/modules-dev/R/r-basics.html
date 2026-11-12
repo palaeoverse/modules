@@ -9,7 +9,7 @@
 <meta name="author" content="Lewis A. Jones">
 <meta name="author" content="Erin M. Dillon">
 <meta name="dcterms.date" content="2026-11-12">
-<meta name="description" content="This is a description">
+<meta name="description" content="Getting started with R">
 
 <title>R Basics</title>
 <style>
@@ -320,29 +320,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link active" data-scroll-target="#what-is-r"><span class="header-section-number">1</span> What is R?</a>
+  <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link active" data-scroll-target="#what-is-r"><span class="header-section-number">1</span> What is R?</a></li>
+  <li><a href="#r-and-rstudio" id="toc-r-and-rstudio" class="nav-link" data-scroll-target="#r-and-rstudio"><span class="header-section-number">2</span> R and RStudio</a></li>
+  <li><a href="#why-use-r" id="toc-why-use-r" class="nav-link" data-scroll-target="#why-use-r"><span class="header-section-number">3</span> Why use R?</a>
   <ul class="collapse">
-  <li><a href="#r-and-rstudio" id="toc-r-and-rstudio" class="nav-link" data-scroll-target="#r-and-rstudio"><span class="header-section-number">1.1</span> R and RStudio</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility"><span class="header-section-number">3.1</span> Reproducibility</a></li>
+  <li><a href="#transparency-and-trust" id="toc-transparency-and-trust" class="nav-link" data-scroll-target="#transparency-and-trust"><span class="header-section-number">3.2</span> Transparency and trust</a></li>
+  <li><a href="#scale-and-speed" id="toc-scale-and-speed" class="nav-link" data-scroll-target="#scale-and-speed"><span class="header-section-number">3.3</span> Scale and speed</a></li>
+  <li><a href="#flexibility" id="toc-flexibility" class="nav-link" data-scroll-target="#flexibility"><span class="header-section-number">3.4</span> Flexibility</a></li>
+  <li><a href="#a-huge-community" id="toc-a-huge-community" class="nav-link" data-scroll-target="#a-huge-community"><span class="header-section-number">3.5</span> A huge community</a></li>
+  <li><a href="#it-is-a-career-skill" id="toc-it-is-a-career-skill" class="nav-link" data-scroll-target="#it-is-a-career-skill"><span class="header-section-number">3.6</span> It is a career skill</a></li>
   </ul></li>
-  <li><a href="#why-use-r" id="toc-why-use-r" class="nav-link" data-scroll-target="#why-use-r"><span class="header-section-number">2</span> Why use R?</a>
+  <li><a href="#basic-syntax-functions-and-object-classes" id="toc-basic-syntax-functions-and-object-classes" class="nav-link" data-scroll-target="#basic-syntax-functions-and-object-classes"><span class="header-section-number">4</span> Basic syntax, functions, and object classes</a>
   <ul class="collapse">
-  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility"><span class="header-section-number">2.1</span> Reproducibility</a></li>
-  <li><a href="#transparency-and-trust" id="toc-transparency-and-trust" class="nav-link" data-scroll-target="#transparency-and-trust"><span class="header-section-number">2.2</span> Transparency and trust</a></li>
-  <li><a href="#scale-and-speed" id="toc-scale-and-speed" class="nav-link" data-scroll-target="#scale-and-speed"><span class="header-section-number">2.3</span> Scale and speed</a></li>
-  <li><a href="#flexibility" id="toc-flexibility" class="nav-link" data-scroll-target="#flexibility"><span class="header-section-number">2.4</span> Flexibility</a></li>
-  <li><a href="#a-huge-community" id="toc-a-huge-community" class="nav-link" data-scroll-target="#a-huge-community"><span class="header-section-number">2.5</span> A huge community</a></li>
-  <li><a href="#it-is-a-career-skill" id="toc-it-is-a-career-skill" class="nav-link" data-scroll-target="#it-is-a-career-skill"><span class="header-section-number">2.6</span> It is a career skill</a></li>
+  <li><a href="#objects-and-assignment" id="toc-objects-and-assignment" class="nav-link" data-scroll-target="#objects-and-assignment"><span class="header-section-number">4.1</span> Objects and assignment</a></li>
+  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors"><span class="header-section-number">4.2</span> Vectors</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">4.3</span> Functions</a></li>
+  <li><a href="#object-classes" id="toc-object-classes" class="nav-link" data-scroll-target="#object-classes"><span class="header-section-number">4.4</span> Object classes</a></li>
+  <li><a href="#data-frames-and-lists" id="toc-data-frames-and-lists" class="nav-link" data-scroll-target="#data-frames-and-lists"><span class="header-section-number">4.5</span> Data frames and lists</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values"><span class="header-section-number">4.6</span> Missing values</a></li>
   </ul></li>
-  <li><a href="#basic-syntax-functions-and-object-classes" id="toc-basic-syntax-functions-and-object-classes" class="nav-link" data-scroll-target="#basic-syntax-functions-and-object-classes"><span class="header-section-number">3</span> Basic syntax, functions, and object classes</a>
+  <li><a href="#import-and-view-datasets" id="toc-import-and-view-datasets" class="nav-link" data-scroll-target="#import-and-view-datasets"><span class="header-section-number">5</span> Import and view datasets</a>
   <ul class="collapse">
-  <li><a href="#objects-and-assignment" id="toc-objects-and-assignment" class="nav-link" data-scroll-target="#objects-and-assignment"><span class="header-section-number">3.1</span> Objects and assignment</a></li>
-  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors"><span class="header-section-number">3.2</span> Vectors</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">3.3</span> Functions</a></li>
-  <li><a href="#object-classes" id="toc-object-classes" class="nav-link" data-scroll-target="#object-classes"><span class="header-section-number">3.4</span> Object classes</a></li>
-  <li><a href="#data-frames-and-lists" id="toc-data-frames-and-lists" class="nav-link" data-scroll-target="#data-frames-and-lists"><span class="header-section-number">3.5</span> Data frames and lists</a></li>
-  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values"><span class="header-section-number">3.6</span> Missing values</a></li>
+  <li><a href="#r-built-in-datasets" id="toc-r-built-in-datasets" class="nav-link" data-scroll-target="#r-built-in-datasets"><span class="header-section-number">5.1</span> R built-in datasets</a></li>
+  <li><a href="#read-and-write-datasets" id="toc-read-and-write-datasets" class="nav-link" data-scroll-target="#read-and-write-datasets"><span class="header-section-number">5.2</span> Read and write datasets</a></li>
+  <li><a href="#inspect-structure-and-summaries" id="toc-inspect-structure-and-summaries" class="nav-link" data-scroll-target="#inspect-structure-and-summaries"><span class="header-section-number">5.3</span> Inspect structure and summaries</a></li>
   </ul></li>
-  <li><a href="#import-and-view-datasets" id="toc-import-and-view-datasets" class="nav-link" data-scroll-target="#import-and-view-datasets"><span class="header-section-number">4</span> Import and view datasets</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="r-basics-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
@@ -360,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    This is a description
+    Getting started with R
   </div>
 </div>
 
@@ -395,52 +398,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 <section id="what-is-r" class="level2" data-number="1">
 <h2 data-number="1" data-anchor-id="what-is-r"><span class="header-section-number">1</span> What is R?</h2>
-<p><a href="https://www.r-project.org">R</a> is a programming language designed for working with data. You use it to import, clean, analyse, and visualise data, and to report your results, all by writing code.</p>
+<p><a href="https://www.r-project.org">R</a> is a programming language designed for working with data. You can use it to import, clean, analyse, and visualise data, and to report your results, all by writing code.</p>
 <p>A few things worth knowing:</p>
 <ul>
 <li>R is a language, not a program with menus - you tell R what to do by typing commands, which you can save, edit, and rerun.</li>
 <li>R is free and open source - anyone can download it, read how it works, and contribute to it.</li>
 <li>R was built by statisticians - it grew out of the S language and was created in the 1990s at the University of Auckland (it is now maintained by a global community).</li>
-<li>R is extended by packages - Researchers share tools for specialised tasks, from fossil range analysis to phylogenetics, as add-on packages.</li>
+<li>R is extended by packages - Researchers share tools for specialised tasks as add-on packages, from fossil range analysis to phylogenetics.</li>
 </ul>
-<section id="r-and-rstudio" class="level3" data-number="1.1">
-<h3 data-number="1.1" data-anchor-id="r-and-rstudio"><span class="header-section-number">1.1</span> R and RStudio</h3>
+</section>
+<section id="r-and-rstudio" class="level2" data-number="2">
+<h2 data-number="2" data-anchor-id="r-and-rstudio"><span class="header-section-number">2</span> R and RStudio</h2>
 <p>R and RStudio are two separate things, and it helps to know the differences. <a href="https://www.r-project.org">R</a> is the language and engine that runs your code while <a href="https://posit.co/products/open-source/rstudio">RStudio</a> is a workspace that makes R easier to use.</p>
 <blockquote class="blockquote">
 <p><em>R is like as a car’s engine while RStudio is the car’s dashboard and controls.</em></p>
 </blockquote>
 <p>In this module, you will be typing into RStudio, but R does the work.</p>
 </section>
-</section>
-<section id="why-use-r" class="level2" data-number="2">
-<h2 data-number="2" data-anchor-id="why-use-r"><span class="header-section-number">2</span> Why use R?</h2>
+<section id="why-use-r" class="level2" data-number="3">
+<h2 data-number="3" data-anchor-id="why-use-r"><span class="header-section-number">3</span> Why use R?</h2>
 <p>You may already analyse data in a spreadsheet. Spreadsheets are fine for storing and eyeballing small tables, but R offers several advantages for research.</p>
-<section id="reproducibility" class="level3" data-number="2.1">
-<h3 data-number="2.1" data-anchor-id="reproducibility"><span class="header-section-number">2.1</span> Reproducibility</h3>
+<section id="reproducibility" class="level3" data-number="3.1">
+<h3 data-number="3.1" data-anchor-id="reproducibility"><span class="header-section-number">3.1</span> Reproducibility</h3>
 <p>Every step of your analysis is written down. Anyone, including you in six months, can rerun your script and get the same result. With point-and-click tools, the steps live only in your memory.</p>
 </section>
-<section id="transparency-and-trust" class="level3" data-number="2.2">
-<h3 data-number="2.2" data-anchor-id="transparency-and-trust"><span class="header-section-number">2.2</span> Transparency and trust</h3>
+<section id="transparency-and-trust" class="level3" data-number="3.2">
+<h3 data-number="3.2" data-anchor-id="transparency-and-trust"><span class="header-section-number">3.2</span> Transparency and trust</h3>
 <p>Code records exactly what you did to your data: what you removed, what you transformed, and which model you ran. Reviewers and collaborators can check it, and mistakes are easier to spot and fix.</p>
 </section>
-<section id="scale-and-speed" class="level3" data-number="2.3">
-<h3 data-number="2.3" data-anchor-id="scale-and-speed"><span class="header-section-number">2.3</span> Scale and speed</h3>
+<section id="scale-and-speed" class="level3" data-number="3.3">
+<h3 data-number="3.3" data-anchor-id="scale-and-speed"><span class="header-section-number">3.3</span> Scale and speed</h3>
 <p>Once you have written code for one dataset, you can run it on a hundred. Repetitive tasks that take hours by hand take seconds, and rerunning an analysis after you add new data costs nothing.</p>
 </section>
-<section id="flexibility" class="level3" data-number="2.4">
-<h3 data-number="2.4" data-anchor-id="flexibility"><span class="header-section-number">2.4</span> Flexibility</h3>
+<section id="flexibility" class="level3" data-number="3.4">
+<h3 data-number="3.4" data-anchor-id="flexibility"><span class="header-section-number">3.4</span> Flexibility</h3>
 <p>R can handle almost any analysis or plot you can imagine. You are not limited to the options someone else put in a menu.</p>
 </section>
-<section id="a-huge-community" class="level3" data-number="2.5">
-<h3 data-number="2.5" data-anchor-id="a-huge-community"><span class="header-section-number">2.5</span> A huge community</h3>
+<section id="a-huge-community" class="level3" data-number="3.5">
+<h3 data-number="3.5" data-anchor-id="a-huge-community"><span class="header-section-number">3.5</span> A huge community</h3>
 <ul>
 <li>There are &gt;25,000 packages available on <a href="https://cran.r-project.org">CRAN</a>, the main package repository</li>
 <li>Most methods in palaeontology, ecology, and evolution have an R implementation</li>
 <li>Help is easy to find, from documentation and tutorials to forums and colleagues</li>
 </ul>
 </section>
-<section id="it-is-a-career-skill" class="level3" data-number="2.6">
-<h3 data-number="2.6" data-anchor-id="it-is-a-career-skill"><span class="header-section-number">2.6</span> It is a career skill</h3>
+<section id="it-is-a-career-skill" class="level3" data-number="3.6">
+<h3 data-number="3.6" data-anchor-id="it-is-a-career-skill"><span class="header-section-number">3.6</span> It is a career skill</h3>
 <p>Familiarity with R is valued across academia, conservation, government, and industry, and the skills you build transfer to other languages (e.g.&nbsp;Python).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -452,7 +455,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>R has a learning curve. Expect to make typos, see error messages, and feel slow at first. This is normal for everyone, but the payoff comes quickly as the basics become second nature.</p>
+<p>Like most skills in life, R has a learning curve. Expect to make typos, see error messages, and feel slow at first. This is normal for everyone, but the payoff comes quickly as the basics become second nature.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -473,8 +476,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="basic-syntax-functions-and-object-classes" class="level2" data-number="3">
-<h2 data-number="3" data-anchor-id="basic-syntax-functions-and-object-classes"><span class="header-section-number">3</span> Basic syntax, functions, and object classes</h2>
+<section id="basic-syntax-functions-and-object-classes" class="level2" data-number="4">
+<h2 data-number="4" data-anchor-id="basic-syntax-functions-and-object-classes"><span class="header-section-number">4</span> Basic syntax, functions, and object classes</h2>
 <p>At its simplest, R is a very powerful calculator. Type an expression into the console (or run it from a script) and R returns the result.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -486,8 +489,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] 2.5</code></pre>
 </div>
 </div>
-<section id="objects-and-assignment" class="level3" data-number="3.1">
-<h3 data-number="3.1" data-anchor-id="objects-and-assignment"><span class="header-section-number">3.1</span> Objects and assignment</h3>
+<section id="objects-and-assignment" class="level3" data-number="4.1">
+<h3 data-number="4.1" data-anchor-id="objects-and-assignment"><span class="header-section-number">4.1</span> Objects and assignment</h3>
 <p>In R, we use <code>&lt;-</code> to store a value in an object. Once stored, you can reuse the object by name.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n_species <span class="ot">&lt;-</span> <span class="dv">25</span></span>
@@ -510,8 +513,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="vectors" class="level3" data-number="3.2">
-<h3 data-number="3.2" data-anchor-id="vectors"><span class="header-section-number">3.2</span> Vectors</h3>
+<section id="vectors" class="level3" data-number="4.2">
+<h3 data-number="4.2" data-anchor-id="vectors"><span class="header-section-number">4.2</span> Vectors</h3>
 <p>A vector is a collection of values of the same type. You can create one with <code>c()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.3</span>, <span class="fl">11.6</span>, <span class="fl">23.0</span>, <span class="fl">33.9</span>)</span>
@@ -538,8 +541,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="functions" class="level3" data-number="3.3">
-<h3 data-number="3.3" data-anchor-id="functions"><span class="header-section-number">3.3</span> Functions</h3>
+<section id="functions" class="level3" data-number="4.3">
+<h3 data-number="4.3" data-anchor-id="functions"><span class="header-section-number">4.3</span> Functions</h3>
 <p>A function is a reusable set of instructions that takes an input, does something with it, and returns a result. You have already used one <code>c()</code> when creating a vector.</p>
 <p>To use (or “call”) a function, type its name followed by parentheses. The values you put inside the parentheses are its <strong>arguments</strong>, which are the inputs the function works on.</p>
 <div class="cell">
@@ -550,8 +553,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Here, <code>sqrt</code> is the function and <code>16</code> is the argument. A function can take several arguments, separated by commas. You can supply them by position or by name.</p>
 </section>
-<section id="object-classes" class="level3" data-number="3.4">
-<h3 data-number="3.4" data-anchor-id="object-classes"><span class="header-section-number">3.4</span> Object classes</h3>
+<section id="object-classes" class="level3" data-number="4.4">
+<h3 data-number="4.4" data-anchor-id="object-classes"><span class="header-section-number">4.4</span> Object classes</h3>
 <p>Every object has a class, which tells R how to treat it. Check it with <code>class()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Numeric</span></span>
@@ -637,8 +640,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="data-frames-and-lists" class="level3" data-number="3.5">
-<h3 data-number="3.5" data-anchor-id="data-frames-and-lists"><span class="header-section-number">3.5</span> Data frames and lists</h3>
+<section id="data-frames-and-lists" class="level3" data-number="4.5">
+<h3 data-number="4.5" data-anchor-id="data-frames-and-lists"><span class="header-section-number">4.5</span> Data frames and lists</h3>
 <p>A <strong>data frame</strong> is a table where each column is a vector and all columns have the same length. A <strong>list</strong> can hold objects of different types and sizes.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>corals <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
@@ -900,8 +903,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="missing-values" class="level3" data-number="3.6">
-<h3 data-number="3.6" data-anchor-id="missing-values"><span class="header-section-number">3.6</span> Missing values</h3>
+<section id="missing-values" class="level3" data-number="4.6">
+<h3 data-number="4.6" data-anchor-id="missing-values"><span class="header-section-number">4.6</span> Missing values</h3>
 <p>R represents missing data as <code>NA</code>. Most summary functions return <code>NA</code> if any value is missing, unless you tell them otherwise.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>)</span>
@@ -916,8 +919,360 @@ Tip
 </div>
 </section>
 </section>
-<section id="import-and-view-datasets" class="level2" data-number="4">
-<h2 data-number="4" data-anchor-id="import-and-view-datasets"><span class="header-section-number">4</span> Import and view datasets</h2>
+<section id="import-and-view-datasets" class="level2" data-number="5">
+<h2 data-number="5" data-anchor-id="import-and-view-datasets"><span class="header-section-number">5</span> Import and view datasets</h2>
+<section id="r-built-in-datasets" class="level3" data-number="5.1">
+<h3 data-number="5.1" data-anchor-id="r-built-in-datasets"><span class="header-section-number">5.1</span> R built-in datasets</h3>
+<p>R comes with many built-in example datasets. You can list them with <code>data()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And also load them by name:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="read-and-write-datasets" class="level3" data-number="5.2">
+<h3 data-number="5.2" data-anchor-id="read-and-write-datasets"><span class="header-section-number">5.2</span> Read and write datasets</h3>
+<p>In most cases, you are going to want to use your own dataset. These can come in various formats, but one of the most common formats is a comma-separated values (<code>.csv</code>) file. In R, we can load this file using <code>read.csv()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"reefs.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>read.csv()</code> looks for files relative to your <strong>working directory</strong>. If you are working in an RStudio Project (more on this later), this is the project folder. Check it with <code>getwd()</code>.</p>
+</div>
+</div>
+<p>Similarly, we can also save files via R. Here, we pass the object we want to save (<code>reefs</code>) and the file name to write to:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(reefs, <span class="st">"reefs_clean.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If a file with the same name already exists, R will overwrite it without warning. Use a new file name (e.g.&nbsp;<code>reefs_clean.csv</code>) to avoid replacing your original data.</p>
+</div>
+</div>
+<p>Similar functions exist for other file formats. The table below lists some of the most common ones using base R. However, many other options exist when extending base R with packages (e.g.&nbsp;<code>.xlsx</code>, <code>.xls</code> formats).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">File type</th>
+<th style="text-align: left;">Read</th>
+<th style="text-align: left;">Write</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Comma-separated (<code>.csv</code>)</td>
+<td style="text-align: left;"><code>read.csv()</code></td>
+<td style="text-align: left;"><code>write.csv()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Semicolon-separated (<code>.csv</code>, common in Europe)</td>
+<td style="text-align: left;"><code>read.csv2()</code></td>
+<td style="text-align: left;"><code>write.csv2()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tab-separated (<code>.tsv</code>, <code>.txt</code>)</td>
+<td style="text-align: left;"><code>read.delim()</code></td>
+<td style="text-align: left;"><code>write.table(sep = "\t")</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Any delimited text file</td>
+<td style="text-align: left;"><code>read.table()</code></td>
+<td style="text-align: left;"><code>write.table()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R data file (<code>.rds</code>)</td>
+<td style="text-align: left;"><code>readRDS()</code></td>
+<td style="text-align: left;"><code>saveRDS()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R workspace (<code>.RData</code>, <code>.rda</code>)</td>
+<td style="text-align: left;"><code>load()</code></td>
+<td style="text-align: left;"><code>save()</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="inspect-structure-and-summaries" class="level3" data-number="5.3">
+<h3 data-number="5.3" data-anchor-id="inspect-structure-and-summaries"><span class="header-section-number">5.3</span> Inspect structure and summaries</h3>
+<p>Always inspect your data straight after importing it.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  r_number               name             formation   system         series
+1        1   Tilkideligi Tepe                       Triassic Upper Triassic
+2        2              Hydra Pantokrator Limestone Triassic Upper Triassic
+3        3 Shiraho, W-Pacific                        Neogene       Holocene
+4        4 Aksu-Terziler area                       Triassic Upper Triassic
+5        5    Adnet, Salzburg                       Triassic Upper Triassic
+6        6          Rotelwand                       Triassic Upper Triassic
+        interval   biota_main       biota_sec      lng     lat country
+1   lower Norian Calcisponges Stromatoporoids  30.3833 37.0333  Turkey
+2  upper Carnian       Corals    Calcisponges  23.6333 37.3833  Greece
+3         Recent       Corals           Algae 124.2500 24.3333 Pacific
+4       Tuvalian Calcisponges Stromatoporoids  31.0333 37.8000  Turkey
+5 upper Rhaetian       Corals    Calcisponges  13.1667 47.7000 Austria
+6       Rhaetian       Corals    Calcisponges  13.1833 47.7000 Austria
+                              authors
+1                          Riedel, P.
+2   Schafer, P., Senowbari-Daryan, B.
+3 Kayanne, H., Suzuki, A. &amp; Saito, H.
+4                          Riedel, P.
+5                         Schafer, P.
+6                         Schafer, P.
+                                                                                                                                                  title
+1                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+2                                                The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -
+3                                                                      Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -
+4                                                 Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -
+5  Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke, Salzburg)
+6 Fazielle Entwicklung und palokologische Zonierung zweier obertriadischer Riffstrukturen in den Nordlichen Kalkalpen (Oberrhat"-Riff-Kalke,  Salzburg)
+  year
+1 1990
+2 1982
+3 1995
+4 1990
+5 1979
+6 1979</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     r_number                                                 name   formation
+4358     4373 core XK-1, Xisha carbonate platform on Shidao Island       Sanya
+4359     4374 core XK-1, Xisha carbonate platform on Shidao Island       Sanya
+4360     4375                                   Jebel Serdj-Bargou Lower Serdj
+4361     4376                                                 Cruz Higueruelas
+4362     4377                                               Jaulin Higueruelas
+4363     4378                  Anjiazhuang near Feicheng, Shandong    Zhangxia
+         system           series           interval biota_main    biota_sec
+4358    Neogene          Miocene        Burdigalian     Corals             
+4359    Neogene          Miocene         Aquitanian     Corals       Corals
+4360 Cretaceous Lower Cretaceous       upper Aptian     Corals      Rudists
+4361   Jurassic   Upper Jurassic upper Kimmeridgian     Corals Foraminifera
+4362   Jurassic   Upper Jurassic upper Kimmeridgian     Corals        Algae
+4363   Cambrian  Middle Cambrian              Amgan   Microbes     Microbes
+          lng     lat country
+4358 112.3472 16.8458   China
+4359 112.3472 16.8458   China
+4360   9.5666 36.0833 Tunisia
+4361  -0.8621 41.3359   Spain
+4362  -0.9908 41.4559   Spain
+4363 116.7700 35.9900   China
+                                                                  authors
+4358                          Yibing Li, Xinyu Liu, Weiwei Chen, Liang Yi
+4359                          Yibing Li, Xinyu Liu, Weiwei Chen, Liang Yi
+4360 Najeh Ben Chaabane, Fares Khemiri, Mohamed Soussi, Ilef Belhaj Taher
+4361                                Marcos Aurell, Alfonso Melendez Hevia
+4362                                Marcos Aurell, Alfonso Melendez Hevia
+4363              Mei, M.-X., Riaz, M., Zhang, Z.-W., Meng, Q.-F., Hu, Y.
+                                                                                                                                                           title
+4358                                       Magnetic Properties and Initiation of Biogenic Reefs in Xisha Islands, South China Sea, at the Oligo-Miocene Boundary
+4359                                       Magnetic Properties and Initiation of Biogenic Reefs in Xisha Islands, South China Sea, at the Oligo-Miocene Boundary
+4360 Late Aptian carbonate platform evolution and controls (south Tethys, Tunisia): response to sea-level oscillations, palaeo-environmental changes and climate
+4361                            Las bioconstrucciones de corales y sus facies asociadas durante el Malm en la Cordillera Iberica Central (provincia de Zaragoza)
+4362                            Las bioconstrucciones de corales y sus facies asociadas durante el Malm en la Cordillera Iberica Central (provincia de Zaragoza)
+4363                          Diversified calcimicrobes in dendrolites of the Zhangxia Formation, Miaolingian Series (Middle Cambrian) of the North China craton
+     year
+4358 2021
+4359 2021
+4360 2021
+4361 1987
+4362 1987
+4363 2021</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4363   14</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "r_number"   "name"       "formation"  "system"     "series"    
+ [6] "interval"   "biota_main" "biota_sec"  "lng"        "lat"       
+[11] "country"    "authors"    "title"      "year"      </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   4363 obs. of  14 variables:
+ $ r_number  : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ name      : chr  "Tilkideligi Tepe" "Hydra" "Shiraho, W-Pacific" "Aksu-Terziler area" ...
+ $ formation : chr  "" "Pantokrator Limestone" "" "" ...
+ $ system    : chr  "Triassic" "Triassic" "Neogene" "Triassic" ...
+ $ series    : chr  "Upper Triassic" "Upper Triassic" "Holocene" "Upper Triassic" ...
+ $ interval  : chr  "lower Norian" "upper Carnian" "Recent" "Tuvalian" ...
+ $ biota_main: chr  "Calcisponges" "Corals" "Corals" "Calcisponges" ...
+ $ biota_sec : chr  "Stromatoporoids" "Calcisponges" "Algae" "Stromatoporoids" ...
+ $ lng       : num  30.4 23.6 124.2 31 13.2 ...
+ $ lat       : num  37 37.4 24.3 37.8 47.7 ...
+ $ country   : chr  "Turkey" "Greece" "Pacific" "Turkey" ...
+ $ authors   : chr  "Riedel, P." "Schafer, P., Senowbari-Daryan, B." "Kayanne, H., Suzuki, A. &amp; Saito, H." "Riedel, P." ...
+ $ title     : chr  "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" "The Upper Triassic Pantokrator Limestone of Hydra (Greece): An example of a prograding reef complex. -" "Diurnal changes in the partial pressure of carbon dioxide in coral reef water. -" "Riffbiotope im Karn und Nor (Obertrias) der Tethys: Entwicklung, Einschnitte und Diversitatsmuster. -" ...
+ $ year      : int  1990 1982 1995 1990 1979 1979 1989 1989 1986 1986 ...</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    r_number           name          formation          system    
+ Min.   :   1   Length   :4363   Length   :4363   Length   :4363  
+ 1st Qu.:1092   N.unique :4050   N.unique :1248   N.unique :  17  
+ Median :2185   N.blank  :   0   N.blank  :2342   N.blank  :   0  
+ Mean   :2186   Min.nchar:   3   Min.nchar:   0   Min.nchar:   7  
+ 3rd Qu.:3276   Max.nchar:  88   Max.nchar:  49   Max.nchar:  21  
+ Max.   :4378                    NAs      :   1                   
+                                                                  
+       series          interval        biota_main       biota_sec   
+ Length   :4363   Length   :4363   Length   :4363   Length   :4363  
+ N.unique :  69   N.unique : 782   N.unique :  17   N.unique :  17  
+ N.blank  :   6   N.blank  :   0   N.blank  : 271   N.blank  : 316  
+ Min.nchar:   0   Min.nchar:   5   Min.nchar:   0   Min.nchar:   0  
+ Max.nchar:  23   Max.nchar:  29   Max.nchar:  27   Max.nchar:  27  
+                                                                    
+                                                                    
+      lng               lat              country          authors    
+ Min.   :-179.55   Min.   :-82.00   Length   :4363   Length   :4363  
+ 1st Qu.: -43.75   1st Qu.: 28.38   N.unique : 145   N.unique :2103  
+ Median :  19.03   Median : 39.93   N.blank  :   0   N.blank  :   0  
+ Mean   :  17.65   Mean   : 36.03   Min.nchar:   4   Min.nchar:   6  
+ 3rd Qu.:  73.57   3rd Qu.: 49.83   Max.nchar:  22   Max.nchar: 213  
+ Max.   : 177.83   Max.   : 82.50                                    
+                                                                     
+       title           year     
+ Length   :4363   Min.   :1871  
+ N.unique :2342   1st Qu.:1981  
+ N.blank  :  11   Median :1989  
+ Min.nchar:   0   Mean   :1988  
+ Max.nchar: 246   3rd Qu.:1996  
+                  Max.   :2021  
+                  NAs    :48    </code></pre>
+</div>
+</div>
+<p>In RStudio, <code>View(reefs)</code> opens the data in a spreadsheet-style viewer.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Exercise 3: Practise syntax with a dataset
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load the built-in <code>iris</code> dataset and answer the following using the functions above.</p>
+<ol type="1">
+<li>How many rows and columns does it have?</li>
+<li>What are the column names, and what class is each column?</li>
+<li>What is the mean <code>Sepal.Length</code>?</li>
+<li>Does the dataset contain any missing values?</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 3: Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1. How many rows and columns does it have?</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 150   5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 150</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>The dataset has 150 rows and 5 columns.</p>
+<p><strong>2. What are the column names, and what class is each column?</strong></p>
+<div class="cell" data-output-fold="true" data-output-summary="Output">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"     </code></pre>
+</div>
+</details>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details><summary>Output</summary>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   150 obs. of  5 variables:
+ $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+ $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+ $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+ $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+ $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</details>
+</div>
+<p><code>str(iris)</code> returns the column names, classes and example values in one go.</p>
+<p><strong>3. What is the mean <code>Sepal.Length</code>?</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(iris<span class="sc">$</span>Sepal.Length)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.843333</code></pre>
+</div>
+</div>
+<p><strong>4. Does the dataset contain any missing values?</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anyNA</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(iris))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(iris))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
+           0            0            0            0            0 </code></pre>
+</div>
+</div>
+<p>No.&nbsp;<code>anyNA()</code> returns <code>FALSE</code> and the total number of <code>NA</code> values is 0.</p>
+</div>
+</div>
+</div>
 
 
 <hr><br><details>
@@ -939,6 +1294,7 @@ Tip
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </details>
+</section>
 </section>
 
 </main> <!-- /main -->
