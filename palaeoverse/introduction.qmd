@@ -37,6 +37,22 @@ required-packages: false
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 
+```{r}
+#| label: setup
+#| include: false
+
+knitr::knit_hooks$set(par = function(before, options, envir) {
+  if (before && isTRUE(options$par)) {
+    # bottom, left, top, right (lines)
+    par(mar = c(4, 4, 2, 1),
+        # figure background
+        bg = "transparent")
+  }
+})
+
+knitr::opts_chunk$set(par = TRUE)
+```
+
 # Why use palaeoverse
 
 Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.

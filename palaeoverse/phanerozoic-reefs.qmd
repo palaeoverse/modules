@@ -43,8 +43,10 @@ required-packages: false
 
 knitr::knit_hooks$set(par = function(before, options, envir) {
   if (before && isTRUE(options$par)) {
-    par(mar = c(4, 4, 2, 1),   # bottom, left, top, right (lines)
-        bg = "transparent")         # figure background
+    # bottom, left, top, right (lines)
+    par(mar = c(4, 4, 2, 1),
+        # figure background
+        bg = "transparent")
   }
 })
 
