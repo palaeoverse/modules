@@ -123,7 +123,7 @@ out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
 out[["collection_name"]]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
-One of the issues above is that the line starting with `dat_pbdb <- dat_pbdb[,` has a missing `]` at the end.
+One of the issues above is that the line starting with `dat_pbdb <- tetrapods[,` has a missing `]` at the end.
 
 Another important problem, which is harder to detect, is that `out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output. This is because we forgot to merge on `"collection_name"` as well:
 
