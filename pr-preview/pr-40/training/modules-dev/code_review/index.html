@@ -426,8 +426,20 @@ solution and next exercise */
 </div>
 </div>
 <p>Depending on the setting, the reviewer might start by checking that the code actually runs, but this is not always possible or needed (for instance if there are already automated tests that ensured that the code was giving the correct results).</p>
-<p>The reviewer should then ask the following questions: what does this code do? What are the inputs and outputs? Do I have enough information (e.g.&nbsp;code comments, informative variable names) to understand that? Is there anything that is hard to get and not documented well enough? Is the code human-readable?</p>
-<p>Once the reviewer is more familiar with the code, they can follow up with questions such as: what could go wrong? What are the assumptions, and what would happen if some of these break? For example, our code might expect a column in an Excel file to be of class “Date”, but what would happen if an update to this file changes this column to be of class “numeric” instead? Is this realistic? Would we be able to detect this change early on?</p>
+<p>The reviewer should then ask the following questions:</p>
+<ul>
+<li>what does this code do?</li>
+<li>what are the inputs and outputs?</li>
+<li>do I have enough information (e.g.&nbsp;code comments, informative variable names) to understand that?</li>
+<li>is there anything that is hard to get and not documented well enough?</li>
+<li>is the code human-readable?</li>
+</ul>
+<p>Once the reviewer is more familiar with the code, they can follow up with questions such as:</p>
+<ul>
+<li>what could go wrong?</li>
+<li>what are the assumptions, and what would happen if some of these break?</li>
+</ul>
+<p>For example, our code might expect a column in an Excel file to be of class “Date”, but what would happen if an update to this file changes this column to be of class “numeric” instead? Is this realistic, and would we be able to detect this change early on?</p>
 <p>A good way to assess your own understanding of the code is to prepare a list of expectations about what this code should do, and then compare these expectations to what the code actually does. This is not always convenient or possible, for example if the code to review is part of a pipeline that takes a long time to run, but it can uncover issues in many cases.</p>
 <p>Note that the amount of tests or expectations to validate is also very context-dependent. In general, code written as part of a data analysis project is very specific to your use case and its purpose is not to run on completely different datasets. <strong>Code that is part of a data analysis project still needs to be properly reviewed and tested</strong>, but you have more control over how this code is used. If your project is a package meant to be used by other people, then you also need to think about all sorts of ways people might misuse your code in their own context.</p>
 <p><em>Activity: Try out reviewing mini “bad code” examples that we provide</em></p>
