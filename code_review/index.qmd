@@ -128,12 +128,9 @@ One of the issues above is that the line starting with `dat_pbdb <- dat_pbdb[,` 
 Another important problem, which is harder to detect, is that `out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output. This is because we forgot to merge on `"collection_name"` as well:
 
 ```diff
-dat_pbdb <- read.csv("my_PBDB_data.csv")
-- dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")
-+ dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")]
-
-dat_darwin <- read.csv("my_DarwinCore_data.csv")
-dat_darwin <- dat_darwin[, c("collection_no", "collection_name", "life_habit")]
+- dat_pbdb <- tetrapods[, c("collection_no", "collection_name", "formation")
++ dat_pbdb <- tetrapods[, c("collection_no", "collection_name", "formation")]
+dat_darwin <- tetrapods[, c("collection_no", "collection_name", "life_habit")]
 
 - out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
 + out <- merge(dat_pbdb, dat_darwin, by = c("collection_no", "collection_name"))
