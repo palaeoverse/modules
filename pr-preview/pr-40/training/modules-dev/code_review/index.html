@@ -344,7 +344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/module-code-review/code_review/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/module-code-review/code_review/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -455,14 +455,11 @@ solution and next exercise */
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For the sake of the example, we use `palaeoverse::tetrapods` as data</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># source for both objects.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">scale =</span> <span class="st">"international ages"</span>)[, <span class="fu">c</span>(<span class="st">"min_ma"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_name"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>periods <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">scale =</span> <span class="st">"international periods"</span>)[, <span class="fu">c</span>(<span class="st">"min_ma"</span>, <span class="st">"max_ma"</span>, <span class="st">"abbr"</span>)]</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dat_pbdb <span class="ot">&lt;-</span> tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"formation"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dat_darwin <span class="ot">&lt;-</span> tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"life_habit"</span>)]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">merge</span>(dat_pbdb, dat_darwin, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>out[[<span class="st">"collection_name"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">merge</span>(ages, periods, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"max_ma"</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>out[[<span class="st">"min_ma"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
@@ -476,15 +473,15 @@ solution and next exercise */
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>One of the issues above is that the line starting with <code>dat_pbdb &lt;- tetrapods[,</code> has a missing <code>]</code> at the end.</p>
-<p>Another important problem, which is harder to detect, is that <code>out[["collection_name"]]</code> returns <code>NULL</code> because we have <code>"collection_name.x"</code> and <code>"collection_name.y"</code> in the output. This is because we forgot to merge on <code>"collection_name"</code> as well:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="st">- dat_pbdb &lt;- tetrapods[, c("collection_no", "collection_name", "formation")</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">+ dat_pbdb &lt;- tetrapods[, c("collection_no", "collection_name", "formation")]</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dat_darwin &lt;- tetrapods[, c("collection_no", "collection_name", "life_habit")]</span>
+<p>One of the issues above is that the line starting with <code>ages &lt;- time_bins(</code> has a missing <code>]</code> at the end.</p>
+<p>Another important problem, which is harder to detect, is that <code>out[["min_ma"]]</code> returns <code>NULL</code> because we have <code>"min_ma.x"</code> and <code>"min_ma.y"</code> in the output. This is because we forgot to merge on <code>"min_ma"</code> as well:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="st">- ages &lt;- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">+ ages &lt;- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")]</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>periods &lt;- time_bins(scale = "international periods")[, c("min_ma", "max_ma", "abbr")]</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">- out &lt;- merge(dat_pbdb, dat_darwin, by = "collection_no")</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">+ out &lt;- merge(dat_pbdb, dat_darwin, by = c("collection_no", "collection_name"))</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>out[["collection_name"]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">- out &lt;- merge(ages, periods, by = "min_ma")</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">+ out &lt;- merge(ages, periods, by = c("min_ma", "max_ma"))</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>out[["min_ma"]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
