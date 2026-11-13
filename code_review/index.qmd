@@ -87,18 +87,18 @@ This may add too much burden on the reviewer, in which case it might be better t
 
 Depending on the setting, the reviewer might start by checking that the code actually runs, but this is not always possible or needed (for instance if there are already automated tests that ensured that the code was giving the correct results).
 
-The reviewer should then ask the following questions: 
+The reviewer should then ask the following questions:
 
-- what does this code do? 
-- what are the inputs and outputs? 
-- do I have enough information (e.g. code comments, informative variable names) to understand that? 
-- is there anything that is hard to get and not documented well enough? 
+- what does this code do?
+- what are the inputs and outputs?
+- do I have enough information (e.g. code comments, informative variable names) to understand that?
+- is there anything that is hard to get and not documented well enough?
 - is the code human-readable?
 
-Once the reviewer is more familiar with the code, they can follow up with questions such as: 
+Once the reviewer is more familiar with the code, they can follow up with questions such as:
 
-- what could go wrong? 
-- what are the assumptions, and what would happen if some of these break? 
+- what could go wrong?
+- what are the assumptions, and what would happen if some of these break?
 
 For example, our code might expect a column in an Excel file to be of class "Date", but what would happen if an update to this file changes this column to be of class "numeric" instead? Is this realistic, and would we be able to detect this change early on?
 
@@ -107,7 +107,6 @@ A good way to assess your own understanding of the code is to prepare a list of 
 Note that the amount of tests or expectations to validate is also very context-dependent. In general, code written as part of a data analysis project is very specific to your use case and its purpose is not to run on completely different datasets. **Code that is part of a data analysis project still needs to be properly reviewed and tested**, but you have more control over how this code is used. If your project is a package meant to be used by other people, then you also need to think about all sorts of ways people might misuse your code in their own context.
 
 ::: {.callout-caution title="Exercise: Without running these examples, do you see what is likely wrong or could be improved?"}
-
 ```{r}
 #| eval: false
 
