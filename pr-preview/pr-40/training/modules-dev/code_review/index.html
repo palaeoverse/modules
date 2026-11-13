@@ -478,16 +478,13 @@ solution and next exercise */
 <div class="callout-body-container callout-body">
 <p>One of the issues above is that the line starting with <code>dat_pbdb &lt;- dat_pbdb[,</code> has a missing <code>]</code> at the end.</p>
 <p>Another important problem, which is harder to detect, is that <code>out[["collection_name"]]</code> returns <code>NULL</code> because we have <code>"collection_name.x"</code> and <code>"collection_name.y"</code> in the output. This is because we forgot to merge on <code>"collection_name"</code> as well:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat_pbdb &lt;- read.csv("my_PBDB_data.csv")</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">- dat_pbdb &lt;- dat_pbdb[, c("collection_no", "collection_name", "formation")</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">+ dat_pbdb &lt;- dat_pbdb[, c("collection_no", "collection_name", "formation")]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="st">- dat_pbdb &lt;- tetrapods[, c("collection_no", "collection_name", "formation")</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">+ dat_pbdb &lt;- tetrapods[, c("collection_no", "collection_name", "formation")]</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dat_darwin &lt;- tetrapods[, c("collection_no", "collection_name", "life_habit")]</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dat_darwin &lt;- read.csv("my_DarwinCore_data.csv")</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dat_darwin &lt;- dat_darwin[, c("collection_no", "collection_name", "life_habit")]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">- out &lt;- merge(dat_pbdb, dat_darwin, by = "collection_no")</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">+ out &lt;- merge(dat_pbdb, dat_darwin, by = c("collection_no", "collection_name"))</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>out[["collection_name"]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">- out &lt;- merge(dat_pbdb, dat_darwin, by = "collection_no")</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">+ out &lt;- merge(dat_pbdb, dat_darwin, by = c("collection_no", "collection_name"))</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>out[["collection_name"]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
