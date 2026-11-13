@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Bethany Allen">
 <meta name="author" content="Etienne Bacher">
+<meta name="author" content="Bethany Allen">
 <meta name="author" content="Lewis A. Jones">
-<meta name="dcterms.date" content="2026-11-12">
+<meta name="dcterms.date" content="2026-11-13">
 <meta name="description" content="Why it is important to read other people’s code and how to do it.">
 
 <title>Code review</title>
@@ -117,12 +117,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    document.body.classList.add('hypothesis-enabled');
-  });
-</script>
 
 
 <meta property="og:title" content="Palaeoverse">
@@ -329,8 +323,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
-             <p>Bethany Allen </p>
              <p>Etienne Bacher </p>
+             <p>Bethany Allen </p>
              <p>Lewis A. Jones </p>
           </div>
   </div>
@@ -338,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 12, 2026</p>
+      <p class="date">November 13, 2026</p>
     </div>
   </div>
   
@@ -411,9 +405,9 @@ solution and next exercise */
 <h2 data-anchor-id="how-to-review-code">How to review code</h2>
 <p>The main objectives of code review are to:</p>
 <ol type="1">
-<li>verify that the code aligns with what we expect it to do;</li>
-<li>find potential mistakes;</li>
-<li>ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future.</li>
+<li>verify that the code aligns with what we expect it to do</li>
+<li>find potential mistakes</li>
+<li>ensure that the code is maintainable, meaning that it follows good practices so that it can be understood, fixed, or improved in the future</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -452,7 +446,7 @@ solution and next exercise */
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat_pbdb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"my_PBDB_data.csv"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dat_pbdb <span class="ot">&lt;-</span> dat_pbdb[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"formation"</span>)]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dat_pbdb <span class="ot">&lt;-</span> dat_pbdb[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"formation"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dat_darwin <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"my_DarwinCore_data.csv"</span>)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dat_darwin <span class="ot">&lt;-</span> dat_darwin[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"life_habit"</span>)]</span>
@@ -472,13 +466,18 @@ solution and next exercise */
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>One of the issues above is that the second line is missing the <code>]</code> at the end.</p>
-<p>But a bigger problem is that <code>out[["collection_name"]]</code> returns <code>NULL</code> because we have <code>"collection_name.x"</code> and <code>"collection_name.y"</code> in the output. This is because we forgot to merge on <code>"collection_name"</code> as well:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x &lt;- tetrapods[1:3, c("collection_no", "collection_name", "lng")]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y &lt;- tetrapods[1:3, c("collection_no", "collection_name", "formation")]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">- out &lt;- merge(x, y, by = "collection_no")</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">+ out &lt;- merge(x, y, by = c("collection_no", "collection_name"))</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>out[["collection_name"]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>One of the issues above is that the line starting with <code>dat_pbdb &lt;- dat_pbdb[,</code> has a missing <code>]</code> at the end.</p>
+<p>Another important problem, which is harder to detect, is that <code>out[["collection_name"]]</code> returns <code>NULL</code> because we have <code>"collection_name.x"</code> and <code>"collection_name.y"</code> in the output. This is because we forgot to merge on <code>"collection_name"</code> as well:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat_pbdb &lt;- read.csv("my_PBDB_data.csv")</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">- dat_pbdb &lt;- dat_pbdb[, c("collection_no", "collection_name", "formation")</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">+ dat_pbdb &lt;- dat_pbdb[, c("collection_no", "collection_name", "formation")]</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dat_darwin &lt;- read.csv("my_DarwinCore_data.csv")</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dat_darwin &lt;- dat_darwin[, c("collection_no", "collection_name", "life_habit")]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">- out &lt;- merge(dat_pbdb, dat_darwin, by = "collection_no")</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">+ out &lt;- merge(dat_pbdb, dat_darwin, by = c("collection_no", "collection_name"))</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>out[["collection_name"]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -603,7 +602,7 @@ solution and next exercise */
 <p>How to use the GitHub interface to review pull requests (PRs)</p>
 <ul>
 <li>Go to the PR</li>
-<li>Go to the tab “Files changed”. All changes are displayed there. Some files are collapsed (e.g.&nbsp;Rd files), indicating that they are automatically generated and shouldn’t be reviewed.</li>
+<li>Go to the tab “Files changed”. All changes are displayed there. Note that <code>.Rd</code> files are collapsed because they are automatically generated and shouldn’t be reviewed.</li>
 <li>When you hover over a line, a blue cross appears on the left. This is how you can select the line for which you want to add a comment.</li>
 <li>Write your comment using the Markdown syntax. There is a button “Add a suggestion” that you can use to directly show the change you would like the author to apply.</li>
 <li>All comments you make are “Pending”, meaning that they are not visible to the author until you submit your review. They are still saved, so you can leave without submitting your review and come back to it later if needed.</li>
@@ -614,7 +613,7 @@ solution and next exercise */
 </div>
 </div>
 <p><video src="demo_github_review.webm" class="img-fluid" alt="This video shows the process to write review comments on a pull request opened on GitHub. The steps are detailed in the callout-note above." controls=""><a href="demo_github_review.webm">Video</a></video></p>
-<p>Note that you can pull the branch locally to directly try it and explore more before writing your review. However, depending on the amount and on the complexity of changes, reviewing on GitHub only without actually running code is completely fine.</p>
+<p>Note that you can pull the branch locally to directly try it and explore more before writing your review. However, depending on the amount and on the complexity of changes, reviewing on GitHub only without actually running code can be completely fine.</p>
 </section>
 <section id="self-reviewing-your-code" class="level2">
 <h2 data-anchor-id="self-reviewing-your-code">Self-reviewing your code</h2>
@@ -628,7 +627,7 @@ solution and next exercise */
 <h3 data-anchor-id="before-requesting-a-review">Before requesting a review</h3>
 <p>Before requesting a review, the author should make sure that automated checks pass. These can include package tests, data validation checks, and linting and styling checks, among other things. It is the author’s responsibility to ensure that these checks pass, the reviewer shouldn’t have to ask for them to be fixed (but the author can ask for help if they cannot fix some failures).</p>
 <p>On top of preparing a self-contained PR and doing some self-review of their code before requesting a review (see above), the author can take several actions to simplify the review process and make it more efficient.</p>
-<p>First, the author should succinctly describe the objective of the PR: does it improve the documentation? Does it fix a bug? Does it add a new feature? If so, is this feature a new function, a new argument, something else? And so on. This doesn’t have to be a long description, one or two sentences may be enough. Note that it is also good practice to link to the issue addressed by this PR. You can add “Closes #1234” or “Fixes #1234” so that issue 1234 is automatically closed when the PR is merged.</p>
+<p>First, the author should succinctly describe the objective of the PR: does it improve the documentation? Does it fix a bug? Does it add a new feature? If so, is this feature a new function, a new argument, something else? And so on. This doesn’t have to be a long description, one or two sentences may be enough. Note that it is also good practice to link to the issue addressed by this PR. You can add “Closes #1234” or “Fixes #1234” so that issue 1234 is automatically closed when the PR is merged (see other accepted “closing keywords” <a href="https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests">here</a>).</p>
 <p>Second, it can be helpful to describe specific goals for the review process, for instance if you want help with the efficiency of your code. The PR author can also add their own review comments using the GitHub interface before requesting a review. Some parts of a PR might be hard to understand without the context, so it is completely fine for the author to add a few comments to clarify some specific lines of code in advance. The author can also use these comments to inform the reviewer of specific lines for which they have doubts and would like feedback on some of their changes. Note that review comments on GitHub can be displayed in a variety of ways, which can make them easier to identify and read than writing comments directly in the file.</p>
 <p>Once the author considers the pull request ready for review, they can request a review.</p>
 </section>
@@ -642,12 +641,12 @@ solution and next exercise */
 <li>Bad: “You shouldn’t use a for loop here, this is obviously very slow.”
 <ul>
 <li>Diminishes the author by using “obviously”</li>
-<li>Doesn’t suggest a solution.</li>
+<li>Doesn’t suggest a solution</li>
 </ul></li>
 <li>Better: “Can we use a vectorised function instead? This is often much faster than for loops.”
 <ul>
 <li>Uses “we” to emphasise team work</li>
-<li>Gives the opportunity to the author to explain why they wrote the code as they did (maybe they made a mistake, maybe not).</li>
+<li>Gives the opportunity to the author to explain why they wrote the code as they did (maybe they made a mistake, maybe not)</li>
 <li>Gives a potential alternative (but the exploration still needs to be done by the author)</li>
 </ul></li>
 </ul>
@@ -713,7 +712,7 @@ solution and next exercise */
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-12
+ date     2026-11-13
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
