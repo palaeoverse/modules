@@ -106,7 +106,7 @@ Without running these examples, do you see what is likely wrong or could be impr
 library(palaeoverse)
 
 dat_pbdb <- read.csv("my_PBDB_data.csv")
-dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")]
+dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")
 
 dat_darwin <- read.csv("my_DarwinCore_data.csv")
 dat_darwin <- dat_darwin[, c("collection_no", "collection_name", "life_habit")]
@@ -115,15 +115,20 @@ out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
 out[["collection_name"]]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
-One of the issues above is that the second line is missing the `]` at the end.
+One of the issues above is that the line starting with `dat_pbdb <- dat_pbdb[,` has a missing `]` at the end.
 
-But a bigger problem is that `out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output. This is because we forgot to merge on `"collection_name"` as well:
+Another important problem, which is harder to detect, is that `out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output. This is because we forgot to merge on `"collection_name"` as well:
 
 ```diff
-x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
-y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")]
-- out <- merge(x, y, by = "collection_no")
-+ out <- merge(x, y, by = c("collection_no", "collection_name"))
+dat_pbdb <- read.csv("my_PBDB_data.csv")
+- dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")
++ dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")]
+
+dat_darwin <- read.csv("my_DarwinCore_data.csv")
+dat_darwin <- dat_darwin[, c("collection_no", "collection_name", "life_habit")]
+
+- out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
++ out <- merge(dat_pbdb, dat_darwin, by = c("collection_no", "collection_name"))
 out[["collection_name"]]
 ```
 :::::
