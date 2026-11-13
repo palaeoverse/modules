@@ -455,11 +455,11 @@ solution and next exercise */
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat_pbdb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"my_PBDB_data.csv"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dat_pbdb <span class="ot">&lt;-</span> dat_pbdb[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"formation"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For the sake of the example, we use `palaeoverse::tetrapods` as data</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># source for both objects.</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dat_darwin <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"my_DarwinCore_data.csv"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dat_darwin <span class="ot">&lt;-</span> dat_darwin[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"life_habit"</span>)]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dat_pbdb <span class="ot">&lt;-</span> tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"formation"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dat_darwin <span class="ot">&lt;-</span> tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"life_habit"</span>)]</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">merge</span>(dat_pbdb, dat_darwin, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>out[[<span class="st">"collection_name"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
