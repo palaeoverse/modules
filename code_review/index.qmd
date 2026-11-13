@@ -112,28 +112,25 @@ Note that the amount of tests or expectations to validate is also very context-d
 
 library(palaeoverse)
 
-# For the sake of the example, we use `palaeoverse::tetrapods` as data
-# source for both objects.
+ages <- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")
+periods <- time_bins(scale = "international periods")[, c("min_ma", "max_ma", "abbr")]
 
-dat_pbdb <- tetrapods[, c("collection_no", "collection_name", "formation")
-dat_darwin <- tetrapods[, c("collection_no", "collection_name", "life_habit")]
-
-out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
-out[["collection_name"]]
+out <- merge(ages, periods, by = c("max_ma"))
+out[["min_ma"]]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
-One of the issues above is that the line starting with `dat_pbdb <- tetrapods[,` has a missing `]` at the end.
+One of the issues above is that the line starting with `ages <- time_bins(` has a missing `]` at the end.
 
-Another important problem, which is harder to detect, is that `out[["collection_name"]]` returns `NULL` because we have `"collection_name.x"` and `"collection_name.y"` in the output. This is because we forgot to merge on `"collection_name"` as well:
+Another important problem, which is harder to detect, is that `out[["min_ma"]]` returns `NULL` because we have `"min_ma.x"` and `"min_ma.y"` in the output. This is because we forgot to merge on `"min_ma"` as well:
 
 ```diff
-- dat_pbdb <- tetrapods[, c("collection_no", "collection_name", "formation")
-+ dat_pbdb <- tetrapods[, c("collection_no", "collection_name", "formation")]
-dat_darwin <- tetrapods[, c("collection_no", "collection_name", "life_habit")]
+- ages <- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")
++ ages <- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")]
+periods <- time_bins(scale = "international periods")[, c("min_ma", "max_ma", "abbr")]
 
-- out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
-+ out <- merge(dat_pbdb, dat_darwin, by = c("collection_no", "collection_name"))
-out[["collection_name"]]
+- out <- merge(ages, periods, by = "min_ma")
++ out <- merge(ages, periods, by = c("min_ma", "max_ma"))
+out[["min_ma"]]
 ```
 :::::
 
