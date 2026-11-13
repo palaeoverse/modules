@@ -12,7 +12,7 @@
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="Bethany J. Allen">
-  <meta name="dcterms.date" content="2026-11-12">
+  <meta name="dcterms.date" content="2026-11-13">
   <title>Exercise 1: Tracking the diversity of early tetrapods</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -235,7 +235,7 @@ Bethany J. Allen
 </div>
 </div>
 
-  <p class="date">2026-11-12</p>
+  <p class="date">2026-11-13</p>
 </section>
 <section class="slide level2">
 
@@ -854,23 +854,12 @@ Bethany J. Allen
 <section class="slide level2">
 <h2>Exercise 4: Save our cryptic diversity</h2>
 <p>How many occurrences are retained in the dataset by <code>tax_unique()</code>, which would otherwise have been discarded?</p>
-</section>
-<section class="slide level2">
-<h2>Taxonomic wrangling</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Exercise 4: Hint</strong></p>
-</div>
-<div class="callout-content">
-<div class="fragment">
-<p>Remember that the <code>genus</code> column contains the genus name for each occurrence in both the original and generated data frames. In our original dataset, each row contains one occurrence, but in the output of <code>tax_unique()</code>, each row corresponds to a unique genus, labelled with its <code>unique_name</code>.</p>
-</div>
-</div>
-</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-label="1"></a><span class="co"># Your turn: calculate the number of unique genera in tax_unique output</span></span>
+<span id="cb56-2"><a aria-label="2"></a><span class="fu">length</span>(<span class="fu">unique</span>(tet_genera<span class="sc">$</span>___))</span>
+<span id="cb56-3"><a aria-label="3"></a></span>
+<span id="cb56-4"><a aria-label="4"></a><span class="co"># Now for the original dataset for comparison: what must not be counted?</span></span>
+<span id="cb56-5"><a aria-label="5"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">___.omit</span>(mid_tetrapods<span class="sc">$</span>___)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section class="slide level2">
@@ -885,7 +874,7 @@ Bethany J. Allen
 </div>
 <div class="callout-content">
 <div class="fragment">
-<p>We can find out the number of unique genera in our original dataset using <code>length(unique(mid_tetrapods$genus))</code>: 804. The number of unique genera after using <code>tax_unique</code> is <code>length(unique(tet_genera$unique_name))</code>: 807. This shows us that there are two additional unique genera retained when we use <code>tax_unique</code>.</p>
+<p><code>length(unique(tet_genera$unique_name))</code>: 807 For the original dataset, we need to remember not to count values (genus names) that are NA. <code>length(unique(na.omit(mid_tetrapods$genus)))</code>: 803 This shows us that there are three additional unique genera retained when we use <code>tax_unique</code>.</p>
 </div>
 </div>
 </div>
@@ -894,12 +883,17 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Taxonomic wrangling</h2>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb56-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># View extra occurrence</span></span>
-<span id="cb56-2" class="hljs-ln-code"><a aria-label="2"></a>tet_genera[<span class="dv">718</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb57-1" class="hljs-ln-code"><a aria-label="1"></a><span class="co"># View extra occurrences</span></span>
+<span id="cb57-2" class="hljs-ln-code"><a aria-label="2"></a>tet_genera[<span class="dv">717</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           class        order          family       genus     unique_name
-718 Osteichthyes Cotylosauria    Gorgonopidae Suchogorgon Suchogorgon sp.
-719 Osteichthyes         &lt;NA&gt; Chroniosuchidae   Suchonica   Suchonica sp.</code></pre>
+<pre><code>           class        order            family           genus
+717     Reptilia         &lt;NA&gt; Styracocephalidae Styracocephalus
+718 Osteichthyes Cotylosauria      Gorgonopidae     Suchogorgon
+719 Osteichthyes         &lt;NA&gt;   Chroniosuchidae       Suchonica
+            unique_name
+717 Styracocephalus sp.
+718     Suchogorgon sp.
+719       Suchonica sp.</code></pre>
 </div>
 </div>
 <p>We can see the additional occurrences retained at the end of our output table.</p>
@@ -907,27 +901,32 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Taxonomic wrangling</h2>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-label="1"></a><span class="co"># View extra occurrence</span></span>
-<span id="cb58-2"><a aria-label="2"></a>tet_genera[<span class="dv">718</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-label="1"></a><span class="co"># View extra occurrences</span></span>
+<span id="cb59-2"><a aria-label="2"></a>tet_genera[<span class="dv">717</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           class        order          family       genus     unique_name
-718 Osteichthyes Cotylosauria    Gorgonopidae Suchogorgon Suchogorgon sp.
-719 Osteichthyes         &lt;NA&gt; Chroniosuchidae   Suchonica   Suchonica sp.</code></pre>
+<pre><code>           class        order            family           genus
+717     Reptilia         &lt;NA&gt; Styracocephalidae Styracocephalus
+718 Osteichthyes Cotylosauria      Gorgonopidae     Suchogorgon
+719 Osteichthyes         &lt;NA&gt;   Chroniosuchidae       Suchonica
+            unique_name
+717 Styracocephalus sp.
+718     Suchogorgon sp.
+719       Suchonica sp.</code></pre>
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
-<span id="cb60-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
-<span id="cb60-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
-<span id="cb60-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
-<span id="cb60-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
-<span id="cb60-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
-<span id="cb60-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
-<span id="cb60-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
-<span id="cb60-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
-<span id="cb60-10"><a aria-label="10"></a></span>
-<span id="cb60-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
-<span id="cb60-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
+<span id="cb61-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb61-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
+<span id="cb61-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
+<span id="cb61-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
+<span id="cb61-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
+<span id="cb61-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
+<span id="cb61-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
+<span id="cb61-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb61-10"><a aria-label="10"></a></span>
+<span id="cb61-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
+<span id="cb61-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         class         order           family      genus         unique_name
 1 Osteichthyes          &lt;NA&gt;             &lt;NA&gt;       &lt;NA&gt; Osteichthyes indet.
@@ -950,27 +949,32 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Taxonomic wrangling</h2>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a aria-label="1"></a><span class="co"># View extra occurrence</span></span>
-<span id="cb62-2"><a aria-label="2"></a>tet_genera[<span class="dv">718</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-label="1"></a><span class="co"># View extra occurrences</span></span>
+<span id="cb63-2"><a aria-label="2"></a>tet_genera[<span class="dv">717</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           class        order          family       genus     unique_name
-718 Osteichthyes Cotylosauria    Gorgonopidae Suchogorgon Suchogorgon sp.
-719 Osteichthyes         &lt;NA&gt; Chroniosuchidae   Suchonica   Suchonica sp.</code></pre>
+<pre><code>           class        order            family           genus
+717     Reptilia         &lt;NA&gt; Styracocephalidae Styracocephalus
+718 Osteichthyes Cotylosauria      Gorgonopidae     Suchogorgon
+719 Osteichthyes         &lt;NA&gt;   Chroniosuchidae       Suchonica
+            unique_name
+717 Styracocephalus sp.
+718     Suchogorgon sp.
+719       Suchonica sp.</code></pre>
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
-<span id="cb64-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
-<span id="cb64-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
-<span id="cb64-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
-<span id="cb64-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
-<span id="cb64-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
-<span id="cb64-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
-<span id="cb64-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
-<span id="cb64-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
-<span id="cb64-10"><a aria-label="10"></a></span>
-<span id="cb64-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
-<span id="cb64-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
+<span id="cb65-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb65-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
+<span id="cb65-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
+<span id="cb65-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
+<span id="cb65-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
+<span id="cb65-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
+<span id="cb65-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
+<span id="cb65-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb65-10"><a aria-label="10"></a></span>
+<span id="cb65-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
+<span id="cb65-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         class         order           family      genus         unique_name
 1 Osteichthyes          &lt;NA&gt;             &lt;NA&gt;       &lt;NA&gt; Osteichthyes indet.
@@ -989,17 +993,17 @@ Bethany J. Allen
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-label="1"></a><span class="co"># Get the names of unique genera per collection</span></span>
-<span id="cb66-2"><a aria-label="2"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
-<span id="cb66-3"><a aria-label="3"></a></span>
-<span id="cb66-4"><a aria-label="4"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
-<span id="cb66-5"><a aria-label="5"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb66-6"><a aria-label="6"></a></span>
-<span id="cb66-7"><a aria-label="7"></a><span class="co"># Rename column names:</span></span>
-<span id="cb66-8"><a aria-label="8"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
-<span id="cb66-9"><a aria-label="9"></a></span>
-<span id="cb66-10"><a aria-label="10"></a><span class="co"># Take a quick look at the new dataframe</span></span>
-<span id="cb66-11"><a aria-label="11"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-label="1"></a><span class="co"># Get the names of unique genera per collection</span></span>
+<span id="cb67-2"><a aria-label="2"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
+<span id="cb67-3"><a aria-label="3"></a></span>
+<span id="cb67-4"><a aria-label="4"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
+<span id="cb67-5"><a aria-label="5"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb67-6"><a aria-label="6"></a></span>
+<span id="cb67-7"><a aria-label="7"></a><span class="co"># Rename column names:</span></span>
+<span id="cb67-8"><a aria-label="8"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
+<span id="cb67-9"><a aria-label="9"></a></span>
+<span id="cb67-10"><a aria-label="10"></a><span class="co"># Take a quick look at the new dataframe</span></span>
+<span id="cb67-11"><a aria-label="11"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n_taxa collection_no
 1      1        104796
@@ -1015,27 +1019,32 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Taxonomic wrangling</h2>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-label="1"></a><span class="co"># View extra occurrence</span></span>
-<span id="cb68-2"><a aria-label="2"></a>tet_genera[<span class="dv">718</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-label="1"></a><span class="co"># View extra occurrences</span></span>
+<span id="cb69-2"><a aria-label="2"></a>tet_genera[<span class="dv">717</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           class        order          family       genus     unique_name
-718 Osteichthyes Cotylosauria    Gorgonopidae Suchogorgon Suchogorgon sp.
-719 Osteichthyes         &lt;NA&gt; Chroniosuchidae   Suchonica   Suchonica sp.</code></pre>
+<pre><code>           class        order            family           genus
+717     Reptilia         &lt;NA&gt; Styracocephalidae Styracocephalus
+718 Osteichthyes Cotylosauria      Gorgonopidae     Suchogorgon
+719 Osteichthyes         &lt;NA&gt;   Chroniosuchidae       Suchonica
+            unique_name
+717 Styracocephalus sp.
+718     Suchogorgon sp.
+719       Suchonica sp.</code></pre>
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
-<span id="cb70-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
-<span id="cb70-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
-<span id="cb70-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
-<span id="cb70-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
-<span id="cb70-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
-<span id="cb70-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
-<span id="cb70-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
-<span id="cb70-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
-<span id="cb70-10"><a aria-label="10"></a></span>
-<span id="cb70-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
-<span id="cb70-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
+<span id="cb71-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb71-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
+<span id="cb71-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
+<span id="cb71-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
+<span id="cb71-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
+<span id="cb71-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
+<span id="cb71-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
+<span id="cb71-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb71-10"><a aria-label="10"></a></span>
+<span id="cb71-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
+<span id="cb71-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         class         order           family      genus         unique_name
 1 Osteichthyes          &lt;NA&gt;             &lt;NA&gt;       &lt;NA&gt; Osteichthyes indet.
@@ -1054,17 +1063,17 @@ Bethany J. Allen
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a aria-label="1"></a><span class="co"># Get the names of unique genera per collection</span></span>
-<span id="cb72-2"><a aria-label="2"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
-<span id="cb72-3"><a aria-label="3"></a></span>
-<span id="cb72-4"><a aria-label="4"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
-<span id="cb72-5"><a aria-label="5"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb72-6"><a aria-label="6"></a></span>
-<span id="cb72-7"><a aria-label="7"></a><span class="co"># Rename column names:</span></span>
-<span id="cb72-8"><a aria-label="8"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
-<span id="cb72-9"><a aria-label="9"></a></span>
-<span id="cb72-10"><a aria-label="10"></a><span class="co"># Take a quick look at the new dataframe</span></span>
-<span id="cb72-11"><a aria-label="11"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-label="1"></a><span class="co"># Get the names of unique genera per collection</span></span>
+<span id="cb73-2"><a aria-label="2"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
+<span id="cb73-3"><a aria-label="3"></a></span>
+<span id="cb73-4"><a aria-label="4"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
+<span id="cb73-5"><a aria-label="5"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb73-6"><a aria-label="6"></a></span>
+<span id="cb73-7"><a aria-label="7"></a><span class="co"># Rename column names:</span></span>
+<span id="cb73-8"><a aria-label="8"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
+<span id="cb73-9"><a aria-label="9"></a></span>
+<span id="cb73-10"><a aria-label="10"></a><span class="co"># Take a quick look at the new dataframe</span></span>
+<span id="cb73-11"><a aria-label="11"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n_taxa collection_no
 1      1        104796
@@ -1076,17 +1085,17 @@ Bethany J. Allen
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a aria-label="1"></a><span class="co"># Take the columns pertaining to collections and their ages in millions of years:</span></span>
-<span id="cb74-2"><a aria-label="2"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"min_ma"</span>)]</span>
-<span id="cb74-3"><a aria-label="3"></a></span>
-<span id="cb74-4"><a aria-label="4"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
-<span id="cb74-5"><a aria-label="5"></a>coll_info <span class="ot">&lt;-</span> coll_info[<span class="sc">!</span><span class="fu">duplicated</span>(coll_info[<span class="dv">1</span>]),]</span>
-<span id="cb74-6"><a aria-label="6"></a></span>
-<span id="cb74-7"><a aria-label="7"></a><span class="co"># Combine this dataframe with the dataframe from above</span></span>
-<span id="cb74-8"><a aria-label="8"></a>alpha_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(coll_info, coll_taxa, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
-<span id="cb74-9"><a aria-label="9"></a></span>
-<span id="cb74-10"><a aria-label="10"></a><span class="co"># Take a look:</span></span>
-<span id="cb74-11"><a aria-label="11"></a><span class="fu">head</span>(alpha_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-label="1"></a><span class="co"># Take the columns pertaining to collections and their ages in millions of years:</span></span>
+<span id="cb75-2"><a aria-label="2"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"min_ma"</span>)]</span>
+<span id="cb75-3"><a aria-label="3"></a></span>
+<span id="cb75-4"><a aria-label="4"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
+<span id="cb75-5"><a aria-label="5"></a>coll_info <span class="ot">&lt;-</span> coll_info[<span class="sc">!</span><span class="fu">duplicated</span>(coll_info[<span class="dv">1</span>]),]</span>
+<span id="cb75-6"><a aria-label="6"></a></span>
+<span id="cb75-7"><a aria-label="7"></a><span class="co"># Combine this dataframe with the dataframe from above</span></span>
+<span id="cb75-8"><a aria-label="8"></a>alpha_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(coll_info, coll_taxa, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
+<span id="cb75-9"><a aria-label="9"></a></span>
+<span id="cb75-10"><a aria-label="10"></a><span class="co"># Take a look:</span></span>
+<span id="cb75-11"><a aria-label="11"></a><span class="fu">head</span>(alpha_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  collection_no max_ma interval_mid_ma min_ma n_taxa
 1         11149  290.1          284.70  279.3      1
@@ -1102,27 +1111,32 @@ Bethany J. Allen
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Taxonomic wrangling</h2>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a aria-label="1"></a><span class="co"># View extra occurrence</span></span>
-<span id="cb76-2"><a aria-label="2"></a>tet_genera[<span class="dv">718</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a aria-label="1"></a><span class="co"># View extra occurrences</span></span>
+<span id="cb77-2"><a aria-label="2"></a>tet_genera[<span class="dv">717</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           class        order          family       genus     unique_name
-718 Osteichthyes Cotylosauria    Gorgonopidae Suchogorgon Suchogorgon sp.
-719 Osteichthyes         &lt;NA&gt; Chroniosuchidae   Suchonica   Suchonica sp.</code></pre>
+<pre><code>           class        order            family           genus
+717     Reptilia         &lt;NA&gt; Styracocephalidae Styracocephalus
+718 Osteichthyes Cotylosauria      Gorgonopidae     Suchogorgon
+719 Osteichthyes         &lt;NA&gt;   Chroniosuchidae       Suchonica
+            unique_name
+717 Styracocephalus sp.
+718     Suchogorgon sp.
+719       Suchonica sp.</code></pre>
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
-<span id="cb78-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
-<span id="cb78-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
-<span id="cb78-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
-<span id="cb78-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
-<span id="cb78-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
-<span id="cb78-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
-<span id="cb78-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
-<span id="cb78-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
-<span id="cb78-10"><a aria-label="10"></a></span>
-<span id="cb78-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
-<span id="cb78-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a aria-label="1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
+<span id="cb79-2"><a aria-label="2"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb79-3"><a aria-label="3"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
+<span id="cb79-4"><a aria-label="4"></a>                           <span class="at">fun =</span> tax_unique,</span>
+<span id="cb79-5"><a aria-label="5"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
+<span id="cb79-6"><a aria-label="6"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
+<span id="cb79-7"><a aria-label="7"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
+<span id="cb79-8"><a aria-label="8"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
+<span id="cb79-9"><a aria-label="9"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb79-10"><a aria-label="10"></a></span>
+<span id="cb79-11"><a aria-label="11"></a><span class="co"># See structure of the new dataframe:</span></span>
+<span id="cb79-12"><a aria-label="12"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         class         order           family      genus         unique_name
 1 Osteichthyes          &lt;NA&gt;             &lt;NA&gt;       &lt;NA&gt; Osteichthyes indet.
@@ -1141,17 +1155,17 @@ Bethany J. Allen
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-label="1"></a><span class="co"># Get the names of unique genera per collection</span></span>
-<span id="cb80-2"><a aria-label="2"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
-<span id="cb80-3"><a aria-label="3"></a></span>
-<span id="cb80-4"><a aria-label="4"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
-<span id="cb80-5"><a aria-label="5"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb80-6"><a aria-label="6"></a></span>
-<span id="cb80-7"><a aria-label="7"></a><span class="co"># Rename column names:</span></span>
-<span id="cb80-8"><a aria-label="8"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
-<span id="cb80-9"><a aria-label="9"></a></span>
-<span id="cb80-10"><a aria-label="10"></a><span class="co"># Take a quick look at the new dataframe</span></span>
-<span id="cb80-11"><a aria-label="11"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-label="1"></a><span class="co"># Get the names of unique genera per collection</span></span>
+<span id="cb81-2"><a aria-label="2"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
+<span id="cb81-3"><a aria-label="3"></a></span>
+<span id="cb81-4"><a aria-label="4"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
+<span id="cb81-5"><a aria-label="5"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb81-6"><a aria-label="6"></a></span>
+<span id="cb81-7"><a aria-label="7"></a><span class="co"># Rename column names:</span></span>
+<span id="cb81-8"><a aria-label="8"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
+<span id="cb81-9"><a aria-label="9"></a></span>
+<span id="cb81-10"><a aria-label="10"></a><span class="co"># Take a quick look at the new dataframe</span></span>
+<span id="cb81-11"><a aria-label="11"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n_taxa collection_no
 1      1        104796
@@ -1163,17 +1177,17 @@ Bethany J. Allen
 </div>
 </div>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a aria-label="1"></a><span class="co"># Take the columns pertaining to collections and their ages in millions of years:</span></span>
-<span id="cb82-2"><a aria-label="2"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"min_ma"</span>)]</span>
-<span id="cb82-3"><a aria-label="3"></a></span>
-<span id="cb82-4"><a aria-label="4"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
-<span id="cb82-5"><a aria-label="5"></a>coll_info <span class="ot">&lt;-</span> coll_info[<span class="sc">!</span><span class="fu">duplicated</span>(coll_info[<span class="dv">1</span>]),]</span>
-<span id="cb82-6"><a aria-label="6"></a></span>
-<span id="cb82-7"><a aria-label="7"></a><span class="co"># Combine this dataframe with the dataframe from above</span></span>
-<span id="cb82-8"><a aria-label="8"></a>alpha_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(coll_info, coll_taxa, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
-<span id="cb82-9"><a aria-label="9"></a></span>
-<span id="cb82-10"><a aria-label="10"></a><span class="co"># Take a look:</span></span>
-<span id="cb82-11"><a aria-label="11"></a><span class="fu">head</span>(alpha_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-label="1"></a><span class="co"># Take the columns pertaining to collections and their ages in millions of years:</span></span>
+<span id="cb83-2"><a aria-label="2"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"min_ma"</span>)]</span>
+<span id="cb83-3"><a aria-label="3"></a></span>
+<span id="cb83-4"><a aria-label="4"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
+<span id="cb83-5"><a aria-label="5"></a>coll_info <span class="ot">&lt;-</span> coll_info[<span class="sc">!</span><span class="fu">duplicated</span>(coll_info[<span class="dv">1</span>]),]</span>
+<span id="cb83-6"><a aria-label="6"></a></span>
+<span id="cb83-7"><a aria-label="7"></a><span class="co"># Combine this dataframe with the dataframe from above</span></span>
+<span id="cb83-8"><a aria-label="8"></a>alpha_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(coll_info, coll_taxa, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
+<span id="cb83-9"><a aria-label="9"></a></span>
+<span id="cb83-10"><a aria-label="10"></a><span class="co"># Take a look:</span></span>
+<span id="cb83-11"><a aria-label="11"></a><span class="fu">head</span>(alpha_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  collection_no max_ma interval_mid_ma min_ma n_taxa
 1         11149  290.1          284.70  279.3      1
@@ -1185,11 +1199,11 @@ Bethany J. Allen
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-label="1"></a><span class="co"># Make a plot for alpha diversity in the Carboniferous and Permian</span></span>
-<span id="cb84-2"><a aria-label="2"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
-<span id="cb84-3"><a aria-label="3"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
-<span id="cb84-4"><a aria-label="4"></a>     <span class="at">xlab=</span><span class="st">"Time (Ma)"</span>, <span class="at">ylab=</span><span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
-<span id="cb84-5"><a aria-label="5"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-label="1"></a><span class="co"># Make a plot for alpha diversity in the Carboniferous and Permian</span></span>
+<span id="cb85-2"><a aria-label="2"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
+<span id="cb85-3"><a aria-label="3"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb85-4"><a aria-label="4"></a>     <span class="at">xlab=</span><span class="st">"Time (Ma)"</span>, <span class="at">ylab=</span><span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
+<span id="cb85-5"><a aria-label="5"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="tetrapod-biodiversity_files/figure-html/alpha-scatter-1.png" width="672" class="r-stretch"><p>Great! Now we can plot our alpha diversity through time. Let’s start with a simple scatterplot:</p>
@@ -1198,17 +1212,17 @@ Bethany J. Allen
 <h2>Taxonomic wrangling</h2>
 <p>It’s a good start, but we would like to know which data points belong in which stages. We can use <code>palaeoverse::axis_geo()</code> to add a geological timescale to our plot.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-label="1"></a><span class="co"># Set margins</span></span>
-<span id="cb85-2"><a aria-label="2"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">7.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>)) <span class="co"># expand at bottom if adding more interval categories</span></span>
-<span id="cb85-3"><a aria-label="3"></a><span class="co"># Make the final alpha diversity plot</span></span>
-<span id="cb85-4"><a aria-label="4"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
-<span id="cb85-5"><a aria-label="5"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb85-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
-<span id="cb85-7"><a aria-label="7"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
-<span id="cb85-8"><a aria-label="8"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
-<span id="cb85-9"><a aria-label="9"></a><span class="fu">box</span>()</span>
-<span id="cb85-10"><a aria-label="10"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the elft side</span></span>
-<span id="cb85-11"><a aria-label="11"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>), <span class="at">title =</span> <span class="st">"Time (Ma)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-label="1"></a><span class="co"># Set margins</span></span>
+<span id="cb86-2"><a aria-label="2"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">7.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>)) <span class="co"># expand at bottom if adding more interval categories</span></span>
+<span id="cb86-3"><a aria-label="3"></a><span class="co"># Make the final alpha diversity plot</span></span>
+<span id="cb86-4"><a aria-label="4"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
+<span id="cb86-5"><a aria-label="5"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb86-6"><a aria-label="6"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb86-7"><a aria-label="7"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
+<span id="cb86-8"><a aria-label="8"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
+<span id="cb86-9"><a aria-label="9"></a><span class="fu">box</span>()</span>
+<span id="cb86-10"><a aria-label="10"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the elft side</span></span>
+<span id="cb86-11"><a aria-label="11"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>), <span class="at">title =</span> <span class="st">"Time (Ma)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="tetrapod-biodiversity_files/figure-html/alpha-scatter-geol-1.png" width="672" class="r-stretch"><p>We can now see an overall increasing trend in maximum tetrapod alpha diversity over the Carboniferous and Permian, with a few extra-diverse outliers.</p>
@@ -1240,18 +1254,18 @@ Bethany J. Allen
 <p>Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the <code>palaeoverse::tax_range_space()</code> function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we’ll use the method <code>con</code> which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space).</p>
 <p>We can use this in combination with <code>group_apply</code> to calculate the convex hull size for each genus in each time interval:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-label="1"></a><span class="co"># First, remove any occurrences without a genus</span></span>
-<span id="cb86-2"><a aria-label="2"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(mid_tetrapods, <span class="sc">!</span><span class="fu">is.na</span>(genus))</span>
-<span id="cb86-3"><a aria-label="3"></a><span class="co"># Find temporal range of all genera</span></span>
-<span id="cb86-4"><a aria-label="4"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> space_tetrapods,</span>
-<span id="cb86-5"><a aria-label="5"></a>                               <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>),</span>
-<span id="cb86-6"><a aria-label="6"></a>                               <span class="at">fun =</span> tax_range_space,</span>
-<span id="cb86-7"><a aria-label="7"></a>                               <span class="at">name =</span> <span class="st">"genus"</span>,</span>
-<span id="cb86-8"><a aria-label="8"></a>                               <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
-<span id="cb86-9"><a aria-label="9"></a>                               <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
-<span id="cb86-10"><a aria-label="10"></a>                               <span class="at">method =</span> <span class="st">"con"</span>)</span>
-<span id="cb86-11"><a aria-label="11"></a><span class="co"># Have a look at the dataset</span></span>
-<span id="cb86-12"><a aria-label="12"></a><span class="fu">head</span>(space_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a aria-label="1"></a><span class="co"># First, remove any occurrences without a genus</span></span>
+<span id="cb87-2"><a aria-label="2"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(mid_tetrapods, <span class="sc">!</span><span class="fu">is.na</span>(genus))</span>
+<span id="cb87-3"><a aria-label="3"></a><span class="co"># Find temporal range of all genera</span></span>
+<span id="cb87-4"><a aria-label="4"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> space_tetrapods,</span>
+<span id="cb87-5"><a aria-label="5"></a>                               <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>),</span>
+<span id="cb87-6"><a aria-label="6"></a>                               <span class="at">fun =</span> tax_range_space,</span>
+<span id="cb87-7"><a aria-label="7"></a>                               <span class="at">name =</span> <span class="st">"genus"</span>,</span>
+<span id="cb87-8"><a aria-label="8"></a>                               <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
+<span id="cb87-9"><a aria-label="9"></a>                               <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
+<span id="cb87-10"><a aria-label="10"></a>                               <span class="at">method =</span> <span class="st">"con"</span>)</span>
+<span id="cb87-11"><a aria-label="11"></a><span class="co"># Have a look at the dataset</span></span>
+<span id="cb87-12"><a aria-label="12"></a><span class="fu">head</span>(space_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          taxon taxon_id area bin_midpoint
 1     Brontopus        1    0      253.021
@@ -1290,19 +1304,19 @@ Bethany J. Allen
 <h2>Quantifying spatial patterns</h2>
 <p>From this information we can now plot how the average range size of tetrapods changed throughout the Carboniferous and Permian:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a aria-label="1"></a><span class="co"># Find the average geographic range size for each time interval</span></span>
-<span id="cb88-2"><a aria-label="2"></a>space_tetrapods_mean <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(space_tetrapods, <span class="st">"bin_midpoint"</span>, <span class="cf">function</span>(df) <span class="fu">mean</span>(df<span class="sc">$</span>area))</span>
-<span id="cb88-3"><a aria-label="3"></a><span class="fu">colnames</span>(space_tetrapods_mean) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean_area"</span>, <span class="st">"bin_midpoint"</span>)</span>
-<span id="cb88-4"><a aria-label="4"></a><span class="co"># Create a plot of average range size through time</span></span>
-<span id="cb88-5"><a aria-label="5"></a><span class="fu">plot</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint, space_tetrapods_mean<span class="sc">$</span>mean_area, <span class="co"># add the points</span></span>
-<span id="cb88-6"><a aria-label="6"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb88-7"><a aria-label="7"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(<span class="fu">as.numeric</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
-<span id="cb88-8"><a aria-label="8"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"Average range size of tetrapod genera (km"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">")"</span>), <span class="co"># axes labels</span></span>
-<span id="cb88-9"><a aria-label="9"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
-<span id="cb88-10"><a aria-label="10"></a><span class="fu">box</span>()</span>
-<span id="cb88-11"><a aria-label="11"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
-<span id="cb88-12"><a aria-label="12"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>))</span>
-<span id="cb88-13"><a aria-label="13"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a aria-label="1"></a><span class="co"># Find the average geographic range size for each time interval</span></span>
+<span id="cb89-2"><a aria-label="2"></a>space_tetrapods_mean <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(space_tetrapods, <span class="st">"bin_midpoint"</span>, <span class="cf">function</span>(df) <span class="fu">mean</span>(df<span class="sc">$</span>area))</span>
+<span id="cb89-3"><a aria-label="3"></a><span class="fu">colnames</span>(space_tetrapods_mean) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean_area"</span>, <span class="st">"bin_midpoint"</span>)</span>
+<span id="cb89-4"><a aria-label="4"></a><span class="co"># Create a plot of average range size through time</span></span>
+<span id="cb89-5"><a aria-label="5"></a><span class="fu">plot</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint, space_tetrapods_mean<span class="sc">$</span>mean_area, <span class="co"># add the points</span></span>
+<span id="cb89-6"><a aria-label="6"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb89-7"><a aria-label="7"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(<span class="fu">as.numeric</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb89-8"><a aria-label="8"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"Average range size of tetrapod genera (km"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">")"</span>), <span class="co"># axes labels</span></span>
+<span id="cb89-9"><a aria-label="9"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
+<span id="cb89-10"><a aria-label="10"></a><span class="fu">box</span>()</span>
+<span id="cb89-11"><a aria-label="11"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
+<span id="cb89-12"><a aria-label="12"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>))</span>
+<span id="cb89-13"><a aria-label="13"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="tetrapod-biodiversity_files/figure-html/convex-hulls-plot-1.png" width="672" class="r-stretch"></section>
@@ -1310,11 +1324,11 @@ Bethany J. Allen
 <h2>Quantifying spatial patterns</h2>
 <p>From this plot it seems like the average geographic range size of tetrapods increased during the Permian. However, we first need to be sure we’re not picking up on another pattern. Remember how we calculated the number of unique geographic cells in each time interval earlier? This provides a measure of the spatial spread of the fossil record. It might be that we’re not picking up on an increased range size, but just a larger geographic spread of fossil bearing rocks within the Permian. To see if this is the case, we can run a simple correlation test between the average geographic range size of tetrapods and the number of unique grid cells in each time interval:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a aria-label="1"></a><span class="co"># Calculate the number of unique cells in each time bin</span></span>
-<span id="cb89-2"><a aria-label="2"></a>unique_cells <span class="ot">&lt;-</span> <span class="fu">unique</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>, <span class="st">"cell_ID"</span>)])</span>
-<span id="cb89-3"><a aria-label="3"></a>spat.cov <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_cells, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb89-4"><a aria-label="4"></a><span class="co"># Run a correlation test between mean range size and the spatial spread of cells through time</span></span>
-<span id="cb89-5"><a aria-label="5"></a><span class="fu">cor.test</span>(<span class="fu">log10</span>(space_tetrapods_mean<span class="sc">$</span>mean_area), <span class="fu">log10</span>(spat.cov<span class="sc">$</span>nrow), <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a aria-label="1"></a><span class="co"># Calculate the number of unique cells in each time bin</span></span>
+<span id="cb90-2"><a aria-label="2"></a>unique_cells <span class="ot">&lt;-</span> <span class="fu">unique</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>, <span class="st">"cell_ID"</span>)])</span>
+<span id="cb90-3"><a aria-label="3"></a>spat.cov <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_cells, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb90-4"><a aria-label="4"></a><span class="co"># Run a correlation test between mean range size and the spatial spread of cells through time</span></span>
+<span id="cb90-5"><a aria-label="5"></a><span class="fu">cor.test</span>(<span class="fu">log10</span>(space_tetrapods_mean<span class="sc">$</span>mean_area), <span class="fu">log10</span>(spat.cov<span class="sc">$</span>nrow), <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Spearman's rank correlation rho
