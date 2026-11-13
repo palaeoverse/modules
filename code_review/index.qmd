@@ -113,11 +113,11 @@ Note that the amount of tests or expectations to validate is also very context-d
 
 library(palaeoverse)
 
-dat_pbdb <- read.csv("my_PBDB_data.csv")
-dat_pbdb <- dat_pbdb[, c("collection_no", "collection_name", "formation")
+# For the sake of the example, we use `palaeoverse::tetrapods` as data
+# source for both objects.
 
-dat_darwin <- read.csv("my_DarwinCore_data.csv")
-dat_darwin <- dat_darwin[, c("collection_no", "collection_name", "life_habit")]
+dat_pbdb <- tetrapods[, c("collection_no", "collection_name", "formation")
+dat_darwin <- tetrapods[, c("collection_no", "collection_name", "life_habit")]
 
 out <- merge(dat_pbdb, dat_darwin, by = "collection_no")
 out[["collection_name"]]
