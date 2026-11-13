@@ -120,7 +120,7 @@ Note the structure of the dataset: each row contains a unique occurrence and eac
 #| label: structure-tetrapods
 #| output-fold: true
 #| output-summary: "Output"
-#| 
+
 # View column names
 colnames(tetrapods)
 # Inspect dataset structure
@@ -162,7 +162,7 @@ In order to investigate diversity through time, we want to allocate each of our 
 
 ```{r}
 #| label: Carbo-Perm-time-bins-graph
-#| 
+
 # Generate time bins
 bins <- time_bins(interval = c("Carboniferous", "Permian"),
                   rank = "stage",
@@ -178,7 +178,7 @@ We can also take a look at the structure of the outputted table which describes 
 #| label: Carbo-Perm-time-bins-summary
 #| output-fold: true
 #| output-summary: "Output"
-#| 
+
 # View first few rows
 head(bins)
 ```
@@ -189,7 +189,7 @@ In the Paleobiology Database, occurrences are allocated to named temporal interv
 #| label: check-occurrence-ages
 #| output-fold: true
 #| output-summary: "Output"
-#| 
+
 # Get new numeric ages for named intervals using the interval key that is supplied with palaeoverse
 tetrapods <- look_up(tetrapods, int_key = interval_key)
 # Look at the newly added columns
@@ -387,18 +387,26 @@ head(tet_genera)
 ## Exercise 4: Save our cryptic diversity
 
 How many occurrences are retained in the dataset by `tax_unique()`, which would otherwise have been discarded?
-:::
 
-::: {.callout-tip collapse="true"}
-## Exercise 4: Hint
+```{r}
+#| label: exercise-4-cryptic-diversity
+#| eval: false
 
-Remember that the `genus` column contains the genus name for each occurrence in both the original and generated data frames. In our original dataset, each row contains one occurrence, but in the output of `tax_unique()`, each row corresponds to a unique genus, labelled with its `unique_name`.
+# Your turn: calculate the number of unique genera in tax_unique output
+length(unique(tet_genera$___))
+
+# Now for the original dataset for comparison: what must not be counted?
+length(unique(___.omit(mid_tetrapods$___)))
+```
 :::
 
 ::: {.callout-tip collapse="true"}
 ## Exercise 4: Answer
 
-We can find out the number of unique genera in our original dataset using `length(unique(mid_tetrapods$genus))`: `r length(unique(mid_tetrapods$genus))`. The number of unique genera after using `tax_unique` is `length(unique(tet_genera$unique_name))`: `r length(unique(tet_genera$unique_name))`. This shows us that there are two additional unique genera retained when we use `tax_unique`.
+`length(unique(tet_genera$unique_name))`: `r length(unique(tet_genera$unique_name))`
+For the original dataset, we need to remember not to count values (genus names) that are NA.
+`length(unique(na.omit(mid_tetrapods$genus)))`: `r length(unique(na.omit(mid_tetrapods$genus)))`
+This shows us that there are three additional unique genera retained when we use `tax_unique`.
 :::
 
 We can see the additional occurrences retained at the end of our output table.
@@ -408,8 +416,8 @@ We can see the additional occurrences retained at the end of our output table.
 #| output-fold: true
 #| output-summary: "Output"
 
-# View extra occurrence
-tet_genera[718:719, ]
+# View extra occurrences
+tet_genera[717:719, ]
 ```
 
 Now that we've seen what this function can do, let's apply it in a way that lets us check for unique genera in each collection (= locality) using `palaeoverse::group_apply()`:
@@ -459,7 +467,7 @@ In order to plot alpha diversity through time, we will also need to add interval
 #| label: colls-count-ages
 #| output-fold: true
 #| output-summary: "Output"
-#| 
+
 # Take the columns pertaining to collections and their ages in millions of years:
 coll_info <- mid_tetrapods[, c("collection_no", "max_ma", "interval_mid_ma", "min_ma")]
 
@@ -477,7 +485,7 @@ Great! Now we can plot our alpha diversity through time. Let's start with a simp
 
 ```{r}
 #| label: alpha-scatter
-#| 
+
 # Make a plot for alpha diversity in the Carboniferous and Permian
 plot(alpha_data$interval_mid_ma, alpha_data$n_taxa, # add the points
      xlim = rev(range(alpha_data$interval_mid_ma, na.rm = TRUE)), # reverse the x-axis
@@ -489,7 +497,7 @@ It's a good start, but we would like to know which data points belong in which s
 
 ```{r}
 #| label: alpha-scatter-geol
-#| 
+
 # Set margins
 par(mar = c(7.1, 4.1, 4.1, 2.1)) # expand at bottom if adding more interval categories
 # Make the final alpha diversity plot
@@ -531,7 +539,7 @@ We can use this in combination with `group_apply` to calculate the convex hull s
 #| label: convex-hulls
 #| output-fold: true
 #| output-summary: "Output"
-#| 
+
 # First, remove any occurrences without a genus
 space_tetrapods <- subset(mid_tetrapods, !is.na(genus))
 # Find temporal range of all genera
