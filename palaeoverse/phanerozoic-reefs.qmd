@@ -71,7 +71,7 @@ To help cement your knowledge, there are multiple exercises throughout this tuto
 
 ## Introduction
 
-Coral reefs are highly sensitive to climate change, and their past distributions are thought to represent the latitudinal extent of tropical and subtropical conditions over geological timescales (Kiessling, 2001; Perrin & Kiessling, 2010).
+Coral reefs are highly sensitive to climate change, and their past distributions are thought to represent the latitudinal extent of tropical and subtropical temperatures over geological timescales (Kiessling, 2001; Perrin & Kiessling, 2010).
 
 However, interpreting this record is not straightforward. Continental drift means that the present-day location of a fossil reef does not necessarily reflect where it formed: occurrences now found at temperate latitudes may have been deposited in tropical settings, and vice versa.
 
@@ -125,7 +125,7 @@ head(reefs)
 str(reefs)
 ```
 
-Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g. source) are also available via the usual documentation call:
+Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g. further description of variables, source) are also available via the usual documentation call:
 
 ```{r}
 #| label: reefs-help
@@ -139,7 +139,7 @@ help(reefs)
 
 1. How many rows does `reefs` have?
 2. How many columns does `reefs` have?
-3. What does each row of `reefs` represent?
+3. What does each row of `reefs` represent? Hint: `help("reefs")`
 4. True or false: the `reefs` dataset tells us how many species lived in each reef.
 :::
 
@@ -149,14 +149,14 @@ help(reefs)
 1. `nrow(reefs)`: `r nrow(reefs)`
 2. `ncol(reefs)`: `r ncol(reefs)`
 3. A whole reef (an ecosystem)
-4. False: each row describes a reef as a whole, not all the species within it
+4. False: each row describes a reef as a whole, not all the species within it. `reefs$biota_main` and `reefs$biota_sec` represent the predominant biota in the reef, but no more detailed information on diversity is given.
 :::
 
-Not bad, that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the `tetrapods` dataset.
+That is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the `tetrapods` dataset.
 
-**But how does the number of occurrences vary across time?**
+**But how does the number of reef occurrences vary across time?**
 
-We can make use of the `group_apply()` function to apply a function across subsets of data:
+We can make use of the `palaeoverse::group_apply()` function to help us answer this question by applying a function across subsets of data. To do so, we just need to provide `group_apply()` with the dataset, the variable by which to determine the subsets, and the function we wish to implement. As we are interested in the number of reefs through time, we will subset the occurrences into different time intervals. As each row represents one reef, we can simply count the number of rows in each interval:
 
 ```{r}
 #| label: group-apply-interval
@@ -178,7 +178,8 @@ head(reef_counts)
 ::: {.callout-tip collapse="true"}
 ## Exercise 2: Hint
 
-`group_apply()` returns one row per group. How many groups did you get?
+1. `group_apply()` returns one row per group. How many groups did you get?
+2. What do you notice about the interval names?
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -192,7 +193,7 @@ Oh dear, we have just hit a common issue: our reef data do not conform to a comm
 
 ## Assign common time scale
 
-One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the `reefs` dataset (e.g. "max_age" and "min_age"). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the [International Commission on Stratigraphy (ICS)](https://stratigraphy.org).
+Unifying the timescales would be easier if we had numeric ages for each interval, but no numeric age range data are provided in the `reefs` dataset (e.g. "max_age" and "min_age"). Ultimately, our goal is to convert the name of each interval into those from a common time scale: the international geological stages established by the [International Commission on Stratigraphy (ICS)](https://stratigraphy.org).
 
 Fortunately, we can make use of the `look_up()` function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we will do the latter using the example built-in `interval_key` dataset:
 
@@ -237,7 +238,7 @@ reefs <- look_up(reefs,
 head(reefs)
 ```
 
-Great! We now have a common time scale and numeric ages. However, some of our reefs seem to range through several stages, so we cannot simply count by the early or late stage. Our data still need to be binned.
+Great! We now have a common time scale and numeric ages. However, some of our reefs seem to range through several stages, so it is not obvious which time interval(s) they should be counted in. Our data still need to be binned.
 
 ## Temporal binning
 
@@ -322,12 +323,12 @@ n_reefs_filtered <- nrow(binned_reefs[which(binned_reefs$overlap_percentage > 50
 ::: {.callout-tip collapse="true"}
 ## Exercise 4: Answers
 
-1. `"all"`
-2. `"random"` and `"point"`
+1. `"all"`: This method bins an occurrence into every bin its age range covers. For occurrences with age ranges of more than one bin, the occurrence row is duplicated.
+2. `"random"` and `"point"`: These methods sample ages randomly so the bin assignment can differ from run to run. The `reps` argument repeats sampling (e.g. `reps = 100`) and the output list is of length `reps`, with one binned dataset per replicate. See `help(bin_time)` for further details.
 3. `r n_reefs_filtered`
 :::
 
-For this tutorial, we will go with `"all"`:
+For this tutorial, we will go with `"all"`, which essentially generates pseudo-occurrences (similar to `palaeoverse::tax_expand_time()`), allowing us to count occurrences for every bin the reef potentially falls in. This is most useful for presence/absence questions (e.g. first and last appearances, range through diversity), but here we use it to offer an upper bound on where an occurrence could fall:
 
 ```{r}
 #| label: bin-all
@@ -576,7 +577,7 @@ paleomap_max <- group_apply(
 plot(x = paleomap_max$bin_midpoint,
      y = paleomap_max$max_p_lat,
      xlab = "Time (Ma)",
-     ylab = "Palaeolatitude (º)",
+     ylab = "Most Poleward Palaeolatitude (º)",
      xlim = c(541, 0),
      xaxt = "n",
      type = "b",
