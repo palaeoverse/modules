@@ -332,7 +332,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cleaning-and-harmonising-data" id="toc-cleaning-and-harmonising-data" class="nav-link" data-scroll-target="#cleaning-and-harmonising-data"><span class="header-section-number">3.2</span> Cleaning and harmonising data</a></li>
   <li><a href="#preparing-data-for-analyses" id="toc-preparing-data-for-analyses" class="nav-link" data-scroll-target="#preparing-data-for-analyses"><span class="header-section-number">3.3</span> Preparing data for analyses</a></li>
   </ul></li>
-  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help"><span class="header-section-number">4</span> Getting help</a></li>
+  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help"><span class="header-section-number">4</span> Getting help</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.1</span> References</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-other-links"><h2>Other Formats</h2><ul><li><a href="introduction-slides.html"><i class="bi bi-easel"></i>Slides</a></li></ul></div></nav>
     </div>
@@ -377,12 +380,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/introduction.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/introduction.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 <section id="why-use-palaeoverse" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Why use palaeoverse</h1>
-<p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.</p>
+<p>Large datasets of fossil occurrences, often downloaded from online community-maintained databases (e.g.&nbsp;<a href="https://paleobiodb.org/#/">the Paleobiology Database</a>), are a vital resource for understanding broad-scale evolutionary patterns, such as how biodiversity has changed through time and space. Such datasets, however, are often messy and must be ‘cleaned’ of inaccurate, incomplete, or duplicate data prior to analysis (see ‘ten rules’ <a href="https://doi.org/10.1111/pala.70028">Jones et al., 2025</a>), as well as prepared and structured in a way suitable for the analysis being implemented.</p>
+<p>Most palaeobiological analyses begin with routine but essential tasks, such as cleaning data, checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.</p>
 <p>The <strong>palaeoverse</strong> R package aims to make such efforts more reusable, reproducible, and readable by:</p>
 <ul>
 <li>replacing long, bespoke scripts with a few clear lines of code</li>
@@ -395,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Three design choices shape how <strong>palaeoverse</strong> functions look and behave.</p>
 <section id="built-around-occurrence-data" class="level2" data-number="2.1">
 <h2 data-number="2.1" data-anchor-id="built-around-occurrence-data"><span class="header-section-number">2.1</span> Built around occurrence data</h2>
-<p>Most functions in <strong>palaeoverse</strong> take an occurrence <code>data.frame</code> as input, so they slot straight into the way many palaeobiologists already store their data.</p>
+<p>Most functions in <strong>palaeoverse</strong> take an occurrence <code>data.frame</code> as input, so they directly fit the way many palaeobiologists already store their data.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -592,11 +596,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="applications" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Applications</h1>
-<p><strong>palaeoverse</strong> can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.</p>
+<p><strong>palaeoverse</strong> can be used for initial data exploration, as well as preparation for a wide range of downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.</p>
 <p>Minimal examples of potential applications are provided below, but the module tutorials (<a href="../../../training/modules-dev/palaeoverse/tetrapod-biodiversity.html">Tutorial 1: Tetrapod biodiversity</a>, <a href="../../../training/modules-dev/palaeoverse/phanerozoic-reefs.html">Tutorial 2: Phanerozoic reefs</a>) will expose you to the broader functionality and use cases of <strong>palaeoverse</strong> functions.</p>
 <section id="exploring-and-summarising-data" class="level2" data-number="3.1">
 <h2 data-number="3.1" data-anchor-id="exploring-and-summarising-data"><span class="header-section-number">3.1</span> Exploring and summarising data</h2>
-<p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
+<p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal (<code>palaeoverse::tax_range_time()</code>) and geographic ranges (<code>palaeoverse::tax_range_space()</code>):</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -635,7 +639,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cleaning-and-harmonising-data" class="level2" data-number="3.2">
 <h2 data-number="3.2" data-anchor-id="cleaning-and-harmonising-data"><span class="header-section-number">3.2</span> Cleaning and harmonising data</h2>
-<p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates, standardising ages, and checking taxonomic names for potential misspellings:</p>
+<p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates (<code>palaeoverse::tax_unique()</code>), standardising ages (<code>palaeoverse::look_up()</code>), and checking taxonomic names for potential misspellings (<code>palaeoverse::tax_check()</code>):</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -661,7 +665,7 @@ NULL</code></pre>
 </section>
 <section id="preparing-data-for-analyses" class="level2" data-number="3.3">
 <h2 data-number="3.3" data-anchor-id="preparing-data-for-analyses"><span class="header-section-number">3.3</span> Preparing data for analyses</h2>
-<p><strong>palaeoverse</strong> includes functions to help prepare data for downstream analyses, such as reconstructing palaeogeographic distributions or temporally and spatially binning data:</p>
+<p><strong>palaeoverse</strong> includes functions to help prepare data for downstream analyses, such as reconstructing palaeogeographic distributions (<code>palaeoverse::palaeorotate()</code>) or temporally (<code>palaeoverse::time_bins()</code>, <code>palaeoverse::bin_time()</code>) and spatially (<code>palaeoverse::lat_bins_area()</code>, <code>palaeoverse::bin_lat()</code>) binning data:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -723,6 +727,12 @@ NULL</code></pre>
 </div>
 </details>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/palaeoverse-reference.png" class="img-fluid figure-img"></p>
+<figcaption>You can see all available functions and their documentation via the package’s dedicated website <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a>.</figcaption>
+</figure>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -733,7 +743,7 @@ NULL</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Think of <strong>palaeoverse</strong> as the bridge between raw occurrence data and the analytical methods you want to apply.</p>
+<p>Think of <strong>palaeoverse</strong> as the bridge between raw occurrence data and the analytical methods you want to apply, supporting the development of a full data prepration and exploration pipeline (see ‘ten rules’ <a href="https://doi.org/10.1111/pala.70028">Jones et al., 2025</a>).</p>
 </div>
 </div>
 </section>
@@ -742,13 +752,10 @@ NULL</code></pre>
 <h1 data-number="4"><span class="header-section-number">4</span> Getting help</h1>
 <p>Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, <strong>palaeoverse</strong> has several layers of support, from built-in documentation to wider community support.</p>
 <p>The <strong>palaeoverse</strong> website (<a href="https://palaeoverse.palaeoverse.org">https://palaeoverse.palaeoverse.org</a>) hosts documentation for every function available, as well as vignettes (tutorials) demonstrating possible applications, and updates on new releases. It is a searchable resource and can be easier to navigate than the help pages in R.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/palaeoverse-reference.png" class="img-fluid figure-img"></p>
-<figcaption>You can see all available functions and their documentation via the package’s dedicated website <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a>.</figcaption>
-</figure>
-</div>
 <p>If you are familiar with GitHub, you can search existing issues in the <strong>palaeoverse</strong> <a href="https://github.com/palaeoverse/palaeoverse/">repository</a> to see whether someone has previously encountered the issue you are facing and whether it has already been addressed. If you cannot find an answer, you are welcome to <a href="https://github.com/palaeoverse/palaeoverse/issues">open an issue</a> and include a minimal reproducible example (see <a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html">guidance on writing one</a>).</p>
+<blockquote class="blockquote">
+<p>If you would like to request a new feature to be added to <strong>palaeoverse</strong>, or you think you have discovered a bug, you are invited to submit an issue on <a href="https://github.com/palaeoverse/palaeoverse/">GitHub</a>, following our <a href="https://palaeoverse.org/contribute/detailed-tutorial/">contribution guide</a>.</p>
+</blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -768,6 +775,9 @@ Tip
 </div>
 </div>
 </div>
+<section id="references" class="level2" data-number="4.1">
+<h2 data-number="4.1" data-anchor-id="references"><span class="header-section-number">4.1</span> References</h2>
+<p>Jones, L. A., Dean, C. D., Allen, B. J., Drage, H. B., Flannery‐Sutherland, J. T., Gearty, W., Chiarenza, A. A., Dillon, E. M., Farina, B. M., &amp; Godoy, P. L. (2025). Ten simple rules to follow when cleaning occurrence data in palaeobiology. <em>Palaeontology</em>, 68(5), e70028. DOI: <a href="https://doi.org/10.1111/pala.70028">10.1111/pala.70028</a>.</p>
 
 
 <hr><br><details>
@@ -850,6 +860,7 @@ Tip
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </details>
+</section>
 </section>
 
 </main> <!-- /main -->
