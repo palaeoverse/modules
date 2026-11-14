@@ -258,7 +258,7 @@ Bethany J. Allen
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<p>Coral reefs are highly sensitive to climate change, and their past distributions are thought to represent the latitudinal extent of tropical and subtropical conditions over geological timescales (Kiessling, 2001; Perrin &amp; Kiessling, 2010).</p>
+<p>Coral reefs are highly sensitive to climate change, and their past distributions are thought to represent the latitudinal extent of tropical and subtropical temperatures over geological timescales (Kiessling, 2001; Perrin &amp; Kiessling, 2010).</p>
 <p>However, interpreting this record is not straightforward. Continental drift means that the present-day location of a fossil reef does not necessarily reflect where it formed: occurrences now found at temperate latitudes may have been deposited in tropical settings, and vice versa.</p>
 <p>Tracing the latitudinal distribution of reefs through time therefore requires reconstructing their palaeogeographic positions with a Global Plate Model. Moreover, recent work shows that palaeogeographic reconstructions can differ substantially among Global Plate Models, and this source of uncertainty must also be be considered (Buffan et al., 2023).</p>
 <p>Here, we will address the question “<strong>how did the latitudinal distribution of reefs change through time?</strong>” while also considering differences in palaeogeographic reconstructions.</p>
@@ -432,14 +432,14 @@ Bethany J. Allen
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># Get dataset documentation</span></span>
 <span id="cb13-2"><a aria-label="2"></a><span class="fu">help</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;source) are also available via the usual documentation call:</p>
+<p>Note the structure of the dataset: each row contains a unique occurrence and each column contains a unique variable. Details on the dataset (e.g.&nbsp;further description of variables, source) are also available via the usual documentation call:</p>
 </section>
 <section class="slide level2">
 <h2>Exercise 1: Get to know <code>reefs</code></h2>
 <ol type="1">
 <li>How many rows does <code>reefs</code> have?</li>
 <li>How many columns does <code>reefs</code> have?</li>
-<li>What does each row of <code>reefs</code> represent?</li>
+<li>What does each row of <code>reefs</code> represent? Hint: <code>help("reefs")</code></li>
 <li>True or false: the <code>reefs</code> dataset tells us how many species lived in each reef.</li>
 </ol>
 </section>
@@ -459,7 +459,7 @@ Bethany J. Allen
 <li><code>nrow(reefs)</code>: 4363</li>
 <li><code>ncol(reefs)</code>: 14</li>
 <li>A whole reef (an ecosystem)</li>
-<li>False: each row describes a reef as a whole, not all the species within it</li>
+<li>False: each row describes a reef as a whole, not all the species within it. <code>reefs$biota_main</code> and <code>reefs$biota_sec</code> represent the predominant biota in the reef, but no more detailed information on diversity is given.</li>
 </ol>
 </div>
 </div>
@@ -468,9 +468,9 @@ Bethany J. Allen
 </section>
 <section class="slide level2">
 <h2>The <code>reefs</code> dataset</h2>
-<p>Not bad, that is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the <code>tetrapods</code> dataset.</p>
-<p><strong>But how does the number of occurrences vary across time?</strong></p>
-<p>We can make use of the <code>group_apply()</code> function to apply a function across subsets of data:</p>
+<p>That is quite a bit of data to play with! Remember that these are reefs (whole ecosystems), not individual occurrences of fossil organisms like in the <code>tetrapods</code> dataset.</p>
+<p><strong>But how does the number of reef occurrences vary across time?</strong></p>
+<p>We can make use of the <code>palaeoverse::group_apply()</code> function to help us answer this question by applying a function across subsets of data. To do so, we just need to provide <code>group_apply()</code> with the dataset, the variable by which to determine the subsets, and the function we wish to implement. As we are interested in the number of reefs through time, we will subset the occurrences into different time intervals. As each row represents one reef, we can simply count the number of rows in each interval:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># Group by the "interval" column</span></span>
 <span id="cb14-2"><a aria-label="2"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
@@ -507,7 +507,10 @@ Bethany J. Allen
 </div>
 <div class="callout-content">
 <div class="fragment">
-<p><code>group_apply()</code> returns one row per group. How many groups did you get?</p>
+<ol type="1">
+<li><code>group_apply()</code> returns one row per group. How many groups did you get?</li>
+<li>What do you notice about the interval names?</li>
+</ol>
 </div>
 </div>
 </div>
@@ -537,7 +540,7 @@ Bethany J. Allen
 </section>
 <section id="assign-common-time-scale" class="slide level2">
 <h2>Assign common time scale</h2>
-<p>One solution would be to use age values to bin the reefs into time bins, but no numeric age range data are provided in the <code>reefs</code> dataset (e.g.&nbsp;“max_age” and “min_age”). We must therefore use the name of each interval to link to a common time scale: the international geological stages established by the <a href="https://stratigraphy.org">International Commission on Stratigraphy (ICS)</a>.</p>
+<p>Unifying the timescales would be easier if we had numeric ages for each interval, but no numeric age range data are provided in the <code>reefs</code> dataset (e.g.&nbsp;“max_age” and “min_age”). Ultimately, our goal is to convert the name of each interval into those from a common time scale: the international geological stages established by the <a href="https://stratigraphy.org">International Commission on Stratigraphy (ICS)</a>.</p>
 <p>Fortunately, we can make use of the <code>look_up()</code> function to help us do this. It can assign international geological stages and numeric ages to occurrences, or use a user-defined interval key to link to a common time scale. Here, we will do the latter using the example built-in <code>interval_key</code> dataset:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># Load the interval key</span></span>
@@ -636,7 +639,7 @@ Bethany J. Allen
 </div>
 </details>
 </div>
-<p>Great! We now have a common time scale and numeric ages. However, some of our reefs seem to range through several stages, so we cannot simply count by the early or late stage. Our data still need to be binned.</p>
+<p>Great! We now have a common time scale and numeric ages. However, some of our reefs seem to range through several stages, so it is not obvious which time interval(s) they should be counted in. Our data still need to be binned.</p>
 </section>
 <section id="temporal-binning" class="slide level2">
 <h2>Temporal binning</h2>
@@ -728,8 +731,8 @@ Bethany J. Allen
 <div class="callout-content">
 <div class="fragment">
 <ol type="1">
-<li><code>"all"</code></li>
-<li><code>"random"</code> and <code>"point"</code></li>
+<li><code>"all"</code>: This method bins an occurrence into every bin its age range covers. For occurrences with age ranges of more than one bin, the occurrence row is duplicated.</li>
+<li><code>"random"</code> and <code>"point"</code>: These methods sample ages randomly so the bin assignment can differ from run to run. The <code>reps</code> argument repeats sampling (e.g.&nbsp;<code>reps = 100</code>) and the output list is of length <code>reps</code>, with one binned dataset per replicate. See <code>help(bin_time)</code> for further details.</li>
 <li>3946</li>
 </ol>
 </div>
@@ -739,7 +742,7 @@ Bethany J. Allen
 </section>
 <section class="slide level2">
 <h2>Temporal binning</h2>
-<p>For this tutorial, we will go with <code>"all"</code>:</p>
+<p>For this tutorial, we will go with <code>"all"</code>, which essentially generates pseudo-occurrences (similar to <code>palaeoverse::tax_expand_time()</code>), allowing us to count occurrences for every bin the reef potentially falls in. This is most useful for presence/absence questions (e.g.&nbsp;first and last appearances, range through diversity), but here we use it to offer an upper bound on where an occurrence could fall:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1117,7 +1120,7 @@ Bethany J. Allen
 <span id="cb44-16"><a aria-label="16"></a><span class="fu">plot</span>(<span class="at">x =</span> paleomap_max<span class="sc">$</span>bin_midpoint,</span>
 <span id="cb44-17"><a aria-label="17"></a>     <span class="at">y =</span> paleomap_max<span class="sc">$</span>max_p_lat,</span>
 <span id="cb44-18"><a aria-label="18"></a>     <span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>,</span>
-<span id="cb44-19"><a aria-label="19"></a>     <span class="at">ylab =</span> <span class="st">"Palaeolatitude (º)"</span>,</span>
+<span id="cb44-19"><a aria-label="19"></a>     <span class="at">ylab =</span> <span class="st">"Most Poleward Palaeolatitude (º)"</span>,</span>
 <span id="cb44-20"><a aria-label="20"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">541</span>, <span class="dv">0</span>),</span>
 <span id="cb44-21"><a aria-label="21"></a>     <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
 <span id="cb44-22"><a aria-label="22"></a>     <span class="at">type =</span> <span class="st">"b"</span>,</span>
