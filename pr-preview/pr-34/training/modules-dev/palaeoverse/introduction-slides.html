@@ -12,7 +12,7 @@
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="Bethany J. Allen">
-  <meta name="dcterms.date" content="2026-11-13">
+  <meta name="dcterms.date" content="2026-11-14">
   <title>Introduction to the palaeoverse R package</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -225,7 +225,7 @@ Bethany J. Allen
 </div>
 </div>
 
-  <p class="date">2026-11-13</p>
+  <p class="date">2026-11-14</p>
 </section>
 <section id="why-palaeoverse" class="slide level2">
 <h2>Why palaeoverse?</h2>
@@ -233,6 +233,7 @@ Bethany J. Allen
 <li>Analyses rarely go straight from raw data to results</li>
 <li>Routine but essential tasks come first: checking taxonomic names, binning occurrences, reconstructing palaeogeography</li>
 <li>This code is often rewritten from scratch for every project</li>
+<li>This leads to duplicated effort, lost time, and ad hoc workflows that can be hard to reproduce, share, or reuse (not <a href="https://doi.org/10.1038/sdata.2016.18">FAIR</a>)</li>
 </ul>
 <aside class="notes">
 <p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.</p>
@@ -288,8 +289,8 @@ Bethany J. Allen
 <h2>Built around occurrence data</h2>
 <ul>
 <li>Most <strong>palaeoverse</strong> functions take an occurrence <code>data.frame</code> as input</li>
-<li>Each row is a single record of something present at a particular place and time</li>
 <li>Each column is a different variable (e.g.&nbsp;identity, age, location, formation, reference)</li>
+<li>Each row is a single record of something present at a particular place and time</li>
 <li>That “something” is usually a taxon, but not always (in the <code>reefs</code> dataset, each row is a fossil reef)</li>
 </ul>
 <aside class="notes">
@@ -457,19 +458,18 @@ Bethany J. Allen
 </section>
 <section id="flexible" class="slide level2">
 <h2>Flexible</h2>
-<p>Functions in <strong>palaeoverse</strong> are not tied to a source (e.g.&nbsp;<a href="https://paleobiodb.org/#/">Paleobiology Database</a>). Column names are provided as arguments, not fixed requirements:</p>
+<p><strong>palaeoverse</strong> functions are not tied to a specific source (e.g.&nbsp;<a href="https://paleobiodb.org/#/">Paleobiology Database</a>). Column names are provided as arguments, not fixed requirements:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
 <span id="cb2-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb2-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
-<span id="cb2-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb2-5"><a aria-label="5"></a><span class="co"># Get unique species</span></span>
-<span id="cb2-6"><a aria-label="6"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a aria-label="7"></a>  <span class="fu">tax_unique</span>(<span class="at">genus =</span> <span class="st">"genus"</span>, </span>
-<span id="cb2-8"><a aria-label="8"></a>             <span class="at">family =</span> <span class="st">"family"</span>, </span>
-<span id="cb2-9"><a aria-label="9"></a>             <span class="at">order =</span> <span class="st">"order"</span>, </span>
-<span id="cb2-10"><a aria-label="10"></a>             <span class="at">class =</span> <span class="st">"class"</span>, </span>
-<span id="cb2-11"><a aria-label="11"></a>             <span class="at">name =</span> <span class="st">"accepted_name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a aria-label="3"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb2-4"><a aria-label="4"></a><span class="co"># Get unique species</span></span>
+<span id="cb2-5"><a aria-label="5"></a>tetrapods <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a aria-label="6"></a>  <span class="fu">tax_unique</span>(<span class="at">genus =</span> <span class="st">"genus"</span>, </span>
+<span id="cb2-7"><a aria-label="7"></a>             <span class="at">family =</span> <span class="st">"family"</span>, </span>
+<span id="cb2-8"><a aria-label="8"></a>             <span class="at">order =</span> <span class="st">"order"</span>, </span>
+<span id="cb2-9"><a aria-label="9"></a>             <span class="at">class =</span> <span class="st">"class"</span>, </span>
+<span id="cb2-10"><a aria-label="10"></a>             <span class="at">name =</span> <span class="st">"accepted_name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.</p>
@@ -512,16 +512,15 @@ Bethany J. Allen
 <h2>Exploring and summarising data</h2>
 <p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
 <span id="cb3-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb3-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
-<span id="cb3-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb3-5"><a aria-label="5"></a><span class="co"># Estimate temporal range of taxa</span></span>
-<span id="cb3-6"><a aria-label="6"></a>tetrapods <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a aria-label="7"></a>  <span class="co"># Drop NAs</span></span>
-<span id="cb3-8"><a aria-label="8"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a aria-label="9"></a>  <span class="co"># Plot temporal range</span></span>
-<span id="cb3-10"><a aria-label="10"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a aria-label="3"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb3-4"><a aria-label="4"></a><span class="co"># Estimate temporal range of taxa</span></span>
+<span id="cb3-5"><a aria-label="5"></a>tetrapods <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a aria-label="6"></a>  <span class="co"># Drop NAs</span></span>
+<span id="cb3-7"><a aria-label="7"></a>  <span class="fu">subset</span>(<span class="sc">!</span><span class="fu">is.na</span>(order)) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a aria-label="8"></a>  <span class="co"># Plot temporal range</span></span>
+<span id="cb3-9"><a aria-label="9"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
@@ -545,12 +544,16 @@ Bethany J. Allen
 <h2>Cleaning and harmonising data</h2>
 <p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates and checking taxonomic names:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Load library</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
 <span id="cb4-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb4-3"><a aria-label="3"></a><span class="co"># Get example data</span></span>
-<span id="cb4-4"><a aria-label="4"></a><span class="fu">data</span>(tetrapods)</span>
-<span id="cb4-5"><a aria-label="5"></a><span class="co"># Check for potential misspellings</span></span>
-<span id="cb4-6"><a aria-label="6"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a aria-label="3"></a><span class="fu">data</span>(tetrapods)</span>
+<span id="cb4-4"><a aria-label="4"></a><span class="co"># Check for potential misspellings</span></span>
+<span id="cb4-5"><a aria-label="5"></a><span class="fu">tax_check</span>(tetrapods, <span class="at">name =</span> <span class="st">"genus"</span>)<span class="sc">$</span>synonyms</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group     greater     lesser count_greater count_lesser
+1     D Dvinosaurus Dinosaurus            23            2
+2     V   Varanopus   Varanops             5            3</code></pre>
+</div>
 </div>
 <aside class="notes">
 <p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates and checking taxonomic names:</p>
@@ -570,20 +573,20 @@ Bethany J. Allen
 <h2>Preparing data for analyses</h2>
 <p><strong>palaeoverse</strong> includes functions to prepare data for analyses, such as estimating palaeocoordinates and binning data:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb5-3"><a aria-label="3"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb5-4"><a aria-label="4"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
-<span id="cb5-5"><a aria-label="5"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>)</span>
-<span id="cb5-6"><a aria-label="6"></a><span class="fu">head</span>(bins, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="fu">library</span>(palaeoverse)</span>
+<span id="cb6-3"><a aria-label="3"></a><span class="fu">data</span>(reefs)</span>
+<span id="cb6-4"><a aria-label="4"></a><span class="co"># Generate equal-area latitudinal bins</span></span>
+<span id="cb6-5"><a aria-label="5"></a>bins <span class="ot">&lt;-</span> <span class="fu">lat_bins_area</span>(<span class="at">n =</span> <span class="dv">12</span>)</span>
+<span id="cb6-6"><a aria-label="6"></a><span class="fu">head</span>(bins, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  bin      min      mid      max         area  area_prop
 1   1 56.44269 73.22135 90.00000 4.250537e+13 0.08333333
 2   2 41.81031 49.12650 56.44269 4.250537e+13 0.08333333
 3   3 30.00000 35.90516 41.81031 4.250537e+13 0.08333333</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="co"># Bin data</span></span>
-<span id="cb7-2"><a aria-label="2"></a>binned_reefs <span class="ot">&lt;-</span> <span class="fu">bin_lat</span>(reefs, <span class="at">bins =</span> bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># Bin data</span></span>
+<span id="cb8-2"><a aria-label="2"></a>binned_reefs <span class="ot">&lt;-</span> <span class="fu">bin_lat</span>(reefs, <span class="at">bins =</span> bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <aside class="notes">
 <p><strong>palaeoverse</strong> includes functions to prepare data for analyses, such as estimating palaeocoordinates and binning data:</p>
@@ -640,9 +643,9 @@ Bethany J. Allen
           display:block!important;
       }</style></aside>
 </section>
-<section id="palaeoverse.palaeoverse.org" class="slide level2">
-<h2><a href="https://palaeoverse.palaeoverse.org">palaeoverse.palaeoverse.org</a></h2>
-<p>hosts:</p>
+<section id="package-website" class="slide level2">
+<h2>Package website</h2>
+<p><a href="https://palaeoverse.palaeoverse.org">palaeoverse.palaeoverse.org</a> hosts:</p>
 <ul>
 <li>documentation for every function</li>
 <li>vignettes (tutorials) showing example applications</li>
@@ -666,7 +669,7 @@ Bethany J. Allen
 <section id="section" class="slide level2">
 <h2></h2>
 
-<img data-src="img/palaeoverse-reference.png" class="r-stretch quarto-figure-center"><p class="caption">Browse all functions in the <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide</a></p></section>
+<img data-src="img/palaeoverse-reference.png" class="r-stretch quarto-figure-center"><p class="caption">Browse all functions in our <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide.</a></p></section>
 <section id="still-stuck" class="slide level2">
 <h2>Still stuck?</h2>
 <ul>
@@ -697,7 +700,7 @@ Bethany J. Allen
 <h1>Now, let’s get coding!</h1>
 <p>…starting with installing <strong>palaeoverse</strong>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><a href="../../../training/modules-dev/palaeoverse/tetrapod-biodiversity.html"><strong>Tutorial 1: Tetrapod biodiversity</strong></a>: Explore alpha diversity and geographic range size in Carboniferous and Permian tetrapods.</li>
