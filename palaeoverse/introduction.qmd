@@ -1,0 +1,238 @@
+---
+title: "Introduction to the palaeoverse R package"
+author:
+  - Lewis A. Jones
+  - Bethany J. Allen
+date: last-modified
+categories: [r, data-preparation, data-exploration, data-viz]
+difficulty: Beginner
+image: img/palaeoverse-logo.png
+number-sections: true
+format:
+  html:
+    toc: true
+other-links:
+  - text: "Slides"
+    href: introduction-slides.html
+    icon: easel
+language:
+  other-links-title: "Other Formats"
+execute:
+  output-location: fragment
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+filters:
+  - collapse-output
+editor:
+  markdown:
+    wrap: 72
+required-packages: false
+---
+
+<!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
+<!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
+
+```{r}
+#| label: setup
+#| include: false
+
+knitr::knit_hooks$set(par = function(before, options, envir) {
+  if (before && isTRUE(options$par)) {
+    # bottom, left, top, right (lines)
+    par(mar = c(4, 4, 2, 1),
+        # figure background
+        bg = "transparent")
+  }
+})
+
+knitr::opts_chunk$set(par = TRUE)
+```
+
+# Why use palaeoverse
+
+Large datasets of fossil occurrences, often downloaded from online community-maintained databases (e.g. [the Paleobiology Database](https://paleobiodb.org/#/)), are a vital resource for understanding broad-scale evolutionary patterns, such as how biodiversity has changed through time and space. Such datasets, however, are often messy and must be 'cleaned' of inaccurate, incomplete, or duplicate data prior to analysis (see 'ten rules' [Jones et al., 2025](https://doi.org/10.1111/pala.70028)), as well as prepared and structured in a way suitable for the analysis being implemented.
+
+Most palaeobiological analyses begin with routine but essential tasks, such as cleaning data, checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.
+
+The **palaeoverse** R package aims to make such efforts more reusable, reproducible, and readable by:
+
+- replacing long, bespoke scripts with a few clear lines of code
+- using consistent function names, arguments, and outputs so that scripts are easy to follow and share
+- providing well-documented, tested, and peer-reviewed functions that are transparent and robust
+
+# Design
+
+Three design choices shape how **palaeoverse** functions look and behave.
+
+## Built around occurrence data
+
+Most functions in **palaeoverse** take an occurrence `data.frame` as input, so they directly fit the way many palaeobiologists already store their data.
+
+::: {.callout-note}
+## What is an occurrence dataset?
+
+In an occurrence dataset, each row is a single record of something present at a particular place and time. That "something" is usually a taxon, but it does not have to be. For example, in **palaeoverse**'s in-built `reefs` dataset, each row is a fossil reef rather than a species.
+
+Occurrence data typically include columns describing:
+
+- Identity, what the entity represents, such as taxonomy (e.g. accepted name, genus)
+- Age (e.g. maximum and minimum ages or named intervals)
+- Location (e.g. longitude and latitude)
+- Additional context (e.g. formation, collection, or reference)
+
+It could look something a little like this:
+
+  | occurrence_no   | accepted_name   | max_ma   | min_ma   | lng      | lat     | …     |
+  | --------------: | --------------: | -------: | -------: | -------: | ------: | ----: |
+  |           40163 |      Crocodylia |     59.2 |       56 |   −74.68 |   39.97 |     … |
+  |           40167 |     Gavialoidea |     59.2 |       56 |   −74.68 |   39.97 |     … |
+  |           40168 |     Gavialoidea |     59.2 |       56 |   −74.68 |   39.97 |     … |
+  |               … |               … |        … |        … |        … |       … |     … |
+:::
+
+## Modular
+
+Each function in **palaeoverse** does one job well. You can use one on its own, or chain several together into a full workflow:
+
+```{r}
+#| label: modular
+#| eval: true
+#| output-fold: true
+#| output-summary: "Output"
+
+# Load library
+library(palaeoverse)
+# Get example data
+data(tetrapods)
+# Get time bins
+bins <- time_bins(interval = "Phanerozoic", rank = "stage")
+# Bin data temporally
+tetrapods |>
+  bin_time(bins = bins, method = "mid") |>
+  # View first six rows
+  head()
+```
+
+## Flexible
+
+Functions in **palaeoverse** are not tied to a single source such as the [Paleobiology Database](https://paleobiodb.org/#/). Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.
+
+```{r}
+#| label: flexible
+#| eval: true
+#| output-fold: true
+#| output-summary: "Output"
+
+# Load library
+library(palaeoverse)
+# Get example data
+data(tetrapods)
+# Get unique species
+tetrapods |>
+  tax_unique(genus = "genus", family = "family", order = "order", 
+             class = "class", name = "accepted_name") |>
+  # View first six rows
+  head()
+```
+
+# Applications
+
+**palaeoverse** can be used for initial data exploration, as well as preparation for a wide range of downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.
+
+Minimal examples of potential applications are provided below, but the module tutorials ([Tutorial 1: Tetrapod biodiversity](tetrapod-biodiversity.qmd), [Tutorial 2: Phanerozoic reefs](phanerozoic-reefs.qmd)) will expose you to the broader functionality and use cases of **palaeoverse** functions.
+
+## Exploring and summarising data
+
+**palaeoverse** includes functions to help users explore and understand their data better, such as calculating temporal (`palaeoverse::tax_range_time()`) and geographic ranges (`palaeoverse::tax_range_space()`):
+
+```{r}
+#| label: temporal-range
+#| eval: true
+#| output-fold: true
+#| output-summary: "Output"
+#| fig-cap: "Temporal range of Carboniferous to Early Triassic tetrapods."
+
+# Load library
+library(palaeoverse)
+# Get example data
+data(tetrapods)
+# Estimate temporal range of taxa
+tetrapods |>
+  # Drop NAs
+  subset(!is.na(order)) |>
+  # Plot temporal range
+  tax_range_time(name = "order", plot = TRUE) |>
+  # View first six rows
+  head()
+```
+
+## Cleaning and harmonising data
+
+**palaeoverse** includes functions to support the cleaning and harmonising of data such as removing duplicates (`palaeoverse::tax_unique()`), standardising ages (`palaeoverse::look_up()`), and checking taxonomic names for potential misspellings (`palaeoverse::tax_check()`):
+
+```{r}
+#| label: check-names
+#| eval: true
+#| output-fold: true
+#| output-summary: "Output"
+
+# Load library
+library(palaeoverse)
+# Get example data
+data(tetrapods)
+# Check for potential misspellings
+tax_check(tetrapods, name = "genus")
+```
+
+## Preparing data for analyses
+
+**palaeoverse** includes functions to help prepare data for downstream analyses, such as reconstructing palaeogeographic distributions (`palaeoverse::palaeorotate()`) or temporally (`palaeoverse::time_bins()`, `palaeoverse::bin_time()`) and spatially (`palaeoverse::lat_bins_area()`, `palaeoverse::bin_lat()`) binning data:
+
+```{r}
+#| label: bin-lat
+#| eval: true
+#| output-fold: true
+#| output-summary: "Output"
+#| fig-cap: "12 approximately equal-area latitudinal bins."
+
+# Load library
+library(palaeoverse)
+# Get example data
+data(reefs)
+# Generate equal-area latitudinal bins
+bins <- lat_bins_area(n = 12, plot = TRUE)
+# Bin data
+reefs |> 
+  bin_lat(bins = bins) |>
+  head()
+```
+
+![You can see all available functions and their documentation via the package's dedicated website [reference guide](https://palaeoverse.palaeoverse.org/reference/index.html).](img/palaeoverse-reference.png)
+
+::: {.callout-note}
+## Where does palaeoverse fit?
+
+Think of **palaeoverse** as the bridge between raw occurrence data and the analytical methods you want to apply, supporting the development of a full data prepration and exploration pipeline (see 'ten rules' [Jones et al., 2025](https://doi.org/10.1111/pala.70028)).
+:::
+
+# Getting help
+
+Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, **palaeoverse** has several layers of support, from built-in documentation to wider community support.
+
+The **palaeoverse** website ([https://palaeoverse.palaeoverse.org](https://palaeoverse.palaeoverse.org)) hosts documentation for every function available, as well as vignettes (tutorials) demonstrating possible applications, and updates on new releases. It is a searchable resource and can be easier to navigate than the help pages in R.
+
+If you are familiar with GitHub, you can search existing issues in the **palaeoverse** [repository](https://github.com/palaeoverse/palaeoverse/) to see whether someone has previously encountered the issue you are facing and whether it has already been addressed. If you cannot find an answer, you are welcome to [open an issue](https://github.com/palaeoverse/palaeoverse/issues) and include a minimal reproducible example (see [guidance on writing one](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html)).
+
+> If you would like to request a new feature to be added to **palaeoverse**, or you think you have discovered a bug, you are invited to submit an issue on [GitHub](https://github.com/palaeoverse/palaeoverse/), following our [contribution guide](https://palaeoverse.org/contribute/detailed-tutorial/).
+
+::: {.callout-tip}
+GitHub can be a daunting place if you have not used it before. You are welcome to join our [Zulip](https://palaeoverse.org/zulip/join-zulip/) and create a topic under "Help".
+
+![You can [join](https://palaeoverse.org/zulip/join-zulip/) **palaeoverse**'s Zulip and ask for help if you are still stuck after reading the package documentation.](img/zulip.png)
+:::
+
+## References
+
+Jones, L. A., Dean, C. D., Allen, B. J., Drage, H. B., Flannery‐Sutherland, J. T., Gearty, W., Chiarenza, A. A., Dillon, E. M., Farina, B. M., & Godoy, P. L. (2025). Ten simple rules to follow when cleaning occurrence data in palaeobiology. *Palaeontology*, 68(5), e70028. DOI: [10.1111/pala.70028](https://doi.org/10.1111/pala.70028).
