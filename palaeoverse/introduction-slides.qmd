@@ -50,6 +50,8 @@ knitr::opts_chunk$set(par = TRUE)
 - Analyses rarely go straight from raw data to results
 - Routine but essential tasks come first: checking taxonomic names, binning occurrences, reconstructing palaeogeography
 - This code is often rewritten from scratch for every project
+- This leads to duplicated effort, lost time, and ad hoc workflows that can be hard to reproduce, share, or reuse (not [FAIR](https://doi.org/10.1038/sdata.2016.18))
+
 
 ::: {.notes}
 Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.
@@ -80,8 +82,8 @@ Three design choices shape how **palaeoverse** functions look and behave:
 ## Built around occurrence data
 
 - Most **palaeoverse** functions take an occurrence `data.frame` as input
-- Each row is a single record of something present at a particular place and time
 - Each column is a different variable (e.g. identity, age, location, formation, reference)
+- Each row is a single record of something present at a particular place and time
 - That "something" is usually a taxon, but not always (in the `reefs` dataset, each row is a fossil reef)
 
 ::: {.notes}
@@ -148,16 +150,15 @@ Each function in **palaeoverse** does one job well. You can use one on its own, 
 
 ## Flexible
 
-Functions in **palaeoverse** are not tied to a source (e.g. [Paleobiology Database](https://paleobiodb.org/#/)). Column names are provided as arguments, not fixed requirements:
+**palaeoverse** functions are not tied to a specific source (e.g. [Paleobiology Database](https://paleobiodb.org/#/)). Column names are provided as arguments, not fixed requirements:
 
 ```{r}
 #| label: flexible
 #| eval: true
 #| output: false
 
-# Load library
+# Load library and data
 library(palaeoverse)
-# Get example data
 data(tetrapods)
 # Get unique species
 tetrapods |>
@@ -193,9 +194,8 @@ We'll be running through two tutorials today but here are just a few possible us
 #| eval: true
 #| output: false
 
-# Load library
+# Load library and data
 library(palaeoverse)
-# Get example data
 data(tetrapods)
 # Estimate temporal range of taxa
 tetrapods |>
@@ -232,14 +232,13 @@ dat <- tax_range_time(tetrapods, name = "order", plot = TRUE)
 ```{r}
 #| label: check-names
 #| eval: true
-#| output: false
+#| output: true
 
-# Load library
+# Load library and data
 library(palaeoverse)
-# Get example data
 data(tetrapods)
 # Check for potential misspellings
-tax_check(tetrapods, name = "genus")
+tax_check(tetrapods, name = "genus")$synonyms
 ```
 
 ::: {.notes}
@@ -287,9 +286,9 @@ Think of **palaeoverse** as the bridge between raw occurrence data and the analy
 Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, **palaeoverse** has several layers of support, from built-in documentation to wider community support.
 :::
 
-## [palaeoverse.palaeoverse.org](https://palaeoverse.palaeoverse.org)
+## Package website
 
-hosts:
+[palaeoverse.palaeoverse.org](https://palaeoverse.palaeoverse.org) hosts:
 
 - documentation for every function
 - vignettes (tutorials) showing example applications
@@ -302,7 +301,7 @@ The **palaeoverse** website ([https://palaeoverse.palaeoverse.org](https://palae
 
 ##
 
-![Browse all functions in the [reference guide](https://palaeoverse.palaeoverse.org/reference/index.html)](img/palaeoverse-reference.png){fig-align="center"}
+![Browse all functions in our [reference guide.](https://palaeoverse.palaeoverse.org/reference/index.html)](img/palaeoverse-reference.png){fig-align="center"}
 
 ## Still stuck?
 
