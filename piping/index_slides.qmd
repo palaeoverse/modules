@@ -109,13 +109,7 @@ res <- sort_by(
 
 <br>
 
-No intermediate objects...
-
-. . .
-
-<br>
-
-...but we must read from the inside out.
+No intermediate objects, but we must read from the inside out.
 
 # Introducing the pipe
 
@@ -132,8 +126,6 @@ res <- head(mtcars, 10) |>
 ```
 
 . . .
-
-<br>
 
 Read it as "**and then**":
 
@@ -183,9 +175,7 @@ grepl("a|e", let)
 
 . . .
 
-<br>
-
-Piping without care gives wrong code:
+Piping without care gives incorrect code:
 
 ```{r}
 #| eval: true
@@ -198,7 +188,7 @@ let |> grepl("a|e")
 
 <br>
 
-`_` tells where the piped data should go:
+`_` tells the piped data where to go:
 
 ```{r}
 #| eval: true

@@ -64,7 +64,7 @@ res <- sort_by(tmp2, ~ am)
 res
 ```
 
-But this is also not ideal because we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.
+This is also not ideal because we will potentially pollute the global environment with lots of temporary objects. Additionally, using a counter in a temporary name means that we will, for instance, need to update multiple names if we want to add an operation between the first and second step.
 
 ### Nested calls
 
@@ -120,7 +120,7 @@ head(mtcars, 10) |>
 ```
 :::
 
-We now have some code that doesn't require intermediate objects but is also easy to read because we see operations in the order in which they are executed.
+We now have some code that doesn't require intermediate objects, but is also easy to read because we see operations in the order in which they are executed.
 
 The `|>` operator was introduced in R 4.1, released in 2021, meaning that you cannot use it in older versions of R.
 
@@ -150,7 +150,7 @@ let <- letters[1:6]
 grepl("a|e", let)
 ```
 
-Using `|>` without specifying the position of the input would lead to wrong code:
+Using `|>` without specifying the position of the input would lead to incorrect code:
 
 ```{r}
 #| warning: true
