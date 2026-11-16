@@ -185,7 +185,8 @@ In the Paleobiology Database, occurrences are allocated to named temporal interv
 #| output-fold: true
 #| output-summary: "Output"
 
-# Get new numeric ages for named intervals using the interval key that is supplied with palaeoverse
+# Get new numeric ages for named intervals using the interval key that is
+# supplied with palaeoverse
 tetrapods <- look_up(tetrapods, int_key = interval_key)
 # Look at the newly added columns
 head(tetrapods[, c("interval_max_ma", "interval_mid_ma", "interval_min_ma")])
@@ -231,7 +232,8 @@ Now that we have an understanding of the amount of uncertainty surrounding the a
 #| output-fold: true
 #| output-summary: "Output"
 
-# Make sure that any values which could not be matched contain their original values
+# Make sure that any values which could not be matched contain their original
+# values
 tetrapods$interval_max_ma <- ifelse(is.na(tetrapods$interval_max_ma),
                                     tetrapods$max_ma,
                                     tetrapods$interval_max_ma)
@@ -251,8 +253,12 @@ Now we are ready to allocate our occurrences to our time bins. We will do this u
 #| eval: false
 
 # Rename columns so that new intervals are used for binning
-colnames(tetrapods)[9:10] <- c("old_max_ma", "old_min_ma")
-colnames(tetrapods)[c(35, 37)] <- c("max_ma", "min_ma")
+colnames(tetrapods)[which(colnames(tetrapods) == "max_ma")] <- "old_max_ma"
+colnames(tetrapods)[which(colnames(tetrapods) == "min_ma")] <- "old_min_ma"
+colnames(tetrapods)[which(colnames(tetrapods) == "interval_max_ma")] <-
+  "max_ma"
+colnames(tetrapods)[which(colnames(tetrapods) == "interval_min_ma")] <-
+  "min_ma"
 
 # Generate time bins
 mid_tetrapods <- bin_time(occdf = tetrapods,
@@ -298,7 +304,7 @@ This time we have received a warning, but no error. Let's take a look at the new
 #| output-summary: "Output"
 
 # View new columns
-mid_tetrapods[1:5, 38:41]
+head(mid_tetrapods[, c("id", "n_bins", "bin_assignment", "bin_midpoint")])
 ```
 
 The second of these new columns is `n_bins`, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how `bin_time` has processed our data:
@@ -328,7 +334,7 @@ We can use `palaeoverse::palaeorotate()` to use a Global Plate Model (GPM) to in
 
 # Palaeorotate occurrences
 mid_tetrapods <- palaeorotate(occdf = mid_tetrapods, age = "bin_midpoint",
-                              method = "point", model = "PALEOMAP")
+                              method = "grid", model = "PALEOMAP")
 ```
 
 Let's now take a look at our new columns containing the palaeocoordinates.
@@ -356,7 +362,7 @@ mid_tetrapods <- bin_space(occdf = mid_tetrapods,
                            lng = "p_lng",
                            lat = "p_lat",
                            spacing = 100)
-# Show the first 6 rows of the new columns added using `bin_space()`.
+# Show the first 6 rows of the new columns added using `bin_space()`
 head(mid_tetrapods[, c("cell_ID", "cell_centroid_lng", "cell_centroid_lat")])
 ```
 
@@ -426,8 +432,8 @@ We can see the additional occurrences retained at the end of our output table.
 #| output-fold: true
 #| output-summary: "Output"
 
-# View extra occurrences
-tet_genera[717:719, ]
+# View extra occurrences (those which lack a genus name)
+subset(tet_genera, is.na(genus))
 ```
 
 Now that we've seen what this function can do, let's apply it in a way that lets us check for unique genera in each collection (= locality) using `palaeoverse::group_apply()`:
@@ -458,9 +464,6 @@ In addition to the columns we had before, we have now gained a `collection_no` c
 #| output-fold: true
 #| output-summary: "Output"
 
-# Get the names of unique genera per collection
-unique_genera <- unique(coll_genera[, c("unique_name", "collection_no")])
-
 # Calculate the number of unique genera per collection
 coll_taxa <- group_apply(unique_genera, group = "collection_no", fun = nrow)
 
@@ -479,7 +482,8 @@ In order to plot alpha diversity through time, we will also need to add interval
 #| output-summary: "Output"
 
 # Subset to collections and their ages in millions of years:
-coll_info <- mid_tetrapods[, c("collection_no", "max_ma", "interval_mid_ma", "min_ma")]
+coll_info <- mid_tetrapods[, c("collection_no", "max_ma", "interval_mid_ma",
+                               "min_ma")]
 
 # Remove duplicated collections based on the collection number (column 1)
 coll_info <- coll_info[!duplicated(coll_info[1]),]
@@ -498,7 +502,8 @@ Great! Now we can plot our alpha diversity through time. Let's start with a simp
 
 # Make a plot for alpha diversity in the Carboniferous and Permian
 plot(alpha_data$interval_mid_ma, alpha_data$n_taxa, # add the points
-     xlim = rev(range(alpha_data$interval_mid_ma, na.rm = TRUE)), # reverse the x-axis
+     xlim = rev(range(alpha_data$interval_mid_ma,
+                      na.rm = TRUE)), # reverse the x-axis
      xlab="Time (Ma)", ylab="No. taxa", # axes labels
      pch = 19, col = "#0e826f") # point style and colour
 ```
@@ -509,16 +514,18 @@ It's a good start, but we would like to know which data points belong in which s
 #| label: alpha-scatter-geol
 
 # Set margins
-par(mar = c(7.1, 4.1, 4.1, 2.1)) # expand at bottom if adding more interval categories
+par(mar = c(7.1, 4.1, 4.1, 2.1)) # expand at bottom if adding more intervals
 # Make the final alpha diversity plot
 plot(alpha_data$interval_mid_ma, alpha_data$n_taxa, # add the points
      axes = FALSE,
-     xlim = rev(range(alpha_data$interval_mid_ma, na.rm = TRUE)), # reverse the x-axis
+     xlim = rev(range(alpha_data$interval_mid_ma,
+                      na.rm = TRUE)), # reverse the x-axis
      xlab = " ", ylab = "No. taxa", # axes labels
      pch = 19, col = "#0e826f") # point style and colour
 box()
 axis(2) # add a normal axis to the left side
-axis_geo(side = 1, intervals = list("epochs", "periods"), title = "Time (Ma)")
+axis_geo(side = 1, intervals = list("epochs", "periods"),
+         title = "Time (Ma)")
 ```
 
 We can now see an overall increasing trend in maximum tetrapod alpha diversity over the Carboniferous and Permian, with a few extra-diverse outliers.
@@ -533,6 +540,7 @@ What steps could we take to investigate this trend in alpha diversity further?
 ## Exercise 5: Answer
 
 There are many things we could try, but here are some suggestions:
+
 - Fit a trend line, to see whether the average alpha richness really increased
 - Identify the overly-diverse (outlier) collections and look into why they were so diverse, do they represent Lagerstätten?
 - Look into the relationship between stage duration and alpha diversity
@@ -584,13 +592,17 @@ From this information we can now plot how the average range size of tetrapods ch
 #| label: convex-hulls-plot
 
 # Find the average geographic range size for each time interval
-space_tetrapods_mean <- group_apply(space_tetrapods, "bin_midpoint", function(df) mean(df$area))
+space_tetrapods_mean <- group_apply(space_tetrapods, "bin_midpoint",
+                                    function(df) mean(df$area))
 colnames(space_tetrapods_mean) <- c("mean_area", "bin_midpoint")
 # Create a plot of average range size through time
-plot(space_tetrapods_mean$bin_midpoint, space_tetrapods_mean$mean_area, # add the points
+plot(space_tetrapods_mean$bin_midpoint,
+     space_tetrapods_mean$mean_area, # add the points
      axes = FALSE,
-     xlim = rev(range(as.numeric(space_tetrapods_mean$bin_midpoint), na.rm = TRUE)), # reverse the x-axis
-     xlab = " ", ylab = expression("Average range size of tetrapod genera (km"^2~")"), # axes labels
+     xlim = rev(range(as.numeric(space_tetrapods_mean$bin_midpoint),
+                      na.rm = TRUE)), # reverse the x-axis
+     xlab = " ", ylab = expression("Average range size of tetrapod genera
+                                   (km"^2~")"), # axes labels
      pch = 19, col = "#0e826f") # point style and colour
 box()
 axis(2) # add a normal axis to the left side
@@ -608,8 +620,10 @@ From this plot it seems like the average geographic range size of tetrapods incr
 # Calculate the number of unique cells in each time bin
 unique_cells <- unique(mid_tetrapods[, c("bin_midpoint", "cell_ID")])
 spat.cov <- group_apply(unique_cells, group = "bin_midpoint", fun = nrow)
-# Run a correlation test between mean range size and the spatial spread of cells through time
-cor.test(log10(space_tetrapods_mean$mean_area), log10(spat.cov$nrow), method = "spearman")
+# Run a correlation test between mean range size and the spatial spread of
+# cells through time
+cor.test(log10(space_tetrapods_mean$mean_area), log10(spat.cov$nrow),
+         method = "spearman")
 ```
 
 The high rho value and a p-value less than our cut off for significance (0.05) indicate a strong and statistically significant correlation between average geographic range size and the spatial spread of data. Seems like this work is far from over...
