@@ -474,7 +474,7 @@ In addition to the columns we had before, we have now gained a `collection_no` c
 #| output-summary: "Output"
 
 # Calculate the number of unique genera per collection
-coll_taxa <- group_apply(unique_genera, group = "collection_no", fun = nrow)
+coll_taxa <- group_apply(coll_genera, group = "collection_no", fun = nrow)
 
 # Rename column names:
 colnames(coll_taxa) <- c("n_taxa", "collection_no")
