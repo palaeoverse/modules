@@ -586,7 +586,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get new numeric ages for named intervals using the interval key that is supplied with palaeoverse</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="ot">&lt;-</span> <span class="fu">look_up</span>(tetrapods, <span class="at">int_key =</span> interval_key)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the newly added columns</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>tetrapods[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">35</span><span class="sc">:</span><span class="dv">37</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tetrapods[, <span class="fu">c</span>(<span class="st">"interval_max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"interval_min_ma"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>  interval_max_ma interval_mid_ma interval_min_ma
@@ -594,7 +594,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 2         265.100         262.100          259.10
 3         251.902         249.551          247.20
 4         290.100         286.800          283.50
-5         283.500         278.225          272.95</code></pre>
+5         283.500         278.225          272.95
+6         293.520         281.160          268.80</code></pre>
 </div>
 </details>
 </div>
@@ -730,7 +731,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </details>
 </div>
-<p>The second of these new columns is <code>n_bins</code>, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how <code>bin_time</code> has processed our data.</p>
+<p>The second of these new columns is <code>n_bins</code>, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how <code>bin_time</code> has processed our data:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a table of potential number of bins</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mid_tetrapods<span class="sc">$</span>n_bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -789,7 +790,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can now generate our spatial bins and place our occurrences into them based on their palaeo-coordinates. Here we will generate and bin into equal-area hexagonal grid cells (based on <a href="https://h3geo.org">Uber’s H3 system</a>).</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate hex cells with diameter around 100km, and bin occurrences</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate hex cells with a centroid spacing of ~100 km, and bin occurrences</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_space</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
@@ -812,7 +813,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="taxonomic-wrangling" class="level2">
 <h2 data-anchor-id="taxonomic-wrangling">Taxonomic wrangling</h2>
-<p>In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g.&nbsp;genera or species); however, this can result in some useful information being discarded. The tax_unique function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:</p>
+<p>In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g.&nbsp;genera or species); however, this can result in some useful information being discarded. The <code>palaeoverse::tax_unique()</code> function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:</p>
 <ul>
 <li><em>Albertosaurus sarcophagus</em></li>
 <li><em>Ankylosaurus</em> sp.</li>
@@ -820,7 +821,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><em>Ornithominus</em> sp.</li>
 <li><em>Tyrannosaurus rex</em></li>
 </ul>
-<p>A filter for species-level identifications would reduce the species richness to just two (<em>A. sarcophagus</em> and <em>T. rex</em>). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. <code>palaeoverse::tax_unique()</code> is designed to deal with such taxonomic data and would retain all five ‘species’ in this example. For further details see <code>help(tax_unique)</code>.</p>
+<p>A filter for species-level identifications would reduce the species richness to just two (<em>A. sarcophagus</em> and <em>T. rex</em>). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. <code>tax_unique()</code> is designed to deal with such taxonomic data and would retain all five ‘species’ in this example. For further details see <code>help(tax_unique)</code>.</p>
 <p>This function can be especially helpful when we want to quantify alpha (local) diversity. Let’s use this function to investigate the number of unique genera in our dataset.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter occurrences to unique genera</span></span>
@@ -882,7 +883,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><code>length(unique(tet_genera$unique_name))</code>: 807</p>
-<p>For the original dataset, we need to remember not to count values (genus names) that are NA.</p>
+<p>For the original dataset, we need to remember not to count values (i.e.&nbsp;genus names) that are <code>NA</code>.</p>
 <p><code>length(unique(na.omit(mid_tetrapods$genus)))</code>: 803</p>
 <p>This shows us that there are three additional unique genera retained when we use <code>tax_unique</code>.</p>
 </div>
@@ -965,7 +966,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>In order to plot alpha diversity through time, we will also need to add interval age data to this table.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take the columns pertaining to collections and their ages in millions of years:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to collections and their ages in millions of years:</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"min_ma"</span>)]</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
@@ -1057,7 +1058,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="quantifying-spatial-patterns" class="level2">
 <h2 data-anchor-id="quantifying-spatial-patterns">Quantifying spatial patterns</h2>
-<p>Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the <code>palaeoverse::tax_range_space()</code> function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we’ll use the method <code>con</code> which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space).</p>
+<p>Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the <code>palaeoverse::tax_range_space()</code> function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we’ll use the method <code>con</code> which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via <code>help(tax_range_space)</code>.</p>
 <p>We can use this in combination with <code>group_apply</code> to calculate the convex hull size for each genus in each time interval:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, remove any occurrences without a genus</span></span>
@@ -1110,7 +1111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A value of <code>0</code> means the convex hull has no volume, because it consists of a single point - i.e.&nbsp;there is only a single occurrence of that genus in that time bin.</p>
+<p>A value of <code>0</code> means the convex hull has no area, because it consists of a single point - i.e.&nbsp;there is only a single occurrence of that genus in that time bin.</p>
 </div>
 </div>
 </div>
