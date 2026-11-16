@@ -12,7 +12,7 @@
 
   <meta name="author" content="Etienne Bacher">
   <meta name="author" content="Will Gearty">
-  <meta name="dcterms.date" content="2026-11-09">
+  <meta name="dcterms.date" content="2026-11-16">
   <title>Piping</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -225,7 +225,7 @@ Will Gearty
 </div>
 </div>
 
-  <p class="date">2026-11-09</p>
+  <p class="date">2026-11-16</p>
 </section>
 <section id="objectives" class="slide level2">
 <h2>Objectives</h2>
@@ -300,11 +300,7 @@ Will Gearty
 </div>
 <div class="fragment">
 <p><br></p>
-<p>No intermediate objects…</p>
-</div>
-<div class="fragment">
-<p><br></p>
-<p>…but we must read from the inside out.</p>
+<p>No intermediate objects, but we must read from the inside out.</p>
 </div>
 </section></section>
 <section>
@@ -322,7 +318,6 @@ Will Gearty
 <span id="cb4-3"><a aria-label="3"></a>  <span class="fu">sort_by</span>(<span class="sc">~</span> am)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
-<p><br></p>
 <p>Read it as “<strong>and then</strong>”:</p>
 <ul>
 <li>keep the first 10 rows, <em>and then</em></li>
@@ -370,8 +365,7 @@ Will Gearty
 </div>
 </div>
 <div class="fragment">
-<p><br></p>
-<p>Piping without care gives wrong code:</p>
+<p>Piping without care gives incorrect code:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>let <span class="sc">|&gt;</span> <span class="fu">grepl</span>(<span class="st">"a|e"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -387,7 +381,7 @@ first element will be used</code></pre>
 <section id="the-placeholder-_" class="slide level2">
 <h2>The placeholder <code>_</code></h2>
 <p><br></p>
-<p><code>_</code> tells where the piped data should go:</p>
+<p><code>_</code> tells the piped data where to go:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>let <span class="sc">|&gt;</span> <span class="fu">grepl</span>(<span class="st">"a|e"</span>, <span class="at">x =</span> _)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Etienne Bacher">
 <meta name="author" content="Will Gearty">
-<meta name="dcterms.date" content="2026-11-09">
+<meta name="dcterms.date" content="2026-11-16">
 <meta name="description" content="Using the pipe operator to have more readable code">
 
 <title>Piping</title>
@@ -86,9 +86,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-9d071a2d1b9528f8f459712b4dfc6d00.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-0b172480e643577b4d75838f4961ff89.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-cf1afee80d78be7fbe0c58f940f7d9f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-9db65d10a2b792157aff071f1296cc0f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-cf1afee80d78be7fbe0c58f940f7d9f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -327,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 9, 2026</p>
+      <p class="date">November 16, 2026</p>
     </div>
   </div>
   
@@ -396,7 +396,7 @@ Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pre>
 </div>
 </div>
-<p>But this is also not ideal because we pollute the global environment with potentially many temporary objects. Additionally, using a counter in a temporary name means that we need to update many names if we want to add an operation between the first and second step for instance.</p>
+<p>This is also not ideal because we will potentially pollute the global environment with lots of temporary objects. Additionally, using a counter in a temporary name means that we will, for instance, need to update multiple names if we want to add an operation between the first and second step.</p>
 </section>
 <section id="nested-calls" class="level3">
 <h3 data-anchor-id="nested-calls">Nested calls</h3>
@@ -486,7 +486,7 @@ Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pr
 </div>
 </div>
 </div>
-<p>We now have some code that doesn’t require intermediate objects but is also easy to read because we see operations in the order in which they are executed.</p>
+<p>We now have some code that doesn’t require intermediate objects, but is also easy to read because we see operations in the order in which they are executed.</p>
 <p>The <code>|&gt;</code> operator was introduced in R 4.1, released in 2021, meaning that you cannot use it in older versions of R.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -529,7 +529,7 @@ Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</code></pr
 <pre><code>[1]  TRUE FALSE FALSE FALSE  TRUE FALSE</code></pre>
 </div>
 </div>
-<p>Using <code>|&gt;</code> without specifying the position of the input would lead to wrong code:</p>
+<p>Using <code>|&gt;</code> without specifying the position of the input would lead to incorrect code:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>let <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"a|e"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -623,7 +623,7 @@ Coefficients:
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-09
+ date     2026-11-16
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
