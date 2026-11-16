@@ -246,7 +246,6 @@ Niklas Hohmann
 </section>
 <section id="a-failing-script" class="slide level2">
 <h2>A failing script</h2>
-<p><br></p>
 <p>From the <a href="https://palaeoverse.palaeoverse.org/articles/phanerozoic-reefs.html">“Latitudinal trends in Phanerozoic reefs”</a> vignette:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -288,11 +287,11 @@ Niklas Hohmann
 <h2>Minimal reproducible example</h2>
 <p><br></p>
 <ul>
-<li>Longer code = more potential causes.</li>
+<li>Longer code = more potential causes</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>First step: build a <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em>.</li>
+<li>First: build a <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em></li>
 </ul>
 </div>
 <div class="fragment">
@@ -314,7 +313,6 @@ Niklas Hohmann
 <li>makes outputs easier to compare</li>
 </ul>
 <div class="fragment">
-<p><br></p>
 <p>Our dataset has thousands of rows and 14 columns:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -327,7 +325,6 @@ Niklas Hohmann
 </section>
 <section id="reduce-the-data-1" class="slide level2">
 <h2>Reduce the data</h2>
-<p><br></p>
 <p>Keep only the first 6 rows:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs)</span>
@@ -348,7 +345,7 @@ Niklas Hohmann
 <section id="reduce-the-data-2" class="slide level2">
 <h2>Reduce the data</h2>
 <p><br></p>
-<p>Keep one row and 5 columns:</p>
+<p>Keep 1 row and 5 columns:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-code-line-numbers="1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
 <span id="cb8-2"><a aria-label="2"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
@@ -360,8 +357,7 @@ Niklas Hohmann
 </section>
 <section id="reduce-the-data-3" class="slide level2">
 <h2>Reduce the data</h2>
-<p><br></p>
-<p>Keep one row and 6 columns:</p>
+<p>Keep 1 row and 6 columns:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-code-line-numbers="1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
 <span id="cb10-2"><a aria-label="2"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
@@ -381,7 +377,6 @@ Niklas Hohmann
 </section>
 <section id="reduce-the-code" class="slide level2">
 <h2>Reduce the code</h2>
-<p><br></p>
 <p>Remove as much code as possible to limit potential causes.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-code-line-numbers="|4|9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
@@ -402,7 +397,7 @@ Niklas Hohmann
 <h2>Reduce the code</h2>
 <p><br></p>
 <ul>
-<li><code>reef_counts</code> is never used: remove it.</li>
+<li><code>reef_counts</code> is never used: remove it</li>
 </ul>
 <div class="fragment">
 <ul>
@@ -415,7 +410,7 @@ Niklas Hohmann
 </div>
 <div class="fragment">
 <ul>
-<li>No: remove it too.</li>
+<li>No: remove it too</li>
 </ul>
 </div>
 </section>
@@ -436,7 +431,7 @@ Niklas Hohmann
 <span id="cb14-10"><a aria-label="10"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
-<p>Two out of five function calls removed, but still no clear cause.</p>
+<p>Two function calls removed, but still no clear cause.</p>
 </div>
 </section>
 <section id="next-step" class="slide level2">
@@ -473,18 +468,17 @@ Niklas Hohmann
 <div class="fragment">
 <p><br></p>
 <ul>
-<li>Errors if the code isn’t self-contained.</li>
+<li>Errors if the code isn’t self-contained</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>If it runs in <code>reprex()</code>, others can reproduce it.</li>
+<li>If it runs in <code>reprex()</code>, others can reproduce it</li>
 </ul>
 </div>
 </section>
 <section id="reprex-1" class="slide level2">
 <h2><code>reprex()</code></h2>
-<p><br></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
 <span id="cb15-2"><a aria-label="2"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
@@ -507,7 +501,6 @@ Niklas Hohmann
 </section>
 <section id="reprex-2" class="slide level2">
 <h2><code>reprex()</code></h2>
-<p><br></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-code-line-numbers="2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
 <span id="cb17-2"><a aria-label="2"></a>  <span class="fu">library</span>(palaeoverse)</span>
@@ -556,7 +549,7 @@ Niklas Hohmann
 <p>A function runs a whole block of code and only shows the final error.</p>
 <div class="fragment">
 <p><br></p>
-<p>One reflex: add <code>print()</code> statements.</p>
+<p>One solution: add <code>print()</code> statements.</p>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -597,21 +590,14 @@ Niklas Hohmann
 <span id="cb22-10"><a aria-label="10"></a></span>
 <span id="cb22-11"><a aria-label="11"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="fragment">
-<p>Execution stops at <code>browser()</code>.</p>
-</div>
 </section>
 <section id="browser-1" class="slide level2">
 <h2><code>browser()</code></h2>
 <p><br></p>
+<p>Execution stops at <code>browser()</code>:</p>
 <ul>
 <li>We have access to the function environment.</li>
 </ul>
-<div class="fragment">
-<ul>
-<li>E.g. <code>sub_grid</code> is <code>250</code>, not its default <code>NULL</code>.</li>
-</ul>
-</div>
 <div class="fragment">
 <ul>
 <li>Press “Enter” to run the next statement.</li>
@@ -667,16 +653,16 @@ Niklas Hohmann
 <h2>Conclusion</h2>
 <p><br></p>
 <ul>
-<li>Reduce the data and the code.</li>
+<li>Reduce the data and the code</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Check your reprex with <code>reprex()</code>.</li>
+<li>Check your reprex with <code>reprex()</code></li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>Inspect functions with <code>browser()</code> and breakpoints.</li>
+<li>Inspect functions with <code>browser()</code> and breakpoints</li>
 </ul>
 </div>
 <div class="fragment">

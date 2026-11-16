@@ -340,7 +340,7 @@
     "href": "training/modules-dev/browser_reprex/index-slides.html#a-failing-script",
     "title": "Debugging with reprex() and browser()",
     "section": "A failing script",
-    "text": "A failing script\n\nFrom the “Latitudinal trends in Phanerozoic reefs” vignette:\n\nlibrary(palaeoverse)\n\ndata(reefs)\nreef_counts &lt;- group_apply(occdf = reefs, group = \"interval\", fun = nrow)\nreefs &lt;- look_up(occdf = reefs,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\nreefs &lt;- subset(reefs, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs, bins = bins, method = \"mid\")\n\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
+    "text": "A failing script\nFrom the “Latitudinal trends in Phanerozoic reefs” vignette:\n\nlibrary(palaeoverse)\n\ndata(reefs)\nreef_counts &lt;- group_apply(occdf = reefs, group = \"interval\", fun = nrow)\nreefs &lt;- look_up(occdf = reefs,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\nreefs &lt;- subset(reefs, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs, bins = bins, method = \"mid\")\n\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#a-failing-script-1",
@@ -354,56 +354,56 @@
     "href": "training/modules-dev/browser_reprex/index-slides.html#minimal-reproducible-example",
     "title": "Debugging with reprex() and browser()",
     "section": "Minimal reproducible example",
-    "text": "Minimal reproducible example\n\n\nLonger code = more potential causes.\n\n\n\nFirst step: build a reproducible example, aka a reprex.\n\n\n\n\nTwo steps:\n\nreduce the data\nreduce the code"
+    "text": "Minimal reproducible example\n\n\nLonger code = more potential causes\n\n\n\nFirst: build a reproducible example, aka a reprex\n\n\n\n\nTwo steps:\n\nreduce the data\nreduce the code"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the data",
-    "text": "Reduce the data\n\nSmaller data:\n\nruns faster\nmakes outputs easier to compare\n\n\n\nOur dataset has thousands of rows and 14 columns:\n\nlibrary(palaeoverse)\ndim(reefs)\n\n[1] 4363   14"
+    "text": "Reduce the data\n\nSmaller data:\n\nruns faster\nmakes outputs easier to compare\n\n\nOur dataset has thousands of rows and 14 columns:\n\nlibrary(palaeoverse)\ndim(reefs)\n\n[1] 4363   14"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data-1",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data-1",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the data",
-    "text": "Reduce the data\n\nKeep only the first 6 rows:\n\nreefs2 &lt;- head(reefs)\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
+    "text": "Reduce the data\nKeep only the first 6 rows:\n\nreefs2 &lt;- head(reefs)\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data-2",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data-2",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the data",
-    "text": "Reduce the data\n\nKeep one row and 5 columns:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:5]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n\nError in `group_apply()`:\n! Supplied `group` is not a named column in `occdf`"
+    "text": "Reduce the data\n\nKeep 1 row and 5 columns:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:5]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n\nError in `group_apply()`:\n! Supplied `group` is not a named column in `occdf`"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data-3",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-data-3",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the data",
-    "text": "Reduce the data\n\nKeep one row and 6 columns:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
+    "text": "Reduce the data\nKeep 1 row and 6 columns:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-code",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-code",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the code",
-    "text": "Reduce the code\n\nRemove as much code as possible to limit potential causes.\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")"
+    "text": "Reduce the code\nRemove as much code as possible to limit potential causes.\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-code-1",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-code-1",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the code",
-    "text": "Reduce the code\n\n\nreef_counts is never used: remove it.\n\n\n\nDoes subset() do anything with one row?\n\n\nidentical(reefs2, subset(reefs2, interval_max_ma &lt;= 541))\n#&gt; [1] TRUE\n\n\n\n\nNo: remove it too."
+    "text": "Reduce the code\n\n\nreef_counts is never used: remove it\n\n\n\nDoes subset() do anything with one row?\n\n\nidentical(reefs2, subset(reefs2, interval_max_ma &lt;= 541))\n#&gt; [1] TRUE\n\n\n\n\nNo: remove it too"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-code-2",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reduce-the-code-2",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the code",
-    "text": "Reduce the code\n\nWhat we have now:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\n\nTwo out of five function calls removed, but still no clear cause."
+    "text": "Reduce the code\n\nWhat we have now:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreefs2 &lt;- look_up(occdf = reefs2,\n                  early_interval = \"interval\",\n                  late_interval = \"interval\",\n                  int_key = interval_key)\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\n\nTwo function calls removed, but still no clear cause."
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#next-step",
@@ -424,21 +424,21 @@
     "href": "training/modules-dev/browser_reprex/index-slides.html#reprex",
     "title": "Debugging with reprex() and browser()",
     "section": "reprex()",
-    "text": "reprex()\n\nreprex::reprex() runs code in a separate, clean R session.\n\n\n\nErrors if the code isn’t self-contained.\n\n\n\n\nIf it runs in reprex(), others can reproduce it."
+    "text": "reprex()\n\nreprex::reprex() runs code in a separate, clean R session.\n\n\n\nErrors if the code isn’t self-contained\n\n\n\n\nIf it runs in reprex(), others can reproduce it"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reprex-1",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reprex-1",
     "title": "Debugging with reprex() and browser()",
     "section": "reprex()",
-    "text": "reprex()\n\n\nreprex::reprex({\n  reefs2 &lt;- head(reefs, n = 1)\n  reefs2 &lt;- reefs2[, 1:6]\n\n  reefs2 &lt;- look_up(occdf = reefs2,\n                    early_interval = \"interval\",\n                    late_interval = \"interval\",\n                    int_key = interval_key)\n  bins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\n  bin_time(occdf = reefs2, bins = bins, method = \"mid\")\n})\n\n\nreefs2 &lt;- head(reefs, n = 1)\n#&gt; Error:\n#&gt; ! object 'reefs' not found"
+    "text": "reprex()\n\nreprex::reprex({\n  reefs2 &lt;- head(reefs, n = 1)\n  reefs2 &lt;- reefs2[, 1:6]\n\n  reefs2 &lt;- look_up(occdf = reefs2,\n                    early_interval = \"interval\",\n                    late_interval = \"interval\",\n                    int_key = interval_key)\n  bins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\n  bin_time(occdf = reefs2, bins = bins, method = \"mid\")\n})\n\n\nreefs2 &lt;- head(reefs, n = 1)\n#&gt; Error:\n#&gt; ! object 'reefs' not found"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reprex-2",
     "href": "training/modules-dev/browser_reprex/index-slides.html#reprex-2",
     "title": "Debugging with reprex() and browser()",
     "section": "reprex()",
-    "text": "reprex()\n\n\nreprex::reprex({\n  library(palaeoverse)\n  data(reefs)\n  reefs2 &lt;- head(reefs, n = 1)\n  reefs2 &lt;- reefs2[, 1:6]\n\n  reefs2 &lt;- look_up(occdf = reefs2,\n                    early_interval = \"interval\",\n                    late_interval = \"interval\",\n                    int_key = interval_key)\n  bins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\n  bin_time(occdf = reefs2, bins = bins, method = \"mid\")\n})\n\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
+    "text": "reprex()\n\nreprex::reprex({\n  library(palaeoverse)\n  data(reefs)\n  reefs2 &lt;- head(reefs, n = 1)\n  reefs2 &lt;- reefs2[, 1:6]\n\n  reefs2 &lt;- look_up(occdf = reefs2,\n                    early_interval = \"interval\",\n                    late_interval = \"interval\",\n                    int_key = interval_key)\n  bins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\n  bin_time(occdf = reefs2, bins = bins, method = \"mid\")\n})\n\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n#&gt; Error in `[.data.frame`:\n#&gt; ! undefined columns selected"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#reprex-3",
@@ -452,7 +452,7 @@
     "href": "training/modules-dev/browser_reprex/index-slides.html#debugging-a-function-1",
     "title": "Debugging with reprex() and browser()",
     "section": "Debugging a function",
-    "text": "Debugging a function\n\nA function runs a whole block of code and only shows the final error.\n\n\nOne reflex: add print() statements.\n\n\n\nBetter: browser() pauses execution inside the function."
+    "text": "Debugging a function\n\nA function runs a whole block of code and only shows the final error.\n\n\nOne solution: add print() statements.\n\n\n\nBetter: browser() pauses execution inside the function."
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#example",
@@ -466,14 +466,14 @@
     "href": "training/modules-dev/browser_reprex/index-slides.html#browser",
     "title": "Debugging with reprex() and browser()",
     "section": "browser()",
-    "text": "browser()\n\nAdd browser() at the top, reload the function, and rerun the code:\n\nfunction (occdf, lng = \"lng\", lat = \"lat\", spacing = 100, sub_grid = NULL,\n    return = FALSE, plot = FALSE)\n{\n    browser()\n    if (!is.data.frame(occdf)) {\n        stop(\"occdf should be of class dataframe\")\n    }\n\n    [ MANUALLY TRUNCATED ]\n\n}\n\n\nExecution stops at browser()."
+    "text": "browser()\n\nAdd browser() at the top, reload the function, and rerun the code:\n\nfunction (occdf, lng = \"lng\", lat = \"lat\", spacing = 100, sub_grid = NULL,\n    return = FALSE, plot = FALSE)\n{\n    browser()\n    if (!is.data.frame(occdf)) {\n        stop(\"occdf should be of class dataframe\")\n    }\n\n    [ MANUALLY TRUNCATED ]\n\n}"
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#browser-1",
     "href": "training/modules-dev/browser_reprex/index-slides.html#browser-1",
     "title": "Debugging with reprex() and browser()",
     "section": "browser()",
-    "text": "browser()\n\n\nWe have access to the function environment.\n\n\n\nE.g. sub_grid is 250, not its default NULL.\n\n\n\n\nPress “Enter” to run the next statement.\n\n\n\n\nOnly the path actually taken is executed (e.g. no if (FALSE)).\n\n\n\n\nPress “Esc” or run Q to exit."
+    "text": "browser()\n\nExecution stops at browser():\n\nWe have access to the function environment.\n\n\n\nPress “Enter” to run the next statement.\n\n\n\n\nOnly the path actually taken is executed (e.g. no if (FALSE)).\n\n\n\n\nPress “Esc” or run Q to exit."
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index-slides.html#browser-2",
@@ -501,7 +501,7 @@
     "href": "training/modules-dev/browser_reprex/index-slides.html#conclusion-1",
     "title": "Debugging with reprex() and browser()",
     "section": "Conclusion",
-    "text": "Conclusion\n\n\nReduce the data and the code.\n\n\n\nCheck your reprex with reprex().\n\n\n\n\nInspect functions with browser() and breakpoints.\n\n\n\n\nGood debugging helps you fix your code and improves bug reports."
+    "text": "Conclusion\n\n\nReduce the data and the code\n\n\n\nCheck your reprex with reprex()\n\n\n\n\nInspect functions with browser() and breakpoints\n\n\n\n\nGood debugging helps you fix your code and improves bug reports."
   },
   {
     "objectID": "training/modules/ggplot/index.html",
@@ -725,7 +725,7 @@
     "href": "training/modules-dev/browser_reprex/index.html#reduce-the-size-of-the-data",
     "title": "Debugging with reprex() and browser()",
     "section": "Reduce the size of the data",
-    "text": "Reduce the size of the data\nIn the debugging process, we will likely run the code at least a handful of times. Therefore, we want to make sure that it runs as fast as possible so that we don’t lose our focus. The easiest way to do this is to reduce the size of our input data.\nIn addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small and simple as possible.\nIn this example, the dataset we are using has thousands of rows and 14 columns:\n\ndim(reefs)\n\n[1] 4335   19\n\n\nLet’s try to reduce the size of our data:\n\n# Select the first rows of the data\nreefs2 &lt;- head(reefs)\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n# Assign a common time scale based on an interval key\nreefs2 &lt;- look_up(occdf = reefs2,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\n# Extract Phanerozoic stage-level stages for time bins\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\nError in `[.data.frame`:\n! undefined columns selected\n\n\nWe still see the same error but now we only have 6 rows left (the default provided by head()), much better! Let’s try to reduce that to one row and to remove some columns.\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:5]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n\nError in `group_apply()`:\n! Supplied `group` is not a named column in `occdf`\n\n# Assign a common time scale based on an interval key\nreefs2 &lt;- look_up(occdf = reefs2,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\n\nError in `look_up()`:\n! `early_interval` needs to match a column name of `occdf`\n\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\n\nError:\n! object 'interval_max_ma' not found\n\n# Extract Phanerozoic stage-level stages for time bins\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\nError in `[.data.frame`:\n! undefined columns selected\n\n\nHmm, we don’t have the same error anymore, so we removed too many columns. Let’s try to keep 6 instead of 5:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n# Assign a common time scale based on an interval key\nreefs2 &lt;- look_up(occdf = reefs2,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\n# Extract Phanerozoic stage-level stages for time bins\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\nError in `[.data.frame`:\n! undefined columns selected\n\n\nBingo! We have the same error as before, but now we only have one row and six columns.\n\n\n\n\n\n\nNoteI can’t reduce the size of my data\n\n\n\nHere, we were lucky enough that we could drastically reduce the size of the data used. This is not always the case. Maybe the error you are experiencing only appears with large data, in which case you don’t have many options.\nTrying to reduce the size of the data is important, no matter what: knowing that the error only appears with large data is key information and might help debug your code.\n\n\nLet’s now try to reduce the size of the code."
+    "text": "Reduce the size of the data\nIn the debugging process, we will likely run the code at least a handful of times. Therefore, we want to make sure that it runs as fast as possible so that we don’t lose our focus. The easiest way to do this is to reduce the size of our input data.\nIn addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small and simple as possible.\nIn this example, the dataset we are using has thousands of rows and 14 columns:\n\ndata(reefs)\ndim(reefs)\n\n[1] 4363   14\n\n\nLet’s try to reduce the size of our data:\n\n# Select the first rows of the data\nreefs2 &lt;- head(reefs)\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n# Assign a common time scale based on an interval key\nreefs2 &lt;- look_up(occdf = reefs2,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\n# Extract Phanerozoic stage-level stages for time bins\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\nError in `[.data.frame`:\n! undefined columns selected\n\n\nWe still see the same error but now we only have 6 rows left (the default provided by head()), much better! Let’s try to reduce that to one row and to remove some columns.\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:5]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n\nError in `group_apply()`:\n! Supplied `group` is not a named column in `occdf`\n\n# Assign a common time scale based on an interval key\nreefs2 &lt;- look_up(occdf = reefs2,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\n\nError in `look_up()`:\n! `early_interval` needs to match a column name of `occdf`\n\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\n\nError:\n! object 'interval_max_ma' not found\n\n# Extract Phanerozoic stage-level stages for time bins\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\nError in `[.data.frame`:\n! undefined columns selected\n\n\nHmm, we don’t have the same error anymore, so we removed too many columns. Let’s try to keep 6 instead of 5:\n\nreefs2 &lt;- head(reefs, n = 1)\nreefs2 &lt;- reefs2[, 1:6]\n\nreef_counts &lt;- group_apply(occdf = reefs2, group = \"interval\", fun = nrow)\n# Assign a common time scale based on an interval key\nreefs2 &lt;- look_up(occdf = reefs2,\n                 early_interval = \"interval\",\n                 late_interval = \"interval\",\n                 int_key = interval_key)\nreefs2 &lt;- subset(reefs2, interval_max_ma &lt;= 541)\n# Extract Phanerozoic stage-level stages for time bins\nbins &lt;- time_bins(interval = \"Phanerozoic\", rank = \"stage\")\n\nbin_time(occdf = reefs2, bins = bins, method = \"mid\")\n\nError in `[.data.frame`:\n! undefined columns selected\n\n\nBingo! We have the same error as before, but now we only have one row and six columns.\n\n\n\n\n\n\nNoteI can’t reduce the size of my data\n\n\n\nHere, we were lucky enough that we could drastically reduce the size of the data used. This is not always the case. Maybe the error you are experiencing only appears with large data, in which case you don’t have many options.\nTrying to reduce the size of the data is important, no matter what: knowing that the error only appears with large data is key information and might help debug your code.\n\n\nLet’s now try to reduce the size of the code."
   },
   {
     "objectID": "training/modules-dev/browser_reprex/index.html#reduce-the-size-of-the-code",
