@@ -248,9 +248,11 @@ sum(is.na(tetrapods$interval_max_ma))
 
 Now we are ready to allocate our occurrences to our time bins. We will do this using the `palaeoverse::bin_time()` function. Here, for simplicity, we will use the 'mid' method, which places each occurrence into the time bin corresponding to the midpoint between its maximum and minimum age.
 
+However, first we need to rename our columns so we don't accidentally use the old ages:
+
 ```{r}
-#| label: time-bin-occs-error
-#| eval: false
+#| label: time-bin-occs-rename
+#| eval: true
 
 # Rename columns so that new intervals are used for binning
 colnames(tetrapods)[which(colnames(tetrapods) == "max_ma")] <- "old_max_ma"
@@ -259,6 +261,13 @@ colnames(tetrapods)[which(colnames(tetrapods) == "interval_max_ma")] <-
   "max_ma"
 colnames(tetrapods)[which(colnames(tetrapods) == "interval_min_ma")] <-
   "min_ma"
+```
+
+And then we can bin our data:
+
+```{r}
+#| label: time-bin-occs-error
+#| eval: false
 
 # Generate time bins
 mid_tetrapods <- bin_time(occdf = tetrapods,
