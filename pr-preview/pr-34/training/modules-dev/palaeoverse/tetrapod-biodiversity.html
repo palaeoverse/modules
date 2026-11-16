@@ -378,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/tetrapod-biodiversity.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/palaeoverse/palaeoverse/tetrapod-biodiversity.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <!-- ENSURE THAT THIS DOCUMENT FOLLOWS THE MODULE STRUCTURE DESCRIBED IN THE GUIDELINES -->
 <!-- https://docs.google.com/document/d/16cxSA2bA1MnrnpzmN2yzJNCwJVO7Hm5ceyz10sCmnzY/edit?tab=t.0 -->
 <section id="preamble" class="level2">
@@ -583,10 +583,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>In the Paleobiology Database, occurrences are allocated to named temporal intervals, with the numeric dates filled in using the Database’s internal timescale. We are going to generate numeric ages for these named intervals using <code>palaeoverse::look_up()</code>, to check whether these are up-to-date.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get new numeric ages for named intervals using the interval key that is supplied with palaeoverse</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="ot">&lt;-</span> <span class="fu">look_up</span>(tetrapods, <span class="at">int_key =</span> interval_key)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the newly added columns</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tetrapods[, <span class="fu">c</span>(<span class="st">"interval_max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"interval_min_ma"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get new numeric ages for named intervals using the interval key that is</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># supplied with palaeoverse</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>tetrapods <span class="ot">&lt;-</span> <span class="fu">look_up</span>(tetrapods, <span class="at">int_key =</span> interval_key)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the newly added columns</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tetrapods[, <span class="fu">c</span>(<span class="st">"interval_max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"interval_min_ma"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>  interval_max_ma interval_mid_ma interval_min_ma
@@ -648,33 +649,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now that we have an understanding of the amount of uncertainty surrounding the age of some of our occurrences, let’s tidy it up by filling in the ages of intervals not included in the <code>look_up()</code> table with those that they were allocated by the Paleobiology Database.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure that any values which could not be matched contain their original values</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_max_ma <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_max_ma),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>max_ma,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>interval_max_ma)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_min_ma <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_min_ma),</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>min_ma,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>interval_min_ma)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_mid_ma <span class="ot">&lt;-</span> (tetrapods<span class="sc">$</span>min_ma <span class="sc">+</span> tetrapods<span class="sc">$</span>max_ma) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that there are no remaining NA values</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_max_ma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure that any values which could not be matched contain their original</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># values</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_max_ma <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_max_ma),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>max_ma,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>interval_max_ma)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_min_ma <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_min_ma),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>min_ma,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                                    tetrapods<span class="sc">$</span>interval_min_ma)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>tetrapods<span class="sc">$</span>interval_mid_ma <span class="ot">&lt;-</span> (tetrapods<span class="sc">$</span>min_ma <span class="sc">+</span> tetrapods<span class="sc">$</span>max_ma) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that there are no remaining NA values</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tetrapods<span class="sc">$</span>interval_max_ma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
 </details>
 </div>
-<p>Now we are ready to allocate our occurrences to our time bins. We will do this using the <code>palaeoverse::bin_time()</code> function, with the ‘mid’ method.</p>
+<p>Now we are ready to allocate our occurrences to our time bins. We will do this using the <code>palaeoverse::bin_time()</code> function. Here, for simplicity, we will use the ‘mid’ method, which places each occurrence into the time bin corresponding to the midpoint between its maximum and minimum age.</p>
+<p>However, first we need to rename our columns so we don’t accidentally use the old ages:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename columns so that new intervals are used for binning</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"old_max_ma"</span>, <span class="st">"old_min_ma"</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">37</span>)] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"max_ma"</span>, <span class="st">"min_ma"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate time bins</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> tetrapods,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">bins =</span> bins,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="fu">which</span>(<span class="fu">colnames</span>(tetrapods) <span class="sc">==</span> <span class="st">"max_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"old_max_ma"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="fu">which</span>(<span class="fu">colnames</span>(tetrapods) <span class="sc">==</span> <span class="st">"min_ma"</span>)] <span class="ot">&lt;-</span> <span class="st">"old_min_ma"</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="fu">which</span>(<span class="fu">colnames</span>(tetrapods) <span class="sc">==</span> <span class="st">"interval_max_ma"</span>)] <span class="ot">&lt;-</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"max_ma"</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tetrapods)[<span class="fu">which</span>(<span class="fu">colnames</span>(tetrapods) <span class="sc">==</span> <span class="st">"interval_min_ma"</span>)] <span class="ot">&lt;-</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"min_ma"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And then we can bin our data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate time bins</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> tetrapods,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">bins =</span> bins,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>It seems we have hit an error!</p>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -708,49 +717,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We will remove these problematic occurrences and try again.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove occurrences younger than the time intervals we're interested in</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>cp_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(tetrapods, min_ma <span class="sc">&gt;</span> <span class="fu">min</span>(bins<span class="sc">$</span>min_ma))</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin occurrences into chosen time bins</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> cp_tetrapods,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">bins =</span> bins,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove occurrences younger than the time intervals we're interested in</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cp_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(tetrapods, min_ma <span class="sc">&gt;</span> <span class="fu">min</span>(bins<span class="sc">$</span>min_ma))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Bin occurrences into chosen time bins</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> cp_tetrapods,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">bins =</span> bins,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This time we have received a warning, but no error. Let’s take a look at the new columns added to the dataset.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View new columns</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">38</span><span class="sc">:</span><span class="dv">41</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View new columns</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"n_bins"</span>, <span class="st">"bin_assignment"</span>, <span class="st">"bin_midpoint"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id n_bins bin_assignment bin_midpoint
 1  1      2              7      301.300
 2  2      1             14      262.100
-4  3      2             10      286.800
-5  4      2             11      278.225
-6  5      6             11      278.225</code></pre>
+4  3      1             10      286.800
+5  4      1             11      278.225
+6  5      4             11      278.225
+7  6      2              8      296.210</code></pre>
 </div>
 </details>
 </div>
 <p>The second of these new columns is <code>n_bins</code>, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how <code>bin_time</code> has processed our data:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a table of potential number of bins</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mid_tetrapods<span class="sc">$</span>n_bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a table of potential number of bins</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mid_tetrapods<span class="sc">$</span>n_bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-   1    2    3    4    5    6    7    8    9 
- 703 2084  854  162   31  190   24    2   59 </code></pre>
+   1    2    3    4    5    6    7    8 
+2401  530  177  216   12   21    5   16 </code></pre>
 </div>
 </details>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert counts into proportions</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mid_tetrapods<span class="sc">$</span>n_bins) <span class="sc">/</span> <span class="fu">nrow</span>(mid_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert counts into proportions</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mid_tetrapods<span class="sc">$</span>n_bins) <span class="sc">/</span> <span class="fu">nrow</span>(mid_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-           1            2            3            4            5            6 
-0.1710878559 0.5071793624 0.2078364566 0.0394256510 0.0075444147 0.0462399611 
-           7            8            9 
-0.0058408372 0.0004867364 0.0143587248 </code></pre>
+          1           2           3           4           5           6 
+0.710775607 0.156897573 0.052397869 0.063943162 0.003552398 0.006216696 
+          7           8 
+0.001480166 0.004736530 </code></pre>
 </div>
 </details>
 </div>
@@ -761,27 +771,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Remember at the start of the exercise, we saw that every occurrence has a latitude and longitude. However, this corresponds to the modern-day coordinates of the locality in which they were found. If we want to understand spatial patterns in deep time, we need to infer the palaeo-coordinates at which the fossils were deposited.</p>
 <p>We can use <code>palaeoverse::palaeorotate()</code> to use a Global Plate Model (GPM) to infer how rocks on the Earth’s surface have shifted over time due to continental drift. You can find more information about how this works using <code>help(palaeorotate)</code>. It’s worth noting that different GPMs will produce different results (Buffan et al.&nbsp;2023), but for now we will go ahead with using the PALEOMAP GPM (Scotese &amp; Wright 2018).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Palaeorotate occurrences</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">palaeorotate</span>(<span class="at">occdf =</span> mid_tetrapods, <span class="at">age =</span> <span class="st">"bin_midpoint"</span>,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">method =</span> <span class="st">"point"</span>, <span class="at">model =</span> <span class="st">"PALEOMAP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Palaeorotate occurrences</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">palaeorotate</span>(<span class="at">occdf =</span> mid_tetrapods, <span class="at">age =</span> <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">method =</span> <span class="st">"grid"</span>, <span class="at">model =</span> <span class="st">"PALEOMAP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s now take a look at our new columns containing the palaeocoordinates.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View new columns</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"p_lng"</span>, <span class="st">"p_lat"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View new columns</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"p_lng"</span>, <span class="st">"p_lat"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>     p_lng    p_lat
-1 -39.1618   2.9214
-2 -33.9023 -59.1946
-4 -30.1811  -0.9483
-5 -28.4255   2.7177
-6 -27.6584   2.2973
-7 -16.5579  -6.0513</code></pre>
+1 -38.8046   3.0577
+2 -33.7730 -59.7070
+4 -30.3140  -0.9008
+5 -28.3769   2.6490
+6 -27.2582   2.4864
+7 -16.3217  -4.5422</code></pre>
 </div>
 </details>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Did any of the rotations fail?</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(mid_tetrapods<span class="sc">$</span>p_lng))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Did any of the rotations fail?</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(mid_tetrapods<span class="sc">$</span>p_lng))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
@@ -790,22 +800,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can now generate our spatial bins and place our occurrences into them based on their palaeo-coordinates. Here we will generate and bin into equal-area hexagonal grid cells (based on <a href="https://h3geo.org">Uber’s H3 system</a>).</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate hex cells with a centroid spacing of ~100 km, and bin occurrences</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_space</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">spacing =</span> <span class="dv">100</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the first 6 rows of the new columns added using `bin_space()`.</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"cell_ID"</span>, <span class="st">"cell_centroid_lng"</span>, <span class="st">"cell_centroid_lat"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate hex cells with a centroid spacing of ~100 km, and bin occurrences</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">bin_space</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">spacing =</span> <span class="dv">100</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the first 6 rows of the new columns added using `bin_space()`.</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"cell_ID"</span>, <span class="st">"cell_centroid_lng"</span>, <span class="st">"cell_centroid_lat"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>          cell_ID cell_centroid_lng cell_centroid_lat
 1 8380d4fffffffff         -38.83199          3.041113
-2 83dd68fffffffff         -34.66666        -59.098482
+2 83dd6efffffffff         -32.95137        -59.805529
 4 837d4bfffffffff         -29.87896         -1.198269
 5 837c45fffffffff         -28.90252          2.777952
-6 837c44fffffffff         -27.94209          2.183584
-7 837da3fffffffff         -16.16673         -6.154225</code></pre>
+6 837c46fffffffff         -26.99023          2.717426
+7 837d81fffffffff         -16.20328         -4.026211</code></pre>
 </div>
 </details>
 </div>
@@ -824,29 +834,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A filter for species-level identifications would reduce the species richness to just two (<em>A. sarcophagus</em> and <em>T. rex</em>). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. <code>tax_unique()</code> is designed to deal with such taxonomic data and would retain all five ‘species’ in this example. For further details see <code>help(tax_unique)</code>.</p>
 <p>This function can be especially helpful when we want to quantify alpha (local) diversity. Let’s use this function to investigate the number of unique genera in our dataset.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter occurrences to unique genera</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>tet_genera <span class="ot">&lt;-</span> <span class="fu">tax_unique</span>(<span class="at">occdf =</span> mid_tetrapods, </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">genus =</span> <span class="st">"genus"</span>, <span class="at">family =</span> <span class="st">"family"</span>, </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">order =</span> <span class="st">"order"</span>, <span class="at">class =</span> <span class="st">"class"</span>, </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a preview of the output table</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tet_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter occurrences to unique genera</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>tet_genera <span class="ot">&lt;-</span> <span class="fu">tax_unique</span>(<span class="at">occdf =</span> mid_tetrapods, </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">genus =</span> <span class="st">"genus"</span>, <span class="at">family =</span> <span class="st">"family"</span>, </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">order =</span> <span class="st">"order"</span>, <span class="at">class =</span> <span class="st">"class"</span>, </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a preview of the output table</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tet_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
-<pre><code>         class         order            family              genus
-1 Osteichthyes  Dicynodontia              &lt;NA&gt;           Abajudon
-2 Osteichthyes  Cotylosauria Charassognathidae          Abdalodon
-3     Reptilia          &lt;NA&gt;  Nyctiphruretidae        Abyssomedon
-4 Osteichthyes Temnospondyli      Zatracheidae   Acanthostomatops
-5     Reptilia      Eosuchia              &lt;NA&gt; Acerosodontosaurus
-6 Osteichthyes Temnospondyli      Trematopidae           Acheloma
-             unique_name
-1           Abajudon sp.
-2          Abdalodon sp.
-3        Abyssomedon sp.
-4   Acanthostomatops sp.
-5 Acerosodontosaurus sp.
-6           Acheloma sp.</code></pre>
+<pre><code>         class         order            family            genus
+1 Osteichthyes  Dicynodontia              &lt;NA&gt;         Abajudon
+2 Osteichthyes  Cotylosauria Charassognathidae        Abdalodon
+3     Reptilia          &lt;NA&gt;  Nyctiphruretidae      Abyssomedon
+4 Osteichthyes Temnospondyli      Zatracheidae Acanthostomatops
+5 Osteichthyes Temnospondyli      Trematopidae         Acheloma
+6 Osteichthyes          &lt;NA&gt;   Acherontiscidae    Acherontiscus
+           unique_name
+1         Abajudon sp.
+2        Abdalodon sp.
+3      Abyssomedon sp.
+4 Acanthostomatops sp.
+5         Acheloma sp.
+6    Acherontiscus sp.</code></pre>
 </div>
 </details>
 </div>
@@ -862,11 +872,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>How many occurrences are retained in the dataset by <code>tax_unique()</code>, which would otherwise have been discarded?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your turn: calculate the number of unique genera in tax_unique output</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(tet_genera<span class="sc">$</span>___))</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now for the original dataset for comparison: what must not be counted?</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">___.omit</span>(mid_tetrapods<span class="sc">$</span>___)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your turn: calculate the number of unique genera in tax_unique output</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(tet_genera<span class="sc">$</span>___))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now for the original dataset for comparison: what must not be counted?</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">___.omit</span>(mid_tetrapods<span class="sc">$</span>___)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -882,44 +892,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>length(unique(tet_genera$unique_name))</code>: 807</p>
+<p><code>length(unique(tet_genera$unique_name))</code>: 719</p>
 <p>For the original dataset, we need to remember not to count values (i.e.&nbsp;genus names) that are <code>NA</code>.</p>
-<p><code>length(unique(na.omit(mid_tetrapods$genus)))</code>: 803</p>
+<p><code>length(unique(na.omit(mid_tetrapods$genus)))</code>: 716</p>
 <p>This shows us that there are three additional unique genera retained when we use <code>tax_unique</code>.</p>
 </div>
 </div>
 </div>
 <p>We can see the additional occurrences retained at the end of our output table.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View extra occurrences</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>tet_genera[<span class="dv">717</span><span class="sc">:</span><span class="dv">719</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View extra occurrences (those which lack a genus name)</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(tet_genera, <span class="fu">is.na</span>(genus))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
-<pre><code>           class        order            family           genus
-717     Reptilia         &lt;NA&gt; Styracocephalidae Styracocephalus
-718 Osteichthyes Cotylosauria      Gorgonopidae     Suchogorgon
-719 Osteichthyes         &lt;NA&gt;   Chroniosuchidae       Suchonica
-            unique_name
-717 Styracocephalus sp.
-718     Suchogorgon sp.
-719       Suchonica sp.</code></pre>
+<pre><code>           class        order           family genus             unique_name
+717 Osteichthyes         &lt;NA&gt;  Acanthostegidae  &lt;NA&gt;  Acanthostegidae indet.
+718 Osteichthyes Dicynodontia   Dicynodontidae  &lt;NA&gt;   Dicynodontidae indet.
+719 Osteichthyes Dicynodontia Endothiodontidae  &lt;NA&gt; Endothiodontidae indet.</code></pre>
 </div>
 </details>
 </div>
 <p>Now that we’ve seen what this function can do, let’s apply it in a way that lets us check for unique genera in each collection (= locality) using <code>palaeoverse::group_apply()</code>:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use group_apply along with tax_unique:</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fun =</span> tax_unique,</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co"># See structure of the new dataframe:</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find unique genera (with tax_unique) in each collection (using group_apply)</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>coll_genera <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> mid_tetrapods,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"collection_no"</span>),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fun =</span> tax_unique,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">genus =</span> <span class="st">"genus"</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">family =</span> <span class="st">"family"</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">order =</span> <span class="st">"order"</span>,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">class =</span> <span class="st">"class"</span>,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="st">"genus"</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co"># See structure of the new dataframe</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coll_genera)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>         class         order           family      genus         unique_name
@@ -941,17 +947,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>In addition to the columns we had before, we have now gained a <code>collection_no</code> column. We are now able to count the unique number of genera per collection.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the names of unique genera per collection</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>unique_genera <span class="ot">&lt;-</span> <span class="fu">unique</span>(coll_genera[, <span class="fu">c</span>(<span class="st">"unique_name"</span>, <span class="st">"collection_no"</span>)])</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename column names:</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a quick look at the new dataframe</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of unique genera per collection</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>coll_taxa <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(coll_genera, <span class="at">group =</span> <span class="st">"collection_no"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename column names:</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(coll_taxa) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"n_taxa"</span>, <span class="st">"collection_no"</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a quick look at the new dataframe</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coll_taxa)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n_taxa collection_no
@@ -966,36 +969,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>In order to plot alpha diversity through time, we will also need to add interval age data to this table.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to collections and their ages in millions of years:</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>, <span class="st">"min_ma"</span>)]</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>coll_info <span class="ot">&lt;-</span> coll_info[<span class="sc">!</span><span class="fu">duplicated</span>(coll_info[<span class="dv">1</span>]),]</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine this dataframe with the dataframe from above</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>alpha_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(coll_info, coll_taxa, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look:</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(alpha_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to collections and their ages in millions of years:</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>coll_info <span class="ot">&lt;-</span> mid_tetrapods[, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_mid_ma"</span>,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"min_ma"</span>)]</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove duplicated collections based on the collection number (column 1)</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>coll_info <span class="ot">&lt;-</span> coll_info[<span class="sc">!</span><span class="fu">duplicated</span>(coll_info[<span class="dv">1</span>]),]</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine this dataframe with the dataframe from above</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>alpha_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(coll_info, coll_taxa, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look:</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(alpha_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>  collection_no max_ma interval_mid_ma min_ma n_taxa
-1         11149  290.1          284.70  279.3      1
-2         11152  295.5          283.90  272.3      1
-3         11165  298.9          294.50  290.1      9
-4         11323  303.4          301.15  298.9      1
-5         12943  305.9          302.40  298.9      1
-6         12976  279.3          275.80  272.3      7</code></pre>
+1         11149 290.10          284.70 283.50      1
+2         11152 293.52          283.90 272.95      1
+3         11165 298.90          294.50 290.10      9
+4         11323 303.70          301.15 293.52      1
+5         12943 307.00          302.40 298.90      1
+6         12976 283.50          275.80 272.95      7</code></pre>
 </div>
 </details>
 </div>
 <p>Great! Now we can plot our alpha diversity through time. Let’s start with a simple scatterplot:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a plot for alpha diversity in the Carboniferous and Permian</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Time (Ma)"</span>, <span class="at">ylab=</span><span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a plot for alpha diversity in the Carboniferous and Permian</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Time (Ma)"</span>, <span class="at">ylab=</span><span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1006,17 +1011,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>It’s a good start, but we would like to know which data points belong in which stages. We can use <code>palaeoverse::axis_geo()</code> to add a geological timescale to our plot.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set margins</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">7.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>)) <span class="co"># expand at bottom if adding more interval categories</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the final alpha diversity plot</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>), <span class="at">title =</span> <span class="st">"Time (Ma)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set margins</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">7.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>)) <span class="co"># expand at bottom if adding more intervals</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the final alpha diversity plot</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alpha_data<span class="sc">$</span>interval_mid_ma, alpha_data<span class="sc">$</span>n_taxa, <span class="co"># add the points</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(alpha_data<span class="sc">$</span>interval_mid_ma,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="st">"No. taxa"</span>, <span class="co"># axes labels</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>),</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Time (Ma)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1051,7 +1058,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>There are many things we could try, but here are some suggestions: - Fit a trend line, to see whether the average alpha richness really increased - Identify the overly-diverse (outlier) collections and look into why they were so diverse, do they represent Lagerstätten? - Look into the relationship between stage duration and alpha diversity - Explore the effect of the lower bound on this distribution - every locality contains at least one tetrapod, what impact does this have on the averages we might want to calculate?</p>
+<p>There are many things we could try, but here are some suggestions:</p>
+<ul>
+<li>Fit a trend line, to see whether the average alpha richness really increased</li>
+<li>Identify the overly-diverse (outlier) collections and look into why they were so diverse, do they represent Lagerstätten?</li>
+<li>Look into the relationship between stage duration and alpha diversity</li>
+<li>Explore the effect of the lower bound on this distribution - every locality contains at least one tetrapod, what impact does this have on the averages we might want to calculate?</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1061,27 +1074,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the <code>palaeoverse::tax_range_space()</code> function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we’ll use the method <code>con</code> which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via <code>help(tax_range_space)</code>.</p>
 <p>We can use this in combination with <code>group_apply</code> to calculate the convex hull size for each genus in each time interval:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, remove any occurrences without a genus</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(mid_tetrapods, <span class="sc">!</span><span class="fu">is.na</span>(genus))</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Find temporal range of all genera</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> space_tetrapods,</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>),</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">fun =</span> tax_range_space,</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">name =</span> <span class="st">"genus"</span>,</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">method =</span> <span class="st">"con"</span>)</span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Have a look at the dataset</span></span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(space_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, remove any occurrences without a genus</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">subset</span>(mid_tetrapods, <span class="sc">!</span><span class="fu">is.na</span>(genus))</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Find temporal range of all genera</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>space_tetrapods <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> space_tetrapods,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>),</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">fun =</span> tax_range_space,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">name =</span> <span class="st">"genus"</span>,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lng =</span> <span class="st">"p_lng"</span>,</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lat =</span> <span class="st">"p_lat"</span>,</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">method =</span> <span class="st">"con"</span>)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Have a look at the dataset</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(space_tetrapods)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
-<pre><code>          taxon taxon_id area bin_midpoint
-1     Brontopus        1    0      253.021
-2    Bunostegos        2    0      253.021
-3   Cyonosaurus        3    0      253.021
-4    Dalongkoua        4    0      253.021
-5 Daptocephalus        5    0      253.021
-6     Diictodon        6    0      253.021</code></pre>
+<pre><code>             taxon taxon_id      area bin_midpoint
+1        Abdalodon        1      0.00       256.62
+2        Acrodenta        2      0.00       256.62
+3      Adelosaurus        3      0.00       256.62
+4    Aelurognathus        4 187239.33       256.62
+5     Aelurosaurus        5  18881.25       256.62
+6 Aenigmastropheus        6      0.00       256.62</code></pre>
 </div>
 </details>
 </div>
@@ -1117,19 +1130,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>From this information we can now plot how the average range size of tetrapods changed throughout the Carboniferous and Permian:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the average geographic range size for each time interval</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>space_tetrapods_mean <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(space_tetrapods, <span class="st">"bin_midpoint"</span>, <span class="cf">function</span>(df) <span class="fu">mean</span>(df<span class="sc">$</span>area))</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(space_tetrapods_mean) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean_area"</span>, <span class="st">"bin_midpoint"</span>)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot of average range size through time</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint, space_tetrapods_mean<span class="sc">$</span>mean_area, <span class="co"># add the points</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(<span class="fu">as.numeric</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"Average range size of tetrapod genera (km"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">")"</span>), <span class="co"># axes labels</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>))</span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the average geographic range size for each time interval</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>space_tetrapods_mean <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(space_tetrapods, <span class="st">"bin_midpoint"</span>,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="cf">function</span>(df) <span class="fu">mean</span>(df<span class="sc">$</span>area))</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(space_tetrapods_mean) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean_area"</span>, <span class="st">"bin_midpoint"</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot of average range size through time</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>     space_tetrapods_mean<span class="sc">$</span>mean_area, <span class="co"># add the points</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(<span class="fu">as.numeric</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint),</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"Average range size of tetrapod genera</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="st">                                   (km"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">")"</span>), <span class="co"># axes labels</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>))</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1140,22 +1157,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>From this plot it seems like the average geographic range size of tetrapods increased during the Permian. However, we first need to be sure we’re not picking up on another pattern. Remember how we calculated the number of unique geographic cells in each time interval earlier? This provides a measure of the spatial spread of the fossil record. It might be that we’re not picking up on an increased range size, but just a larger geographic spread of fossil bearing rocks within the Permian. To see if this is the case, we can run a simple correlation test between the average geographic range size of tetrapods and the number of unique grid cells in each time interval:</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of unique cells in each time bin</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>unique_cells <span class="ot">&lt;-</span> <span class="fu">unique</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>, <span class="st">"cell_ID"</span>)])</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>spat.cov <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_cells, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a correlation test between mean range size and the spatial spread of cells through time</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="fu">log10</span>(space_tetrapods_mean<span class="sc">$</span>mean_area), <span class="fu">log10</span>(spat.cov<span class="sc">$</span>nrow), <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of unique cells in each time bin</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>unique_cells <span class="ot">&lt;-</span> <span class="fu">unique</span>(mid_tetrapods[, <span class="fu">c</span>(<span class="st">"bin_midpoint"</span>, <span class="st">"cell_ID"</span>)])</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>spat.cov <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(unique_cells, <span class="at">group =</span> <span class="st">"bin_midpoint"</span>, <span class="at">fun =</span> nrow)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a correlation test between mean range size and the spatial spread of</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cells through time</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="fu">log10</span>(space_tetrapods_mean<span class="sc">$</span>mean_area), <span class="fu">log10</span>(spat.cov<span class="sc">$</span>nrow),</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Spearman's rank correlation rho
 
 data:  log10(space_tetrapods_mean$mean_area) and log10(spat.cov$nrow)
-S = 58.796, p-value = 7.69e-07
+S = 197.06, p-value = 0.008974
 alternative hypothesis: true rho is not equal to 0
 sample estimates:
       rho 
-0.9135346 </code></pre>
+0.6481159 </code></pre>
 </div>
 </details>
 </div>
