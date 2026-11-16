@@ -188,7 +188,7 @@ In the Paleobiology Database, occurrences are allocated to named temporal interv
 # Get new numeric ages for named intervals using the interval key that is supplied with palaeoverse
 tetrapods <- look_up(tetrapods, int_key = interval_key)
 # Look at the newly added columns
-tetrapods[1:5, 35:37]
+head(tetrapods[, c("interval_max_ma", "interval_mid_ma", "interval_min_ma")])
 ```
 
 ::: {.callout-caution}
@@ -301,7 +301,7 @@ This time we have received a warning, but no error. Let's take a look at the new
 mid_tetrapods[1:5, 38:41]
 ```
 
-The second of these new columns is `n_bins`, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how `bin_time` has processed our data.
+The second of these new columns is `n_bins`, which tells us how many stages are spanned by our occurrences. We can summarise this information to explore how `bin_time` has processed our data:
 
 ```{r}
 #| label: summary-n-bins
@@ -351,7 +351,7 @@ We can now generate our spatial bins and place our occurrences into them based o
 #| output-fold: true
 #| output-summary: "Output"
 
-# Generate hex cells with diameter around 100km, and bin occurrences
+# Generate hex cells with a centroid spacing of ~100 km, and bin occurrences
 mid_tetrapods <- bin_space(occdf = mid_tetrapods,
                            lng = "p_lng",
                            lat = "p_lat",
@@ -364,7 +364,7 @@ We can see that each occurrence has been placed into a grid cell, described usin
 
 ## Taxonomic wrangling
 
-In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g. genera or species); however, this can result in some useful information being discarded. The tax_unique function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:
+In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g. genera or species); however, this can result in some useful information being discarded. The `palaeoverse::tax_unique()` function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:
 
 - *Albertosaurus sarcophagus*
 - *Ankylosaurus* sp.
@@ -372,7 +372,7 @@ In many cases, palaeobiologists count unique taxa by retaining only unique occur
 - *Ornithominus* sp.
 - *Tyrannosaurus rex*
 
-A filter for species-level identifications would reduce the species richness to just two (*A. sarcophagus* and *T. rex*). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. `palaeoverse::tax_unique()` is designed to deal with such taxonomic data and would retain all five 'species' in this example. For further details see `help(tax_unique)`.
+A filter for species-level identifications would reduce the species richness to just two (*A. sarcophagus* and *T. rex*). However, none of these clades are nested within one another, so each of the indeterminately identified occurrences represents at least one species not already represented in the dataset. `tax_unique()` is designed to deal with such taxonomic data and would retain all five 'species' in this example. For further details see `help(tax_unique)`.
 
 This function can be especially helpful when we want to quantify alpha (local) diversity. Let's use this function to investigate the number of unique genera in our dataset.
 
@@ -412,7 +412,7 @@ length(unique(___.omit(mid_tetrapods$___)))
 
 `length(unique(tet_genera$unique_name))`: `r length(unique(tet_genera$unique_name))`
 
-For the original dataset, we need to remember not to count values (genus names) that are NA.
+For the original dataset, we need to remember not to count values (i.e. genus names) that are `NA`.
 
 `length(unique(na.omit(mid_tetrapods$genus)))`: `r length(unique(na.omit(mid_tetrapods$genus)))`
 
@@ -478,7 +478,7 @@ In order to plot alpha diversity through time, we will also need to add interval
 #| output-fold: true
 #| output-summary: "Output"
 
-# Take the columns pertaining to collections and their ages in millions of years:
+# Subset to collections and their ages in millions of years:
 coll_info <- mid_tetrapods[, c("collection_no", "max_ma", "interval_mid_ma", "min_ma")]
 
 # Remove duplicated collections based on the collection number (column 1)
@@ -541,7 +541,7 @@ There are many things we could try, but here are some suggestions:
 
 ## Quantifying spatial patterns
 
-Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the `palaeoverse::tax_range_space()` function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we'll use the method `con` which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space).
+Another factor that we can examine is how the range size of taxa changed across the Carboniferous-Permian boundary. We can examine this spatial distribution through time using the `palaeoverse::tax_range_space()` function, which provides several different methods for estimating the distribution of taxonomic occurrences. For now we'll use the method `con` which calculates the geographic range of taxa using a convex hull, but the rest of the methods are described in detail in the function documentation which can be accessed via `help(tax_range_space)`.
 
 We can use this in combination with `group_apply` to calculate the convex hull size for each genus in each time interval:
 
@@ -575,7 +575,7 @@ What does it mean for a convex hull to have an area of `0`?
 ::: {.callout-tip collapse="true"}
 ## Exercise 6: Answer
 
-A value of `0` means the convex hull has no volume, because it consists of a single point - i.e. there is only a single occurrence of that genus in that time bin.
+A value of `0` means the convex hull has no area, because it consists of a single point - i.e. there is only a single occurrence of that genus in that time bin.
 :::
 
 From this information we can now plot how the average range size of tetrapods changed throughout the Carboniferous and Permian:
