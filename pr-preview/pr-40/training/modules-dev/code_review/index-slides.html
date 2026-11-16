@@ -10,10 +10,10 @@
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.11.9">
 
-  <meta name="author" content="Bethany Allen">
   <meta name="author" content="Etienne Bacher">
+  <meta name="author" content="Bethany Allen">
   <meta name="author" content="Lewis A. Jones">
-  <meta name="dcterms.date" content="2026-11-13">
+  <meta name="dcterms.date" content="2026-11-16">
   <title>Code review</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -111,12 +111,6 @@
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <script async="" src="https://hypothes.is/embed.js"></script>
-  <script>
-    window.document.addEventListener("DOMContentLoaded", function (_event) {
-      document.body.classList.add('hypothesis-enabled');
-    });
-  </script>
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -222,12 +216,12 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Bethany Allen
+Etienne Bacher
 </div>
 </div>
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Etienne Bacher
+Bethany Allen
 </div>
 </div>
 <div class="quarto-title-author">
@@ -237,7 +231,7 @@ Lewis A. Jones
 </div>
 </div>
 
-  <p class="date">November 13, 2026</p>
+  <p class="date">November 16, 2026</p>
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning objectives</h2>
@@ -253,14 +247,15 @@ Lewis A. Jones
 <h2>Why review code?</h2>
 <p><br></p>
 <ul>
-<li>We read more code than we write</li>
+<li>A second pair of eyes catches bugs and fragile code</li>
+<li>Thinking about how code fails makes it more robust</li>
 <li>AI-generated code needs checking</li>
 <li>Reviewing teaches new methods and functions</li>
 </ul>
 </section>
 <section>
 <section id="how-to-review-code" class="title-slide slide level1 center">
-<h1>How to review code?</h1>
+<h1>How to review code</h1>
 
 </section>
 <section id="objectives-of-a-review" class="slide level2">
@@ -279,14 +274,17 @@ Lewis A. Jones
 <li>What does this code do?</li>
 <li>What are the inputs and outputs?</li>
 <li>What could go wrong?</li>
-<li>Are the assumptions handled?</li>
+<li>What if an assumption breaks?
+<ul>
+<li>e.g.&nbsp;a “Date” column becomes “numeric”</li>
+</ul></li>
 </ul>
 </section>
 <section id="who-is-responsible-for-what" class="slide level2">
 <h2>Who is responsible for what?</h2>
 <p><br></p>
 <ul>
-<li><strong>Author</strong>: clear names, docs, and comments</li>
+<li><strong>Author</strong>: clear names, docs, and comments; applies the changes</li>
 <li><strong>Reviewer</strong>: a fresh point of view</li>
 <li>It is fine to say “I can’t review this”</li>
 </ul>
@@ -306,10 +304,11 @@ Lewis A. Jones
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(palaeoverse)</span>
 <span id="cb1-2"><a aria-label="2"></a></span>
-<span id="cb1-3"><a aria-label="3"></a>x <span class="ot">&lt;-</span> tetrapods[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"lng"</span>)]</span>
-<span id="cb1-4"><a aria-label="4"></a>y <span class="ot">&lt;-</span> tetrapods[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">c</span>(<span class="st">"collection_no"</span>, <span class="st">"collection_name"</span>, <span class="st">"formation"</span>)]</span>
-<span id="cb1-5"><a aria-label="5"></a>out <span class="ot">&lt;-</span> <span class="fu">merge</span>(x, y, <span class="at">by =</span> <span class="st">"collection_no"</span>)</span>
-<span id="cb1-6"><a aria-label="6"></a>out[[<span class="st">"collection_name"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a aria-label="3"></a>ages <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">scale =</span> <span class="st">"international ages"</span>)[, <span class="fu">c</span>(<span class="st">"min_ma"</span>, <span class="st">"max_ma"</span>, <span class="st">"interval_name"</span>)</span>
+<span id="cb1-4"><a aria-label="4"></a>periods <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">scale =</span> <span class="st">"international periods"</span>)[, <span class="fu">c</span>(<span class="st">"min_ma"</span>, <span class="st">"max_ma"</span>, <span class="st">"abbr"</span>)]</span>
+<span id="cb1-5"><a aria-label="5"></a></span>
+<span id="cb1-6"><a aria-label="6"></a>out <span class="ot">&lt;-</span> <span class="fu">merge</span>(ages, periods, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"max_ma"</span>))</span>
+<span id="cb1-7"><a aria-label="7"></a>out[[<span class="st">"min_ma"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -324,9 +323,9 @@ Lewis A. Jones
 <p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p><code>out[["collection_name"]]</code> is <code>NULL</code>: the columns are <code>collection_name.x</code> and <code>.y</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource diff number-lines code-with-copy"><code class="sourceCode diff"><span id="cb2-1"><a aria-label="1"></a><span class="st">- out &lt;- merge(x, y, by = "collection_no")</span></span>
-<span id="cb2-2"><a aria-label="2"></a><span class="va">+ out &lt;- merge(x, y, by = c("collection_no", "collection_name"))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Missing <code>]</code>, and <code>out[["min_ma"]]</code> is <code>NULL</code>: the columns are <code>min_ma.x</code> and <code>.y</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource diff number-lines code-with-copy"><code class="sourceCode diff"><span id="cb2-1"><a aria-label="1"></a><span class="st">- out &lt;- merge(ages, periods, by = c("max_ma"))</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="va">+ out &lt;- merge(ages, periods, by = c("min_ma", "max_ma"))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -421,7 +420,7 @@ Lewis A. Jones
 </section></section>
 <section>
 <section id="where-to-review-code" class="title-slide slide level1 center">
-<h1>Where to review code?</h1>
+<h1>Where to review code</h1>
 
 </section>
 <section id="use-git-and-github" class="slide level2">
@@ -465,10 +464,21 @@ Lewis A. Jones
 <h1>Review process</h1>
 
 </section>
+<section id="before-requesting-a-review" class="slide level2">
+<h2>Before requesting a review</h2>
+<p><br></p>
+<ul>
+<li>Make sure automated checks pass</li>
+<li>Describe the goal of the PR briefly</li>
+<li>Link the issue (“Closes #1234”)</li>
+<li>Pre-comment tricky lines or ask for specific feedback</li>
+</ul>
+</section>
 <section id="reviewer-side" class="slide level2">
 <h2>Reviewer side</h2>
 <p><br></p>
 <ul>
+<li>Keep the goal of the PR in mind</li>
 <li>Critique the code, not the author</li>
 <li>Explain why you suggest a change</li>
 <li>Add positive comments too</li>
@@ -486,8 +496,9 @@ Lewis A. Jones
 <h2>Author side</h2>
 <p><br></p>
 <ul>
-<li>Describe the goal of the PR briefly</li>
 <li>Address every comment, politely and with arguments</li>
+<li>No need to reply instantly</li>
+<li>Persistent disagreement? Discuss in person</li>
 </ul>
 </section>
 <section id="discuss-upfront" class="slide level2">
