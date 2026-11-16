@@ -443,7 +443,7 @@ Now that we've seen what this function can do, let's apply it in a way that lets
 #| output-fold: true
 #| output-summary: "Output"
 
-# Use group_apply along with tax_unique:
+# Find unique genera (with tax_unique) in each collection (using group_apply)
 coll_genera <- group_apply(occdf = mid_tetrapods,
                            group = c("collection_no"),
                            fun = tax_unique,
@@ -453,7 +453,7 @@ coll_genera <- group_apply(occdf = mid_tetrapods,
                            class = "class",
                            resolution = "genus")
 
-# See structure of the new dataframe:
+# See structure of the new dataframe
 head(coll_genera)
 ```
 
