@@ -1,9 +1,9 @@
 ---
 title: "Code review"
-description: "Why it is important to read other people's code and how to do it."
+description: "Why reviewing code matters and how to do it effectively, constructively, and collaboratively."
 author:
-  - Bethany Allen
   - Etienne Bacher
+  - Bethany Allen
   - Lewis A. Jones
 date: last-modified
 date-format: long
@@ -25,8 +25,6 @@ execute:
 editor:
   markdown:
     wrap: 72
-comments:
-  hypothesis: true
 ---
 
 ## Learning objectives
@@ -42,11 +40,12 @@ comments:
 
 <br>
 
-- We read more code than we write
+- A second pair of eyes catches bugs and fragile code
+- Thinking about how code fails makes it more robust
 - AI-generated code needs checking
 - Reviewing teaches new methods and functions
 
-# How to review code?
+# How to review code
 
 ## Objectives of a review
 
@@ -63,13 +62,14 @@ comments:
 - What does this code do?
 - What are the inputs and outputs?
 - What could go wrong?
-- Are the assumptions handled?
+- What if an assumption breaks?
+  - e.g. a "Date" column becomes "numeric"
 
 ## Who is responsible for what?
 
 <br>
 
-- **Author**: clear names, docs, and comments
+- **Author**: clear names, docs, and comments; applies the changes
 - **Reviewer**: a fresh point of view
 - It is fine to say "I can't review this"
 
@@ -81,21 +81,22 @@ What is likely wrong?
 ```{r}
 library(palaeoverse)
 
-x <- tetrapods[1:3, c("collection_no", "collection_name", "lng")]
-y <- tetrapods[1:3, c("collection_no", "collection_name", "formation")]
-out <- merge(x, y, by = "collection_no")
-out[["collection_name"]]
+ages <- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")
+periods <- time_bins(scale = "international periods")[, c("min_ma", "max_ma", "abbr")]
+
+out <- merge(ages, periods, by = c("max_ma"))
+out[["min_ma"]]
 ```
 :::
 
 . . .
 
 ::: {.callout-tip title="Solution"}
-`out[["collection_name"]]` is `NULL`: the columns are `collection_name.x` and `.y`.
+Missing `]`, and `out[["min_ma"]]` is `NULL`: the columns are `min_ma.x` and `.y`.
 
 ```diff
-- out <- merge(x, y, by = "collection_no")
-+ out <- merge(x, y, by = c("collection_no", "collection_name"))
+- out <- merge(ages, periods, by = c("max_ma"))
++ out <- merge(ages, periods, by = c("min_ma", "max_ma"))
 ```
 :::
 
@@ -152,7 +153,7 @@ if (length(idx_to_remove) > 0) {
 ```
 :::
 
-# Where to review code?
+# Where to review code
 
 ## Use Git and GitHub
 
@@ -187,10 +188,20 @@ if (length(idx_to_remove) > 0) {
 
 # Review process
 
+## Before requesting a review
+
+<br>
+
+- Make sure automated checks pass
+- Describe the goal of the PR briefly
+- Link the issue ("Closes #1234")
+- Pre-comment tricky lines or ask for specific feedback
+
 ## Reviewer side
 
 <br>
 
+- Keep the goal of the PR in mind
 - Critique the code, not the author
 - Explain why you suggest a change
 - Add positive comments too
@@ -206,8 +217,9 @@ if (length(idx_to_remove) > 0) {
 
 <br>
 
-- Describe the goal of the PR briefly
 - Address every comment, politely and with arguments
+- No need to reply instantly
+- Persistent disagreement? Discuss in person
 
 ## Discuss upfront
 
