@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
 <link href="../../../training/modules-dev/github/exercise2.html" rel="next">
-<link href="../../../training/modules-dev/github/exercise0.html" rel="prev">
+<link href="../../../training/modules-dev/github/index.html" rel="prev">
 <link href="../../../_brand/logos/favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -293,12 +293,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/github/exercise0.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">0. Basic Git workflow and vocabulary</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/github/exercise1.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">1. Practice with GitHub Desktop on a local repository</span></a>
   </div>
@@ -324,6 +318,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             </button> 
       </div>
       <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../training/modules-dev/github/appendix-cli/exercise0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">0. Basic Git workflow and vocabulary</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/github/appendix-cli/exercise1.html" class="sidebar-item-text sidebar-link">
@@ -450,20 +450,33 @@ Note
 <p><img src="figures/ghd-initial_commit.png" class="img-fluid"></p>
 <p>In the upper left you will see “Current repository” with “test-git-repo” underneath it, indicating that you are currently looking at your test-git-repo. This is how you will interact with your new repository!</p>
 <p>Note that your repository is a folder on your computer, just like any others. You can see this if you click on the button labelled “Show in Explorer” (on Windows) / “Show in Finder” (on a Mac). At the moment, there are no files in your repository, although there is a <em>hidden</em> folder called <code>.git</code> and a <em>hidden</em> file called <code>.gitattributes</code>. <strong>You never touch these files</strong>; they are what <code>git</code> use to keep track of the contents of this folder. These are what make this folder a repository.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>A local Git repository is a folder on your computer that you have told the application <code>git</code> to keep track of. Any folder can be made into a git repository!</p>
 </div>
 </div></li>
-<li><p>Let’s add some files to your new repository for git to track. In the following steps, we’ll pretend that we’re a writer working on a script for a new movie. We’re going to use a simple text editor to create a file called <code>story.txt</code>. To do that:</p>
+<li><p>Let’s add some files to your new repository for git to track. In the following steps, we’ll pretend that we’re a writer working on a script for a new movie. We’re going to use a simple text editor to create a file called <code>story.txt</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>How to create a text file?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To do that:</p>
 <ul>
 <li><strong>If you’re on Windows:</strong>
 <ol type="a">
@@ -481,7 +494,10 @@ Tip
 <li>In the “Where” field navigate to your repository’s directory. If you kept the default path when creating the repository, this should be <code>Documents/GitHub/test-git-repo</code>. If you’re not certain, you can verify by clicking on the “Show in Finder” button in GitHub Desktop.</li>
 <li>Click “Save”.</li>
 </ol></li>
-</ul></li>
+</ul>
+</div>
+</div>
+</div></li>
 <li><p>Now let’s write our story! Use your text editor to add following to <code>story.txt</code>:</p>
 <pre><code>Once upon a time, in a land far,
 far away...</code></pre>
@@ -534,7 +550,7 @@ far away...</code></pre>
 <li><p>Go back to GitHub Desktop. Notice that a yellow box with a dot has appeared next to <code>story.txt</code>. If you click on story, you should now see a <em>diff</em> that shows what lines have changed in <code>story.txt</code>:</p>
 <p><img src="figures/ghd-story_uncommitted_change.png" class="img-fluid"></p>
 <div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -543,7 +559,7 @@ far away...</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>At some point Mac users will notice a file called <code>.DS_Store</code> appears in their repo, as it did for me in the screen shot above. This is a hidden file that MacOS automatically creates in every folder for indexing purposes. <strong>Do not commit this file to your repository!</strong> It’s not something you want to track. For now, just ignore it. Below we provide instructions on how to permanently ignore files like these in your repository.</p>
 <p>Windows users: carry on.</p>
@@ -619,7 +635,19 @@ far away...</code></pre>
 <p><img src="figures/ghd-switch_branches.png" class="img-fluid"></p>
 <p>Going back and forth between <code>main</code> and <code>title-dev</code>, you’ll see that at the moment, the <code>title-dev</code> branch is identical to the <code>main</code> branch. You can verify that by viewing the contents of the repository in Explorer (Windows) / Finder (Mac). Click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button. You’ll see that <code>story.txt</code> is still there no matter if you’re on <code>title-dev</code> or <code>main</code>.</p>
 <p>Likewise, the commit history for <code>title-dev</code> is also the same as <code>main</code>: switch to the <code>title-dev</code> branch then click on the History tab. You’ll see the same 4 commits as you have on <code>main</code>.</p></li>
-<li><p>Let’s do some development on <code>title-dev</code>. Switch to the <code>title-dev</code> branch. Now let’s create a file called <code>title.txt</code> to store our title idea:</p>
+<li><p>Let’s do some development on <code>title-dev</code>. Switch to the <code>title-dev</code> branch. Now let’s create a file called <code>title.txt</code> to store our title idea.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>How to create a new text file?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
 <li><strong>Windows users:</strong>
 <ol type="a">
@@ -637,7 +665,10 @@ far away...</code></pre>
 <li>In the “Save As” field type <code>title.txt</code>.</li>
 <li>Click “Save”.</li>
 </ol></li>
-</ul></li>
+</ul>
+</div>
+</div>
+</div></li>
 <li><p>Add a title to <code>title.txt</code>. Use your text editor to add:</p>
 <pre><code>STAR FIGHT!</code></pre>
 <p>Save the change by typing <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows) / <kbd>⌘</kbd>+<kbd>S</kbd> (Mac).</p></li>
@@ -798,7 +829,7 @@ George Lucas</code></pre>
 <li><p>Go back to <code>main</code> and change the third line to <code>foxtrot</code> (i.e., replace <code>charlie</code>), then commit it.</p></li>
 </ol>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -807,7 +838,7 @@ George Lucas</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>Once you create <code>list.txt</code> (use your text editor to do this), you should see it appear in the Changes tab in GitHub Desktop. Make sure you’re on <code>main</code> (the Current Branch should say <code>main</code>; if not, click Current Branch -&gt; main). Then:</p>
@@ -870,7 +901,7 @@ George Lucas</code></pre>
 <p><strong>D.</strong> An error is raised because the same file was modified.</p>
 <p><em>If you’re not sure, try it yourself and see what happens!</em></p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -879,7 +910,7 @@ George Lucas</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The answer is <strong>C</strong>. Since different lines have been modified, <code>git</code> is able to merge the changes together without issue. To do it yourself:</p>
 <ol type="a">
@@ -926,7 +957,7 @@ George Lucas</code></pre>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>D.</strong> An error is raised because the same line is modified.</p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -935,7 +966,7 @@ George Lucas</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The answer is <strong>D</strong>, an error is raised. Since the same line has been modified in the same file, <code>git</code> cannot tell how to reconcile the differences. This is known as a <em>merge conflict</em>. In this case, <code>git</code> will leave it up to the user to reconcile the differences. How to do that is discussed in the next section.</p>
 </div>
@@ -998,7 +1029,7 @@ George Lucas</code></pre>
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-12
+ date     2026-11-17
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -1569,8 +1600,8 @@ https://goatcounter.com/help/domains
   </script>
 <nav class="page-navigation" aria-label="Page">
   <div class="nav-page nav-page-previous">
-      <a href="../../../training/modules-dev/github/exercise0.html" class="pagination-link" aria-label="0. Basic Git workflow and vocabulary">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">0. Basic Git workflow and vocabulary</span>
+      <a href="../../../training/modules-dev/github/index.html" class="pagination-link" aria-label="Git and GitHub">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Git and GitHub</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
