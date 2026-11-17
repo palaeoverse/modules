@@ -205,15 +205,13 @@ You're not happy with your story opening. You don't want to write fairy tales, y
    ```
    :::
 
-
-
 ### Ignoring changes in some files
 
 It frequently happens that you can have files in your repository that you don't want Git to track. This can be things like temporary build files, or system files like the `.DS_Store` on Macs. If you don't explicitly commit a new file (by clicking the check mark next to it and hitting the commit button), then files won't be tracked. However, trying to avoid clicking these files can be tedious and error prone. You'll also get warnings about changes every time you switch branches (below).
 
 We can tell Git to ignore certain files by storing their names in a special file called `.gitignore`. Here, we'll tell it to ignore the `.DS_Store` file created by MacOS.
 
-::: {.callout-note title="Windows users"}
+::: {.callout-note title="Windows users" collapse="true"}
 Windows users will not have a `.DS_Store` file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called `.DS_Store` and save it:
 
 a. Switch back to Notepad.
@@ -241,33 +239,80 @@ To tell Git to ignore a file:
 
 1. As with any other file, we need to commit the changes to `.gitignore` for Git to keep track of it. Commit the change by clicking the "Commit 1 file to main" (note that the commit message automatically created by GitHub Desktop is "Create .gitignore").
 
-1. From now on, any file named `.DS_Store` in this repository (meaning, in this folder and all sub-folders) file will not appear in your Changes menu, nor will you be able to commit changes to it to the repository.
+   ::: {.callout-note title="Graph view"}
+   ```{=html}
+   <pre class="mermaid">
+   %%{init: {"gitGraph": {"rotateCommitLabel": false, "showBranches": false}}}%%
+   gitGraph
+      commit id: "Initial commit"
+      commit id: "Create story.txt"
+      commit id: "Change opening"
+      commit id: "Create .gitignore"
+   </pre>
+   ```
+   :::
+
+From now on, any file named `.DS_Store` in this repository (meaning, in this folder and all sub-folders) file will not appear in your Changes menu, nor will you be able to commit changes to it to the repository.
 
 ## III. Branches
 
-You want to start working on titles for your stories, but you want to do it independently of your work on the story itself. To do that, let's create a *branch* to specifically work on titles.
+You want to start working on titles for your stories, but you have a feeling that imagining the perfect title will take several iterations. 
+
+We could continue to make new commits as we come up with new ideas, but this would quickly lead to a messy Git history. This is not always a big deal, but Git is here to enable us to quickly go back to previous versions, and it is easier to locate a correct version when we don't have to navigate dozens of commits containing intermediate changes. 
+
+In other words, we would like to keep our work on titles separate from our work on the story itself, and only integrate the titles when we are finally happy with them. 
+
+This will require introducing a new key concept in the usual Git workflow: **branches**.
+
+### What is a branch?
+
+A branch is a sort of parallel environment where we can push our commits. A Git project can have as many branches as you want. 
+
+The graphs we have been seeing so far were slightly misleading. In reality, we always commit to a branch (by default, we commit to the `main` branch):
+
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+</pre>
+```
+
+### Creating a new branch
+
+When we create a new branch, we separate our future commits from the `main` branch. For instance, we could create a branch `title-dev` that will receive all our commits about the stories titles:
+
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+</pre>
+```
+
+Let's see how to do this in practice:
 
 1. In GitHub Desktop, click on the "Current Branch" tab. This will show a drop-down menu showing all of the branches on your repository:
 
    ![](figures/ghd-branch_menu.png)
 
-   Currently, we only have one branch, which is called `main`. This is the Default branch, meaning it's the branch you are placed in whenever you first create or *clone* a repository (more on cloning later). Think of it as the master copy of your repository. If this were a code repository, the `main` would be the branch that you (try to) keep a clean, working version of your code.
+   Currently, we only have one branch, which is called `main` by default, as mentioned above. Think of it as the master copy of your repository. If this were a code repository, the `main` would be the branch that you (try to) keep a clean, working version of your code.
 
-1. Let's create a new branch on which we will develop our title. Click the "New Branch" button in the upper right. You will be prompted to create a name. Call it `title-dev`, then click "Create Branch":
+1. Let's create our new branch, named `title-dev`, on which we will develop our title. Click the "New Branch" button in the upper right. You will be prompted to create a name. Call it `title-dev`, then click "Create Branch":
 
    ![](figures/ghd-new_branch.png)
 
    You are now on a new branch called `title-dev`. You can see that by looking at the Current Branch at the top: it says title-dev:
 
    ![](figures/ghd-title_dev_branch.png)
-
-1. You can switch between branches by clicking the "Current Branch" drop-down menu, then selecting the branch you want:
-
-   ![](figures/ghd-switch_branches.png)
-
-   Going back and forth between `main` and `title-dev`, you'll see that at the moment, the `title-dev` branch is identical to the `main` branch. You can verify that by viewing the contents of the repository in Explorer (Windows) / Finder (Mac). Click the "Show in Explorer" (Windows) / "Show in Finder" (Mac) button. You'll see that `story.txt` is still there no matter if you're on `title-dev` or `main`.
-
-   Likewise, the commit history for `title-dev` is also the same as `main`: switch to the `title-dev` branch then click on the History tab. You'll see the same 4 commits as you have on `main`.
 
 1. Let's do some development on `title-dev`. Switch to the `title-dev` branch. Now let's create a file called `title.txt` to store our title idea.
 
@@ -302,23 +347,44 @@ You want to start working on titles for your stories, but you want to do it inde
 
 1. Commit the new changes by clicking "Commit 1 file to title-dev". Note the default commit message is "Create title.txt".
 
+::: {.callout-note title="Graph version"}
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+</pre>
+```
+:::
+
+### Navigating branches
+
+We don't have to be stuck on a branch until its changes are integrated in the `main` branch, we can navigate between branches!
+
+1. You can switch between branches by clicking the "Current Branch" drop-down menu, then selecting the branch you want:
+
+   ![](figures/ghd-switch_branches.png)
+
+   <!-- Going back and forth between `main` and `title-dev`, you'll see that at the moment, the `title-dev` branch is identical to the `main` branch. You can verify that by viewing the contents of the repository in Explorer (Windows) / Finder (Mac). Click the "Show in Explorer" (Windows) / "Show in Finder" (Mac) button. You'll see that `story.txt` is still there no matter if you're on `title-dev` or `main`. -->
+
+   <!-- Likewise, the commit history for `title-dev` is also the same as `main`: switch to the `title-dev` branch then click on the History tab. You'll see the same 4 commits as you have on `main`. -->
+
 1. Satisfied with your title for now, go back to your main branch by clicking on the "Current branch" drop down and selecting `main`:
 
    ![](figures/ghd-switch_to_main.png)
 
 1. Let's see what happened to your files when you switched back to `main`. If you still have the Explorer/Finder window open, look at it. If not, click the "Show in Explorer" (Windows) / "Show in Finder" (Mac) button to view the contents of the repository.
 
-   The `title.txt` file is gone!
+   The `title.txt` file is gone! Likewise, if you click on the "History" tab in GitHub Desktop, you'll see that your last commit is no longer in your history; you just have the first four commits.
 
-   Likewise, if you click on the "History" tab in GitHub Desktop, you'll see that your last commit is no longer in your history; you just have the first four commits.
-
-   This is because your last commit (and the file it created, `title.txt`) only exists on the `title-dev` branch. To verify that it's still there, click the "Current Branch" drop-down menu and switch to the `title-dev` branch. You'll see the "Create title.txt" commit reappear in your History. You'll also see the `title.txt` file reappear in your directory in Explorer/Finder. Toggling back and forth between the branches will make it disappear and reappear.
-
-   What's going on? In graph form, your repository currently looks like this:
-
-   ![](figures/git_graphs.001.png){height=300}
-
-   Here, each dot represents a commit, and the different lines represent a different branch. Following a line illustrates the history as seen by that branch. Since the commits on `title-dev` live on their own branch, changes you make on `main` won't affect `title-dev` and vice versa (at least not until we merge the branches; more on that below).
+   This is because your last commit (and the file it created, `title.txt`) only exists on the `title-dev` branch. To verify that it's still there, click the "Current Branch" drop-down menu and switch to the `title-dev` branch. You'll see the "Create title.txt" commit reappear in your History. 
+   
+   Since the commits on `title-dev` live on their own branch, changes you make on `main` won't affect `title-dev` and vice versa (at least not until we merge the branches, more on that below).
 
 1. Let's make some more changes to `story.txt`, but let's do it on the `main` branch. Switch to `main` using the "Current Branch" drop-down menu. Now use your text editor to add the following lines to `story.txt`:
 
@@ -331,8 +397,6 @@ You want to start working on titles for your stories, but you want to do it inde
    the evil Galactic Empire.
    ```
 
-   Save the changes by typing <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows) / <kbd>&#8984;</kbd>+<kbd>S</kbd>
-
 1. Stage the commit by clicking the check mark next to `story.txt` in GitHub Desktop and change the commit message to "Add first pargraph":
 
    ![](figures/ghd-stage_paragraph.png)
@@ -340,6 +404,23 @@ You want to start working on titles for your stories, but you want to do it inde
    Now commit the changes by clicking "Commit 1 file to main".
 
 1. Click on the History tab. Note that you now have 5 commits on master, none of which include the commits to `title-dev` branch.
+
+   ::: {.callout-note title="Graph version"}
+   ```{=html}
+   <pre class="mermaid">
+   %%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+   gitGraph
+      commit id: "Initial commit"
+      commit id: "Create story.txt"
+      commit id: "Change opening"
+      commit id: "Create .gitignore"
+      branch title-dev
+      commit id: "Create title.txt"
+      checkout main
+      commit id: "Add first pargraph"
+   </pre>
+   ```
+   :::
 
 1. In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your `title-dev` branch by clicking the Current Branch -> title-dev.
 
@@ -365,15 +446,34 @@ You want to start working on titles for your stories, but you want to do it inde
 
    ![](figures/ghd-title_dev_status.png)
 
-   In graph form, your repo looks like this:
-
-   ![](figures/git_graphs.002.png){height=300}
+::: {.callout-note title="Graph version"}
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+</pre>
+```
+:::
 
 ### Merging
 
-1. Satisfied that your title is perfect, you no longer feel the need to keep the title development on a separate branch. It's ready to be *merged* on to the `main` branch. To do that, first switch to the main branch by clicking Current Branch -> main.
+We have done some work on the title in parallel to the work on the story itself, and we finally found a great title that we don't plan to change. It is now time to integrate our changes on the title back into the `main` branch. In more common Git vocabulary, it is time to **merge** our branch.
 
-1. Before merging `title-dev` on to `main`, we're going to create a second copy of `main` that we'll call `main-bkup`. We'll do that here so we can demonstrate squash and merge below. But when you first start using Git, it's good practice to create a backup of `main` before doing merges, as mistakes can happen that can be difficult to untangle. This way, you have the original state of `main` preserved in the backup branch that you can always go back to.
+First, we will create a backup of the `main` branch, just in case something goes wrong. Some mistakes in Git usage can be notoriously hard to debug, so making a clean backup before a big operation like merging can be useful.
+
+1. First, let's switch to the `main` branch by clicking "Current Branch" and selecting `main`.
+
+1. We will call our backup `main-bkup`. This way, you have the original state of `main` preserved in the backup branch that you can always go back to.
 
    To create the copy of `main`:
 
@@ -382,6 +482,27 @@ You want to start working on titles for your stories, but you want to do it inde
       ![](figures/ghd-main_bkup_create.png)
 
    b. This will open the "Create a Branch" window. Type `main-bkup` in the Name field, then click "Create Branch". You will now be on the `main-bkup` branch.
+
+      ::: {.callout-note title="Graph version"}
+      ```{=html}
+      <pre class="mermaid">
+      %%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+      gitGraph
+         commit id: "Initial commit"
+         commit id: "Create story.txt"
+         commit id: "Change opening"
+         commit id: "Create .gitignore"
+         branch title-dev
+         commit id: "Create title.txt"
+         checkout main
+         commit id: "Add first paragraph"
+         checkout title-dev
+         commit id: "Update title.txt"
+         checkout main
+         branch main-bkup
+      </pre>
+      ```
+      :::
 
    c. Now go back to the `main` branch by clicking "Current Branch -> main".
 
@@ -399,11 +520,30 @@ You want to start working on titles for your stories, but you want to do it inde
 
    The commits you made on `title-dev` are now in `main`, along with a final "Merge" commit at the end. This final "merge" commit is to indicate that some of the commits in the history came from another branch (and what the name of the branch was).
 
-   If you look at Explorer/Finder, you'll see that `title.txt` is now in your directory when you're on `main`. If you switch between `main` and `title-dev`, `title.txt` remains in both. Note that the history on `title-dev` is unaffected by the merge: merging only changes the branch you merged *into*, not the branch you merged *from*.
-
-   In graphical form, you `main` branch now looks like this:
-
-   ![](figures/git_graphs.003.png){height=300}
+   If you look at Explorer/Finder, you'll see that `title.txt` is now in your directory when you're on `main`. If you switch between `main` and `title-dev`, `title.txt` remains in both. Note that the history on `title-dev` is unaffected by the merge: merging only changes the branch you merged *into*, not the branch you merged *from*.  
+   
+   ::: {.callout-note title="Graph version"}
+   ```{=html}
+   <pre class="mermaid">
+   %%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+   gitGraph
+      commit id: "Initial commit"
+      commit id: "Create story.txt"
+      commit id: "Change opening"
+      commit id: "Create .gitignore"
+      branch title-dev
+      commit id: "Create title.txt"
+      checkout main
+      commit id: "Add first paragraph"
+      checkout title-dev
+      commit id: "Update title.txt"
+      checkout main
+      branch main-bkup
+      checkout main
+      merge title-dev id: "Merge branch\n'title-dev'"
+   </pre>
+   ```
+   :::
 
 ### Squash and merge: the cleaner history
 
@@ -428,35 +568,36 @@ Let's see would have happened if we selected **squash and merge** instead by doi
    ![](figures/ghd-squash_merge_history.png)
 
    The two commits that were done on `title-dev`, as well as the final merge commit, have all been "squashed" into a single large commit, which is placed at the end of the history on `main-bkup`. In graphical form, the history on `main-bkup` now looks like this:
-
-   ![](figures/git_graphs.004.png){width=800}
+   
+   ::: {.callout-note title="Graph version"}
+   ```{=html}
+   <pre class="mermaid">
+   %%{init: {"gitGraph": {"rotateCommitLabel": false, "mainBranchName": "main-bkup"}}}%%   
+   gitGraph
+      commit id: "Initial commit"
+      commit id: "Create story.txt"
+      commit id: "Change opening"
+      commit id: "Create .gitignore"
+      commit id: "Add first paragraph"
+      commit id: "Squashed commit"
+   </pre>
+   ```
+   :::
 
    The contents of `main-bkup` are exactly the same as `main`, just the history is different. (You can verify this by switching between `main` and `main-bkup`.)
 
-#### When do you use squash and merge vs merge?
+#### To merge, or to squash and merge?
 
-It's up to you, as each has its pros and cons:
+This is one of the existing debates among Git users, and ultimately it is mostly a matter of preference regarding the commit history on the main branch:
 
-**Merge**
+- if we do not squash (as we did first), then all commits from our branch (potentially hundreds of commits) will also appear in the history of `main`;
+- if we squash, all the commits from our branch will be condensed into a single commit, and only this commit will appear in the history of `main`.
 
-- Pros:
-  - Preserves entire development history.
-  - If multiple authors contributed to a development branch, their contributions are attributed in the history. This makes it easier to tell who did what using `git blame`.
+The former can make it easier to find when a bug was introduced because we still have all these small commits so it can be easier to see which one contains the bug. The downside is that the author must be careful that all commits in the merged branch have a good name and description, otherwise it can make the commit history very hard to parse.
 
-- Cons:
-  - Makes for a complicated history.
-  - Development branches can consist of many small commits. You probably don't want every little "fix typo" commit in your history on `main`.
+This choice also depends on whether multiple people contributed to the branch. With the "merge only" approach, each person's contribution is attributed in the history, and we can see who changed what with `git blame`. With the "squash and merge" approach, we can see from the commit message that multiple people contributed, but we cannot see who did what exactly (unless we go back to exploring the development branch, which can be tedious).
 
-**Squash and merge**
-
-- Pros:
-  - Makes for a much cleaner history: all new developments are contained in a single commit.
-  - GitHub Desktop will formulate the merge commit message to include all the commit messages from the development branch for reference.
-
-- Cons:
-  - It will look as though one person wrote all the changes in the commit since all the commits on the development branch are condensed into a single commit. If multiple people contributed to the branch, their attribution is lost, making it difficult to know who did what using `git blame`. Their attribution can be worked out from looking at the commit message and referring to the development branch (if it's not deleted), but this can be tedious.
-
-Personally, I use Squash and Merge most of the time to keep the history on `main` clean and straight forward (this is particularly nice on GitHub when using pull requests, as it will refer to the PR in the commit message; we will see this in exercise 3). But when working with someone else on a branch I will sometimes use Merge instead.
+Personally, I use "squash and merge" most of the time to keep the history on `main` clean and straightforward (this is particularly nice on GitHub when using pull requests, as it will refer to the PR in the commit message; we will see this in exercise 3). 
 
 ::: {.callout-note title="What about rebasing?"}
 There is another way to merge branches called *rebasing*. Rebasing changes the history of the development branch to make it look like all the commits came after the last commit on main. This is mostly useful for keeping a development branch up to date with `main`. For more on rebasing, see this article by the Atlassian corporation: [Merging vs. rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
@@ -689,7 +830,8 @@ That's the basics of how to use `git`. In the following parts we'll see how to u
 <script src="https://cdn.jsdelivr.net/npm/pele@1/dist/pele.global.js"></script>
 <style>
   /* Room for the labels moved above the line, which fall outside the SVG's viewBox */
-  pre.mermaid { padding-top: 3em; }
+  /* !important beats Quarto's `.callout-body > :first-child` padding reset inside callouts */
+  pre.mermaid { padding-top: 3em !important; }
   pre.mermaid > svg { overflow: visible; }
 </style>
 <script>
