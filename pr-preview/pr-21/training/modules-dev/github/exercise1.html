@@ -87,9 +87,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-cf1afee80d78be7fbe0c58f940f7d9f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-9db65d10a2b792157aff071f1296cc0f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-cf1afee80d78be7fbe0c58f940f7d9f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-6840d7323d6b5b3cb369688acab45674.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-2a5f3b1e5fd1a3c770ba0c217f2e07c1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-6840d7323d6b5b3cb369688acab45674.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -360,9 +360,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#i.-initializing-and-adding-files" id="toc-i.-initializing-and-adding-files" class="nav-link active" data-scroll-target="#i.-initializing-and-adding-files">I. Initializing and adding files</a></li>
-  <li><a href="#ii.-making-changes-to-files" id="toc-ii.-making-changes-to-files" class="nav-link" data-scroll-target="#ii.-making-changes-to-files">II. Making changes to files</a></li>
-  <li><a href="#iii.-branches" id="toc-iii.-branches" class="nav-link" data-scroll-target="#iii.-branches">III. Branches</a></li>
+  <li><a href="#how-does-git-work" id="toc-how-does-git-work" class="nav-link active" data-scroll-target="#how-does-git-work">How does Git work?</a></li>
+  <li><a href="#i.-initialising-and-adding-files" id="toc-i.-initialising-and-adding-files" class="nav-link" data-scroll-target="#i.-initialising-and-adding-files">I. Initialising and adding files</a></li>
+  <li><a href="#ii.-making-changes-to-files" id="toc-ii.-making-changes-to-files" class="nav-link" data-scroll-target="#ii.-making-changes-to-files">II. Making changes to files</a>
+  <ul class="collapse">
+  <li><a href="#ignoring-changes-in-some-files" id="toc-ignoring-changes-in-some-files" class="nav-link" data-scroll-target="#ignoring-changes-in-some-files">Ignoring changes in some files</a></li>
+  </ul></li>
+  <li><a href="#iii.-branches" id="toc-iii.-branches" class="nav-link" data-scroll-target="#iii.-branches">III. Branches</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-branch" id="toc-what-is-a-branch" class="nav-link" data-scroll-target="#what-is-a-branch">What is a branch?</a></li>
+  <li><a href="#creating-a-new-branch" id="toc-creating-a-new-branch" class="nav-link" data-scroll-target="#creating-a-new-branch">Creating a new branch</a></li>
+  <li><a href="#navigating-branches" id="toc-navigating-branches" class="nav-link" data-scroll-target="#navigating-branches">Navigating branches</a></li>
+  <li><a href="#merging" id="toc-merging" class="nav-link" data-scroll-target="#merging">Merging</a></li>
+  <li><a href="#squash-and-merge-the-cleaner-history" id="toc-squash-and-merge-the-cleaner-history" class="nav-link" data-scroll-target="#squash-and-merge-the-cleaner-history">Squash and merge: the cleaner history</a></li>
+  <li><a href="#updating-a-branch" id="toc-updating-a-branch" class="nav-link" data-scroll-target="#updating-a-branch">Updating a branch</a></li>
+  </ul></li>
   <li><a href="#deleting-branches" id="toc-deleting-branches" class="nav-link" data-scroll-target="#deleting-branches">Deleting branches</a></li>
   <li><a href="#challenge-questions-editing-the-same-file-on-different-branches" id="toc-challenge-questions-editing-the-same-file-on-different-branches" class="nav-link" data-scroll-target="#challenge-questions-editing-the-same-file-on-different-branches">Challenge Questions: Editing the same file on different branches</a></li>
   <li><a href="#iv.-resolving-merge-conflicts" id="toc-iv.-resolving-merge-conflicts" class="nav-link" data-scroll-target="#iv.-resolving-merge-conflicts">IV. Resolving merge conflicts</a></li>
@@ -424,9 +436,24 @@ Note
 <p>To do this exercise you will need to install and setup GitHub Desktop. Follow the instructions <a href="../../../training/modules-dev/github/index.html#prerequisites">here</a>.</p>
 </div>
 </div>
-<p>In this exercise you will initialize a git repository on your computer and explore various git commands with it.</p>
-<section id="i.-initializing-and-adding-files" class="level3">
-<h3 data-anchor-id="i.-initializing-and-adding-files">I. Initializing and adding files</h3>
+<section id="how-does-git-work" class="level2">
+<h2 data-anchor-id="how-does-git-work">How does Git work?</h2>
+<p>Essentially, Git works around two concepts: <strong>repositories</strong> and <strong>commits</strong>.</p>
+<p>A Git <strong>repository</strong> is a folder on our computer that we have told the application <code>git</code> to keep track of. Any folder can be made into a Git repository!</p>
+<p>A Git repository records changes since it started tracking this folder. Changes are organised as <strong>commits</strong>. For instance, the Git history of a folder could look like this:</p>
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false, "showBranches": false}}}%%
+gitGraph
+   commit id: "start using\n git"
+   commit id: "add a plot to \n view time bins"
+   commit id: "fix a typo in \nthe documentation"
+</pre>
+<p>Our first commit (“start using git”) records the state of the folder when we started using Git, our second one could for instance add a script to generate a plot, and our third one fixes a typo.</p>
+<p>Commits are the cornerstone of version control because they allow us to go back to any point, i.e.&nbsp;to recover any <em>version</em> of our project.</p>
+<p>In this exercise, we will initialise a Git repository on our computer and explore various Git commands with it. In the <a href="../../../training/modules-dev/github/exercise2.html">second exercise</a>, we will see how to store a Git repository online and how to interact with it. Finally, in the <a href="../../../training/modules-dev/github/exercise3.html">third exercise</a>, we will see how to collaborate on other people’s repositories.</p>
+</section>
+<section id="i.-initialising-and-adding-files" class="level2">
+<h2 data-anchor-id="i.-initialising-and-adding-files">I. Initialising and adding files</h2>
+<p>In this section, we will initialise a Git repository from scratch and start tracking some files.</p>
 <ol type="1">
 <li><p>If it’s not already open, open GitHub Desktop.</p></li>
 <li><p>If this is your first time using GitHub Desktop you should see a screen with “Let’s get started!” at the top:</p>
@@ -439,7 +466,7 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Note
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -449,23 +476,10 @@ Note
 <li><p>You will see a window that has “No local changes” at the top:</p>
 <p><img src="figures/ghd-initial_commit.png" class="img-fluid"></p>
 <p>In the upper left you will see “Current repository” with “test-git-repo” underneath it, indicating that you are currently looking at your test-git-repo. This is how you will interact with your new repository!</p>
-<p>Note that your repository is a folder on your computer, just like any others. You can see this if you click on the button labelled “Show in Explorer” (on Windows) / “Show in Finder” (on a Mac). At the moment, there are no files in your repository, although there is a <em>hidden</em> folder called <code>.git</code> and a <em>hidden</em> file called <code>.gitattributes</code>. <strong>You never touch these files</strong>; they are what <code>git</code> use to keep track of the contents of this folder. These are what make this folder a repository.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A local Git repository is a folder on your computer that you have told the application <code>git</code> to keep track of. Any folder can be made into a git repository!</p>
-</div>
-</div></li>
-<li><p>Let’s add some files to your new repository for git to track. In the following steps, we’ll pretend that we’re a writer working on a script for a new movie. We’re going to use a simple text editor to create a file called <code>story.txt</code>.</p>
+<p>Note that your repository is a folder on your computer, just like any others. You can see this if you click on the button labelled “Show in Explorer” (on Windows) / “Show in Finder” (on a Mac). At the moment, there are no files in your repository, although there is a <em>hidden</em> folder called <code>.git</code> and a <em>hidden</em> file called <code>.gitattributes</code>. <strong>You never touch these files</strong>; they are what <code>git</code> use to keep track of the contents of this folder. These are what make this folder a repository.</p></li>
+<li><p>Let’s add some files to your new repository for Git to track. In the following steps, we’ll pretend that we’re a writer working on a script for a new movie. We’re going to use a simple text editor to create a file called <code>story.txt</code>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -474,7 +488,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To do that:</p>
 <ul>
@@ -537,13 +551,33 @@ Warning
 </div></li>
 <li><p>You can view the history of your commits by clicking on the “History” tab:</p>
 <p><img src="figures/ghd-first_commit_history.png" class="img-fluid"></p>
-<p>In this case, there are two commits: an initial commit that was created by GitHub Desktop when the repository was created, and the commit you just made to create <code>story.txt</code>.</p></li>
+<p>In this case, there are two commits: an initial commit that was created by GitHub Desktop when the repository was created, and the commit you just made to create <code>story.txt</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph view
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false, "showBranches": false}}}%%
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+</pre>
+</div>
+</div></li>
 </ol>
+<p>We created a file, which is a type of change that can be tracked by Git. However, its real strength is to track changes within files so that we can clearly see which parts have been created, deleted, or modified.</p>
+<p>In the next section, we will modify some of our existing files and see how to record these changes.</p>
 </section>
-<section id="ii.-making-changes-to-files" class="level3">
-<h3 data-anchor-id="ii.-making-changes-to-files">II. Making changes to files</h3>
+<section id="ii.-making-changes-to-files" class="level2">
+<h2 data-anchor-id="ii.-making-changes-to-files">II. Making changes to files</h2>
+<p>You’re not happy with your story opening. You don’t want to write fairy tales, you want to write Sci-fi!</p>
 <ol type="1">
-<li><p>You’re not happy with your story opening. You don’t want to write fairy tales, you want to write Sci-fi! Go back to your text editor <code>story.txt</code> and change the line <code>Once upon a time, in a land far,</code> to <code>A long time ago in a galaxy far,</code> so that your file now reads:</p>
+<li><p>Go back to your text editor <code>story.txt</code> and change the line <code>Once upon a time, in a land far,</code> to <code>A long time ago in a galaxy far,</code> so that your file now reads:</p>
 <pre><code>A long time ago in a galaxy far,
 far away...</code></pre>
 <p>Much better. Save the changes to the file.</p></li>
@@ -566,7 +600,7 @@ far away...</code></pre>
 </div>
 </div>
 </div></li>
-<li><p>The yellow box next to <code>story.txt</code> means that git recognizes that <code>story.txt</code> has changed, <em>but your changes have not been committed yet.</em> If you go to the History tab, you’ll see that there are still only two commits. If you click on the “Create story.txt” commit, it will show the previous state of the file.</p>
+<li><p>The yellow box next to <code>story.txt</code> means that Git recognizes that <code>story.txt</code> has changed, <em>but your changes have not been committed yet.</em> If you go to the History tab, you’ll see that there are still only two commits. If you click on the “Create story.txt” commit, it will show the previous state of the file.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -582,21 +616,41 @@ far away...</code></pre>
 </div></li>
 <li><p>Let’s commit your changes so you don’t lose them! Click the check box next to <code>story.txt</code>. When you do, GitHub Desktop will automatically change the summary to “Update story.txt”. That is a description of what we did, but it’s not very informative. Let’s give a more descriptive summary. Change the summary to “Change opening”, then click “Commit 1 file to main”:</p>
 <p><img src="figures/ghd-second_commit_staging.png" class="img-fluid"></p>
-<p>You’ll now see 2 commits in your history.</p></li>
-</ol>
-<section id="adding-files-to-.gitignore" class="level4">
-<h4 data-anchor-id="adding-files-to-.gitignore">Adding files to <code>.gitignore</code></h4>
-<p>It frequently happens that you can have files in your repository that you don’t want Git to track. This can be things like temporary build files, or system files like the <code>.DS_Store</code> on Macs. If you don’t explicitly commit a new file (by clicking the check mark next to it and hitting the commit button), then files won’t be tracked. However, trying to avoid clicking these files can be tedious and error prone. You’ll also get warnings about changes every time you switch branches (below).</p>
-<p>We can tell Git to ignore certain files. Here, we’ll tell it to ignore the <code>.DS_Store</code> file created by MacOS.</p>
+<p>You’ll now see 3 commits in your history.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph view
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false, "showBranches": false}}}%%
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+</pre>
+</div>
+</div></li>
+</ol>
+<section id="ignoring-changes-in-some-files" class="level3">
+<h3 data-anchor-id="ignoring-changes-in-some-files">Ignoring changes in some files</h3>
+<p>It frequently happens that you can have files in your repository that you don’t want Git to track. This can be things like temporary build files, or system files like the <code>.DS_Store</code> on Macs. If you don’t explicitly commit a new file (by clicking the check mark next to it and hitting the commit button), then files won’t be tracked. However, trying to avoid clicking these files can be tedious and error prone. You’ll also get warnings about changes every time you switch branches (below).</p>
+<p>We can tell Git to ignore certain files by storing their names in a special file called <code>.gitignore</code>. Here, we’ll tell it to ignore the <code>.DS_Store</code> file created by MacOS.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Windows users
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Windows users will not have a <code>.DS_Store</code> file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called <code>.DS_Store</code> and save it:</p>
 <ol type="a">
@@ -609,35 +663,79 @@ far away...</code></pre>
 </ol>
 </div>
 </div>
+</div>
 <p>To tell Git to ignore a file:</p>
 <ol type="1">
 <li><p>Right-click the file you’d like it to ignore, in this case <code>.DS_Store</code>. On the drop-down menu, select “Ignore file (Add to .gitignore)”:</p>
 <p><img src="figures/ghd-ignore_menu.png" class="img-fluid"></p></li>
 <li><p>Adding the file will make the selected file disappear in the Changes menu. In it’s place, you’ll see a <code>.gitignore</code> file has been created. The <code>.gitignore</code> file is a simple text file that lists the names of any files in the repository that you want Git to ignore. Notice that GitHub Desktop has both created the file, and added <code>.DS_Store</code> to it:</p>
 <p><img src="figures/ghd-ignore_staging.png" class="img-fluid"></p></li>
-<li><p>As with any other file, we need to commit the changes to <code>.gitignore</code> for Git to keep track of it. Commit the change by clicking the “Commit 1 file to main” (note that the commit message automatically created by GitHub Desktop is “Create .gitignore”).</p></li>
-<li><p>From now on, any file named <code>.DS_Store</code> in this repository (meaning, in this folder and all sub-folders) file will not appear in your Changes menu, nor will you be able to commit changes to it to the repository.</p></li>
+<li><p>As with any other file, we need to commit the changes to <code>.gitignore</code> for Git to keep track of it. Commit the change by clicking the “Commit 1 file to main” (note that the commit message automatically created by GitHub Desktop is “Create .gitignore”).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph view
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false, "showBranches": false}}}%%
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+</pre>
+</div>
+</div></li>
 </ol>
+<p>From now on, any file named <code>.DS_Store</code> in this repository (meaning, in this folder and all sub-folders) file will not appear in your Changes menu, nor will you be able to commit changes to it to the repository.</p>
 </section>
 </section>
-<section id="iii.-branches" class="level3">
-<h3 data-anchor-id="iii.-branches">III. Branches</h3>
-<p>You want to start working on titles for your stories, but you want to do it independently of your work on the story itself. To do that, let’s create a <em>branch</em> to specifically work on titles.</p>
+<section id="iii.-branches" class="level2">
+<h2 data-anchor-id="iii.-branches">III. Branches</h2>
+<p>You want to start working on titles for your stories, but you have a feeling that imagining the perfect title will take several iterations.</p>
+<p>We could continue to make new commits as we come up with new ideas, but this would quickly lead to a messy Git history. This is not always a big deal, but Git is here to enable us to quickly go back to previous versions, and it is easier to locate a correct version when we don’t have to navigate dozens of commits containing intermediate changes.</p>
+<p>In other words, we would like to keep our work on titles separate from our work on the story itself, and only integrate the titles when we are finally happy with them.</p>
+<p>This will require introducing a new key concept in the usual Git workflow: <strong>branches</strong>.</p>
+<section id="what-is-a-branch" class="level3">
+<h3 data-anchor-id="what-is-a-branch">What is a branch?</h3>
+<p>A branch is a sort of parallel environment where we can push our commits. A Git project can have as many branches as you want.</p>
+<p>The graphs we have been seeing so far were slightly misleading. In reality, we always commit to a branch (by default, we commit to the <code>main</code> branch):</p>
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+</pre>
+</section>
+<section id="creating-a-new-branch" class="level3">
+<h3 data-anchor-id="creating-a-new-branch">Creating a new branch</h3>
+<p>When we create a new branch, we separate our future commits from the <code>main</code> branch. For instance, we could create a branch <code>title-dev</code> that will receive all our commits about the stories titles:</p>
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+</pre>
+<p>Let’s see how to do this in practice:</p>
 <ol type="1">
 <li><p>In GitHub Desktop, click on the “Current Branch” tab. This will show a drop-down menu showing all of the branches on your repository:</p>
 <p><img src="figures/ghd-branch_menu.png" class="img-fluid"></p>
-<p>Currently, we only have one branch, which is called <code>main</code>. This is the Default branch, meaning it’s the branch you are placed in whenever you first create or <em>clone</em> a repository (more on cloning later). Think of it as the master copy of your repository. If this were a code repository, the <code>main</code> would be the branch that you (try to) keep a clean, working version of your code.</p></li>
-<li><p>Let’s create a new branch on which we will develop our title. Click the “New Branch” button in the upper right. You will be prompted to create a name. Call it <code>title-dev</code>, then click “Create Branch”:</p>
+<p>Currently, we only have one branch, which is called <code>main</code> by default, as mentioned above. Think of it as the master copy of your repository. If this were a code repository, the <code>main</code> would be the branch that you (try to) keep a clean, working version of your code.</p></li>
+<li><p>Let’s create our new branch, named <code>title-dev</code>, on which we will develop our title. Click the “New Branch” button in the upper right. You will be prompted to create a name. Call it <code>title-dev</code>, then click “Create Branch”:</p>
 <p><img src="figures/ghd-new_branch.png" class="img-fluid"></p>
 <p>You are now on a new branch called <code>title-dev</code>. You can see that by looking at the Current Branch at the top: it says title-dev:</p>
 <p><img src="figures/ghd-title_dev_branch.png" class="img-fluid"></p></li>
-<li><p>You can switch between branches by clicking the “Current Branch” drop-down menu, then selecting the branch you want:</p>
-<p><img src="figures/ghd-switch_branches.png" class="img-fluid"></p>
-<p>Going back and forth between <code>main</code> and <code>title-dev</code>, you’ll see that at the moment, the <code>title-dev</code> branch is identical to the <code>main</code> branch. You can verify that by viewing the contents of the repository in Explorer (Windows) / Finder (Mac). Click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button. You’ll see that <code>story.txt</code> is still there no matter if you’re on <code>title-dev</code> or <code>main</code>.</p>
-<p>Likewise, the commit history for <code>title-dev</code> is also the same as <code>main</code>: switch to the <code>title-dev</code> branch then click on the History tab. You’ll see the same 4 commits as you have on <code>main</code>.</p></li>
 <li><p>Let’s do some development on <code>title-dev</code>. Switch to the <code>title-dev</code> branch. Now let’s create a file called <code>title.txt</code> to store our title idea.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -646,7 +744,7 @@ far away...</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>Windows users:</strong>
@@ -675,27 +773,77 @@ far away...</code></pre>
 <li><p>Go back to GitHub Desktop. You should see <code>title.txt</code> in the Changes sidebar, with the new lines shown in the diff:</p>
 <p><img src="figures/ghd-title_initial_stage.png" class="img-fluid"></p></li>
 <li><p>Commit the new changes by clicking “Commit 1 file to title-dev”. Note the default commit message is “Create title.txt”.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph version
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+</pre>
+</div>
+</div>
+</section>
+<section id="navigating-branches" class="level3">
+<h3 data-anchor-id="navigating-branches">Navigating branches</h3>
+<p>We don’t have to be stuck on a branch until its changes are integrated in the <code>main</code> branch, we can navigate between branches!</p>
+<ol type="1">
+<li><p>You can switch between branches by clicking the “Current Branch” drop-down menu, then selecting the branch you want:</p>
+<p><img src="figures/ghd-switch_branches.png" class="img-fluid"></p>
+<!-- Going back and forth between `main` and `title-dev`, you'll see that at the moment, the `title-dev` branch is identical to the `main` branch. You can verify that by viewing the contents of the repository in Explorer (Windows) / Finder (Mac). Click the "Show in Explorer" (Windows) / "Show in Finder" (Mac) button. You'll see that `story.txt` is still there no matter if you're on `title-dev` or `main`. -->
+<!-- Likewise, the commit history for `title-dev` is also the same as `main`: switch to the `title-dev` branch then click on the History tab. You'll see the same 4 commits as you have on `main`. --></li>
 <li><p>Satisfied with your title for now, go back to your main branch by clicking on the “Current branch” drop down and selecting <code>main</code>:</p>
 <p><img src="figures/ghd-switch_to_main.png" class="img-fluid"></p></li>
 <li><p>Let’s see what happened to your files when you switched back to <code>main</code>. If you still have the Explorer/Finder window open, look at it. If not, click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button to view the contents of the repository.</p>
-<p>The <code>title.txt</code> file is gone!</p>
-<p>Likewise, if you click on the “History” tab in GitHub Desktop, you’ll see that your last commit is no longer in your history; you just have the first four commits.</p>
-<p>This is because your last commit (and the file it created, <code>title.txt</code>) only exists on the <code>title-dev</code> branch. To verify that it’s still there, click the “Current Branch” drop-down menu and switch to the <code>title-dev</code> branch. You’ll see the “Create title.txt” commit reappear in your History. You’ll also see the <code>title.txt</code> file reappear in your directory in Explorer/Finder. Toggling back and forth between the branches will make it disappear and reappear.</p>
-<p>What’s going on? In graph form, your repository currently looks like this:</p>
-<p><img src="figures/git_graphs.001.png" height="300"></p>
-<p>Here, each dot represents a commit, and the different lines represent a different branch. Following a line illustrates the history as seen by that branch. Since the commits on <code>title-dev</code> live on their own branch, changes you make on <code>main</code> won’t affect <code>title-dev</code> and vice versa (at least not until we merge the branches; more on that below).</p></li>
+<p>The <code>title.txt</code> file is gone! Likewise, if you click on the “History” tab in GitHub Desktop, you’ll see that your last commit is no longer in your history; you just have the first four commits.</p>
+<p>This is because your last commit (and the file it created, <code>title.txt</code>) only exists on the <code>title-dev</code> branch. To verify that it’s still there, click the “Current Branch” drop-down menu and switch to the <code>title-dev</code> branch. You’ll see the “Create title.txt” commit reappear in your History.</p>
+<p>Since the commits on <code>title-dev</code> live on their own branch, changes you make on <code>main</code> won’t affect <code>title-dev</code> and vice versa (at least not until we merge the branches, more on that below).</p></li>
 <li><p>Let’s make some more changes to <code>story.txt</code>, but let’s do it on the <code>main</code> branch. Switch to <code>main</code> using the “Current Branch” drop-down menu. Now use your text editor to add the following lines to <code>story.txt</code>:</p>
 <pre><code>
 It is period of civil war.
 Rebel spaceships, striking
 from a hidden base, have won
 their first victory against
-the evil Galactic Empire.</code></pre>
-<p>Save the changes by typing <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows) / <kbd>⌘</kbd>+<kbd>S</kbd></p></li>
+the evil Galactic Empire.</code></pre></li>
 <li><p>Stage the commit by clicking the check mark next to <code>story.txt</code> in GitHub Desktop and change the commit message to “Add first pargraph”:</p>
 <p><img src="figures/ghd-stage_paragraph.png" class="img-fluid"></p>
 <p>Now commit the changes by clicking “Commit 1 file to main”.</p></li>
-<li><p>Click on the History tab. Note that you now have 5 commits on master, none of which include the commits to <code>title-dev</code> branch.</p></li>
+<li><p>Click on the History tab. Note that you now have 5 commits on master, none of which include the commits to <code>title-dev</code> branch.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph version
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first pargraph"
+</pre>
+</div>
+</div></li>
 <li><p>In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your <code>title-dev</code> branch by clicking the Current Branch -&gt; title-dev.</p>
 <p>Now use your text editor to edit <code>title.txt</code> and change <code>STAR FIGHT!</code> to:</p>
 <pre><code>Star Wars
@@ -708,20 +856,73 @@ George Lucas</code></pre>
 <p><img src="figures/ghd-final_title_commit.png" class="img-fluid"></p>
 <p>Note that the commit message is “Update title.txt”.</p></li>
 <li><p>Click on the History tab. Note that there are 6 commits here: the first four from <code>main</code> (before you branched off), and the last two on <code>title-dev</code>:</p>
-<p><img src="figures/ghd-title_dev_status.png" class="img-fluid"></p>
-<p>In graph form, your repo looks like this:</p>
-<p><img src="figures/git_graphs.002.png" height="300"></p></li>
+<p><img src="figures/ghd-title_dev_status.png" class="img-fluid"></p></li>
 </ol>
-<section id="merging" class="level4">
-<h4 data-anchor-id="merging">Merging</h4>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph version
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+</pre>
+</div>
+</div>
+</section>
+<section id="merging" class="level3">
+<h3 data-anchor-id="merging">Merging</h3>
+<p>We have done some work on the title in parallel to the work on the story itself, and we finally found a great title that we don’t plan to change. It is now time to integrate our changes on the title back into the <code>main</code> branch. In more common Git vocabulary, it is time to <strong>merge</strong> our branch.</p>
+<p>First, we will create a backup of the <code>main</code> branch, just in case something goes wrong. Some mistakes in Git usage can be notoriously hard to debug, so making a clean backup before a big operation like merging can be useful.</p>
 <ol type="1">
-<li><p>Satisfied that your title is perfect, you no longer feel the need to keep the title development on a separate branch. It’s ready to be <em>merged</em> on to the <code>main</code> branch. To do that, first switch to the main branch by clicking Current Branch -&gt; main.</p></li>
-<li><p>Before merging <code>title-dev</code> on to <code>main</code>, we’re going to create a second copy of <code>main</code> that we’ll call <code>main-bkup</code>. We’ll do that here so we can demonstrate squash and merge below. But when you first start using Git, it’s good practice to create a backup of <code>main</code> before doing merges, as mistakes can happen that can be difficult to untangle. This way, you have the original state of <code>main</code> preserved in the backup branch that you can always go back to.</p>
+<li><p>First, let’s switch to the <code>main</code> branch by clicking “Current Branch” and selecting <code>main</code>.</p></li>
+<li><p>We will call our backup <code>main-bkup</code>. This way, you have the original state of <code>main</code> preserved in the backup branch that you can always go back to.</p>
 <p>To create the copy of <code>main</code>:</p>
 <ol type="a">
 <li><p>Click Current Branch. Make sure you’re on <code>main</code> (the checkmark is next to <code>main</code>), then click “New Branch”:</p>
 <p><img src="figures/ghd-main_bkup_create.png" class="img-fluid"></p></li>
-<li><p>This will open the “Create a Branch” window. Type <code>main-bkup</code> in the Name field, then click “Create Branch”. You will now be on the <code>main-bkup</code> branch.</p></li>
+<li><p>This will open the “Create a Branch” window. Type <code>main-bkup</code> in the Name field, then click “Create Branch”. You will now be on the <code>main-bkup</code> branch.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph version
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+   checkout main
+   branch main-bkup
+</pre>
+</div>
+</div></li>
 <li><p>Now go back to the <code>main</code> branch by clicking “Current Branch -&gt; main”.</p></li>
 </ol></li>
 <li><p>Now click the Current Branch drop-down menu again, and this time click the “Choose a branch to merge into <em>main</em>” button:</p>
@@ -732,12 +933,39 @@ George Lucas</code></pre>
 <p><img src="figures/ghd-merge_history.png" class="img-fluid"></p>
 <p>The commits you made on <code>title-dev</code> are now in <code>main</code>, along with a final “Merge” commit at the end. This final “merge” commit is to indicate that some of the commits in the history came from another branch (and what the name of the branch was).</p>
 <p>If you look at Explorer/Finder, you’ll see that <code>title.txt</code> is now in your directory when you’re on <code>main</code>. If you switch between <code>main</code> and <code>title-dev</code>, <code>title.txt</code> remains in both. Note that the history on <code>title-dev</code> is unaffected by the merge: merging only changes the branch you merged <em>into</em>, not the branch you merged <em>from</em>.</p>
-<p>In graphical form, you <code>main</code> branch now looks like this:</p>
-<p><img src="figures/git_graphs.003.png" height="300"></p></li>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph version
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+   checkout main
+   branch main-bkup
+   checkout main
+   merge title-dev id: "Merge branch\n'title-dev'"
+</pre>
+</div>
+</div></li>
 </ol>
 </section>
-<section id="squash-and-merge-the-cleaner-history" class="level4">
-<h4 data-anchor-id="squash-and-merge-the-cleaner-history">Squash and merge: the cleaner history</h4>
+<section id="squash-and-merge-the-cleaner-history" class="level3">
+<h3 data-anchor-id="squash-and-merge-the-cleaner-history">Squash and merge: the cleaner history</h3>
 <p>When we were preparing to merge <code>title-dev</code>, you may have noticed there was a drop-down button next to the “Create a merge commit” button:</p>
 <p><img src="figures/ghd-merge_select_highlight.png" class="img-fluid"></p>
 <p>If you had clicked that, you are presented with three options – merge, squash and merge, and rebase:</p>
@@ -750,62 +978,141 @@ George Lucas</code></pre>
 <li><p>Click the History tab to see what the history on <code>main-bkup</code> looks like:</p>
 <p><img src="figures/ghd-squash_merge_history.png" class="img-fluid"></p>
 <p>The two commits that were done on <code>title-dev</code>, as well as the final merge commit, have all been “squashed” into a single large commit, which is placed at the end of the history on <code>main-bkup</code>. In graphical form, the history on <code>main-bkup</code> now looks like this:</p>
-<p><img src="figures/git_graphs.004.png" class="img-fluid" width="800"></p>
-<p>The contents of <code>main-bkup</code> are exactly the same as <code>main</code>, just the history is different. (You can verify this by switching between <code>main</code> and <code>main-bkup</code>.)</p></li>
-</ol>
-<section id="when-do-you-use-squash-and-merge-vs-merge" class="level5">
-<h5 data-anchor-id="when-do-you-use-squash-and-merge-vs-merge">When do you use squash and merge vs merge?</h5>
-<p>It’s up to you, as each has its pros and cons:</p>
-<p><strong>Merge</strong></p>
-<ul>
-<li>Pros:
-<ul>
-<li>Preserves entire development history.</li>
-<li>If multiple authors contributed to a development branch, their contributions are attributed in the history. This makes it easier to tell who did what using <code>git blame</code>.</li>
-</ul></li>
-<li>Cons:
-<ul>
-<li>Makes for a complicated history.</li>
-<li>Development branches can consist of many small commits. You probably don’t want every little “fix typo” commit in your history on <code>main</code>.</li>
-</ul></li>
-</ul>
-<p><strong>Squash and merge</strong></p>
-<ul>
-<li>Pros:
-<ul>
-<li>Makes for a much cleaner history: all new developments are contained in a single commit.</li>
-<li>GitHub Desktop will formulate the merge commit message to include all the commit messages from the development branch for reference.</li>
-</ul></li>
-<li>Cons:
-<ul>
-<li>It will look as though one person wrote all the changes in the commit since all the commits on the development branch are condensed into a single commit. If multiple people contributed to the branch, their attribution is lost, making it difficult to know who did what using <code>git blame</code>. Their attribution can be worked out from looking at the commit message and referring to the development branch (if it’s not deleted), but this can be tedious.</li>
-</ul></li>
-</ul>
-<p>Personally, I use Squash and Merge most of the time to keep the history on <code>main</code> clean and straight forward (this is particularly nice on GitHub when using pull requests, as it will refer to the PR in the commit message; we will see this in exercise 3). But when working with someone else on a branch I will sometimes use Merge instead.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>What about rebasing?
+<span class="screen-reader-only">Note</span>Graph version
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There is another way to merge branches called <em>rebasing</em>. Rebasing changes the history of the development branch to make it look like all the commits came after the last commit on main. This is mostly useful for keeping a development branch up to date with <code>main</code>. For more on rebasing, see this article by the Atlassian corporation: <a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">Merging vs.&nbsp;rebasing</a>.</p>
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false, "mainBranchName": "main-bkup"}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   commit id: "Add first paragraph"
+   commit id: "Squashed commit"
+</pre>
 </div>
 </div>
+<p>The contents of <code>main-bkup</code> are exactly the same as <code>main</code>, just the history is different. (You can verify this by switching between <code>main</code> and <code>main-bkup</code>.)</p></li>
+</ol>
+<section id="to-merge-or-to-squash-and-merge" class="level4">
+<h4 data-anchor-id="to-merge-or-to-squash-and-merge">To merge, or to squash and merge?</h4>
+<p>This is one of the existing debates among Git users, and ultimately it is mostly a matter of preference regarding the commit history on the <code>main</code> branch:</p>
+<ul>
+<li>if we do not squash (as we did first), then all commits from our branch (potentially hundreds of commits) will also appear in the history of <code>main</code>;</li>
+<li>if we squash, all the commits from our branch will be condensed into a single commit, and only this commit will appear in the history of <code>main</code>.</li>
+</ul>
+<p>The former can make it easier to find when a bug was introduced because we still have all these small commits so it can be easier to see which one contains the bug. The downside is that the author must be careful that all commits in the merged branch have a good name and description, otherwise it can make the commit history very hard to parse.</p>
+<p>This choice also depends on whether multiple people contributed to the branch. With the “merge only” approach, each person’s contribution is attributed in the history, and we can see who changed what with <code>git blame</code>. With the “squash and merge” approach, we can see from the commit message that multiple people contributed, but we cannot see who did what exactly (unless we go back to exploring the development branch, which can be tedious).</p>
+<p>Personally, I use “squash and merge” most of the time to keep the history on <code>main</code> clean and straightforward (this is particularly nice on GitHub when using pull requests, as it will refer to the PR in the commit message; we will see this in exercise 3).</p>
 </section>
 </section>
+<section id="updating-a-branch" class="level3">
+<h3 data-anchor-id="updating-a-branch">Updating a branch</h3>
+<p>Let’s go back to our earlier situation for a moment, before merging:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph version
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+</pre>
+</div>
+</div>
+<p>Note that when we decided to merge, our branch <code>title-dev</code> was out-of-sync with <code>main</code> since the commit <code>Add first paragraph</code> only exists on <code>main</code>. When we decided to merge <code>title-dev</code> into <code>main</code>, GitHub Desktop implicitly updated <code>title-dev</code> first:</p>
+<p>[<strong>TODO</strong>: check whether this is actually the case]</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Graph version
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+   merge main id: "Merge 'main'"
+   checkout main
+   merge title-dev id: "Merge branch\n'title-dev'"
+</pre>
+</div>
+</div>
+<p>In other words, it automatically updated our <code>title-dev</code> branch to the latest version of <code>main</code>, and did that using the “merging” approach.</p>
+<p>Another way to do this is called <strong>rebasing</strong>. Rebasing is an operation where we change the base of our branch, so that the base no longer is the commit <code>Create .gitignore</code> but instead is <code>Add first paragraph</code>:</p>
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   commit id: "Add first paragraph"
+   branch title-dev
+   commit id: "Create title.txt"
+   commit id: "Update title.txt"
+   checkout title-dev
+</pre>
+<p>After rebasing, it <em>looks like</em> we had originally created the branch from the commit <code>Add first paragraph</code> right from the start.</p>
+<p>No matter which approach you use, if everything went well then we can merge our branch into <code>main</code> once it is ready.</p>
+<p>After rebasing:</p>
+<pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   commit id: "Add first paragraph"
+   branch title-dev
+   commit id: "Create title.txt"
+   commit id: "Update title.txt"
+   checkout title-dev
+   checkout main
+   merge title-dev id: "Merge branch\n'title-dev'"
+</pre>
+<p>Should we choose merging or rebasing? This is another one of the few debates among git users, but generally it is not worth fighting about this. Both have pros and cons, starting with the ease of use. Merging is in general easier to manage when there are conflicts to resolve, e.g.&nbsp;if the commit from <code>main</code> that we want to integrate in our branch modifies some files that our branch also modifies.</p>
 </section>
-<section id="deleting-branches" class="level3">
-<h3 data-anchor-id="deleting-branches">Deleting branches</h3>
-<p>Now that you’ve merged your <code>title-dev</code> branch, you can delete it to save space. To do that, click Current Branch, then <strong>right click</strong> <code>title-dev</code>. This will yield a drop-down menu. Select “Delete branch”:</p>
+</section>
+<section id="deleting-branches" class="level2">
+<h2 data-anchor-id="deleting-branches">Deleting branches</h2>
+<p>Now that you’ve merged your <code>title-dev</code> branch and are back on the <code>main</code> branch, you can delete it to save space. To do that, click Current Branch, then <strong>right click</strong> <code>title-dev</code>. This will yield a drop-down menu. Select “Delete branch”:</p>
 <p><img src="figures/ghd-delete_branch.png" class="img-fluid"></p>
 <p>You will be prompted with a warning. Click the “Delete” button. The <code>title-dev</code> branch will be gone! You can also delete <code>main-bkup</code> now if you like.</p>
 </section>
-<section id="challenge-questions-editing-the-same-file-on-different-branches" class="level3">
-<h3 data-anchor-id="challenge-questions-editing-the-same-file-on-different-branches">Challenge Questions: Editing the same file on different branches</h3>
+<section id="challenge-questions-editing-the-same-file-on-different-branches" class="level2">
+<h2 data-anchor-id="challenge-questions-editing-the-same-file-on-different-branches">Challenge Questions: Editing the same file on different branches</h2>
 <p>In the above example we only made changes to different files on our two branches: on <code>main</code> we only edited <code>story.txt</code>, while on <code>title-dev</code> we only edited <code>title.txt</code>. However, there is nothing stopping us from editing the <em>same</em> file concurrently on two different branches. The following questions will illustrate how that works.</p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -829,7 +1136,7 @@ George Lucas</code></pre>
 <li><p>Go back to <code>main</code> and change the third line to <code>foxtrot</code> (i.e., replace <code>charlie</code>), then commit it.</p></li>
 </ol>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -838,7 +1145,7 @@ George Lucas</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>Once you create <code>list.txt</code> (use your text editor to do this), you should see it appear in the Changes tab in GitHub Desktop. Make sure you’re on <code>main</code> (the Current Branch should say <code>main</code>; if not, click Current Branch -&gt; main). Then:</p>
@@ -901,7 +1208,7 @@ George Lucas</code></pre>
 <p><strong>D.</strong> An error is raised because the same file was modified.</p>
 <p><em>If you’re not sure, try it yourself and see what happens!</em></p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -910,7 +1217,7 @@ George Lucas</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The answer is <strong>C</strong>. Since different lines have been modified, <code>git</code> is able to merge the changes together without issue. To do it yourself:</p>
 <ol type="a">
@@ -957,7 +1264,7 @@ George Lucas</code></pre>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>D.</strong> An error is raised because the same line is modified.</p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -966,7 +1273,7 @@ George Lucas</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The answer is <strong>D</strong>, an error is raised. Since the same line has been modified in the same file, <code>git</code> cannot tell how to reconcile the differences. This is known as a <em>merge conflict</em>. In this case, <code>git</code> will leave it up to the user to reconcile the differences. How to do that is discussed in the next section.</p>
 </div>
@@ -975,8 +1282,8 @@ George Lucas</code></pre>
 </div>
 </div>
 </section>
-<section id="iv.-resolving-merge-conflicts" class="level3">
-<h3 data-anchor-id="iv.-resolving-merge-conflicts">IV. Resolving merge conflicts</h3>
+<section id="iv.-resolving-merge-conflicts" class="level2">
+<h2 data-anchor-id="iv.-resolving-merge-conflicts">IV. Resolving merge conflicts</h2>
 <p>As illustrated in the Challenge Questions, if the same lines in the same file are modified on two different branches, <code>git</code> will not know how to merge the changes. This is called a <strong>merge conflict</strong>. In this case, <code>git</code> will ask you to reconcile the differences. To illustrate, let’s try merging <code>dev2</code> into <code>main</code> after making the changes to <code>list.txt</code> discussed in Question 3 above:</p>
 <ol type="1">
 <li><p>If you have not done so, try to merge <code>dev2</code> into <code>main</code> after making the changes to the second line of <code>list.txt</code> discussed in Question 3:</p>
@@ -1012,9 +1319,28 @@ George Lucas</code></pre>
 </ol>
 <p>Merge conflicts happen, but can be fixed fairly easy. If there were multiple areas in a file that caused a conflict, the conflicting areas would all be surrounded by the same <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>/<code>=======</code>/<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> lines that we saw above. You’ll want to search through the file for those to make sure you got all the conflicts. If multiple files had conflicts, <code>git</code> will make you resolve all of them before allowing the merge to complete.</p>
 </section>
-<section id="summary" class="level3">
-<h3 data-anchor-id="summary">Summary</h3>
+<section id="summary" class="level2">
+<h2 data-anchor-id="summary">Summary</h2>
 <p>That’s the basics of how to use <code>git</code>. In the following parts we’ll see how to use this with GitHub and how to collaborate with partners using <code>git</code> and GitHub.</p>
+<!-- Must come after the <pre>: the loop only mounts elements already in the DOM -->
+<script src="https://cdn.jsdelivr.net/npm/pele@1/dist/pele.global.js"></script>
+<style>
+  /* Room for the labels moved above the line, which fall outside the SVG's viewBox */
+  /* !important beats Quarto's `.callout-body > :first-child` padding reset inside callouts */
+  pre.mermaid { padding-top: 3em !important; }
+  pre.mermaid > svg { overflow: visible; }
+</style>
+<script>
+  // pele always puts commit labels below the line: mirror every other one above it
+  const alternate = (el) => el.querySelectorAll('.pele-commit-label').forEach((label, i) => {
+    if (i % 2 === 0) return;
+    const dot = label.parentElement.querySelector('circle, rect').getBBox();
+    const box = label.getBBox();
+    label.setAttribute('transform', `translate(0 ${2 * (dot.y + dot.height / 2) - 2 * (box.y + box.height / 2)})`);
+  });
+  // onRender because pele redraws the SVG on resize
+  for (const el of document.querySelectorAll('pre.mermaid')) pele.mount(el, el.textContent, { onRender: () => alternate(el) });
+</script>
 
 
 <hr><br><details>
