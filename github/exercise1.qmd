@@ -35,7 +35,7 @@ editor:
 To do this exercise you will need to install and setup GitHub Desktop. Follow the instructions [here](index.qmd#prerequisites).
 :::
 
-### How does Git work?
+## How does Git work?
 
 Essentially, Git works around two concepts: **repositories** and **commits**.
 
@@ -59,7 +59,7 @@ Commits are the cornerstone of version control because they allow us to go back 
 
 In this exercise, we will initialise a Git repository on our computer and explore various Git commands with it. In the [second exercise](exercise2.qmd), we will see how to store a Git repository online and how to interact with it. Finally, in the [third exercise](exercise3.qmd), we will see how to collaborate on other people's repositories.
 
-### I. Initialising and adding files
+## I. Initialising and adding files
 
 In this section, we will initialise a Git repository from scratch and start tracking some files.
 
@@ -74,8 +74,6 @@ In this section, we will initialise a Git repository from scratch and start trac
 1. In the Create a New Repository window, enter `test-git-repo` in the "Name" field, then click "Create Repository". You do not need to fill out any of the other fields.
 
    ::: {.callout-note}
-   ## Note
-
    By default this will create a local repository in your Documents/GitHub folder. You can change where the repo is located by clicking "Choose". For this tutorial, let's stick with the default.
    :::
 
@@ -134,11 +132,10 @@ In this section, we will initialise a Git repository from scratch and start trac
 
 1. Now click the "Commit 1 file to main" button. When you do, the window will automatically change back to "No local changes". Congratulations, you've made your first `git` commit!
 
-   ::: {.callout-tip}
-   ## What happens when you commit changes?
-
+   ::: {.callout-tip title="What happens when you commit changes?"}
    A commit creates a snapshot of the files you committed. Every commit has a commit message, an author, and a unique hash identifying that change. Git keeps a *history* of all commits made in a repository. From now on, you can go back and view the previous state of a file at different commit points. This is known as *version control*.
    :::
+   
 
 1. You can view the history of your commits by clicking on the "History" tab:
 
@@ -146,9 +143,26 @@ In this section, we will initialise a Git repository from scratch and start trac
 
    In this case, there are two commits: an initial commit that was created by GitHub Desktop when the repository was created, and the commit you just made to create `story.txt`.
 
-### II. Making changes to files
+   ::: {.callout-note title="Graph view"}
+   ```{=html}
+   <pre class="mermaid">
+   %%{init: {"gitGraph": {"rotateCommitLabel": false, "showBranches": false}}}%%
+   gitGraph
+      commit id: "Initial commit"
+      commit id: "Create story.txt"
+   </pre>
+   ```
+   :::
 
-1. You're not happy with your story opening. You don't want to write fairy tales, you want to write Sci-fi! Go back to your text editor `story.txt` and change the line `Once upon a time, in a land far,` to `A long time ago in a galaxy far,` so that your file now reads:
+We created a file, which is a type of change that can be tracked by Git. However, its real strength is to track changes within files so that we can clearly see which parts have been created, deleted, or modified. 
+
+In the next section, we will modify some of our existing files and see how to record these changes.
+
+## II. Making changes to files
+
+You're not happy with your story opening. You don't want to write fairy tales, you want to write Sci-fi! 
+
+1. Go back to your text editor `story.txt` and change the line `Once upon a time, in a land far,` to `A long time ago in a galaxy far,` so that your file now reads:
 
    ```
    A long time ago in a galaxy far,
@@ -169,9 +183,7 @@ In this section, we will initialise a Git repository from scratch and start trac
 
 1. The yellow box next to `story.txt` means that Git recognizes that `story.txt` has changed, *but your changes have not been committed yet.* If you go to the History tab, you'll see that there are still only two commits. If you click on the "Create story.txt" commit, it will show the previous state of the file.
 
-   ::: {.callout-warning}
-   ## Saving is not committing!
-
+   ::: {.callout-warning title="Saving is not committing!"}
    Simply saving changes to a file will not result in a new snapshot of it! To tell Git to create a snapshot for preservation **you have to create a commit.** If you make further changes to your file without committing in between, the intermediate changes will not be tracked.
    :::
 
@@ -179,17 +191,29 @@ In this section, we will initialise a Git repository from scratch and start trac
 
    ![](figures/ghd-second_commit_staging.png)
 
-   You'll now see 2 commits in your history.
+   You'll now see 3 commits in your history.
 
-#### Adding files to `.gitignore`
+   ::: {.callout-note title="Graph view"}
+   ```{=html}
+   <pre class="mermaid">
+   %%{init: {"gitGraph": {"rotateCommitLabel": false, "showBranches": false}}}%%
+   gitGraph
+      commit id: "Initial commit"
+      commit id: "Create story.txt"
+      commit id: "Change opening"
+   </pre>
+   ```
+   :::
+
+
+
+### Ignoring changes in some files
 
 It frequently happens that you can have files in your repository that you don't want Git to track. This can be things like temporary build files, or system files like the `.DS_Store` on Macs. If you don't explicitly commit a new file (by clicking the check mark next to it and hitting the commit button), then files won't be tracked. However, trying to avoid clicking these files can be tedious and error prone. You'll also get warnings about changes every time you switch branches (below).
 
-We can tell Git to ignore certain files. Here, we'll tell it to ignore the `.DS_Store` file created by MacOS.
+We can tell Git to ignore certain files by storing their names in a special file called `.gitignore`. Here, we'll tell it to ignore the `.DS_Store` file created by MacOS.
 
-::: {.callout-note}
-## Windows users
-
+::: {.callout-note title="Windows users"}
 Windows users will not have a `.DS_Store` file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called `.DS_Store` and save it:
 
 a. Switch back to Notepad.
@@ -219,7 +243,7 @@ To tell Git to ignore a file:
 
 1. From now on, any file named `.DS_Store` in this repository (meaning, in this folder and all sub-folders) file will not appear in your Changes menu, nor will you be able to commit changes to it to the repository.
 
-### III. Branches
+## III. Branches
 
 You want to start working on titles for your stories, but you want to do it independently of your work on the story itself. To do that, let's create a *branch* to specifically work on titles.
 
@@ -345,7 +369,7 @@ You want to start working on titles for your stories, but you want to do it inde
 
    ![](figures/git_graphs.002.png){height=300}
 
-#### Merging
+### Merging
 
 1. Satisfied that your title is perfect, you no longer feel the need to keep the title development on a separate branch. It's ready to be *merged* on to the `main` branch. To do that, first switch to the main branch by clicking Current Branch -> main.
 
@@ -381,7 +405,7 @@ You want to start working on titles for your stories, but you want to do it inde
 
    ![](figures/git_graphs.003.png){height=300}
 
-#### Squash and merge: the cleaner history
+### Squash and merge: the cleaner history
 
 When we were preparing to merge `title-dev`, you may have noticed there was a drop-down button next to the "Create a merge commit" button:
 
@@ -409,7 +433,7 @@ Let's see would have happened if we selected **squash and merge** instead by doi
 
    The contents of `main-bkup` are exactly the same as `main`, just the history is different. (You can verify this by switching between `main` and `main-bkup`.)
 
-##### When do you use squash and merge vs merge?
+#### When do you use squash and merge vs merge?
 
 It's up to you, as each has its pros and cons:
 
@@ -434,13 +458,11 @@ It's up to you, as each has its pros and cons:
 
 Personally, I use Squash and Merge most of the time to keep the history on `main` clean and straight forward (this is particularly nice on GitHub when using pull requests, as it will refer to the PR in the commit message; we will see this in exercise 3). But when working with someone else on a branch I will sometimes use Merge instead.
 
-::: {.callout-note}
-## What about rebasing?
-
+::: {.callout-note title="What about rebasing?"}
 There is another way to merge branches called *rebasing*. Rebasing changes the history of the development branch to make it look like all the commits came after the last commit on main. This is mostly useful for keeping a development branch up to date with `main`. For more on rebasing, see this article by the Atlassian corporation: [Merging vs. rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
 :::
 
-### Deleting branches
+## Deleting branches
 
 Now that you've merged your `title-dev` branch, you can delete it to save space. To do that, click Current Branch, then **right click** `title-dev`. This will yield a drop-down menu. Select "Delete branch":
 
@@ -448,13 +470,11 @@ Now that you've merged your `title-dev` branch, you can delete it to save space.
 
 You will be prompted with a warning. Click the "Delete" button. The `title-dev` branch will be gone! You can also delete `main-bkup` now if you like.
 
-### Challenge Questions: Editing the same file on different branches
+## Challenge Questions: Editing the same file on different branches
 
 In the above example we only made changes to different files on our two branches: on `main` we only edited `story.txt`, while on `title-dev` we only edited `title.txt`. However, there is nothing stopping us from editing the *same* file concurrently on two different branches. The following questions will illustrate how that works.
 
-::: {.callout-caution appearance="simple" icon="false"}
-#### Question 1: Setup
-
+::: {.callout-caution appearance="simple" icon="false" title="Question 1: Setup"}
 Create a file called `list.txt` that initially contains the following three lines:
 
 ```txt
@@ -473,9 +493,7 @@ Now use the what you learned above to do the following:
 
 4. Go back to `main` and change the third line to `foxtrot` (i.e., replace `charlie`), then commit it.
 
-::::: {.callout-caution collapse="true" appearance="simple" icon="false"}
-##### Solution
-
+::::: {.callout-caution collapse="true" appearance="simple" icon="false" title="Solution"}
 1. Once you create `list.txt` (use your text editor to do this), you should see it appear in the Changes tab in GitHub Desktop. Make sure you're on `main` (the Current Branch should say `main`; if not, click Current Branch -> main). Then:
 
    a. Click the check mark next to `list.txt`.
@@ -515,9 +533,7 @@ charlie
 ```
 :::
 
-::: {.callout-caution appearance="simple" icon="false"}
-#### Question 2: Editing different lines
-
+::: {.callout-caution appearance="simple" icon="false" title="Question 2: Editing different lines"}
 Now suppose you merge `dev1` into `main`. What happens to `list.txt`?
 
 **A.** `main` takes precedence since it's the branch being merged into; `list.txt` will look like:
@@ -548,9 +564,7 @@ foxtrot
 
 *If you're not sure, try it yourself and see what happens!*
 
-::::: {.callout-caution collapse="true" appearance="simple" icon="false"}
-##### Solution
-
+::::: {.callout-caution collapse="true" appearance="simple" icon="false" title="Solution"}
 The answer is **C**. Since different lines have been modified, `git` is able to merge the changes together without issue. To do it yourself:
 
 a. Click Current Branch -> main to switch to main.
@@ -559,9 +573,7 @@ c. Select dev1 then click "Create a merge commit".
 :::::
 :::
 
-::: {.callout-caution appearance="simple" icon="false"}
-#### Question 3: Editing the same lines
-
+::: {.callout-caution appearance="simple" icon="false" title="Question 3: Editing the same lines"}
 After merging `dev1` on to `main`, suppose you create another branch called `dev2`. On `dev2` you change the second line of `list.txt` to be `echo` while on `main` you change the second line to `easy`; i.e. on `main` `list.txt` looks like:
 
 ```txt
@@ -607,14 +619,12 @@ foxtrot
 
 **D.** An error is raised because the same line is modified.
 
-::::: {.callout-caution collapse="true" appearance="simple" icon="false"}
-##### Solution
-
+::::: {.callout-caution collapse="true" appearance="simple" icon="false" title="Solution"}
 The answer is **D**, an error is raised. Since the same line has been modified in the same file, `git` cannot tell how to reconcile the differences. This is known as a *merge conflict*. In this case, `git` will leave it up to the user to reconcile the differences. How to do that is discussed in the next section.
 :::::
 :::
 
-### IV. Resolving merge conflicts
+## IV. Resolving merge conflicts
 
 As illustrated in the Challenge Questions, if the same lines in the same file are modified on two different branches, `git` will not know how to merge the changes. This is called a **merge conflict**. In this case, `git` will ask you to reconcile the differences. To illustrate, let's try merging `dev2` into `main` after making the changes to `list.txt` discussed in Question 3 above:
 
@@ -670,7 +680,7 @@ As illustrated in the Challenge Questions, if the same lines in the same file ar
 
 Merge conflicts happen, but can be fixed fairly easy. If there were multiple areas in a file that caused a conflict, the conflicting areas would all be surrounded by the same `<<<<<<< `/`=======`/`>>>>>>>` lines that we saw above. You'll want to search through the file for those to make sure you got all the conflicts. If multiple files had conflicts, `git` will make you resolve all of them before allowing the merge to complete.
 
-### Summary
+## Summary
 
 That's the basics of how to use `git`. In the following parts we'll see how to use this with GitHub and how to collaborate with partners using `git` and GitHub.
 
