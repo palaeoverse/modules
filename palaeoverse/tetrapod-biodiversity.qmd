@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 1: Tracking the diversity of early tetrapods"
+title: "Tutorial 2: Tracking the diversity of early tetrapods"
 description: "How diverse were tetrapods in the Palaeozoic, and how was this diversity structured through time and across space?"
 author:
   - Bethany J. Allen
@@ -46,9 +46,9 @@ knitr::opts_chunk$set(par = TRUE)
 
 ## Preamble
 
-In this tutorial, you will use **palaeoverse** to explore the temporal and spatial diversity patterns of Palaeozoic tetrapods, using data from the Paleobiology Database (Uhen et al. 2026).
+In this tutorial, you will use **palaeoverse** to explore the temporal and spatial diversity patterns of Palaeozoic tetrapods, using data from the [Paleobiology Database](https://paleobiodb.org/#/) (Uhen et al. 2026).
 
-Along the way, you will meet many functions used in a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, estimating palaeocoordinates, and summarising the results.
+Along the way, you will meet many functions used in a typical palaeobiological workflow including exploring data, assigning a common time scale, binning occurrences, taxonomic wrangling, estimating palaeocoordinates, and summarising the results.
 
 To help cement your knowledge, there are multiple exercises throughout this tutorial for you to work through.
 
@@ -56,7 +56,6 @@ To help cement your knowledge, there are multiple exercises throughout this tuto
 ## How exercises work
 
 - **Questions:** work out your answer in R first, then click the "Answers" box beneath the questions to check it.
-- **Hints and solutions:** click the boxes labelled "Hint" or "Solution" to reveal them, but do attempt the tasks yourself first!
 - **Your turn:** code chunks marked `___` are incomplete. Replace each `___` before running them locally.
 :::
 
@@ -69,12 +68,22 @@ The fossil record of early tetrapods is considered relatively sparse, meaning th
 Let's start by installing and loading the **palaeoverse** R package:
 
 ```{r}
-#| label: load-palaeoverse
-#| eval: true
+#| label: install-palaeoverse
+#| eval: false
 #| output: false
 
 # Install palaeoverse
 install.packages("palaeoverse", repos = "https://cloud.r-project.org")
+# Load palaeoverse
+library(palaeoverse)
+```
+
+```{r}
+#| label: load-palaeoverse
+#| eval: true
+#| output: false
+#| echo: false
+
 # Load palaeoverse
 library(palaeoverse)
 ```
@@ -99,7 +108,7 @@ Load the `tetrapods` dataset:
 data(tetrapods)
 ```
 
-Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let's take a look at the data frame:
+Before conducting any analyses, it is always a good idea to explore your data first and understand what you are working with. Let's take a look at the dataset:
 
 ```{r}
 #| label: view-tetrapods
@@ -133,7 +142,7 @@ help(tetrapods)
 
 Let's now generate some simple summary statistics, to help us understand the scope and scale of the dataset.
 
-::: {.callout-warning}
+::: {.callout-caution}
 ## Exercise 1: Get to know `tetrapods`
 
 - How many occurrences (observations/rows) are there?
@@ -146,8 +155,8 @@ Let's now generate some simple summary statistics, to help us understand the sco
 ## Exercise 1: Answers
 
 1. `nrow(tetrapods)`: `r nrow(tetrapods)`
-2. `max(tetrapods$max_ma, na.rm = TRUE)`: `r max(tetrapods$max_ma, na.rm = TRUE)`
-3. `min(tetrapods$min_ma, na.rm = TRUE)`: `r min(tetrapods$min_ma, na.rm = TRUE)`
+2. `max(tetrapods$max_ma)`: `r max(tetrapods$max_ma)`
+3. `min(tetrapods$min_ma)`: `r min(tetrapods$min_ma)`
 4. `sum(is.na(tetrapods$lat))`: `r sum(is.na(tetrapods$lat))`
 :::
 
@@ -225,7 +234,7 @@ length(unique(c(tetrapods$___, tetrapods$___)))
 3. `(sum(is.na(tetrapods$interval_max_ma)) / nrow(tetrapods))`: `r (sum(is.na(tetrapods$interval_max_ma)) / nrow(tetrapods))`
 :::
 
-Now that we have an understanding of the amount of uncertainty surrounding the age of some of our occurrences, let's tidy it up by filling in the ages of intervals not included in the `look_up()` table with those that they were allocated by the Paleobiology Database.
+Now that we have an understanding of the amount of uncertainty surrounding the age of some of our occurrences, let's tidy it up by filling in the ages of intervals not included in the `look_up()` table with those that they were allocated by the Paleobiology Database:
 
 ```{r}
 #| label: fill-missing-occurrence-ages
@@ -246,7 +255,7 @@ tetrapods$interval_mid_ma <- (tetrapods$min_ma + tetrapods$max_ma) / 2
 sum(is.na(tetrapods$interval_max_ma))
 ```
 
-Now we are ready to allocate our occurrences to our time bins. We will do this using the `palaeoverse::bin_time()` function. Here, for simplicity, we will use the 'mid' method, which places each occurrence into the time bin corresponding to the midpoint between its maximum and minimum age.
+Now we are ready to allocate our occurrences to our time bins. We will do this using the `palaeoverse::bin_time()` function. Here, for simplicity, we will use the "mid" method, which places each occurrence into the time bin corresponding to the midpoint between its maximum and minimum age.
 
 However, first we need to rename our columns so we don't accidentally use the old ages:
 
@@ -289,7 +298,7 @@ Why are we getting an error when we try to bin our occurrences?
 If we remember back to our initial exploration of the data, the youngest occurrences in the dataset are Early Triassic in age. This sits outside of the Carboniferous-Permian interval across which we have generated our time bins. The function is giving us an error because these Early Triassic occurrences are too young to be placed into any of the provided time bins.
 :::
 
-We will remove these problematic occurrences and try again.
+We will remove these problematic occurrences and try again:
 
 ```{r}
 #| label: time-bin-occs
@@ -305,7 +314,7 @@ mid_tetrapods <- bin_time(occdf = cp_tetrapods,
                           method = "mid")
 ```
 
-This time we have received a warning, but no error. Let's take a look at the new columns added to the dataset.
+This time we have received a warning, but no error. Let's take a look at the new columns added to the dataset:
 
 ```{r}
 #| label: bin-time-columns
@@ -336,7 +345,7 @@ We can see that around 70% of the occurrences can be allocated to a single stage
 
 Remember at the start of the exercise, we saw that every occurrence has a latitude and longitude. However, this corresponds to the modern-day coordinates of the locality in which they were found. If we want to understand spatial patterns in deep time, we need to infer the palaeo-coordinates at which the fossils were deposited.
 
-We can use `palaeoverse::palaeorotate()` to use a Global Plate Model (GPM) to infer how rocks on the Earth's surface have shifted over time due to continental drift. You can find more information about how this works using `help(palaeorotate)`. It's worth noting that different GPMs will produce different results (Buffan et al. 2023), but for now we will go ahead with using the PALEOMAP GPM (Scotese & Wright 2018).
+We can use `palaeoverse::palaeorotate()` to use a Global Plate Model (GPM) to infer how rocks on the Earth's surface have shifted over time due to continental drift. You can find more information about how this works using `help(palaeorotate)`. It's worth noting that different GPMs will produce different results (Buffan et al. 2023), but for now we will go ahead with using the PALEOMAP GPM (Scotese & Wright 2018):
 
 ```{r}
 #| label: palaeorotate
@@ -359,7 +368,7 @@ head(mid_tetrapods[, c("p_lng", "p_lat")])
 sum(is.na(mid_tetrapods$p_lng))
 ```
 
-We can now generate our spatial bins and place our occurrences into them based on their palaeo-coordinates. Here we will generate and bin into equal-area hexagonal grid cells (based on [Uber's H3 system](https://h3geo.org)).
+We can now generate our spatial bins and place our occurrences into them based on their palaeo-coordinates. Here we will generate and bin into equal-area hexagonal grid cells (based on [Uber's H3 system](https://h3geo.org)):
 
 ```{r}
 #| label: hex-cells
@@ -378,6 +387,35 @@ head(mid_tetrapods[, c("cell_ID", "cell_centroid_lng", "cell_centroid_lat")])
 We can see that each occurrence has been placed into a grid cell, described using a unique ID, and with the centroid of the cell also provided.
 
 ## Taxonomic wrangling
+
+Fossil occurrence data are often messy, and the taxonomic information attached to them is no exception. Inspecting and cleaning these data is a fundamental step in ensuring that counts of unique taxa through time are accurate. For example, without it, the same species can be counted multiple times due to slight spelling differences. The `palaeoverse::tax_check()` function helps you find such issues by flagging and counting potential spelling variants of the same taxon. Variants are checked within alphabetical groups by default, or within higher taxonomic groups if these are provided:
+
+```{r}
+#| label: tax-check
+#| output-fold: true
+#| output-summary: "Output"
+
+# Check taxon names alphabetically
+tax_check(taxdf = tetrapods, name = "genus", dis = 0.05)
+```
+
+In our first call to `tax_check()`, two pairs of genus names are flagged: *Dvinosaurus*/*Dinosaurus* and *Varanopus*/*Varanops*. Without any prior knowledge, it would be easy to assume that each pair is a spelling variant of the same name. However, on closer inspection of the taxonomic literature, we find that these are distinct genera belonging to different families:
+
+- *Dinosaurus* belongs to the Phthinosuchidae
+- *Dvinosaurus* belongs to the Dvinosauridae
+- *Varanops* belongs to the Varanopidae
+- *Varanopus* belongs to the Captorhinidae
+
+If we inspect `tetrapods` again, this time grouping by family, no names are flagged, so we're good to move on:
+
+```{r}
+#| label: tax-check-group
+#| output-fold: true
+#| output-summary: "Output"
+
+# Check taxon names by group
+tax_check(taxdf = tetrapods, name = "genus", group = "family", dis = 0.05)
+```
 
 In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g. genera or species); however, this can result in some useful information being discarded. The `palaeoverse::tax_unique()` function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:
 
@@ -649,6 +687,7 @@ In this tutorial, you have:
 - linked interval names to a common time scale with `look_up()`
 - binned occurrences by time with `time_bins()` and `bin_time()`
 - estimated palaeocoordinates with `palaeorotate()`, and binned them by space with `bin_space()`
+- checked for potential spelling mistakes with `tax_check()`
 - determined unique occurrences using `tax_unique()`
 - quantified convex hull volumes using `tax_range_space()`
 
