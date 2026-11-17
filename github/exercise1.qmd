@@ -588,7 +588,7 @@ Let's see would have happened if we selected **squash and merge** instead by doi
 
 #### To merge, or to squash and merge?
 
-This is one of the existing debates among Git users, and ultimately it is mostly a matter of preference regarding the commit history on the main branch:
+This is one of the existing debates among Git users, and ultimately it is mostly a matter of preference regarding the commit history on the `main` branch:
 
 - if we do not squash (as we did first), then all commits from our branch (potentially hundreds of commits) will also appear in the history of `main`;
 - if we squash, all the commits from our branch will be condensed into a single commit, and only this commit will appear in the history of `main`.
@@ -599,13 +599,104 @@ This choice also depends on whether multiple people contributed to the branch. W
 
 Personally, I use "squash and merge" most of the time to keep the history on `main` clean and straightforward (this is particularly nice on GitHub when using pull requests, as it will refer to the PR in the commit message; we will see this in exercise 3). 
 
-::: {.callout-note title="What about rebasing?"}
-There is another way to merge branches called *rebasing*. Rebasing changes the history of the development branch to make it look like all the commits came after the last commit on main. This is mostly useful for keeping a development branch up to date with `main`. For more on rebasing, see this article by the Atlassian corporation: [Merging vs. rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
+### Updating a branch
+
+Let's go back to our earlier situation for a moment, before merging:
+
+::: {.callout-note title="Graph version"}
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+</pre>
+```
 :::
+
+Note that when we decided to merge, our branch `title-dev` was out-of-sync with `main` since the commit `Add first paragraph` only exists on `main`. When we decided to merge `title-dev` into `main`, GitHub Desktop implicitly updated `title-dev` first:
+
+[**TODO**: check whether this is actually the case]
+
+::: {.callout-note title="Graph version"}
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   branch title-dev
+   commit id: "Create title.txt"
+   checkout main
+   commit id: "Add first paragraph"
+   checkout title-dev
+   commit id: "Update title.txt"
+   merge main id: "Merge 'main'"
+   checkout main
+   merge title-dev id: "Merge branch\n'title-dev'"
+</pre>
+```
+:::
+
+In other words, it automatically updated our `title-dev` branch to the latest version of `main`, and did that using the "merging" approach.
+
+Another way to do this is called **rebasing**. Rebasing is an operation where we change the base of our branch, so that the base no longer is the commit `Create .gitignore` but instead is `Add first paragraph`:
+
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   commit id: "Add first paragraph"
+   branch title-dev
+   commit id: "Create title.txt"
+   commit id: "Update title.txt"
+   checkout title-dev
+</pre>
+```
+
+After rebasing, it *looks like* we had originally created the branch from the commit `Add first paragraph` right from the start.
+
+No matter which approach you use, if everything went well then we can merge our branch into `main` once it is ready.
+
+After rebasing:
+
+```{=html}
+<pre class="mermaid">
+%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
+gitGraph
+   commit id: "Initial commit"
+   commit id: "Create story.txt"
+   commit id: "Change opening"
+   commit id: "Create .gitignore"
+   commit id: "Add first paragraph"
+   branch title-dev
+   commit id: "Create title.txt"
+   commit id: "Update title.txt"
+   checkout title-dev
+   checkout main
+   merge title-dev id: "Merge branch\n'title-dev'"
+</pre>
+```
+
+Should we choose merging or rebasing? This is another one of the few debates among git users, but generally it is not worth fighting about this. Both have pros and cons, starting with the ease of use. Merging is in general easier to manage when there are conflicts to resolve, e.g. if the commit from `main` that we want to integrate in our branch modifies some files that our branch also modifies.
 
 ## Deleting branches
 
-Now that you've merged your `title-dev` branch, you can delete it to save space. To do that, click Current Branch, then **right click** `title-dev`. This will yield a drop-down menu. Select "Delete branch":
+Now that you've merged your `title-dev` branch and are back on the `main` branch, you can delete it to save space. To do that, click Current Branch, then **right click** `title-dev`. This will yield a drop-down menu. Select "Delete branch":
 
 ![](figures/ghd-delete_branch.png)
 
