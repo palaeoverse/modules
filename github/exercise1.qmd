@@ -484,21 +484,21 @@ First, we will create a backup of the `main` branch, just in case something goes
 
       ::: {.callout-note title="Graph version"}
       ```{=html}
-      <pre class="mermaid">
-      %%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+      <pre class="mermaid backup-on-top">
+      %%{init: {"gitGraph": {"rotateCommitLabel": false, "mainBranchOrder": 1}}}%%   
       gitGraph
          commit id: "Initial commit"
          commit id: "Create story.txt"
          commit id: "Change opening"
          commit id: "Create .gitignore"
-         branch title-dev
+         branch title-dev order: 2
          commit id: "Create title.txt"
          checkout main
          commit id: "Add first paragraph"
          checkout title-dev
          commit id: "Update title.txt"
          checkout main
-         branch main-bkup
+         branch main-bkup order: 0
       </pre>
       ```
       :::
@@ -523,21 +523,21 @@ First, we will create a backup of the `main` branch, just in case something goes
    
    ::: {.callout-note title="Graph version"}
    ```{=html}
-   <pre class="mermaid">
-   %%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
+   <pre class="mermaid backup-on-top">
+   %%{init: {"gitGraph": {"rotateCommitLabel": false, "mainBranchOrder": 1}}}%%   
    gitGraph
       commit id: "Initial commit"
       commit id: "Create story.txt"
       commit id: "Change opening"
       commit id: "Create .gitignore"
-      branch title-dev
+      branch title-dev order: 2
       commit id: "Create title.txt"
       checkout main
       commit id: "Add first paragraph"
       checkout title-dev
       commit id: "Update title.txt"
       checkout main
-      branch main-bkup
+      branch main-bkup order: 0
       checkout main
       merge title-dev id: "Merge branch\n'title-dev'"
    </pre>
@@ -570,7 +570,7 @@ Let's see would have happened if we selected **squash and merge** instead by doi
    
    ::: {.callout-note title="Graph version"}
    ```{=html}
-   <pre class="mermaid">
+   <pre class="mermaid backup-on-top">
    %%{init: {"gitGraph": {"rotateCommitLabel": false, "mainBranchName": "main-bkup"}}}%%   
    gitGraph
       commit id: "Initial commit"
@@ -921,6 +921,13 @@ In the [next exercise](exercise2.qmd), we will see how to store a Git repository
   /* !important beats Quarto's `.callout-body > :first-child` padding reset inside callouts */
   pre.mermaid { padding-top: 3em !important; }
   pre.mermaid > svg { overflow: visible; }
+  /* pele colours lanes by position, so putting main-bkup on top would recolour main and
+     title-dev: restore pele's defaults (main blue, title-dev orange) and make main-bkup green */
+  pre.mermaid.backup-on-top {
+    --pele-series-1: #54a24b;
+    --pele-series-2: #4c78a8;
+    --pele-series-3: #f58518;
+  }
 </style>
 <script>
   // pele always puts commit labels below the line: mirror every other one above it
@@ -930,7 +937,37 @@ In the [next exercise](exercise2.qmd), we will see how to store a Git repository
     const box = label.getBBox();
     label.setAttribute('transform', `translate(0 ${2 * (dot.y + dot.height / 2) - 2 * (box.y + box.height / 2)})`);
   });
+  // Commit that each never-committed branch (e.g. a backup) was created from
+  const forks = (src) => {
+    const tip = {}, from = {};
+    let cur = 'main';
+    for (const line of src.split('\n')) {
+      const [cmd, name] = line.trim().split(/\s+/);
+      if (cmd === 'commit' || cmd === 'merge') { tip[cur] = line.match(/id: "(.*?)"/)?.[1]; delete from[cur]; }
+      if (cmd === 'branch') from[name] = tip[name] = tip[cur];
+      if (cmd === 'branch' || cmd === 'checkout') cur = name;
+    }
+    return from;
+  };
+  // pele only draws a dashed lane for branches without commits: add a solid line forking off
+  // their source commit, so they read as a copy of it
+  const drawForks = (el, from) => el.querySelectorAll('.pele-branch').forEach((branch) => {
+    const dot = el.querySelector(`.pele-commit[data-id="${CSS.escape(from[branch.dataset.id] ?? '')}"] :is(circle, rect)`)?.getBBox();
+    const edge = el.querySelector('.pele-edge')?.cloneNode();
+    if (!dot || !edge) return;
+    const lane = branch.querySelector('.pele-lane');
+    const [, y, end] = lane.getAttribute('d').match(/-?[\d.]+/g);
+    const [x, cy] = [dot.x + dot.width / 2, dot.y + dot.height / 2];
+    // Same S-curve (36px wide) as pele's own branch edges
+    edge.setAttribute('d', `M${x},${cy}C${x + 18},${cy} ${x + 18},${y} ${x + 36},${y}H${end}`);
+    edge.setAttribute('stroke', lane.getAttribute('stroke'));
+    edge.setAttribute('fill', 'none');
+    branch.append(edge);
+  });
   // onRender because pele redraws the SVG on resize
-  for (const el of document.querySelectorAll('pre.mermaid')) pele.mount(el, el.textContent, { onRender: () => alternate(el) });
+  for (const el of document.querySelectorAll('pre.mermaid')) {
+    const from = forks(el.textContent);
+    pele.mount(el, el.textContent, { onRender: () => { alternate(el); drawForks(el, from); } });
+  }
 </script>
 ```
