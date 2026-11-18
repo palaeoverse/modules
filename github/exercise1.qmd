@@ -602,7 +602,6 @@ Personally, I use "squash and merge" most of the time to keep the history on `ma
 
 Let's go back to our earlier situation for a moment, before merging:
 
-::: {.callout-note title="Graph version"}
 ```{=html}
 <pre class="mermaid">
 %%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
@@ -619,13 +618,11 @@ gitGraph
    commit id: "Update title.txt"
 </pre>
 ```
-:::
 
 Note that when we decided to merge, our branch `title-dev` was out-of-sync with `main` since the commit `Add first paragraph` only exists on `main`. When we decided to merge `title-dev` into `main`, GitHub Desktop implicitly updated `title-dev` first:
 
 [**TODO**: check whether this is actually the case]
 
-::: {.callout-note title="Graph version"}
 ```{=html}
 <pre class="mermaid">
 %%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
@@ -645,7 +642,6 @@ gitGraph
    merge title-dev id: "Merge branch\n'title-dev'"
 </pre>
 ```
-:::
 
 In other words, it automatically updated our `title-dev` branch to the latest version of `main`, and did that using the "merging" approach.
 
