@@ -801,9 +801,7 @@ gitGraph
 <p>We don’t have to be stuck on a branch until its changes are integrated in the <code>main</code> branch, we can navigate between branches!</p>
 <ol type="1">
 <li><p>You can switch between branches by clicking the “Current Branch” drop-down menu, then selecting the branch you want:</p>
-<p><img src="figures/ghd-switch_branches.png" class="img-fluid"></p>
-<!-- Going back and forth between `main` and `title-dev`, you'll see that at the moment, the `title-dev` branch is identical to the `main` branch. You can verify that by viewing the contents of the repository in Explorer (Windows) / Finder (Mac). Click the "Show in Explorer" (Windows) / "Show in Finder" (Mac) button. You'll see that `story.txt` is still there no matter if you're on `title-dev` or `main`. -->
-<!-- Likewise, the commit history for `title-dev` is also the same as `main`: switch to the `title-dev` branch then click on the History tab. You'll see the same 4 commits as you have on `main`. --></li>
+<p><img src="figures/ghd-switch_branches.png" class="img-fluid"></p></li>
 <li><p>Satisfied with your title for now, go back to your main branch by clicking on the “Current branch” drop down and selecting <code>main</code>:</p>
 <p><img src="figures/ghd-switch_to_main.png" class="img-fluid"></p></li>
 <li><p>Let’s see what happened to your files when you switched back to <code>main</code>. If you still have the Explorer/Finder window open, look at it. If not, click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button to view the contents of the repository.</p>
@@ -1016,16 +1014,6 @@ gitGraph
 <section id="updating-a-branch" class="level3">
 <h3 data-anchor-id="updating-a-branch">Updating a branch</h3>
 <p>Let’s go back to our earlier situation for a moment, before merging:</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Graph version
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
 gitGraph
    commit id: "Initial commit"
@@ -1039,20 +1027,8 @@ gitGraph
    checkout title-dev
    commit id: "Update title.txt"
 </pre>
-</div>
-</div>
 <p>Note that when we decided to merge, our branch <code>title-dev</code> was out-of-sync with <code>main</code> since the commit <code>Add first paragraph</code> only exists on <code>main</code>. When we decided to merge <code>title-dev</code> into <code>main</code>, GitHub Desktop implicitly updated <code>title-dev</code> first:</p>
 <p>[<strong>TODO</strong>: check whether this is actually the case]</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Graph version
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%   
 gitGraph
    commit id: "Initial commit"
@@ -1069,8 +1045,6 @@ gitGraph
    checkout main
    merge title-dev id: "Merge branch\n'title-dev'"
 </pre>
-</div>
-</div>
 <p>In other words, it automatically updated our <code>title-dev</code> branch to the latest version of <code>main</code>, and did that using the “merging” approach.</p>
 <p>Another way to do this is called <strong>rebasing</strong>. Rebasing is an operation where we change the base of our branch, so that the base no longer is the commit <code>Create .gitignore</code> but instead is <code>Add first paragraph</code>:</p>
 <pre class="mermaid">%%{init: {"gitGraph": {"rotateCommitLabel": false}}}%%
@@ -1134,7 +1108,7 @@ gitGraph
 <li><p>Go back to <code>main</code> and change the third line to <code>foxtrot</code> (i.e., replace <code>charlie</code>), then commit it.</p></li>
 </ol>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1143,7 +1117,7 @@ gitGraph
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>Once you create <code>list.txt</code> (use your text editor to do this), you should see it appear in the Changes tab in GitHub Desktop. Make sure you’re on <code>main</code> (the Current Branch should say <code>main</code>; if not, click Current Branch -&gt; main). Then:</p>
@@ -1206,7 +1180,7 @@ gitGraph
 <p><strong>D.</strong> An error is raised because the same file was modified.</p>
 <p><em>If you’re not sure, try it yourself and see what happens!</em></p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1215,7 +1189,7 @@ gitGraph
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The answer is <strong>C</strong>. Since different lines have been modified, <code>git</code> is able to merge the changes together without issue. To do it yourself:</p>
 <ol type="a">
@@ -1262,7 +1236,7 @@ gitGraph
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>D.</strong> An error is raised because the same line is modified.</p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1271,7 +1245,7 @@ gitGraph
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The answer is <strong>D</strong>, an error is raised. Since the same line has been modified in the same file, <code>git</code> cannot tell how to reconcile the differences. This is known as a <em>merge conflict</em>. In this case, <code>git</code> will leave it up to the user to reconcile the differences. How to do that is discussed in the next section.</p>
 </div>
@@ -1391,7 +1365,7 @@ gitGraph
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-17
+ date     2026-11-18
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
