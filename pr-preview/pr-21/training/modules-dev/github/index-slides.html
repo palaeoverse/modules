@@ -188,14 +188,43 @@ Etienne Bacher
 </section>
 <section id="motivation" class="slide level2">
 <h2>Motivation</h2>
+</section>
+<section id="keep-track-of-changes" class="slide level2">
+<h2>Keep track of changes</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
 <p>Imagine that you are working on a project. This project could be an academic paper, a Master’s thesis, a small blog post, an R package, any kind of project where you write text over several working sessions.</p>
 <p>You start making progress, you are pretty happy with the way it’s going. Suddenly you notice that your introduction (or your code to analyse data, or anything else) could be improved, although you don’t know exactly how.</p>
 <p>You make changes but you are not really sure if this is going anywhere, so you’d like to keep a version of your past work, <em>just in case</em>. You can do that either by creating a copy of your file or by commenting out pieces of text in the original file.</p>
 <p>In the end, you keep your new changes but also the previous version, <em>just in case</em>.</p>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:40%;">
+<p><img data-src="figures/version_control_comics.png"></p>
+</div></div>
 <p>Later, you send your report to your supervisor or project manager, who tells you to explore various parts of your project more in depth. You start making changes, but you also had some experience where this person told you to do the opposite a few weeks later, so you create new copies and comment out more text, <em>just in case</em>.</p>
 <p>As time goes, the folder containing your project starts looking like: <code>analysis_1.R</code>, <code>analysis1bis.R</code>, <code>analysis_final.R</code>, <code>report_v1.docx</code>, <code>report_v2.docx</code>, <code>report_final.docx</code>, <code>report_final_final.docx</code>, etc.</p>
 <p>Ideally, we would like to have only two files (<code>analysis.R</code> and <code>report.docx</code>), while keeping access to previous versions of these files. And we would also like to see precisely what changed between these versions. In other words, we want some kind of <strong>version control</strong>.</p>
 <p>Git and GitHub are tools that enable us to do this version control. On top of keeping a history of all changes happening across all tracked files, they greatly facilitate collaboration. They are essential tools to be familiar with, and while they were originally created for software projects, they can be used with any kind of text files. This module will teach you how to get started with Git and GitHub so you can use them in your own projects and contribute to other people’s projects.</p>
+</section>
+<section id="collaborate-more-efficiently" class="slide level2">
+<h2>Collaborate more efficiently</h2>
+<p>You might think: “all of this is very nice, but my collaborators and I already use Google Docs and/or Dropbox, so why bother?”.</p>
+<p>This is a legitimate question! Google Docs and other tools to do collaborative text writing seem to address a similar need as Git and GitHub do, and their ubiquity means that these tools can be more appropriate depending on the context.</p>
+<p>Nevertheless, besides the fact that these tools are not integrated in code editors (such as RStudio, Positron), meaning that we would need to copy and paste code across files, they also come with their own pain points:</p>
+<ul>
+<li>Someone edits or deletes the paragraph you were working on at the same time as you.</li>
+<li>You can see <em>what</em> changed, but not <em>why</em> this change happened.</li>
+<li>Restoring an older version of a document also undoes everyone else’s more recent work.</li>
+<li>Trying to do massive changes requires making file copies so that you don’t affect everyone else’s work, so you still end up with files like <code>manuscript_v2_final_FINAL.docx</code> or <code>analysis_old_DO_NOT_USE.R</code>.</li>
+</ul>
+
+<img data-src="figures/version_control_google_docs_top.png" class="r-stretch"><p>These points allow us to distinguish <strong>version history</strong> (what Google Docs does) and <strong>version control</strong> (what Git does):</p>
+<ul>
+<li><p>version history: everyone works on the same copy of the document at the same time, and <em>the software</em> decides when to save. If two people edit the same sentence at once, one of them wins. If you want to go back, you can only go back to whatever moment the software happened to save, and everything that changed after that moment is rolled back with it.</p></li>
+<li><p>version control: <em>you</em> decide when to save a snapshot of your work, and each snapshot records who made it and a message describing what was changed. Every piece of work can be done in parallel, and no matter whether it is eventually integrated in the project or abandoned, it will always be easy to recover. If two people modify the same thing, people get to decide which one should be preferred.</p></li>
+</ul>
+<p>Git and GitHub give much more control to users, meaning that they also take more effort to learn than Google Docs. In this module, we will gradually see how to use Git and GitHub on our own projects, and then we will see how to efficiently collaborate.</p>
 </section>
 <section id="exercises" class="slide level2">
 <h2>Exercises</h2>
