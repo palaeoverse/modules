@@ -12,8 +12,9 @@
 
   <meta name="author" content="William Gearty">
   <meta name="author" content="Niklas Hohmann">
+  <meta name="author" content="Etienne Bacher">
   <meta name="dcterms.date" content="2026-10-06">
-  <title>3. Collaborating in GitHub using the Fork and Pull Model</title>
+  <title>3. Collaborating in GitHub</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -210,7 +211,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">3. Collaborating in GitHub using the Fork and Pull Model</h1>
+  <h1 class="title">3. Collaborating in GitHub</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -223,15 +224,87 @@ William Gearty
 Niklas Hohmann
 </div>
 </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Etienne Bacher
+</div>
+</div>
 </div>
 
   <p class="date">2026-10-06</p>
 </section>
 <section class="slide level2">
 
-<p>In this exercise you will learn how to collaborate with others using GitHub. You will work with a partner to contribute to the test repository they created on GitHub in <a href="../../../training/modules-dev/github/exercise2.html">Exercise 2</a> (and they will do the same with your repository!).</p>
+<p>In <a href="../../../training/modules-dev/github/exercise2.html">exercise 2</a>, we saw how to create a GitHub repository and how to push changes to it. We created this repo and were the only ones to modify it. It is already useful to track our personal projects using Git and GitHub, but the strength of these tools is also to facilitate collaborative coding.</p>
+<p>In this exercise, we will see how to collaborate with others using GitHub. You will work with a partner to contribute to the test repository they created on GitHub in exercise 2 (and they will do the same with your repository!).</p>
+<p>First, find a partner to work with. Get the URL of the test repository they created in Exercise 2. The URL should be something like <code>https://github.com/THEIR_USERNAME/THEIR_REPO_NAME</code> where <code>THEIR_USERNAME</code> is your partner’s GitHub username and <code>THEIR_REPO_NAME</code> is the name of the repository they created in Exercise 2. <strong>Again, you are going to your <em>partner’s</em> repository, not your own.</strong></p>
+<p>Usually, in order to modify another person’s repository, we will need to <strong>fork</strong> their repository first.</p>
+</section>
+<section id="about-forks" class="slide level2">
+<h2>About forks</h2>
+</section>
+<section id="what-is-a-fork" class="slide level2">
+<h2>What is a fork?</h2>
+<p>A fork is a copy of another user’s GitHub repository that is stored in your account. The copy of the repository is, for all intents and purposes, an exact replica of the original repository up until this point.</p>
+<p>From this point on, your fork is independent of the original. Changes to the original repository also won’t affect your fork unless you actively sync it by fetching. You can create a fork of any public repository on GitHub!</p>
+</section>
+<section id="why-a-fork-and-not-a-simple-clone" class="slide level2">
+<h2>Why a fork and not a simple clone?</h2>
+<p>You might wonder: why would I fork instead of directly cloning someone else’s repository? The main reason is related to permissions. A public repository is visible to and can be cloned by everyone, but only the author and chosen collaborators can modify it! By contrast, a fork is stored under your account, meaning that you are free to make any changes that you like to, e.g.&nbsp;add commits or branches, without affecting the original repository.</p>
+<p>If you have the right to directly modify the repository, either because you created it or because its creator gave you the rights to do so, then you don’t need to fork it before applying changes.</p>
+<p>Forking a repository allows you to develop things without breaking the original repository while you do. This is incredibly useful if you want to contribute to another project that is widely used.</p>
+<p>In summary, for a repository that you cannot directly modify:</p>
+<ul>
+<li><p>if you just want a local copy that you know you won’t modify, for instance because you just want to explore it offline without changing anything, then cloning without forking first is enough.</p></li>
+<li><p>if there is a chance that you will modify the clone at some point, then fork it first.</p></li>
+</ul>
+</section>
+<section id="the-fork-and-pull-model" class="slide level2">
+<h2>The Fork and Pull model</h2>
+<p>The workflow to follow if you want to suggest changes to a repository that you cannot modify directly is:</p>
 <ol type="1">
-<li><p>Find a partner to work with. Get the web address of the test repository they created in Exercise 2. This is the URL of their repository website. The URL should be something like <code>https://github.com/THEIR_USERNAME/THEIR_REPO_NAME</code> where <code>THEIR_USERNAME</code> is your partner’s GitHub username and <code>THEIR_REPO_NAME</code> is the name of the repository they created in Exercise 2. <strong>Again, you are going to the website for your <em>partner’s</em> repository, not your own.</strong></p></li>
+<li>create a fork of that project under your own GitHub account</li>
+<li>clone your fork to your local computer (we did this in exercise 2)</li>
+<li>develop your fork by pushing/pulling between your local computer and GitHub (we did this in exercise 2)</li>
+<li>when you are content that your new addition is ready, you fill out a pull request to merge the changes in your fork into the original repository</li>
+</ol>
+<p>In general, you should create a new branch on your fork to store changes that you want to submit to the original repository. Making one branch per type of change you want to suggest allows you to submit multiple pull requests to the same repository.</p>
+<p>The original repo’s owner(s) can then review your changes, and, if they accept them, merge it into their repository for widespread adoption. This is known as the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model">fork and pull model</a>.</p>
+<p>The diagram below illustrates the relationship between a fork (on GitHub) and a clone:</p>
+<pre class="mermaid fork-diagram" aria-label="Fork diagram: userB creates a fork of userA's repository on GitHub. userA and userB each have a clone of the repository on their local computers. Within each user's fork of the repository they have different branches (in userA's repos they are main and dev1; in userB, main and br1).">flowchart TB
+  subgraph GitHub
+    subgraph A["userA/repo"]
+      direction LR
+      A1[main] ~~~ A2[dev1] ~~~ A3[...]
+    end
+    gap[" "]:::spacer
+    subgraph B["userB/repo"]
+      direction LR
+      B1[main] ~~~ B2[br1] ~~~ B3[...]
+    end
+  end
+  subgraph CA["userA's computer"]
+    LA["userA/repo"]
+  end
+  subgraph CB["userB's computer"]
+    subgraph LB["userB/repo"]
+      direction LR
+      LB1[main] ~~~ LB2[br1] ~~~ LB3[...]
+    end
+  end
+  A -- clone --&gt; LA
+  B -- clone --&gt; LB
+  classDef userA stroke:#8a00c2,stroke-width:2px
+  classDef userB stroke:#7ab648,stroke-width:2px
+  class A,LA userA
+  class B,LB userB
+  classDef spacer fill:none,stroke:none
+</pre>
+</section>
+<section id="forking-in-practice" class="slide level2">
+<h2>Forking in practice</h2>
+<p>You should now be on your partner’s GitHub repository.</p>
+<ol type="1">
 <li><p>Click the <code>Fork</code> button in the upper right of their website. This will open the “Create a new fork” page.</p></li>
 <li><p>On the “Create a new fork” page:</p>
 <ul>
@@ -239,16 +312,6 @@ Niklas Hohmann
 <li>Leave the repository name the same. The Owner / respository name should look like <code>YOUR_USERNAME / THEIR_REPO_NAME</code>.</li>
 </ul></li>
 <li><p>Now click the green <code>Create fork</code> button in the lower right. This will create a “fork” of your partner’s repository under your own GitHub account. You will be redirected to your fork. Note the URL at the top of the webpage: it should be something like <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</code>.</p></li>
-</ol>
-</section>
-<section class="slide level2">
-<h2>About forks</h2>
-<p>A <em>fork</em> is a copy of another user’s GitHub repository. When you create the fork, you create copy of the repository under your GitHub account. The copy of the repository has the entire commit history of the repository up until that point. It is, for all intents and purposes, an exact replica of the original repository, except that the copy is now under your account.</p>
-<p>From this point on, your fork is independent of the original. Since it is under your account, you are free to make any changes that you like to — add commits or branches, delete things, etc. — without affecting the original repository. Changes to the original repository also won’t affect your fork unless you actively sync it by fetching.</p>
-<p>You can create a fork of any public repository on GitHub!</p>
-<p>The advantage of using forks is it allows you to develop things without breaking the original repository while you do. This is incredibly useful if you want to contribute to another project that is widely used: you create a fork of that project under your own GitHub account; clone your fork to your local computer; develop your fork by pushing/pulling between your local computer and GitHub. Then, when you are content that your new addition is ready, you fill out a pull request to merge the changes in your fork into the original repository (usually on its <code>main</code> branch). The original repo’s owner(s) can then review your changes, and, if they accept them, merge it into their repository for widespread adoption. This is known as the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model">fork and pull model</a>.</p>
-<p>The diagram below illustrates the relationship between a fork (on GitHub) and a clone: <img data-src="figures/fork_diagram.png" width="600" alt="Fork digram: userB creates a fork of userA’s repository on GitHub. userA and userB each have a clone of the repository on their local computers. Within each user’s fork of the repository they have different branches (in userA’s repos they are main and dev1; in userB, main and br1)."></p>
-<ol start="6" type="1">
 <li><p>You want to contribute a new development to your partner’s repository. To do so, first clone <strong>your fork</strong> of their repository to your local computer:</p>
 <ol type="a">
 <li><p>If you are not already there, go to your fork’s website on GitHub. The web address should be something like <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</code>.</p></li>
@@ -282,8 +345,8 @@ Niklas Hohmann
 <li><p>Use your text editor to open <code>mymath.R</code> and add the following lines to it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a></span>
 <span id="cb1-2"><a aria-label="2"></a>multiply <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
-<span id="cb1-3"><a aria-label="3"></a>    <span class="fu">return</span> (a<span class="sc">*</span>b)</span>
-<span id="cb1-4"><a aria-label="4"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a aria-label="3"></a>   <span class="fu">return</span> (a<span class="sc">*</span>b)</span>
+<span id="cb1-4"><a aria-label="4"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save the changes.</p></li>
 <li><p>Commit your changes using GitHub Desktop.</p></li>
 <li><p>This commit (and the <code>dev2</code> branch) currently only exists on your local copy of your fork. To push it to <em>your fork</em> on GitHub, click the “Publish branch” button on GitHub Desktop.</p></li>
@@ -299,6 +362,31 @@ Niklas Hohmann
 <li><p>Update your local copy of your fork. Go to GitHub Desktop and click “Fetch origin”. Now switch to your main branch and click “Pull origin” button to pull in the changes.</p></li>
 <li><p>Now that your changes have been merged on to your partner’s main branch and you’ve synced your fork both on GitHub and your computer, you’re free to delete your development branch on your computer using GitHub Desktop.</p></li>
 </ol>
+<!-- Must come after the <pre>: the loop only mounts elements already in the DOM -->
+<script src="https://cdn.jsdelivr.net/npm/pele@1/dist/pele.global.js"></script>
+<script>
+  // A fork edge would stack the two GitHub repos vertically (pele ignores `direction` in
+  // subgraphs with outside edges), so draw it by hand once they sit side by side
+  const drawFork = (el) => {
+    const box = (id) => el.querySelector(`.pele-cluster[data-id="${id}"] rect`).getBBox();
+    const [a, b] = [box('A'), box('B')];
+    const [x1, x2, y] = [a.x + a.width, b.x, a.y + a.height / 2];
+    const edge = el.querySelector('.pele-edge').cloneNode(true);
+    const [line, marker] = edge.querySelectorAll('path');
+    line.setAttribute('d', `M${x1},${y}H${x2 - 7}`);
+    marker.setAttribute('d', `M${x2},${y}L${x2 - 8},${y - 3.36}L${x2 - 8},${y + 3.36}Z`);
+    el.querySelector('.pele-edges').append(edge);
+    const label = el.querySelector('.pele-edge-label').cloneNode(true);
+    const text = label.querySelector('text');
+    label.querySelector('rect').remove();
+    text.textContent = 'fork';
+    text.setAttribute('x', (x1 + x2) / 2);
+    text.setAttribute('y', y - 8);
+    el.querySelector('.pele-edge-labels').append(label);
+  };
+  // onRender because pele redraws the SVG on resize
+  for (const el of document.querySelectorAll('pre.fork-diagram')) pele.mount(el, el.textContent, { onRender: () => drawFork(el) });
+</script>
 
 
 </section>
