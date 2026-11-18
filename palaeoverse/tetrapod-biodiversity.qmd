@@ -35,7 +35,7 @@ required-packages: false
 knitr::knit_hooks$set(par = function(before, options, envir) {
   if (before && isTRUE(options$par)) {
     # bottom, left, top, right (lines)
-    par(mar = c(4, 4, 2, 1),
+    par(mar = c(7.1, 6.1, 4.1, 2.1),
     # figure background
         bg = "transparent")
   }
@@ -174,7 +174,7 @@ bins <- time_bins(interval = c("Carboniferous", "Permian"),
                   plot = TRUE)
 ```
 
-The function gives us the option to generate a plot of our time bins -- here we can see some variation in the duration of our different stages, with particularly long stages in the Early Carboniferous and shorter ones across the Carboniferous-Permian boundary. This is a form of structure inherent to our dataset, and something we should bear in mind for our downstream analyses.
+The function gives us the option to generate a plot of our time bins -- here we can see some variation in the duration of our different stages, with particularly long stages in the Early Carboniferous and shorter ones across the Carboniferous--Permian boundary. This is a form of structure inherent to our dataset, and something we should bear in mind for our downstream analyses.
 
 We can also take a look at the structure of the outputted table which describes the time bins.
 
@@ -295,7 +295,7 @@ Why are we getting an error when we try to bin our occurrences?
 ::: {.callout-tip collapse="true"}
 ## Exercise 3: Answer
 
-If we remember back to our initial exploration of the data, the youngest occurrences in the dataset are Early Triassic in age. This sits outside of the Carboniferous-Permian interval across which we have generated our time bins. The function is giving us an error because these Early Triassic occurrences are too young to be placed into any of the provided time bins.
+If we remember back to our initial exploration of the data, the youngest occurrences in the dataset are Early Triassic in age. This sits outside of the Carboniferous--Permian interval across which we have generated our time bins. The function is giving us an error because these Early Triassic occurrences are too young to be placed into any of the provided time bins.
 :::
 
 We will remove these problematic occurrences and try again:
@@ -352,7 +352,7 @@ We can use `palaeoverse::palaeorotate()` to use a Global Plate Model (GPM) to in
 
 # Palaeorotate occurrences
 mid_tetrapods <- palaeorotate(occdf = mid_tetrapods, age = "bin_midpoint",
-                              method = "grid", model = "PALEOMAP")
+                              method = "point", model = "PALEOMAP")
 ```
 
 Let's now take a look at our new columns containing the palaeocoordinates.
@@ -644,12 +644,14 @@ space_tetrapods_mean <- group_apply(space_tetrapods, "bin_midpoint",
 colnames(space_tetrapods_mean) <- c("mean_area", "bin_midpoint")
 # Create a plot of average range size through time
 plot(space_tetrapods_mean$bin_midpoint,
-     space_tetrapods_mean$mean_area, # add the points
+     space_tetrapods_mean$mean_area,
      axes = FALSE,
+     # reverse the x-axis
      xlim = rev(range(as.numeric(space_tetrapods_mean$bin_midpoint),
-                      na.rm = TRUE)), # reverse the x-axis
-     xlab = " ", ylab = expression("Average range size of tetrapod genera
-                                   (km"^2~")"), # axes labels
+                      na.rm = TRUE)),
+     # axes labels
+     xlab = " ", 
+     ylab = expression("Average range size of tetrapod genera (km"^2*")"),
      pch = 19, col = "#0e826f") # point style and colour
 box()
 axis(2) # add a normal axis to the left side
