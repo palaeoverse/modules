@@ -22,8 +22,8 @@ editor:
 
 This section shows how to do [Exercise 2](../exercise2.qmd) using `git` via the command-line interface (CLI). See the linked exercise for the narrative. Steps done on github.com are the same as in the linked exercise and are not repeated here.
 
-::: {.callout-important title="ssh key setup"}
-To push to GitHub from the command line, you need an `ssh` key uploaded to GitHub. If you have not done that yet, follow the [ssh setup instructions](ssh_setup.qmd) before starting this exercise.
+::: {.callout-important title="GitHub authentication"}
+To push to GitHub from the command line, `git` needs to authenticate you. If you have not done that yet, follow the [authentication instructions](index.qmd#github-authentication) before starting this exercise.
 :::
 
 ### Part 1: Adding a repository on GitHub
@@ -32,17 +32,17 @@ To push to GitHub from the command line, you need an `ssh` key uploaded to GitHu
 
 1. Go to <https://github.com/new> and create a repository called `test-git-repo`, with the description "My test repository" and "Private" visibility. **Leave "Add a README file" unchecked and do not choose a license**: the repository must be empty, since its content comes from your local repository.
 
-1. On the page of your new repository, copy the URL in the "SSH" tab of the "Quick setup" box. It should be something like `git@github.com:YOUR_USERNAME/test-git-repo.git`.
+1. On the page of your new repository, copy the URL in the "HTTPS" tab of the "Quick setup" box. It should be something like `https://github.com/YOUR_USERNAME/test-git-repo.git`.
 
 1. In your terminal, go to the `test-git-repo` you created in Exercise 1, register the GitHub repository as the remote called `origin`, and push your `main` branch to it:
 
    ```bash
    cd ~/test-git-repo
-   git remote add origin SSH_URL
+   git remote add origin REPO_URL
    git push -u origin main
    ```
 
-   where `SSH_URL` is the URL you copied. `-u origin main` makes your local `main` *track* the `main` branch on `origin`, so that later you can simply run `git push` and `git pull`.
+   where `REPO_URL` is the URL you copied. `-u origin main` makes your local `main` *track* the `main` branch on `origin`, so that later you can simply run `git push` and `git pull`.
 
 1. Refresh the page of your repository on GitHub: it now contains your files and history.
 
@@ -52,15 +52,15 @@ This is done entirely on github.com: follow the steps in [Exercise 2](../exercis
 
 ### Part 2: Cloning a repository
 
-1. On the page of the repository you created on GitHub, click the green `<> Code` button, select the "SSH" tab, and copy the URL.
+1. On the page of the repository you created on GitHub, click the green `<> Code` button, select the "HTTPS" tab, and copy the URL.
 
 1. In your terminal, `cd` to the folder where you want your local copy of the repository to live, then clone it:
 
    ```bash
-   git clone SSH_URL
+   git clone REPO_URL
    ```
 
-   where `SSH_URL` is the URL you copied.
+   where `REPO_URL` is the URL you copied.
 
 1. This creates a folder with the same name as your repository. `cd` into it and run `ls`: you should see the `README.md` and `LICENSE` files.
 

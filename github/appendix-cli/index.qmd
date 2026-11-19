@@ -15,11 +15,19 @@ may also find the CLI to be more efficient to work with.
 
 The following should be done *before* doing the exercises below.
 
-### GitHub ssh keys
+### GitHub authentication
 
-In exercises 2 and 3 you will be using GitHub to "push" and "pull" commits between your local computer and GitHub's servers. This requires authentication to be setup. For these purposes we suggest using ssh keys. To set that up, follow the instructions here:
+In exercises 2 and 3 you will be using GitHub to "push" and "pull" commits between your local computer and GitHub's servers over HTTPS. Pushing requires `git` to authenticate you, but GitHub doesn't accept your account password for this.
 
-- [Setup ssh key for GitHub](ssh_setup.qmd)
+- **On Windows**, Git for Windows comes with the Git Credential Manager: the first time you push, a browser window opens to log in to GitHub, and your credentials are stored for next times. There is nothing to set up.
+
+- **On Mac or Linux**, the simplest way is to install the [GitHub CLI](https://cli.github.com/) and run:
+
+  ```bash
+  gh auth login
+  ```
+
+  Select "GitHub.com", then "HTTPS", answer "Yes" when asked to authenticate Git with your GitHub credentials, and log in with your web browser.
 
 ### Git configuration
 
