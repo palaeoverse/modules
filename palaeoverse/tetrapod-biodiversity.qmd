@@ -388,7 +388,7 @@ We can see that each occurrence has been placed into a grid cell, described usin
 
 ## Taxonomic wrangling
 
-Fossil occurrence data are often messy, and the taxonomic information attached to them is no exception. Inspecting and cleaning these data is a fundamental step in ensuring that counts of unique taxa through time are accurate. For example, without it, the same species can be counted multiple times due to slight spelling differences. The `palaeoverse::tax_check()` function helps you find such issues by flagging and counting potential spelling variants of the same taxon. Variants are checked within alphabetical groups by default, or within higher taxonomic groups if these are provided:
+Fossil occurrence data are often messy, and the taxonomic information attached to them is no exception. Inspecting and cleaning these data is a fundamental step in ensuring that counts of unique taxa through time are accurate. For example, without it, the same species can be counted multiple times due to slight spelling differences. The `palaeoverse::tax_check()` function helps you find such issues by flagging similar chracter strings, which may potentially be spelling variants (or typos) of the same taxon. Variants are provided within alphabetical groups by default, or within higher taxonomic groups if these are provided:
 
 ```{r}
 #| label: tax-check
@@ -399,7 +399,7 @@ Fossil occurrence data are often messy, and the taxonomic information attached t
 tax_check(taxdf = tetrapods, name = "genus", dis = 0.05)
 ```
 
-In our first call to `tax_check()`, two pairs of genus names are flagged: *Dvinosaurus*/*Dinosaurus* and *Varanopus*/*Varanops*. Without any prior knowledge, it would be easy to assume that each pair is a spelling variant of the same name. However, on closer inspection, we can see that these are distinct genera belonging to different families:
+In our `tax_check()` output, two pairs of genus names are flagged: *Dvinosaurus*/*Dinosaurus* and *Varanopus*/*Varanops*. Without any prior knowledge, it would be easy to assume that each pair is a spelling variant of the same name. However, on closer inspection, we can see that these are distinct genera belonging to different families:
 
 ```{r}
 #| label: tax-check-families
@@ -425,7 +425,7 @@ If we inspect `tetrapods` again, this time grouping by family, no names are flag
 tax_check(taxdf = tetrapods, name = "genus", group = "family", dis = 0.05)
 ```
 
-In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g. genera or species); however, this can result in some useful information being discarded. The `palaeoverse::tax_unique()` function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:
+Now that we know our taxonomic names are clean, we can start thinking about how to identify and count unique taxa. In many cases, palaeobiologists count unique taxa by retaining only unique occurrences identified to a given taxonomic resolution (e.g. genera or species); however, this can result in some useful information being discarded. The `palaeoverse::tax_unique()` function retains occurrences identified to a coarser taxonomic resolution which are not already represented within the dataset. Take, for example, the following occurrences:
 
 - *Albertosaurus sarcophagus*
 - *Ankylosaurus* sp.
@@ -632,13 +632,13 @@ As you can see, the combination of `group_apply` and `tax_range_space` produces 
 ::: {.callout-caution}
 ## Exercise 6: Area Zero
 
-What does it mean for a convex hull to have an area of `0`?
+What does it mean for a convex hull to have an `area` of `0`?
 :::
 
 ::: {.callout-tip collapse="true"}
 ## Exercise 6: Answer
 
-A value of `0` means the convex hull has no area, because it consists of a single point - i.e. there is only a single occurrence of that genus in that time bin.
+A value of `0` means the convex hull has no volume, because it consists of a single point - i.e. there is only a single occurrence of that genus in that time bin.
 :::
 
 From this information we can now plot how the average range size of tetrapods changed throughout the Carboniferous and Permian:
