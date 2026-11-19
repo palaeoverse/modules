@@ -12,7 +12,7 @@
 
   <meta name="author" content="Lewis A. Jones">
   <meta name="author" content="William Gearty">
-  <meta name="dcterms.date" content="2026-11-12">
+  <meta name="dcterms.date" content="2026-11-19">
   <title>Getting started with rphylopic</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -197,6 +197,7 @@
       margin-right: 0; 
     }
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
   <style>
   .reveal .slides section div.callout.callout-style-simple,
   .reveal .slides section div.callout.callout-style-default { font-size: inherit; }
@@ -234,7 +235,7 @@ William Gearty
 </div>
 </div>
 
-  <p class="date">2026-11-12</p>
+  <p class="date">2026-11-19</p>
 </section>
 <section class="slide level2">
 
@@ -498,9 +499,9 @@ URL: https://images.phylopic.org/images/113d2520-9f92-456f-b305-52ee3986172d/vec
 </div>
 </div>
 <p>Let’s see what those look like altogether:</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">ggplot2</a></li><li><a href="#tabset-1-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-1-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -718,9 +719,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <p>That’s looking better.</p>
 <p>Now, let’s draft the plot that we want to make. In this case, we’re interested in whether penguins’ flipper length generally increases in line with bill length within each species:</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">ggplot2</a></li><li><a href="#tabset-2-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-2-1">
 <p><strong>Tip:</strong> ggplot2’s <code>facet_wrap()</code> function splits a dataset into multiple panels based on a categorical variable and arranges them in a compact 2D grid. We can make use of this here for visualising each of our species, creating a plot panel for each.</p>
 <div class="cell">
@@ -771,9 +772,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>That’s not a bad basic plot and we can definitely see a general trend, but we can make it nicer by adding a penguin silhouette. Sadly, we don’t have a separate silhouette for each species (<a href="https://contribute.phylopic.org">although we could make one…</a>), so we’ll place a single silhouette in the top panel using the <code>geom_phylopic</code> (ggplot2) and <code>add_phylopic_base()</code> (base R) functions. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">ggplot2</a></li><li><a href="#tabset-3-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-3-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="co"># Create object for plotting penguin</span></span>
@@ -828,9 +829,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>Isn’t that nifty! But we can go a step further: what if we used little penguins instead of points? We can do this with <code>geom_phylopic()</code> (ggplot2) and <code>add_phylopic_base()</code> (base R). Since we want the same image for every x-y pair, we can specify <code>img = penguin_rot</code> once more:</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">ggplot2</a></li><li><a href="#tabset-4-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-4-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
@@ -880,9 +881,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>Well… those silhouettes are perhaps a little… big! By default, <code>geom_phylopic()</code> and <code>add_phylopic_base()</code> makes each silhouette as tall as the plot, which is far too large here. Instead, we can specify a height or width to use (in y-axis or x-axis units, respectively):</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">ggplot2</a></li><li><a href="#tabset-5-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-5-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins_subset) <span class="sc">+</span></span>
@@ -952,9 +953,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <div class="callout-content">
 <div class="fragment">
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">ggplot2</a></li><li><a href="#tabset-6-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-6-1">
 <p>With <code>geom_phylopic()</code>, rphylopic automatically rescales values between 1 and 6. So, we can just pass <code>height = body_mass_g</code>.</p>
 <p><strong>Hint:</strong> If the defaults don’t suit your data, you can also adjust the scaling with <code>scale_height_continuous()</code> (or <code>scale_width_continuous()</code> for the width aesthetic), used just like <code>scale_size_continuous()</code>. We’ll use the defaults here:</p>
@@ -1030,9 +1031,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <div class="callout-content">
 <div class="fragment">
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">ggplot2</a></li><li><a href="#tabset-7-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-7-1">
 <p><strong>Tip:</strong> the default for <code>geom_phylopic()</code> is to not display a legend, so we need to set <code>show.legend = TRUE</code>. However, we only want a legend for the fill colours, so we use <code>guide = "none"</code> for the size scale. We also want to show the fill color in the legend, so we need to override the shape:</p>
 <div class="cell">
@@ -1165,9 +1166,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <p>Before we can plot our fossil occurrences on a map, we need to prepare two spatial datasets. First, we use <code>ne_countries()</code> from the <a href="http://ropensci.github.io/rnaturalearth/">rnaturalearth</a> package to download a world map of country boundaries from Natural Earth, returned as an sf (simple features) object. Second, we convert our Diplocaulus occurrence data from a standard data frame into an sf object using <code>st_as_sf()</code>. This tells R which columns hold the coordinates and which coordinate reference system they use; <code>crs = 4326</code> specifies WGS84, the standard longitude/latitude system. Doing this means R treats our occurrences as true spatial points rather than just numbers, ensuring they overlay correctly on the world map. With both layers in the same format and coordinate system, we can then plot them together.</p>
 <p>Now, let’s plot those occurrences on a world map. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill colour, the more occurrences in that geographic location.</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">ggplot2</a></li><li><a href="#tabset-8-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-8-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-label="1"></a><span class="co"># Plot</span></span>
@@ -1206,9 +1207,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>Now let’s replace those points with silhouettes.</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">ggplot2</a></li><li><a href="#tabset-9-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-9-1">
 <p>Note that while we use the genus name as the <code>name</code> aesthetic here, we easily could have done <code>name = "Diplocaulus"</code> outside of the <code>aes()</code> call instead. However, if we were plotting occurrences of multiple genera, we’d definitely want to plot them as different silhouettes using <code>name = genus</code> within the <code>aes()</code> call.</p>
 <div class="cell">
@@ -1252,9 +1253,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">ggplot2</a></li><li><a href="#tabset-10-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-10-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-label="1"></a><span class="co"># Target projection (Robinson)</span></span>
@@ -1542,9 +1543,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a aria-label="1"></a>vertebrate_data<span class="sc">$</span>svg[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> vertebrate_data<span class="sc">$</span>svg[[<span class="dv">1</span>]])</span>
 <span id="cb74-2"><a aria-label="2"></a>vertebrate_data<span class="sc">$</span>svg[[<span class="dv">8</span>]] <span class="ot">&lt;-</span> <span class="fu">rotate_phylopic</span>(<span class="at">img =</span> vertebrate_data<span class="sc">$</span>svg[[<span class="dv">8</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-11" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-11-1">ggplot2</a></li><li><a href="#tabset-11-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-11-1">
 <p>Now let’s go ahead and plot our phylogeny with the <a href="https://www.bioconductor.org/packages/ggtree">ggtree</a> package:</p>
 <div class="cell">
@@ -1578,9 +1579,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>Hmm… that’s a bit boring. Let’s add a geological timescale!</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-12" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-12-1">ggplot2</a></li><li><a href="#tabset-12-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-12-1">
 <p>Using the <a href="https://williamgearty.com/deeptime/">deeptime</a> R package, we can add the geological timescale to the background of our plot with <code>coord_geo_polar()</code>. Note that the time axis must be reversed with <code>revts()</code> for this to work, as <code>coord_geo_polar()</code> expects time to run in the opposite direction to how it’s usually plotted. Geologists and palaeontologists, after all, tend to root themselves in the past!</p>
 <div class="cell">
@@ -1622,9 +1623,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>That’s looking a lot prettier! Let’s go ahead and add our silhouettes now.</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-13" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-13-1">ggplot2</a></li><li><a href="#tabset-13-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-13-1">
 <p>When using <code>ggplot2</code>, we first attach the <code>vertebrate_data</code> object with the <code>%&lt;+%</code> operator from <a href="https://bioconductor.org/packages/release/bioc/html/ggtree.html">ggtree</a>. We can then use <code>geom_phylopic()</code> to plot our silhouettes from the <code>svg</code> column.</p>
 <div class="cell">
@@ -1667,9 +1668,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 <p>Note that only a single height is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let’s fix some of the silhouettes by rotating them 90 degrees:</p>
 <p>And now the finished product:</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1">ggplot2</a></li><li><a href="#tabset-14-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-14-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-label="1"></a><span class="fu">revts</span>(<span class="fu">ggtree</span>(vertebrate.tree, <span class="at">linewidth =</span> <span class="dv">1</span>)) <span class="sc">%&lt;+%</span> vertebrate_data <span class="sc">+</span></span>
@@ -1714,9 +1715,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 <h2>Network plots</h2>
 <p>The <a href="https://ggraph.data-imaginist.com">ggraph</a> package extends ggplot2 to network graphs, and <code>geom_phylopic()</code> can be dropped into a <code>ggraph()</code> plot to render nodes as PhyloPic silhouettes. This is especially useful for food webs, taxonomic networks, and other graph-structured data where nodes represent organisms.</p>
 <p>Let’s demonstrate with a simple Permian food web. First, we set up the network:</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-15" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-15-1">ggplot2</a></li><li><a href="#tabset-15-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-15-1">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-label="1"></a><span class="co"># Load libraries</span></span>
@@ -1751,9 +1752,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>Let’s now visualise that simple network:</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-16" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-16-1">ggplot2</a></li><li><a href="#tabset-16-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-16-1">
 <p>Each vertex name in g corresponds to a taxonomic name we can pass to PhyloPic. Because geom_phylopic() accepts the name aesthetic, we can map vertex names directly to silhouettes. The x and y aesthetics are also inherited from the ggraph initialization, but still need to be defined explicitly.</p>
 <div class="cell">
@@ -1798,9 +1799,9 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 </div>
 </div>
 <p>And add a little colour to our lives:</p>
-<div class="panel-tabset">
+<div class="panel-tabset" data-group="plot-type">
 <ul id="tabset-17" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-17-1">ggplot2</a></li><li><a href="#tabset-17-2">Base R</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="plot-type">
 <div id="tabset-17-1">
 <p>Many customisation options for your silhouettes are also available via <code>geom_phylopic()</code>, either as aesthetics (e.g.&nbsp;colour, angle) or as fixed arguments. For example, here we give each silhouette a different colour and apply a small fixed angle rotation:</p>
 <div class="cell">
@@ -2105,6 +2106,13 @@ $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
         });
       })();
     </script>
+    <div class="title-footer">
+      <span><a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i>&nbsp;&nbsp;palaeoverse</a></span>
+      <span><a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i>&nbsp;&nbsp;palaeoverse.bsky.social</a></span>
+      <span><a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i>&nbsp;&nbsp;Palaeoverse</a></span>
+      <span><a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i>&nbsp;&nbsp;palaeoverse</a></span>
+      <span><a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i>&nbsp;&nbsp;ThePalaeoverse</a></span>
+    </div>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
