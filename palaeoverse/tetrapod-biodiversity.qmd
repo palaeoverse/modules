@@ -399,12 +399,20 @@ Fossil occurrence data are often messy, and the taxonomic information attached t
 tax_check(taxdf = tetrapods, name = "genus", dis = 0.05)
 ```
 
-In our first call to `tax_check()`, two pairs of genus names are flagged: *Dvinosaurus*/*Dinosaurus* and *Varanopus*/*Varanops*. Without any prior knowledge, it would be easy to assume that each pair is a spelling variant of the same name. However, on closer inspection of the taxonomic literature, we find that these are distinct genera belonging to different families:
+In our first call to `tax_check()`, two pairs of genus names are flagged: *Dvinosaurus*/*Dinosaurus* and *Varanopus*/*Varanops*. Without any prior knowledge, it would be easy to assume that each pair is a spelling variant of the same name. However, on closer inspection, we can see that these are distinct genera belonging to different families:
 
-- *Dinosaurus* belongs to the Phthinosuchidae
-- *Dvinosaurus* belongs to the Dvinosauridae
-- *Varanops* belongs to the Varanopidae
-- *Varanopus* belongs to the Captorhinidae
+```{r}
+#| label: tax-check-families
+#| output-fold: true
+#| output-summary: "Output"
+
+# List of flagged genera
+flagged_genera <- c("Dinosaurus", "Dvinosaurus", "Varanops", "Varanopus")
+
+# Find families of flagged genera
+check_flagged_genera <- subset(tetrapods, genus %in% flagged_genera)
+unique(check_flagged_genera[, c("genus", "family")])
+```
 
 If we inspect `tetrapods` again, this time grouping by family, no names are flagged, so we're good to move on:
 
