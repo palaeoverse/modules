@@ -104,9 +104,14 @@ This module is divided in three parts:
 
 ## Prerequisites
 
-The following should be done *before* doing the exercises above.
+The following should be done *before* doing the exercises above. 
 
-For this tutorial, we will be using [GitHub Desktop](https://github.com/apps/desktop).
+Git and GitHub can be used via GitHub Desktop (a graphical interface) or via the command-line interface (CLI). This tutorial shows how to use both.
+
+::: {.panel-tabset}
+### GitHub Desktop
+
+Install [GitHub Desktop](https://github.com/apps/desktop).
 
 ::: {.callout-note title="See detailed installation instructions" collapse="true"}
 To install:
@@ -134,9 +139,32 @@ The first time you open GitHub Desktop you will need to sign into GitHub.
 
 You will next be prompted with a "Let's get started!" screen that will ask you to add a repository to GitHub Desktop. **Stop here** and go to  [Part 1](exercise1.qmd).
 
-## Appendix
+### Command line
 
-The above exercises all use GitHub Desktop. In the [appendix](appendix-cli/index.qmd), the exercises are repeated using the command-line interface for `git`.
+#### Git configuration
+
+Before doing the exercises in this session, you'll need to tell `git` what your name and email are, so that it creates commits with the appropriate author information. To do that, open a terminal and run the following (it doesn't matter which directory you run these from), but replacing `YOUR NAME` with your name and `YOUR_EMAIL_ADDRESS` with your email address:
+
+```bash
+git config --global user.name "YOUR NAME"
+git config --global user.email "YOUR_EMAIL_ADDRESS"
+```
+
+#### GitHub authentication
+
+In exercises 2 and 3 you will be using GitHub to "push" and "pull" commits between your local computer and GitHub's servers over HTTPS. Pushing requires `git` to authenticate you, but GitHub doesn't accept your account password for this.
+
+- **On Windows**, Git for Windows comes with the Git Credential Manager: the first time you push, a browser window opens to log in to GitHub, and your credentials are stored for next times. There is nothing to set up.
+
+- **On Mac or Linux**, the simplest way is to install the [GitHub CLI](https://cli.github.com/) and run:
+
+  ```bash
+  gh auth login
+  ```
+
+  Select "GitHub.com", then "HTTPS", answer "Yes" when asked to authenticate Git with your GitHub credentials, and log in with your web browser.
+:::
+
 
 ## Acknowledgements
 
