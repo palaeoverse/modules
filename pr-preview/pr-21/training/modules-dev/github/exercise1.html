@@ -401,7 +401,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Each step can be done with GitHub Desktop or with <code>git</code> on the command line: use the tabs below to switch between the two. To use GitHub Desktop, you will need to install and setup GitHub Desktop. Follow the instructions <a href="../../../training/modules-dev/github/index.html#prerequisites">here</a>.</p>
+<p>Each step can be done with GitHub Desktop or with <code>git</code> on the command line. When the instructions differ, use the tabs to switch between the two. To use GitHub Desktop, you will need to install and setup GitHub Desktop. Follow the instructions <a href="../../../training/modules-dev/github/index.html#prerequisites">here</a>.</p>
 </div>
 </div>
 <section id="how-does-git-work" class="level2">
@@ -422,11 +422,13 @@ gitGraph
 <section id="i.-initialising-and-adding-files" class="level2">
 <h2 data-anchor-id="i.-initialising-and-adding-files">I. Initialising and adding files</h2>
 <p>In this section, we will initialise a Git repository from scratch and start tracking some files.</p>
+<ol type="1">
+<li><p>Create a new repository called <code>test-git-repo</code>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<ol type="1">
+<ol type="a">
 <li><p>If it’s not already open, open GitHub Desktop.</p></li>
 <li><p>If this is your first time using GitHub Desktop you should see a screen with “Let’s get started!” at the top:</p>
 <p><img src="figures/ghd-start.png" class="img-fluid"></p>
@@ -447,8 +449,27 @@ Note
 </div></li>
 <li><p>You will see a window that has “No local changes” at the top:</p>
 <p><img src="figures/ghd-initial_commit.png" class="img-fluid"></p>
-<p>In the upper left you will see “Current repository” with “test-git-repo” underneath it, indicating that you are currently looking at your test-git-repo. This is how you will interact with your new repository!</p>
-<p>Note that your repository is a folder on your computer, just like any others. You can see this if you click on the button labelled “Show in Explorer” (on Windows) / “Show in Finder” (on a Mac). At the moment, there are no files in your repository, although there is a <em>hidden</em> folder called <code>.git</code> and a <em>hidden</em> file called <code>.gitattributes</code>. <strong>You never touch these files</strong>; they are what <code>git</code> use to keep track of the contents of this folder. These are what make this folder a repository.</p></li>
+<p>In the upper left you will see “Current repository” with “test-git-repo” underneath it, indicating that you are currently looking at your test-git-repo. This is how you will interact with your new repository! You can see the repository folder by clicking on the button labelled “Show in Explorer” (on Windows) / “Show in Finder” (on a Mac).</p></li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Create a folder called <code>test-git-repo</code> (here, in your home directory), move into it, and initialise a Git repository in it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> test-git-repo</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> test-git-repo</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git init</code> confirms that the repository was created:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Initialized empty Git repository in /home/you/test-git-repo/.git/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git status</code> shows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>On branch main</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>nothing to commit (create/copy files and use "git add" to track)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>Note that your repository is a folder on your computer, just like any others. At the moment, there are no files in your repository, although there is a <em>hidden</em> folder called <code>.git</code> (and, with GitHub Desktop, a <em>hidden</em> file called <code>.gitattributes</code>). <strong>You never touch these files</strong>; they are what <code>git</code> use to keep track of the contents of this folder. These are what make this folder a repository.</p></li>
 <li><p>Let’s add some files to your new repository for Git to track. In the following steps, we’ll pretend that we’re a writer working on a script for a new movie. We’re going to use a simple text editor to create a file called <code>story.txt</code>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -501,13 +522,52 @@ Warning
 </div>
 </div></li>
 <li><p>Save your changes by clicking File -&gt; Save, or by using the keyboard shortcut <kbd>Ctrl</kbd>+<kbd>S</kbd> (on Windows) / <kbd>⌘</kbd>+<kbd>S</kbd> (on Mac).</p></li>
-<li><p>Now go back to GitHub Desktop. You’ll notice that it has changed from “No local changes” to showing a “Changes” tab with <code>story.txt</code> listed with its contents:</p>
+<li><p>Let’s see what Git thinks of this new file:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Go back to GitHub Desktop. You’ll notice that it has changed from “No local changes” to showing a “Changes” tab with <code>story.txt</code> listed with its contents:</p>
 <p><img src="figures/ghd-first_change.png" class="img-fluid"></p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>On branch main</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Untracked files:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to include in what will be committed)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        story.txt</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>nothing added to commit but untracked files present (use "git add" to track)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
 <p><code>git</code> knows you have a file in the directory called <code>story.txt</code>, but it isn’t tracking it yet!</p></li>
-<li><p>Let’s tell <code>git</code> to start tracking <code>story.txt</code> by making a <em>commit</em>. If it isn’t already, click the box next to “1 changed file”. When you do, you’ll notice that the “Summary (required)” box automatically changes to “Create story.txt”:</p>
+<li><p>Let’s tell <code>git</code> to start tracking <code>story.txt</code> by making a <em>commit</em>. Each commit has a <em>commit message</em>: this is text that will be added to the commit describing what was done. Here, we’ll use “Create story.txt”.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>If it isn’t already, click the box next to “1 changed file”. When you do, you’ll notice that the “Summary (required)” box automatically changes to “Create story.txt”:</p>
 <p><img src="figures/ghd-first_commit_stage.png" class="img-fluid"></p>
-<p>The summary box and the optional “Description” box below constitute the <em>commit message</em>. This is text that will be added to the commit describing what was done. In this case, GitHub Desktop automatically provides a default message of “Create story.txt”. That’s a good description of what we’ve done, so let’s keep it.</p></li>
-<li><p>Now click the “Commit 1 file to main” button. When you do, the window will automatically change back to “No local changes”. Congratulations, you’ve made your first <code>git</code> commit!</p>
+<p>The summary box and the optional “Description” box below constitute the commit message. In this case, GitHub Desktop automatically provides a default message of “Create story.txt”. That’s a good description of what we’ve done, so let’s keep it.</p>
+<p>Now click the “Commit 1 file to main” button. When you do, the window will automatically change back to “No local changes”.</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p>First, <em>stage</em> <code>story.txt</code>, i.e.&nbsp;add it to the next commit, then commit it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add story.txt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create story.txt"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git commit</code> prints a summary of the commit. <code>17b2095</code> is the start of its hash, which identifies it (yours will be different):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>[main (root-commit) 17b2095] Create story.txt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> 1 file changed, 2 insertions(+)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a> create mode 100644 story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git status</code> now says <code>nothing to commit, working tree clean</code>.</p>
+</div>
+</div>
+</div>
+<p>Congratulations, you’ve made your first <code>git</code> commit!</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -521,42 +581,27 @@ Warning
 <p>A commit creates a snapshot of the files you committed. Every commit has a commit message, an author, and a unique hash identifying that change. Git keeps a <em>history</em> of all commits made in a repository.</p>
 </div>
 </div></li>
-<li><p>You can view the history of your commits by clicking on the “History” tab:</p>
+<li><p>You can view the history of your commits:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p>Click on the “History” tab:</p>
 <p><img src="figures/ghd-first_commit_history.png" class="img-fluid"></p>
-<p>In this case, there are two commits: an initial commit that was created by GitHub Desktop when the repository was created, and the commit you just made to create <code>story.txt</code>.</p></li>
+<p>In this case, there are two commits: an initial commit that was created by GitHub Desktop when the repository was created, and the commit you just made to create <code>story.txt</code>.</p>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>commit 17b2095e7b6ed25600be638ed5f02749ddb94a3d</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Author: Your Name &lt;you@example.com&gt;</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Date:   Tue Oct 6 10:03:00 2026 +0200</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Unlike GitHub Desktop, <code>git init</code> doesn’t create an “Initial commit”, so there is only the commit you just made.</p>
+</div>
+</div>
+</div></li>
 </ol>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<ol type="1">
-<li><p>Create a folder called <code>test-git-repo</code> (here, in your home directory) and move into it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> test-git-repo</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> test-git-repo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Initialise a Git repository in this folder:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git status</code> shows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>On branch main</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>No commits yet</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>nothing to commit (create/copy files and use "git add" to track)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Use your text editor to create <code>story.txt</code> in <code>test-git-repo</code> with the following content (with a new line after the first “far,”):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Once upon a time, in a land far,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>far away...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git status</code> now lists <code>story.txt</code> under <code>Untracked files</code>: <code>git</code> sees the file but doesn’t track it yet.</p></li>
-<li><p>Stage <code>story.txt</code>, i.e.&nbsp;add it to the next commit:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git status</code> now lists it under <code>Changes to be committed</code>.</p></li>
-<li><p>Commit it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create story.txt"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git status</code> now says <code>nothing to commit, working tree clean</code>. Congratulations, you’ve made your first commit!</p></li>
-<li><p>View the history of your commits with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unlike GitHub Desktop, <code>git init</code> doesn’t create an “Initial commit”, so there is only the commit you just made.</p></li>
-</ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -598,13 +643,12 @@ far away...</code></pre>
 <p>Simply saving changes to a file will not result in a new snapshot of it! To tell Git to create a snapshot for preservation <strong>you have to create a commit.</strong> If you make further changes to your file without committing in between, the intermediate changes will not be tracked.</p>
 </div>
 </div></li>
-</ol>
+<li><p>Let’s see what lines have changed in <code>story.txt</code> since the last commit. This is called a <em>diff</em>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Command line</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<ol start="2" type="1">
-<li><p>Go back to GitHub Desktop. Notice that a yellow box with a dot has appeared next to <code>story.txt</code>. If you click on story, you should now see a <em>diff</em> that shows what lines have changed in <code>story.txt</code>:</p>
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<p>Go back to GitHub Desktop. Notice that a yellow box with a dot has appeared next to <code>story.txt</code>. If you click on story, you should now see the diff:</p>
 <p><img src="figures/ghd-story_uncommitted_change.png" class="img-fluid"></p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
@@ -622,25 +666,63 @@ far away...</code></pre>
 <p>Windows users: carry on.</p>
 </div>
 </div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>diff --git a/story.txt b/story.txt</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>index ceb7be2..577687e 100644</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>--- a/story.txt</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>+++ b/story.txt</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>@@ -1,2 +1,2 @@</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>-Once upon a time, in a land far,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>+A long time ago in a galaxy far,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> far away...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Lines starting with <code>-</code> were removed, and lines starting with <code>+</code> were added.</p>
+</div>
+</div>
 </div></li>
-<li><p>The yellow box next to <code>story.txt</code> means that Git recognizes that <code>story.txt</code> has changed, <em>but your changes have not been committed yet.</em> If you go to the History tab, you’ll see that there are still only two commits. If you click on the “Create story.txt” commit, it will show the previous state of the file.</p></li>
-<li><p>Let’s commit your changes so you don’t lose them! Click the check box next to <code>story.txt</code>. When you do, GitHub Desktop will automatically change the summary to “Update story.txt”. That is a description of what we did, but it’s not very informative. Let’s give a more descriptive summary. Change the summary to “Change opening”, then click “Commit 1 file to main”:</p>
+<li><p>Git recognizes that <code>story.txt</code> has changed, <em>but your changes have not been committed yet.</em></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<p>This is what the yellow box next to <code>story.txt</code> means. If you go to the History tab, you’ll see that there are still only two commits. If you click on the “Create story.txt” commit, it will show the previous state of the file.</p>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<p><code>git status</code> lists <code>story.txt</code> under <code>Changes not staged for commit</code>, and <code>git log</code> still shows a single commit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>On branch main</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Changes not staged for commit:</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to update what will be committed)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  (use "git restore &lt;file&gt;..." to discard changes in working directory)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        modified:   story.txt</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>no changes added to commit (use "git add" and/or "git commit -a")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>Let’s commit your changes so you don’t lose them! This time, let’s give a more descriptive commit message: “Change opening”.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<p>Click the check box next to <code>story.txt</code>. When you do, GitHub Desktop will automatically change the summary to “Update story.txt”. That is a description of what we did, but it’s not very informative. Change the summary to “Change opening”, then click “Commit 1 file to main”:</p>
 <p><img src="figures/ghd-second_commit_staging.png" class="img-fluid"></p>
-<p>You’ll now see 3 commits in your history.</p></li>
+<p>You’ll now see 3 commits in your history.</p>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add story.txt</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Without <code>-m</code>, <code>git commit</code> opens a text editor to write the commit message, which is handy for multi-line messages. Type “Change opening”, then save and exit to complete the commit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>[main b81e803] Change opening</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a> 1 file changed, 1 insertion(+), 1 deletion(-)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git log</code> now shows 2 commits. <code>git log --oneline</code> shows a more compact version of the history, with one line per commit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>b81e803 Change opening</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>17b2095 Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
 </ol>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<ol start="2" type="1">
-<li><p><code>git status</code> lists <code>story.txt</code> under <code>Changes not staged for commit</code>: <code>git</code> sees that the file changed, <em>but your changes have not been committed yet.</em> <code>git diff</code> shows what changed since the last commit:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Stage and commit the change, this time without <code>-m</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add story.txt</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This opens a text editor to write the commit message, which is handy for multi-line messages. Type “Change opening”, then save and exit to complete the commit. <code>git log</code> now shows 2 commits.</p></li>
-</ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -663,10 +745,6 @@ gitGraph
 <h3 data-anchor-id="ignoring-changes-in-some-files">Ignoring changes in some files</h3>
 <p>It frequently happens that you can have files in your repository that you don’t want Git to track. This can be things like temporary build files, or system files like the <code>.DS_Store</code> on Macs. If you don’t explicitly commit a new file (by clicking the check mark next to it and hitting the commit button), then files won’t be tracked. However, trying to avoid clicking these files can be tedious and error prone. You’ll also get warnings about changes every time you switch branches (below).</p>
 <p>We can tell Git to ignore certain files by storing their names in a special file called <code>.gitignore</code>. Here, we’ll tell it to ignore the <code>.DS_Store</code> file created by MacOS.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Command line</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -679,7 +757,11 @@ gitGraph
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Windows users will not have a <code>.DS_Store</code> file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called <code>.DS_Store</code> and save it:</p>
+<p>Windows users will not have a <code>.DS_Store</code> file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called <code>.DS_Store</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <ol type="a">
 <li><p>Switch back to Notepad.</p></li>
 <li><p>Create a new file by typing <kbd>Ctrl</kbd>+<kbd>N</kbd>. This will open a new Untitled file that is empty.</p></li>
@@ -689,31 +771,66 @@ gitGraph
 <li><p>Click “Save”</p></li>
 </ol>
 </div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> .DS_Store</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <p>To tell Git to ignore a file:</p>
 <ol type="1">
-<li><p>Right-click the file you’d like it to ignore, in this case <code>.DS_Store</code>. On the drop-down menu, select “Ignore file (Add to .gitignore)”:</p>
-<p><img src="figures/ghd-ignore_menu.png" class="img-fluid"></p></li>
-<li><p>Adding the file will make the selected file disappear in the Changes menu. In it’s place, you’ll see a <code>.gitignore</code> file has been created. The <code>.gitignore</code> file is a simple text file that lists the names of any files in the repository that you want Git to ignore. Notice that GitHub Desktop has both created the file, and added <code>.DS_Store</code> to it:</p>
-<p><img src="figures/ghd-ignore_staging.png" class="img-fluid"></p></li>
-<li><p>As with any other file, we need to commit the changes to <code>.gitignore</code> for Git to keep track of it. Commit the change by clicking the “Commit 1 file to main” (note that the commit message automatically created by GitHub Desktop is “Create .gitignore”).</p></li>
+<li><p>Add the file you’d like it to ignore, in this case <code>.DS_Store</code>, to <code>.gitignore</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<p>Right-click <code>.DS_Store</code>. On the drop-down menu, select “Ignore file (Add to .gitignore)”:</p>
+<p><img src="figures/ghd-ignore_menu.png" class="img-fluid"></p>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">".DS_Store"</span> <span class="op">&gt;&gt;</span> .gitignore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This creates <code>.gitignore</code> if it doesn’t exist.</p>
+</div>
+</div>
+</div></li>
+<li><p><code>.DS_Store</code> no longer appears in the changes. In its place, you’ll see a <code>.gitignore</code> file has been created. The <code>.gitignore</code> file is a simple text file that lists the names of any files in the repository that you want Git to ignore.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<p>Notice that GitHub Desktop has both created the file, and added <code>.DS_Store</code> to it:</p>
+<p><img src="figures/ghd-ignore_staging.png" class="img-fluid"></p>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<p>Check this with <code>git status</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>On branch main</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Untracked files:</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to include in what will be committed)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        .gitignore</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>nothing added to commit but untracked files present (use "git add" to track)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>As with any other file, we need to commit the changes to <code>.gitignore</code> for Git to keep track of it, here with the message “Create .gitignore”:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<p>Commit the change by clicking the “Commit 1 file to main” (note that the commit message automatically created by GitHub Desktop is “Create .gitignore”).</p>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .gitignore</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create .gitignore"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>[main 40d5b63] Create .gitignore</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a> 1 file changed, 1 insertion(+)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a> create mode 100644 .gitignore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
 </ol>
-</div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<ol type="1">
-<li><p>If <code>git status</code> doesn’t list a <code>.DS_Store</code> file (e.g.&nbsp;on Windows), create an empty one to follow along:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> .DS_Store</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Add <code>.DS_Store</code> to <code>.gitignore</code> (this creates <code>.gitignore</code> if it doesn’t exist):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">".DS_Store"</span> <span class="op">&gt;&gt;</span> .gitignore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git status</code> no longer lists <code>.DS_Store</code>, but lists <code>.gitignore</code> instead.</p></li>
-<li><p>As with any other file, commit <code>.gitignore</code> for Git to keep track of it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .gitignore</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create .gitignore"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-</ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -767,19 +884,43 @@ gitGraph
    commit id: "Create title.txt"
 </pre>
 <p>Let’s see how to do this in practice:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Command line</a></li></ul>
-<div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <ol type="1">
-<li><p>In GitHub Desktop, click on the “Current Branch” tab. This will show a drop-down menu showing all of the branches on your repository:</p>
+<li><p>Let’s look at the branches of your repository:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<p>Click on the “Current Branch” tab. This will show a drop-down menu showing all of the branches on your repository:</p>
 <p><img src="figures/ghd-branch_menu.png" class="img-fluid"></p>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>* main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>*</code> marks the branch you are on.</p>
+</div>
+</div>
+</div>
 <p>Currently, we only have one branch, which is called <code>main</code> by default, as mentioned above. Think of it as the master copy of your repository. If this were a code repository, the <code>main</code> would be the branch that you (try to) keep a clean, working version of your code.</p></li>
-<li><p>Let’s create our new branch, named <code>title-dev</code>, on which we will develop our title. Click the “New Branch” button in the upper right. You will be prompted to create a name. Call it <code>title-dev</code>, then click “Create Branch”:</p>
+<li><p>Let’s create our new branch, named <code>title-dev</code>, on which we will develop our title, and switch to it:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
+<p>Click the “New Branch” button in the upper right. You will be prompted to create a name. Call it <code>title-dev</code>, then click “Create Branch”:</p>
 <p><img src="figures/ghd-new_branch.png" class="img-fluid"></p>
 <p>You are now on a new branch called <code>title-dev</code>. You can see that by looking at the Current Branch at the top: it says title-dev:</p>
-<p><img src="figures/ghd-title_dev_branch.png" class="img-fluid"></p></li>
-<li><p>Let’s do some development on <code>title-dev</code>. Switch to the <code>title-dev</code> branch. Now let’s create a file called <code>title.txt</code> to store our title idea.</p>
+<p><img src="figures/ghd-title_dev_branch.png" class="img-fluid"></p>
+</div>
+<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Switched to a new branch 'title-dev'</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>-b</code> creates the branch before switching to it. You are now on a new branch called <code>title-dev</code>, as shown by <code>git branch</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>  main</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>* title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>Let’s do some development on <code>title-dev</code>. Now let’s create a file called <code>title.txt</code> to store our title idea.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -816,30 +957,26 @@ gitGraph
 <li><p>Add a title to <code>title.txt</code>. Use your text editor to add:</p>
 <pre><code>STAR FIGHT!</code></pre>
 <p>Save the change by typing <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows) / <kbd>⌘</kbd>+<kbd>S</kbd> (Mac).</p></li>
-<li><p>Go back to GitHub Desktop. You should see <code>title.txt</code> in the Changes sidebar, with the new lines shown in the diff:</p>
-<p><img src="figures/ghd-title_initial_stage.png" class="img-fluid"></p></li>
-<li><p>Commit the new changes by clicking “Commit 1 file to title-dev”. Note the default commit message is “Create title.txt”.</p></li>
+<li><p>Commit the new file with the message “Create title.txt”:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<p>Go back to GitHub Desktop. You should see <code>title.txt</code> in the Changes sidebar, with the new lines shown in the diff:</p>
+<p><img src="figures/ghd-title_initial_stage.png" class="img-fluid"></p>
+<p>Commit the new changes by clicking “Commit 1 file to title-dev”. Note the default commit message is “Create title.txt”.</p>
+</div>
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add title.txt</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create title.txt"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>[title-dev 0517538] Create title.txt</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a> 1 file changed, 1 insertion(+)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a> create mode 100644 title.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note that the summary starts with <code>title-dev</code>: this is the branch on which the commit was made.</p>
+</div>
+</div>
+</div></li>
 </ol>
-</div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<ol type="1">
-<li><p>List the branches of your repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This returns <code>* main</code>: we currently have only one branch, called <code>main</code> by default, and the <code>*</code> marks the branch you are on.</p></li>
-<li><p>Create a new branch called <code>title-dev</code> and switch to it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>-b</code> creates the branch before switching to it. <code>git branch</code> now shows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>  main</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>* title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Use your text editor to create <code>title.txt</code> containing:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>STAR FIGHT!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Stage and commit it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add title.txt</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create title.txt"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-</ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -865,48 +1002,81 @@ gitGraph
 <section id="navigating-branches" class="level3">
 <h3 data-anchor-id="navigating-branches">Navigating branches</h3>
 <p>We don’t have to be stuck on a branch until its changes are integrated in the <code>main</code> branch, we can navigate between branches!</p>
+<ol type="1">
+<li><p>Satisfied with your title for now, go back to your main branch:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Command line</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
-<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<ol type="1">
-<li><p>You can switch between branches by clicking the “Current Branch” drop-down menu, then selecting the branch you want:</p>
-<p><img src="figures/ghd-switch_branches.png" class="img-fluid"></p></li>
-<li><p>Satisfied with your title for now, go back to your main branch by clicking on the “Current branch” drop down and selecting <code>main</code>:</p>
-<p><img src="figures/ghd-switch_to_main.png" class="img-fluid"></p></li>
-<li><p>Let’s see what happened to your files when you switched back to <code>main</code>. If you still have the Explorer/Finder window open, look at it. If not, click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button to view the contents of the repository.</p>
-<p>The <code>title.txt</code> file is gone! Likewise, if you click on the “History” tab in GitHub Desktop, you’ll see that your last commit is no longer in your history; you just have the first four commits.</p>
-<p>This is because your last commit (and the file it created, <code>title.txt</code>) only exists on the <code>title-dev</code> branch. To verify that it’s still there, click the “Current Branch” drop-down menu and switch to the <code>title-dev</code> branch. You’ll see the “Create title.txt” commit reappear in your History.</p>
-<p>Since the commits on <code>title-dev</code> live on their own branch, changes you make on <code>main</code> won’t affect <code>title-dev</code> and vice versa (at least not until we merge the branches, more on that below).</p></li>
-<li><p>Let’s make some more changes to <code>story.txt</code>, but let’s do it on the <code>main</code> branch. Switch to <code>main</code> using the “Current Branch” drop-down menu. Now use your text editor to add the following lines to <code>story.txt</code>:</p>
-<pre><code>
-It is period of civil war.
-Rebel spaceships, striking
-from a hidden base, have won
-their first victory against
-the evil Galactic Empire.</code></pre></li>
-<li><p>Stage the commit by clicking the check mark next to <code>story.txt</code> in GitHub Desktop and change the commit message to “Add first pargraph”:</p>
-<p><img src="figures/ghd-stage_paragraph.png" class="img-fluid"></p>
-<p>Now commit the changes by clicking “Commit 1 file to main”.</p></li>
-<li><p>Click on the History tab. Note that you now have 5 commits on master, none of which include the commits to <code>title-dev</code> branch.</p></li>
-</ol>
+<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
+<p>You can switch between branches by clicking the “Current Branch” drop-down menu, then selecting the branch you want. Select <code>main</code>:</p>
+<p><img src="figures/ghd-switch_branches.png" class="img-fluid"></p>
+<p><img src="figures/ghd-switch_to_main.png" class="img-fluid"></p>
 </div>
-<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<ol type="1">
-<li><p>Satisfied with your title for now, go back to <code>main</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>ls</code> shows that <code>title.txt</code> is gone, and <code>git log</code> doesn’t show the “Create title.txt” commit: it only exists on <code>title-dev</code>. To verify that it’s still there, run <code>git checkout title-dev</code>, then come back with <code>git checkout main</code>.</p></li>
-<li><p>On <code>main</code>, use your text editor to add the following lines to <code>story.txt</code>:</p>
+<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Switched to branch 'main'</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>Let’s see what happened to your files and history when you switched back to <code>main</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
+<p>If you still have the Explorer/Finder window open, look at it. If not, click the “Show in Explorer” (Windows) / “Show in Finder” (Mac) button to view the contents of the repository. The <code>title.txt</code> file is gone! Likewise, if you click on the “History” tab in GitHub Desktop, you’ll see that your last commit is no longer in your history; you just have the first four commits.</p>
+</div>
+<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>story.txt</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>40d5b63 Create .gitignore</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>b81e803 Change opening</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>17b2095 Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>title.txt</code> file is gone! Likewise, your last commit is no longer in your history; you just have the first three commits.</p>
+</div>
+</div>
+</div>
+<p>This is because your last commit (and the file it created, <code>title.txt</code>) only exists on the <code>title-dev</code> branch. To verify that it’s still there, switch to the <code>title-dev</code> branch: you’ll see the “Create title.txt” commit reappear in your history.</p>
+<p>Since the commits on <code>title-dev</code> live on their own branch, changes you make on <code>main</code> won’t affect <code>title-dev</code> and vice versa (at least not until we merge the branches, more on that below).</p></li>
+<li><p>Let’s make some more changes to <code>story.txt</code>, but let’s do it on the <code>main</code> branch. Switch back to <code>main</code>. Now use your text editor to add the following lines to <code>story.txt</code>:</p>
 <pre><code>
 It is period of civil war.
 Rebel spaceships, striking
 from a hidden base, have won
 their first victory against
 the evil Galactic Empire.</code></pre></li>
-<li><p>Stage and commit the change:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add first paragraph"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git add -u</code> stages the changes of all tracked files. <code>git log</code> shows that none of the commits on <code>main</code> include the commit from <code>title-dev</code>.</p>
+<li><p>Commit the changes with the message “Add first paragraph”:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
+<p>Stage the commit by clicking the check mark next to <code>story.txt</code> in GitHub Desktop and change the commit message to “Add first paragraph”:</p>
+<p><img src="figures/ghd-stage_paragraph.png" class="img-fluid"></p>
+<p>Now commit the changes by clicking “Commit 1 file to main”.</p>
+</div>
+<div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add first paragraph"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git add -u</code> stages the changes of all tracked files.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>[main c1d82b6] Add first paragraph</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a> 1 file changed, 6 insertions(+)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>Look at the history of <code>main</code>: none of its commits include the commits to <code>title-dev</code> branch.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-18-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-1" role="tab" aria-controls="tabset-18-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-2" role="tab" aria-controls="tabset-18-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
+<p>Click on the History tab. Note that you now have 5 commits on master.</p>
+</div>
+<div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>c1d82b6 Add first paragraph</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>40d5b63 Create .gitignore</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>b81e803 Change opening</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>17b2095 Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -920,14 +1090,20 @@ the evil Galactic Empire.</code></pre></li>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Add <code>--graph</code> to <code>git log</code> to see the history as a graph, and <code>--all</code> to include all branches:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>* c1d82b6 Add first paragraph</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>| * 0517538 Create title.txt</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>|/</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>* 40d5b63 Create .gitignore</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>* b81e803 Change opening</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>* 17b2095 Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div></li>
 </ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -951,12 +1127,8 @@ gitGraph
 </pre>
 </div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Command line</a></li></ul>
-<div class="tab-content">
-<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <ol type="1">
-<li><p>In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your <code>title-dev</code> branch by clicking the Current Branch -&gt; title-dev.</p>
+<li><p>In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your <code>title-dev</code> branch.</p>
 <p>Now use your text editor to edit <code>title.txt</code> and change <code>STAR FIGHT!</code> to:</p>
 <pre><code>Star Wars
 A NEW HOPE
@@ -964,31 +1136,42 @@ A NEW HOPE
 by
 George Lucas</code></pre>
 <p>Nice work, George!</p></li>
-<li><p>Save your changes to <code>title.txt</code> and stage the changes in GitHub Desktop by clicking the check box next to <code>title.txt</code>. Commit the changes by clicking the “Commit 1 file to title-dev”:</p>
+<li><p>Save your changes to <code>title.txt</code> and commit them with the message “Update title.txt”:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-19-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-1" role="tab" aria-controls="tabset-19-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-2" role="tab" aria-controls="tabset-19-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-19-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-19-1-tab">
+<p>Stage the changes in GitHub Desktop by clicking the check box next to <code>title.txt</code>. Commit the changes by clicking the “Commit 1 file to title-dev”:</p>
 <p><img src="figures/ghd-final_title_commit.png" class="img-fluid"></p>
-<p>Note that the commit message is “Update title.txt”.</p></li>
-<li><p>Click on the History tab. Note that there are 6 commits here: the first four from <code>main</code> (before you branched off), and the last two on <code>title-dev</code>:</p>
-<p><img src="figures/ghd-title_dev_status.png" class="img-fluid"></p></li>
+<p>Note that the commit message is “Update title.txt”.</p>
+</div>
+<div id="tabset-19-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Update title.txt"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>[title-dev 1b45d74] Update title.txt</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a> 1 file changed, 5 insertions(+), 1 deletion(-)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>The history of <code>title-dev</code> contains the commits from <code>main</code> before you branched off, and the last two on <code>title-dev</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-20-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-1" role="tab" aria-controls="tabset-20-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-2" role="tab" aria-controls="tabset-20-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-20-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-20-1-tab">
+<p>Click on the History tab. Note that there are 6 commits here: the first four from <code>main</code>, and the last two on <code>title-dev</code>:</p>
+<p><img src="figures/ghd-title_dev_status.png" class="img-fluid"></p>
+</div>
+<div id="tabset-20-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-2-tab">
+<p><code>git log --oneline</code> shows 5 commits: the first three from <code>main</code>, and the last two on <code>title-dev</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>1b45d74 Update title.txt</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>0517538 Create title.txt</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>40d5b63 Create .gitignore</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>b81e803 Change opening</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>17b2095 Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
 </ol>
-</div>
-<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<ol type="1">
-<li><p>In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to <code>title-dev</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>and use your text editor to change the content of <code>title.txt</code> to:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Star Wars</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>A NEW HOPE</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>by</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>George Lucas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Stage and commit the change:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Update title.txt"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git log</code> shows the commits from <code>main</code> before you branched off, and the two commits on <code>title-dev</code>.</p></li>
-</ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1019,32 +1202,28 @@ gitGraph
 <h3 data-anchor-id="merging">Merging</h3>
 <p>We have done some work on the title in parallel to the work on the story itself, and we finally found a great title that we don’t plan to change. It is now time to integrate our changes on the title back into the <code>main</code> branch. In more common Git vocabulary, it is time to <strong>merge</strong> our branch.</p>
 <p>First, we will create a backup of the <code>main</code> branch, just in case something goes wrong. Some mistakes in Git usage can be notoriously hard to debug, so making a clean backup before a big operation like merging can be useful.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Command line</a></li></ul>
-<div class="tab-content">
-<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <ol type="1">
-<li><p>First, let’s switch to the <code>main</code> branch by clicking “Current Branch” and selecting <code>main</code>.</p></li>
+<li><p>First, let’s switch to the <code>main</code> branch.</p></li>
 <li><p>We will call our backup <code>main-bkup</code>. This way, you have the original state of <code>main</code> preserved in the backup branch that you can always go back to.</p>
 <p>To create the copy of <code>main</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-21-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-1" role="tab" aria-controls="tabset-21-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-21-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-2" role="tab" aria-controls="tabset-21-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-21-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-21-1-tab">
 <ol type="a">
 <li><p>Click Current Branch. Make sure you’re on <code>main</code> (the checkmark is next to <code>main</code>), then click “New Branch”:</p>
 <p><img src="figures/ghd-main_bkup_create.png" class="img-fluid"></p></li>
 <li><p>This will open the “Create a Branch” window. Type <code>main-bkup</code> in the Name field, then click “Create Branch”. You will now be on the <code>main-bkup</code> branch.</p></li>
 <li><p>Now go back to the <code>main</code> branch by clicking “Current Branch -&gt; main”.</p></li>
-</ol></li>
 </ol>
 </div>
-<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
-<ol type="1">
-<li><p>Switch to <code>main</code> and create <code>main-bkup</code> from it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch main-bkup</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unlike <code>git checkout -b</code>, <code>git branch</code> creates the branch without switching to it, so you stay on <code>main</code>.</p></li>
+<div id="tabset-21-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-21-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch main-bkup</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Unlike <code>git checkout -b</code>, <code>git branch</code> creates the branch without switching to it, so you stay on <code>main</code>.</p>
+</div>
+</div>
+</div></li>
 </ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1072,32 +1251,54 @@ gitGraph
 </pre>
 </div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Command line</a></li></ul>
-<div class="tab-content">
-<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <ol type="1">
-<li><p>Now click the Current Branch drop-down menu again, and this time click the “Choose a branch to merge into <em>main</em>” button:</p>
+<li><p>Now let’s merge <code>title-dev</code> into <code>main</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-22-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-1" role="tab" aria-controls="tabset-22-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-22-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-2" role="tab" aria-controls="tabset-22-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-22-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-22-1-tab">
+<ol type="a">
+<li><p>Click the Current Branch drop-down menu again, and this time click the “Choose a branch to merge into <em>main</em>” button:</p>
 <p><img src="figures/ghd-merge_branch_select.png" class="img-fluid"></p></li>
 <li><p>Select the <code>title-dev</code> branch. The button at the bottom will turn to blue and say “Create a merge commit”. Click that to merge the branch:</p>
 <p><img src="figures/ghd-merge_screen.png" class="img-fluid"></p></li>
-<li><p>Congratulations! You’ve made your first merge on to main. To see what happened, click on the History tab to see what the history on the main branch looks like now:</p>
+</ol>
+</div>
+<div id="tabset-22-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-22-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This opens your text editor with the commit message <code>Merge branch 'title-dev'</code>. Don’t change it, just save and exit to finish the merge:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>Merge made by the 'ort' strategy.</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a> title.txt | 5 +++++</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a> 1 file changed, 5 insertions(+)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a> create mode 100644 title.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>Congratulations! You’ve made your first merge on to main. To see what happened, let’s look at the history on the main branch:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-23-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-1" role="tab" aria-controls="tabset-23-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-23-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-2" role="tab" aria-controls="tabset-23-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-23-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-23-1-tab">
+<p>Click on the History tab:</p>
 <p><img src="figures/ghd-merge_history.png" class="img-fluid"></p>
+</div>
+<div id="tabset-23-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-23-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>*   5a21f4b Merge branch 'title-dev'</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>|\</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>| * 1b45d74 Update title.txt</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>| * 0517538 Create title.txt</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>* | c1d82b6 Add first paragraph</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>|/</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>* 40d5b63 Create .gitignore</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>* b81e803 Change opening</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>* 17b2095 Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
 <p>The commits you made on <code>title-dev</code> are now in <code>main</code>, along with a final “Merge” commit at the end. This final “merge” commit is to indicate that some of the commits in the history came from another branch (and what the name of the branch was).</p>
-<p>If you look at Explorer/Finder, you’ll see that <code>title.txt</code> is now in your directory when you’re on <code>main</code>. If you switch between <code>main</code> and <code>title-dev</code>, <code>title.txt</code> remains in both. Note that the history on <code>title-dev</code> is unaffected by the merge: merging only changes the branch you merged <em>into</em>, not the branch you merged <em>from</em>.</p></li>
+<p><code>title.txt</code> is now in your directory when you’re on <code>main</code>. If you switch between <code>main</code> and <code>title-dev</code>, <code>title.txt</code> remains in both. Note that the history on <code>title-dev</code> is unaffected by the merge: merging only changes the branch you merged <em>into</em>, not the branch you merged <em>from</em>.</p></li>
 </ol>
-</div>
-<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
-<ol type="1">
-<li><p>Merge <code>title-dev</code> into <code>main</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This opens your text editor with the commit message <code>Merge branch 'title-dev'</code>. Don’t change it, just save and exit to finish the merge.</p></li>
-<li><p>Congratulations! You’ve made your first merge on to main. <code>git log</code> shows that the commits you made on <code>title-dev</code> are now in <code>main</code>, along with a final “Merge” commit. This final commit indicates that some of the commits in the history came from another branch (and what the name of the branch was).</p>
-<p><code>ls</code> shows that <code>title.txt</code> is now in your directory. Note that the history on <code>title-dev</code> is unaffected by the merge: merging only changes the branch you merged <em>into</em>, not the branch you merged <em>from</em>.</p></li>
-</ol>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1131,35 +1332,54 @@ gitGraph
 <section id="squash-and-merge-the-cleaner-history" class="level3">
 <h3 data-anchor-id="squash-and-merge-the-cleaner-history">Squash and merge: the cleaner history</h3>
 <p>Instead of creating a merge commit, we could have done a <strong>squash and merge</strong>. Let’s see what would have happened by doing a squash and merge on to <code>main-bkup</code>.</p>
+<ol type="1">
+<li><p>Switch to the <code>main-bkup</code> branch.</p></li>
+<li><p>Squash and merge <code>title-dev</code> into <code>main-bkup</code>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Command line</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-24-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-1" role="tab" aria-controls="tabset-24-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-24-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-2" role="tab" aria-controls="tabset-24-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
-<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div id="tabset-24-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-24-1-tab">
 <p>When we were preparing to merge <code>title-dev</code>, you may have noticed there was a drop-down button next to the “Create a merge commit” button:</p>
 <p><img src="figures/ghd-merge_select_highlight.png" class="img-fluid"></p>
 <p>If you had clicked that, you are presented with three options – merge, squash and merge, and rebase:</p>
 <p><img src="figures/ghd-squash_merge_select.png" class="img-fluid"></p>
-<ol type="1">
-<li><p>Switch to the <code>main-bkup</code> branch by clicking “Current branch -&gt; main-bkup”.</p></li>
-<li><p>Click “Current branch” again, and select “Choose a branch to merge into main-bkup”. Select “title-dev”, then click the drop down arrow next to the “Create a merge commit button”:</p></li>
+<ol type="a">
+<li><p>Click “Current branch” again, and select “Choose a branch to merge into main-bkup”. Select “title-dev”, then click the drop down arrow next to the “Create a merge commit button”.</p></li>
 <li><p>Select “Squash and merge”. This will change the blue button to read “Squash and merge”. Click that to do the squash and merge.</p></li>
-<li><p>Click the History tab to see what the history on <code>main-bkup</code> looks like:</p>
-<p><img src="figures/ghd-squash_merge_history.png" class="img-fluid"></p></li>
 </ol>
 </div>
-<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
-<ol type="1">
-<li><p>Switch to <code>main-bkup</code> and squash <code>title-dev</code> into it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main-bkup</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge <span class="at">--squash</span> title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unlike a regular merge, <code>--squash</code> stages the changes from <code>title-dev</code> but doesn’t commit them.</p></li>
-<li><p>Commit them:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This opens your text editor with a message listing the squashed commits. Save and exit, then run <code>git log</code> to see what the history on <code>main-bkup</code> looks like.</p></li>
+<div id="tabset-24-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-24-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge <span class="at">--squash</span> title-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Automatic merge went well; stopped before committing as requested</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>Squash commit -- not updating HEAD</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Unlike a regular merge, <code>--squash</code> stages the changes from <code>title-dev</code> but doesn’t commit them. Commit them with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This opens your text editor with a message listing the squashed commits. Save and exit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>[main-bkup 61857c0] Squashed commit of the following:</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a> 1 file changed, 5 insertions(+)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a> create mode 100644 title.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>Look at the history on <code>main-bkup</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-25-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-25-1" role="tab" aria-controls="tabset-25-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-25-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-25-2" role="tab" aria-controls="tabset-25-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-25-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-25-1-tab">
+<p>Click the History tab:</p>
+<p><img src="figures/ghd-squash_merge_history.png" class="img-fluid"></p>
+</div>
+<div id="tabset-25-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-25-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>61857c0 Squashed commit of the following:</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>c1d82b6 Add first paragraph</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>40d5b63 Create .gitignore</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>b81e803 Change opening</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>17b2095 Create story.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
 </ol>
-</div>
-</div>
-</div>
 <p>The two commits that were done on <code>title-dev</code>, as well as the final merge commit, have all been “squashed” into a single large commit, which is placed at the end of the history on <code>main-bkup</code>. In graphical form, the history on <code>main-bkup</code> now looks like this:</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1262,19 +1482,22 @@ gitGraph
 </section>
 <section id="deleting-branches" class="level3">
 <h3 data-anchor-id="deleting-branches">Deleting branches</h3>
-<p>Now that you’ve merged your <code>title-dev</code> branch and are back on the <code>main</code> branch, you can delete it to save space.</p>
+<p>Now that you’ve merged your <code>title-dev</code> branch and are back on the <code>main</code> branch, you can delete it to save space. You can also delete <code>main-bkup</code> now if you like.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Command line</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-26-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-26-1" role="tab" aria-controls="tabset-26-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-26-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-26-2" role="tab" aria-controls="tabset-26-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
-<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<div id="tabset-26-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-26-1-tab">
 <p>To do that, click Current Branch, then right-click <code>title-dev</code>. This will yield a drop-down menu. Select “Delete branch”:</p>
 <p><img src="figures/ghd-delete_branch.png" class="img-fluid"></p>
-<p>You will be prompted with a warning. Click the “Delete” button. The <code>title-dev</code> branch will be gone! You can also delete <code>main-bkup</code> now if you like.</p>
+<p>You will be prompted with a warning. Click the “Delete” button. The <code>title-dev</code> branch will be gone!</p>
 </div>
-<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> title-dev</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-D</span> main-bkup</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tabset-26-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-26-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> title-dev</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-D</span> main-bkup</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>Switched to branch 'main'</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>Deleted branch title-dev (was 1b45d74).</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>Deleted branch main-bkup (was 61857c0).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>-d</code> refuses to delete a branch whose commits aren’t in the current branch, so that you don’t lose them. <code>main-bkup</code> contains the squashed commit, which isn’t on <code>main</code>, so it needs <code>-D</code> to force the deletion.</p>
 </div>
 </div>
@@ -1295,9 +1518,9 @@ gitGraph
 </div>
 <div class="callout-body-container callout-body">
 <p>Create a file called <code>list.txt</code> that initially contains the following three lines:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>alpha</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>alpha</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now use the what you learned above to do the following:</p>
 <ol type="1">
 <li><p>Add and commit <code>list.txt</code> to <code>main</code>.</p></li>
@@ -1318,9 +1541,9 @@ gitGraph
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Command line</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-27-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-27-1" role="tab" aria-controls="tabset-27-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-27-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-27-2" role="tab" aria-controls="tabset-27-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
-<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div id="tabset-27-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-27-1-tab">
 <ol type="1">
 <li><p>Once you create <code>list.txt</code> (use your text editor to do this), you should see it appear in the Changes tab in GitHub Desktop. Make sure you’re on <code>main</code> (the Current Branch should say <code>main</code>; if not, click Current Branch -&gt; main). Then:</p>
 <ol type="a">
@@ -1344,17 +1567,17 @@ gitGraph
 </ol></li>
 </ol>
 </div>
-<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div id="tabset-27-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-27-2-tab">
 <p>Create <code>list.txt</code> with your text editor, then:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add list.txt</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create list.txt"</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> dev1</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># change the first line of list.txt to delta, then:</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">"add delta to list"</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># change the third line of list.txt to foxtrot, then:</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">"add foxtrot to list"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add list.txt</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create list.txt"</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> dev1</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co"># change the first line of list.txt to delta, then:</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">"add delta to list"</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="co"># change the third line of list.txt to foxtrot, then:</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">"add foxtrot to list"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>git commit -a</code> stages the changes of all tracked files before committing.</p>
 </div>
 </div>
@@ -1363,13 +1586,13 @@ gitGraph
 </div>
 </div>
 <p>When you are done, <code>list.txt</code> should look like the following on <code>main</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>alpha</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>alpha</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>while on <code>dev1</code> it should look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
@@ -1384,17 +1607,17 @@ gitGraph
 <div class="callout-body-container callout-body">
 <p>Now suppose you merge <code>dev1</code> into <code>main</code>. What happens to <code>list.txt</code>?</p>
 <p><strong>A.</strong> <code>main</code> takes precedence since it’s the branch being merged into; <code>list.txt</code> will look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>alpha</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>alpha</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>B.</strong> <code>dev1</code> takes precedence since it’s the branch being merged; <code>list.txt</code> will look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>charlie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>C.</strong> The changes from both are adopted; <code>list.txt</code> will look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>bravo</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>D.</strong> An error is raised because the same file was modified.</p>
 <p><em>If you’re not sure, try it yourself and see what happens!</em></p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
@@ -1411,18 +1634,18 @@ gitGraph
 <div class="callout-body-container callout-body">
 <p>The answer is <strong>C</strong>. Since different lines have been modified, <code>git</code> is able to merge the changes together without issue. To do it yourself:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false" href="">Command line</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-28-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-28-1" role="tab" aria-controls="tabset-28-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-28-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-28-2" role="tab" aria-controls="tabset-28-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
-<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<div id="tabset-28-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-28-1-tab">
 <ol type="a">
 <li>Click Current Branch -&gt; main to switch to main.</li>
 <li>Click Current Branch -&gt; “Choose a branch to merge into main”</li>
 <li>Select dev1 then click “Create a merge commit”.</li>
 </ol>
 </div>
-<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge dev1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tabset-28-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-28-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge dev1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1442,27 +1665,27 @@ gitGraph
 </div>
 <div class="callout-body-container callout-body">
 <p>After merging <code>dev1</code> on to <code>main</code>, suppose you create another branch called <code>dev2</code>. On <code>dev2</code> you change the second line of <code>list.txt</code> to be <code>echo</code> while on <code>main</code> you change the second line to <code>easy</code>; i.e.&nbsp;on <code>main</code> <code>list.txt</code> looks like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>easy</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>easy</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On <code>dev2</code> <code>list.txt</code> looks like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>What happens if you merge <code>dev2</code> into <code>main</code> in this case?</strong></p>
 <p><strong>A.</strong> <code>main</code> takes precedence since it’s the branch being merged into; <code>list.txt</code> will look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>easy</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>easy</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>B.</strong> <code>dev2</code> takes precedence since it’s the branch being merged; <code>list.txt</code> will look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>C.</strong> The changes from both branches are adopted; <code>list.txt</code> will look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>easy</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>easy</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>D.</strong> An error is raised because the same line is modified.</p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
@@ -1486,77 +1709,88 @@ gitGraph
 <section id="iv.-resolving-merge-conflicts" class="level2">
 <h2 data-anchor-id="iv.-resolving-merge-conflicts">IV. Resolving merge conflicts</h2>
 <p>As illustrated in the Challenge Questions, if the same lines in the same file are modified on two different branches, <code>git</code> will not know how to merge the changes. This is called a <strong>merge conflict</strong>. In this case, <code>git</code> will ask you to reconcile the differences. To illustrate, let’s try merging <code>dev2</code> into <code>main</code> after making the changes to <code>list.txt</code> discussed in Question 3 above:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false" href="">Command line</a></li></ul>
-<div class="tab-content">
-<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
 <ol type="1">
 <li><p>If you have not done so, try to merge <code>dev2</code> into <code>main</code> after making the changes to the second line of <code>list.txt</code> discussed in Question 3:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-29-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-29-1" role="tab" aria-controls="tabset-29-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-29-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-29-2" role="tab" aria-controls="tabset-29-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-29-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-29-1-tab">
 <ol type="a">
 <li>Switch to <code>main</code>: Click Current Branch -&gt; main.</li>
 <li>Click Current Branch -&gt; Choose a branch to merge into “main”.</li>
 <li>Select dev2, then click “Create a merge commit” (note that a message pops up above the button that says there be 1 conflicted file).</li>
-</ol></li>
-<li><p>When you try to do the merge, you will get the Resolve conflicts box:</p>
+</ol>
+</div>
+<div id="tabset-29-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-29-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>The merge fails, and Git tells you what files are conflicted (in this case <code>list.txt</code>):</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-30-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-30-1" role="tab" aria-controls="tabset-30-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-30-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-30-2" role="tab" aria-controls="tabset-30-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-30-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-30-1-tab">
+<p>You will get the Resolve conflicts box:</p>
 <p><img src="figures/ghd-resolve_conflicts.png" class="img-fluid"></p>
-<p>This tells you what files are conflicted (in this case <code>list.txt</code>).</p>
-<p>To fix this, we need to manually resolve the conflict. There are several options to deal with this. If you have VS Code or some other code editor installed, you will see an option to open the file in that program. Here, though, we’ll use our simple text editor to resolve the issue.</p></li>
-</ol>
 </div>
-<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
-<ol type="1">
-<li><p>If you have not done so, try to merge <code>dev2</code> into <code>main</code> after making the changes to the second line of <code>list.txt</code> discussed in Question 3:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>You will get:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Auto-merging list.txt</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>CONFLICT (content): Merge conflict in list.txt</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>Automatic merge failed; fix conflicts and then commit the result.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>git status</code> lists the conflicted files (in this case <code>list.txt</code>) under <code>Unmerged paths</code>. To fix this, we need to manually resolve the conflict with a text editor.</p></li>
-</ol>
+<div id="tabset-30-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-30-2-tab">
+<p>You will get:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>Auto-merging list.txt</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>CONFLICT (content): Merge conflict in list.txt</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>Automatic merge failed; fix conflicts and then commit the result.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git status</code> also lists the conflicted files under <code>Unmerged paths</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>On branch main</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>You have unmerged paths.</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  (fix conflicts and run "git commit")</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  (use "git merge --abort" to abort the merge)</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>Unmerged paths:</span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>  (use "git add &lt;file&gt;..." to mark resolution)</span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>        both modified:   list.txt</span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a>no changes added to commit (use "git add" and/or "git commit -a")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<ol start="3" type="1">
+<p>To fix this, we need to manually resolve the conflict. There are several options to deal with this, such as using a code editor like VS Code. Here, though, we’ll use our simple text editor to resolve the issue.</p></li>
 <li><p>Open list.txt with your text editor. You should see the following:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>easy</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>=======</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev2</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>easy</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>=======</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev2</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>git</code> has added the conflicting lines from both branches to the file, along with information about the two branches. The line as it appears on <code>main</code> is prefaced with <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>. This indicates that the following line(s) is (are) how it appears on the branch being merged into. The line(s) is (are) followed by a <code>=======</code>.</p>
 <p>After the <code>=======</code> the line(s) as it/they appear(s) on the branch being merged are shown. These are followed by <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; BRANCH_NAME</code> (here, <code>BRANCH_NAME</code> is <code>dev2</code>).</p></li>
 <li><p>We are free to edit the file anyway we like to resolve the conflict. You should remove the <code>&lt;&lt;&lt;&lt;</code>, <code>====</code>, and <code>&gt;&gt;&gt;&gt;</code> lines that <code>git</code> has added, along with the edit you want to make to resolve the conflict.</p>
 <p>In this case, let’s keep the edit as it appears on <code>dev2</code>, and remove the edit on <code>main</code>. Delete the appropriate lines so that the file looks like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>delta</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>delta</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>foxtrot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then save and exit the file.</p></li>
-</ol>
+<li><p>Complete the merge:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false" href="">Command line</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-31-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-31-1" role="tab" aria-controls="tabset-31-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-31-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-31-2" role="tab" aria-controls="tabset-31-2" aria-selected="false" href="">Command line</a></li></ul>
 <div class="tab-content">
-<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
-<ol start="5" type="1">
-<li><p>As soon as you save the changes to <code>list.txt</code>, the merge conflict window in GitHub Desktop will change to show that all conflicts have been resolved:</p>
+<div id="tabset-31-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-31-1-tab">
+<p>As soon as you save the changes to <code>list.txt</code>, the merge conflict window in GitHub Desktop will change to show that all conflicts have been resolved:</p>
 <p><img src="figures/ghd-resolved_conflicts.png" class="img-fluid"></p>
-<p>Click “Continue Merge”.</p></li>
-<li><p>The merge conflict is resolved! If you click on the History tab you will see the history with all the commits in it, as if you had a merged without any issue.</p></li>
+<p>Click “Continue Merge”.</p>
+</div>
+<div id="tabset-31-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-31-2-tab">
+<p>Stage the file and commit <em>without</em> the <code>-m</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add list.txt</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This opens your text editor with the commit message set to <code>Merge branch 'dev2'</code>. Save and exit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>[main 1c5dcc2] Merge branch 'dev2'</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div></li>
+<li><p>The merge conflict is resolved! If you look at the history, you will see all the commits in it, as if you had merged without any issue.</p></li>
 </ol>
-</div>
-<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
-<ol start="5" type="1">
-<li><p>Stage the file and complete the merge <em>without</em> the <code>-m</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add list.txt</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This opens your text editor with the commit message set to <code>Merge branch 'dev2'</code>. Save and exit.</p></li>
-<li><p>The merge conflict is resolved! <code>git log</code> shows the history with all the commits in it, as if you had merged without any issue.</p></li>
-</ol>
-</div>
-</div>
-</div>
 <p>Merge conflicts happen, but can be fixed fairly easy. If there were multiple areas in a file that caused a conflict, the conflicting areas would all be surrounded by the same <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>/<code>=======</code>/<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> lines that we saw above. You’ll want to search through the file for those to make sure you got all the conflicts. If multiple files had conflicts, <code>git</code> will make you resolve all of them before allowing the merge to complete.</p>
 </section>
 <section id="summary" class="level2">
