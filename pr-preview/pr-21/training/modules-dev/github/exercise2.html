@@ -10,6 +10,7 @@
 <meta name="author" content="Niklas Hohmann">
 <meta name="author" content="Etienne Bacher">
 <meta name="dcterms.date" content="2026-10-06">
+<meta name="description" content="Storing a project using Git online to improve project robustness.">
 
 <title>2. Interacting with remote repositories on GitHub</title>
 <style>
@@ -332,29 +333,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/github/appendix-cli/exercise1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 1: Practice with <code>git</code> on a local repository</span></a>
-  </div>
-</li>
+ <span class="menu-text">training/modules-dev/github/appendix-cli/exercise1.qmd</span>
+  </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/github/appendix-cli/exercise2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 2: Using <code>git pull</code> and <code>push</code> with GitHub</span></a>
-  </div>
-</li>
+ <span class="menu-text">training/modules-dev/github/appendix-cli/exercise2.qmd</span>
+  </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/github/appendix-cli/exercise3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 3: Collaborating in GitHub using the Fork and Pull Model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/github/appendix-cli/ssh_setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Create and add an ssh key to GitHub</span></a>
-  </div>
-</li>
+ <span class="menu-text">training/modules-dev/github/appendix-cli/exercise3.qmd</span>
+  </li>
       </ul>
   </li>
     </ul>
@@ -384,13 +370,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">2. Interacting with remote repositories on GitHub</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">r</div>
-    <div class="quarto-category">tidyverse</div>
-    <div class="quarto-category">dataviz</div>
-  </div>
-  </div>
+</div>
 
+<div>
+  <div class="description">
+    Storing a project using Git online to improve project robustness.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -419,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/github/github/exercise2.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/github/github/exercise2.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -430,7 +416,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To do this exercise you will need to install and setup GitHub Desktop. Follow the instructions <a href="../../../training/modules-dev/github/index.html#prerequisites">here</a>.</p>
+<p>Each step can be done with GitHub Desktop or with <code>git</code> on the command line: use the tabs below to switch between the two. To use GitHub Desktop, you will need to install and setup GitHub Desktop. Follow the instructions <a href="../../../training/modules-dev/github/index.html#prerequisites">here</a>. To use the command line, you will need to set up <a href="../../../training/modules-dev/github/appendix-cli/index.html#github-authentication">GitHub authentication</a>.</p>
 </div>
 </div>
 <p>In the <a href="../../../training/modules-dev/github/exercise1.html">first exercise</a>, we saw how to create a new <em>local</em> Git repository. All operations were made on our computer, and all commits are stored locally. In general, we also want to store our version-controlled project online.</p>
@@ -447,6 +433,10 @@ Note
 <section id="publish-a-local-repository" class="level3">
 <h3 data-anchor-id="publish-a-local-repository">1. Publish a local repository</h3>
 <p>In this subsection, we assume you have created a repository <code>test-git-repo</code> as shown in Exercise 1.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <ol type="1">
 <li><p>If it’s not already open, open <code>test-git-repo</code> with GitHub Desktop.</p></li>
 <li><p>Click the “Publish repository” button:</p>
@@ -460,6 +450,22 @@ Note
 <li><p>When you click on “View on GitHub”, your web browser will open. You’ll be at the website for your GitHub repository, which will live in your GitHub account.</p>
 <p>Congratulations! You’ve published a repository to GitHub. We’ll see what we can do with GitHub below.</p></li>
 </ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<ol type="1">
+<li><p>Go to <a href="https://github.com/new" class="uri">https://github.com/new</a> and create a repository called <code>test-git-repo</code>, with the description “My test repository” and “Private” visibility. <strong>Leave “Add a README file” unchecked and do not choose a license</strong>: the repository must be empty, since its content comes from your local repository.</p></li>
+<li><p>On the page of your new repository, copy the URL in the “HTTPS” tab of the “Quick setup” box. It should be something like <code>https://github.com/YOUR_USERNAME/test-git-repo.git</code>.</p></li>
+<li><p>In your terminal, go to the <code>test-git-repo</code> you created in Exercise 1, register the GitHub repository as the remote called <code>origin</code>, and push your <code>main</code> branch to it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/test-git-repo</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin REPO_URL</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>where <code>REPO_URL</code> is the URL you copied. <code>-u origin main</code> makes your local <code>main</code> <em>track</em> the <code>main</code> branch on <code>origin</code>, so that later you can simply run <code>git push</code> and <code>git pull</code>.</p></li>
+<li><p>Refresh the page of your repository on GitHub: it now contains your files and history.</p>
+<p>Congratulations! You’ve published a repository to GitHub. We’ll see what we can do with GitHub below.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="create-a-repository-on-github" class="level3">
 <h3 data-anchor-id="create-a-repository-on-github">2. Create a repository on GitHub</h3>
@@ -480,12 +486,32 @@ Note
 <h2 data-anchor-id="ii.-cloning-a-repository">II. Cloning a repository</h2>
 <p>We want to add things to our repository. We can do that through the web interface, but it’s easier to do changes locally and then send (or <strong>push</strong>) them to our remote repository, especially for code development so that you can test things.</p>
 <p>Doing changes locally means that we need to get a local copy of a remote repository. This is called <strong>cloning</strong>. Note that the access to the remote repository can be restricted (in the example above, we ticked a box to make it private so only us can access it), but anyone that has access to the repository may clone it.</p>
-<p>To clone the repository, click the Green <code>&lt;&gt; Code</code> button in the upper right. Then click “Open with GitHub Desktop”:</p>
+<p>To clone the repository:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Click the Green <code>&lt;&gt; Code</code> button in the upper right. Then click “Open with GitHub Desktop”:</p>
 <p><img src="figures/github-clone.png" class="img-fluid"></p>
 <p>This will open the “Clone a Repository” window in GitHub Desktop:</p>
 <p><img src="figures/ghd-clone_window.png" class="img-fluid"></p>
 <p>Don’t change any values. Just click “Clone”.</p>
 <p>You will now have a new directory in your GitHub folder on your computer that has the same name as the repo on github.com. Click the “Show in Explorer/Finder” button to see the contents of the repo. You should see the <code>README.md</code> file and the <code>LICENSE</code> file listed.</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<ol type="1">
+<li><p>Click the green <code>&lt;&gt; Code</code> button in the upper right, select the “HTTPS” tab, and copy the URL.</p></li>
+<li><p>In your terminal, <code>cd</code> to the folder where you want your local copy of the repository to live, then clone it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone REPO_URL</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>where <code>REPO_URL</code> is the URL you copied.</p></li>
+<li><p>This creates a folder with the same name as your repository. <code>cd</code> into it and run <code>ls</code>: you should see the <code>README.md</code> and <code>LICENSE</code> files.</p></li>
+<li><p>Run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This shows the URL of <code>origin</code> (see below) twice: once for <em>fetching</em> (where you pull updates from) and once for <em>pushing</em> (where you push your changes to).</p></li>
+</ol>
+</div>
+</div>
+</div>
 <p>This is your local copy of your repository. It is set up to track your repository on GitHub, which is called the <strong>origin</strong> repository.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -505,42 +531,105 @@ Note
 <h2 data-anchor-id="iii.-pushing-to-your-remote-repository">III. Pushing to your remote repository</h2>
 <ol type="1">
 <li><p>Let’s add a file to your repository. Use your text editor to create a file called <code>mymath.R</code> (refer to <a href="../../../training/modules-dev/github/exercise1.html">Exercise 1</a> if you forgot how to do that) and put the following in it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Some math functions</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>add <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span> (a <span class="sc">+</span> b)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Some math functions</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>add <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span> (a <span class="sc">+</span> b)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is a simple R program that contains a function to add two numbers.</p></li>
 </ol>
-<p>This is a simple R program that contains a function to add two numbers.</p>
-<ol type="1">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<ol start="2" type="1">
 <li><p>Add and commit your file to your repo using GitHub Desktop. (Review <a href="../../../training/modules-dev/github/exercise1.html">Exercise 1</a> if your forgot how.)</p></li>
 <li><p>Now look at your copy of the repository on GitHub in your web browser. (You may want to open your web browser side-by-side with GitHub Desktop to make the rest of the exercise easier.) Is <code>mymath.R</code> there? No.&nbsp;This is because you have only committed the file to your <em>local</em> copy of the repository. The origin repository on GitHub doesn’t know about these changes.</p></li>
 <li><p>You may have noticed that after you committed <code>mymath.R</code>, a button appeared in GitHub desktop telling you to <em>push</em> the changes to the origin repository on GitHub:</p>
 <p><img src="figures/ghd-push.png" class="img-fluid"></p>
 <p><em>Pushing</em> changes is how you update your remote repository on GitHub.</p>
 <p>Click the “Push origin” button to send the changes to GitHub.</p></li>
-<li><p>Go back to your web browser and refresh your repository page. You should now see the <code>mymath.R</code> file there. You can click on it to view it if you like. You can also see your commit history on GitHub (click the icon that looks like a clock just below the green <code>&lt;&gt; Code</code> button on the front page of your repository). Notice that the history on GitHub is the same as your history on your local computer. Your repos are in sync!</p></li>
+</ol>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<ol start="2" type="1">
+<li><p>Stage and commit your file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add mymath.R</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"add mymath file"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Now look at your copy of the repository on GitHub in your web browser. Is <code>mymath.R</code> there? No.&nbsp;This is because you have only committed the file to your <em>local</em> copy of the repository. The origin repository on GitHub doesn’t know about these changes.</p></li>
+<li><p><em>Pushing</em> changes is how you update your remote repository on GitHub. Send the changes to GitHub with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</div>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Go back to your web browser and refresh your repository page. You should now see the <code>mymath.R</code> file there. You can click on it to view it if you like. You can also see your commit history on GitHub (click the icon that looks like a clock just below the green <code>&lt;&gt; Code</code> button on the front page of your repository). Notice that the history on GitHub is the same as your history on your local computer. Your repos are in sync!</li>
 </ol>
 </section>
 <section id="iv.-fetching-changes-on-github-creating-pull-requests" class="level2">
 <h2 data-anchor-id="iv.-fetching-changes-on-github-creating-pull-requests">IV. Fetching changes on GitHub &amp; creating pull requests</h2>
 <p>As in the first exercise, let’s create a branch to do some development work. We could do this on our local computer, but let’s do it on GitHub instead.</p>
 <ol type="1">
-<li><p>Click the drop down button that says “main” in the upper left corner of the website. Then click “View all branches”. This will bring you to another page that shows you all your branches. Currently we only have one, <code>main</code>. Create a new branch by clicking the green <code>New branch</code> button in the upper right. In the “New branch name” field type <code>dev1</code> then click <code>Create new branch</code>. This will create the new branch.</p></li>
+<li>Click the drop down button that says “main” in the upper left corner of the website. Then click “View all branches”. This will bring you to another page that shows you all your branches. Currently we only have one, <code>main</code>. Create a new branch by clicking the green <code>New branch</code> button in the upper right. In the “New branch name” field type <code>dev1</code> then click <code>Create new branch</code>. This will create the new branch.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<ol start="2" type="1">
 <li><p>Now let’s make some changes on the <code>dev1</code> branch on our local computer. To do that, we’ll need to update our local repo to pickup the new branch. Go to GitHub Desktop and click “Fetch origin” in the upper right:</p>
 <p><img src="figures/ghd-fetch.png" class="img-fluid"></p>
 <p>At this point, we are still on the <code>main</code> branch. We only pulled updates from the remote repository to the local one.</p></li>
 <li><p>Now click “Current Branch”. You’ll see under “Other branches” <code>origin/dev1</code>. Click on it to switch to that branch. You now have a <code>dev1</code> branch on your local repository that is set to <em>track</em> the remote one on GitHub. This means that when we push from this branch it will by default push changes to the <code>dev1</code> branch on GitHub, not the <code>main</code> branch.</p></li>
+</ol>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<ol start="2" type="1">
+<li><p>Now let’s make some changes on the <code>dev1</code> branch on our local computer. To do that, we’ll need to update our local repo to pickup the new branch:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You’ll see a message about the new branch <code>origin/dev1</code>. At this point, <code>git branch</code> still only shows <code>* main</code>: fetching only informs your local repository of what’s on GitHub. <code>git branch -r</code> lists the remote branches.</p></li>
+<li><p>Create a local <code>dev1</code> branch that <em>tracks</em> the one on GitHub and switch to it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> dev1 origin/dev1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This means that when we push from this branch it will by default push changes to the <code>dev1</code> branch on GitHub, not the <code>main</code> branch. <code>git branch -vv</code> shows which remote branch each local branch tracks.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
 <li><p>Let’s modify <code>mymath.R</code> on <code>dev1</code>. On your local computer, use your text editor to open <code>mymath.R</code> and add the following to it (including the leading empty line):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>subtract <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span> (a <span class="sc">-</span> b)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>subtract <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span> (a <span class="sc">-</span> b)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save the changes.</p></li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<ol start="5" type="1">
 <li><p>Commit the changes to <code>mymath.R</code> to the dev1 branch on your local repo using GitHub Desktop.</p></li>
 <li><p>Again, your changes to your local <code>dev1</code> are not on GitHub yet. To do that, push the changes by clicking the “Push origin” button on GitHub Dekstop.</p></li>
 <li><p>Now look at your web browser. As soon pushed the changes a message popped up that said “<code>dev1</code> had recent pushes” with a green <code>Compare and pull request</code> button popping up.</p>
 <p>On GitHub Desktop, you’ll also see see a button pop up that says “Preview Pull Request.” If you click that, another window will pop up. This shows all the differences between <code>dev1</code> and <code>main</code>. There will also be a button that says “Create Pull Request”.</p></li>
 <li><p>Clicking “Create Pull Request” in GitHub Desktop or clicking the green “Compare &amp; pull request” button on github.com will open the “pull request” page on github.com in your web browser. Open the pull request by clicking either button.</p></li>
+</ol>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<ol start="5" type="1">
+<li><p>Commit the changes to <code>mymath.R</code> to the dev1 branch on your local repo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"add subtraction"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Again, your changes to your local <code>dev1</code> are not on GitHub yet. Push them:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The output contains <code>dev1 -&gt; dev1</code>: the changes went to <code>dev1</code> on GitHub.</p></li>
+<li><p>Now look at your web browser. As soon as you pushed the changes, a message popped up that said “<code>dev1</code> had recent pushes” with a green <code>Compare &amp; pull request</code> button.</p></li>
+<li><p>Click the “Compare &amp; pull request” button to open the “pull request” page.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<ol start="9" type="1">
 <li><p>The pull request page on GitHub will automatically have a title that is the message from your last commit. You can optionally add a longer description. Then click the <code>Create pull request</code> button.</p></li>
 <li><p>This will open a <em>Pull request</em> (or PR for short). Pull requests are GitHub’s way of managing new development via branches.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -560,6 +649,12 @@ Note
 </div></li>
 <li><p>There’s a green <code>Merge pull request</code> button at the bottom of the page. There’s also a drop down arrow next to it. If you click that, you will see Merge, Squash &amp; Merge, and Rebase options, just as we did when merging branches in GitHub Desktop in <a href="../../../training/modules-dev/github/exercise1.html">Exercise 1</a>.</p>
 <p>Let’s use Squash &amp; Merge to merge the pull request. Click the drop down arrow next to “Merge pull request”, then select “Squash and merge”. The green button will change to read “Squash and merge”. Click it, then “Confirm squash and merge”. This will merge your changes on <code>dev1</code> on to <code>main</code>. You now have the option to delete <code>dev1</code>, feel free to do so.</p></li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<ol start="12" type="1">
 <li><p>We have updated our <code>main</code> branch in the remote repository, on GitHub, but the <code>main</code> branch in our local copy doesn’t have these changes. To update it, switch to your <code>main</code> branch on GitHub Desktop (click “Current Branch” -&gt; <code>main</code>). Now click the “Fetch origin” in the upper right of GitHub Desktop.</p></li>
 <li><p>After you fetch, a message will pop up that says “Pull 1 commit from the origin remote”:</p>
 <p><img src="figures/ghd-pull.png" class="img-fluid"></p>
@@ -569,6 +664,20 @@ Note
 <p><img src="figures/ghd-pr_link.png" class="img-fluid"></p>
 <p>If you click on the PR number it will open the pull request page on github.com in your browser. This is way, you can easily see the entire history of the changes that were made and any discussion / review that occurred before it was merged.</p></li>
 </ol>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<ol start="12" type="1">
+<li><p>We have updated our <code>main</code> branch in the remote repository, on GitHub, but the <code>main</code> branch in our local copy doesn’t have these changes. To update it, switch to your <code>main</code> branch and fetch the changes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><code>git status</code> now says <code>Your branch is behind 'origin/main' by 1 commit</code>. Even though you fetched, the changes on your remote repository have not actually been merged into your local repository yet! This is because fetching only lets your local repository know what the <em>status</em> of your remote repository is, it doesn’t actually change your local repository.</p>
+<p>You can verify this with <code>git log</code>: your pull request commit is not there. In order to get the changes into your local repository you need to <strong>pull</strong> the changes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Once you pull the changes, your local repository’s main branch will be up to date with your remote. <code>git log</code> now shows the Squash &amp; Merge commit. GitHub has also added the pull request number <code>(#1)</code> in the commit message. On github.com, this number is a link to the pull request page, so you can easily see the entire history of the changes that were made and any discussion / review that occurred before it was merged.</p></li>
+</ol>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -580,7 +689,19 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>Even though you deleted the <code>dev1</code> branch on github.com, <code>dev1</code> still exists in your local repository, even though you fetched the changes to your local repository. <strong>Git will not delete a local branch even if it’s deleted remotely.</strong> There’s good reason for that: if a collaborator accidentally deleted a branch on the remote repository that you were working on locally, you’d be in for an unpleasant surprise the next time you fetched.</p>
-<p>You’ll need to explicitly delete your local copy of <code>dev1</code> using GitHub Desktop. To do that, click “Current Branch”, then right click <code>dev1</code>, then “Delete”.</p>
+<p>You’ll need to explicitly delete your local copy of <code>dev1</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<p>Click “Current Branch”, then right click <code>dev1</code>, then “Delete”.</p>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> dev1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If <code>git</code> refuses because <code>dev1</code> is not fully merged, use <code>-D</code> instead: the squashed commit on <code>main</code> is not the same as the commits on <code>dev1</code>, even though their content is identical.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <p>Congratulations! You’ve made your first pull request! Pull requests are a key part of collaborating with others on a project, and one of the most useful attributes about GitHub. In the <a href="../../../training/modules-dev/github/exercise3.html">next exercise</a> you’ll see how to use PRs to collaborate with others.</p>
@@ -598,7 +719,7 @@ Note
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-18
+ date     2026-11-19
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 

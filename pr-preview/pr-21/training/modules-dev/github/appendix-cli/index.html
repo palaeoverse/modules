@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix: git and GitHub with the Command Line Interface</title>
+<title>Appendix: Git and GitHub with the Command Line Interface</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -328,29 +328,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../training/modules-dev/github/appendix-cli/exercise1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 1: Practice with <code>git</code> on a local repository</span></a>
-  </div>
-</li>
+ <span class="menu-text">training/modules-dev/github/appendix-cli/exercise1.qmd</span>
+  </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../training/modules-dev/github/appendix-cli/exercise2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 2: Using <code>git pull</code> and <code>push</code> with GitHub</span></a>
-  </div>
-</li>
+ <span class="menu-text">training/modules-dev/github/appendix-cli/exercise2.qmd</span>
+  </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../training/modules-dev/github/appendix-cli/exercise3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 3: Collaborating in GitHub using the Fork and Pull Model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../../training/modules-dev/github/appendix-cli/ssh_setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Create and add an ssh key to GitHub</span></a>
-  </div>
-</li>
+ <span class="menu-text">training/modules-dev/github/appendix-cli/exercise3.qmd</span>
+  </li>
       </ul>
   </li>
     </ul>
@@ -365,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a>
   <ul class="collapse">
-  <li><a href="#github-ssh-keys" id="toc-github-ssh-keys" class="nav-link" data-scroll-target="#github-ssh-keys">GitHub ssh keys</a></li>
+  <li><a href="#github-authentication" id="toc-github-authentication" class="nav-link" data-scroll-target="#github-authentication">GitHub authentication</a></li>
   <li><a href="#git-configuration" id="toc-git-configuration" class="nav-link" data-scroll-target="#git-configuration">Git configuration</a></li>
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -377,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Appendix: git and GitHub with the Command Line Interface</h1>
+<h1 class="title">Appendix: Git and GitHub with the Command Line Interface</h1>
 </div>
 
 
@@ -399,20 +384,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="prerequisites" class="level2">
 <h2 data-anchor-id="prerequisites">Prerequisites</h2>
 <p>The following should be done <em>before</em> doing the exercises below.</p>
-<section id="github-ssh-keys" class="level3">
-<h3 data-anchor-id="github-ssh-keys">GitHub ssh keys</h3>
-<p>In exercises 2 and 3 you will be using GitHub to “push” and “pull” commits between your local computer and GitHub’s servers. This requires authentication to be setup. For these purposes we suggest using ssh keys. To set that up, follow the instructions here:</p>
+<section id="github-authentication" class="level3">
+<h3 data-anchor-id="github-authentication">GitHub authentication</h3>
+<p>In exercises 2 and 3 you will be using GitHub to “push” and “pull” commits between your local computer and GitHub’s servers over HTTPS. Pushing requires <code>git</code> to authenticate you, but GitHub doesn’t accept your account password for this.</p>
 <ul>
-<li><a href="../../../../training/modules-dev/github/appendix-cli/ssh_setup.html">Setup ssh key for GitHub</a></li>
+<li><p><strong>On Windows</strong>, Git for Windows comes with the Git Credential Manager: the first time you push, a browser window opens to log in to GitHub, and your credentials are stored for next times. There is nothing to set up.</p></li>
+<li><p><strong>On Mac or Linux</strong>, the simplest way is to install the <a href="https://cli.github.com/">GitHub CLI</a> and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> auth login</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Select “GitHub.com”, then “HTTPS”, answer “Yes” when asked to authenticate Git with your GitHub credentials, and log in with your web browser.</p></li>
 </ul>
 </section>
 <section id="git-configuration" class="level3">
 <h3 data-anchor-id="git-configuration">Git configuration</h3>
 <p>Before doing the exercises in this session, you’ll need to tell <code>git</code> what your name and email are, so that it creates commits with the appropriate author information. To do that, open a terminal and run the following (it doesn’t matter which directory you run these from), but replacing <code>YOUR NAME</code> with your name and <code>YOUR_EMAIL_ADDRESS</code> with your email address:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"YOUR NAME"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"YOUR_EMAIL_ADDRESS"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"YOUR NAME"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"YOUR_EMAIL_ADDRESS"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For entering longer commit messages (you’ll learn what this means in Exercise 1) we’ll need to tell <code>git</code> what text editor to use. By default <code>git</code> will use <code>vim</code>, which can be tricky to understand for new users. For the purposes of this tutorial, we’ll use the more user-friendly <a href="https://en.wikipedia.org/wiki/GNU_nano">nano</a>. To do that, run the following in your terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor nano</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor nano</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -424,7 +412,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>If you wish to reset to the default editor after the tutorial is over, run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--unset-all</span> core.editor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--unset-all</span> core.editor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -432,9 +420,9 @@ Note
 <section id="exercises" class="level2">
 <h2 data-anchor-id="exercises">Exercises</h2>
 <ul>
-<li><a href="../../../../training/modules-dev/github/appendix-cli/exercise1.html">Exercise1</a>: Practice with <code>git</code> on a local repository</li>
-<li><a href="../../../../training/modules-dev/github/appendix-cli/exercise2.html">Exercise2</a>: <code>git</code> and GitHub</li>
-<li><a href="../../../../training/modules-dev/github/appendix-cli/exercise3.html">Exercise3</a>: Collaborating in GitHub using the Fork and Pull Model</li>
+<li><a href="exercise1.qmd">Exercise1</a>: Practice with <code>git</code> on a local repository</li>
+<li><a href="exercise2.qmd">Exercise2</a>: <code>git</code> and GitHub</li>
+<li><a href="exercise3.qmd">Exercise3</a>: Collaborating in GitHub using the Fork and Pull Model</li>
 </ul>
 
 
@@ -450,7 +438,7 @@ Note
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-18
+ date     2026-11-19
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
