@@ -98,6 +98,12 @@ In this section, we will initialise a Git repository from scratch and start trac
    git init
    ```
 
+   `git init` confirms that the repository was created:
+
+   ```txt
+   Initialized empty Git repository in /home/you/test-git-repo/.git/
+   ```
+
    `git status` shows:
 
    ```txt
@@ -155,7 +161,21 @@ In this section, we will initialise a Git repository from scratch and start trac
 
    #### Command line
 
-   Run `git status`: it lists `story.txt` under `Untracked files`.
+   ```bash
+   git status
+   ```
+
+   ```txt
+   On branch main
+
+   No commits yet
+
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+           story.txt
+
+   nothing added to commit but untracked files present (use "git add" to track)
+   ```
    :::
 
    `git` knows you have a file in the directory called `story.txt`, but it isn't tracking it yet!
@@ -182,6 +202,14 @@ In this section, we will initialise a Git repository from scratch and start trac
    git commit -m "Create story.txt"
    ```
 
+   `git commit` prints a summary of the commit. `17b2095` is the start of its hash, which identifies it (yours will be different):
+
+   ```txt
+   [main (root-commit) 17b2095] Create story.txt
+    1 file changed, 2 insertions(+)
+    create mode 100644 story.txt
+   ```
+
    `git status` now says `nothing to commit, working tree clean`.
    :::
 
@@ -206,6 +234,14 @@ In this section, we will initialise a Git repository from scratch and start trac
 
    ```bash
    git log
+   ```
+
+   ```txt
+   commit 17b2095e7b6ed25600be638ed5f02749ddb94a3d
+   Author: Your Name <you@example.com>
+   Date:   Tue Oct 6 10:03:00 2026 +0200
+
+       Create story.txt
    ```
 
    Unlike GitHub Desktop, `git init` doesn't create an "Initial commit", so there is only the commit you just made.
@@ -263,6 +299,19 @@ You're not happy with your story opening. You don't want to write fairy tales, y
    ```bash
    git diff
    ```
+
+   ```txt
+   diff --git a/story.txt b/story.txt
+   index ceb7be2..577687e 100644
+   --- a/story.txt
+   +++ b/story.txt
+   @@ -1,2 +1,2 @@
+   -Once upon a time, in a land far,
+   +A long time ago in a galaxy far,
+    far away...
+   ```
+
+   Lines starting with `-` were removed, and lines starting with `+` were added.
    :::
 
 1. Git recognizes that `story.txt` has changed, *but your changes have not been committed yet.*
@@ -274,7 +323,17 @@ You're not happy with your story opening. You don't want to write fairy tales, y
 
    #### Command line
 
-   `git status` lists `story.txt` under `Changes not staged for commit`, and `git log` still shows a single commit.
+   `git status` lists `story.txt` under `Changes not staged for commit`, and `git log` still shows a single commit:
+
+   ```txt
+   On branch main
+   Changes not staged for commit:
+     (use "git add <file>..." to update what will be committed)
+     (use "git restore <file>..." to discard changes in working directory)
+           modified:   story.txt
+
+   no changes added to commit (use "git add" and/or "git commit -a")
+   ```
    :::
 
 1. Let's commit your changes so you don't lose them! This time, let's give a more descriptive commit message: "Change opening".
@@ -295,7 +354,19 @@ You're not happy with your story opening. You don't want to write fairy tales, y
    git commit
    ```
 
-   Without `-m`, `git commit` opens a text editor to write the commit message, which is handy for multi-line messages. Type "Change opening", then save and exit to complete the commit. `git log` now shows 2 commits.
+   Without `-m`, `git commit` opens a text editor to write the commit message, which is handy for multi-line messages. Type "Change opening", then save and exit to complete the commit:
+
+   ```txt
+   [main b81e803] Change opening
+    1 file changed, 1 insertion(+), 1 deletion(-)
+   ```
+
+   `git log` now shows 2 commits. `git log --oneline` shows a more compact version of the history, with one line per commit:
+
+   ```txt
+   b81e803 Change opening
+   17b2095 Create story.txt
+   ```
    :::
 
 ::: {.callout-note title="Graph view"}
@@ -373,7 +444,16 @@ To tell Git to ignore a file:
 
    #### Command line
 
-   Check this with `git status`.
+   Check this with `git status`:
+
+   ```txt
+   On branch main
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+           .gitignore
+
+   nothing added to commit but untracked files present (use "git add" to track)
+   ```
    :::
 
 1. As with any other file, we need to commit the changes to `.gitignore` for Git to keep track of it, here with the message "Create .gitignore":
@@ -388,6 +468,12 @@ To tell Git to ignore a file:
    ```bash
    git add .gitignore
    git commit -m "Create .gitignore"
+   ```
+
+   ```txt
+   [main 40d5b63] Create .gitignore
+    1 file changed, 1 insertion(+)
+    create mode 100644 .gitignore
    ```
    :::
 
@@ -467,7 +553,11 @@ Let's see how to do this in practice:
    git branch
    ```
 
-   This returns `* main`, where `*` marks the branch you are on.
+   ```txt
+   * main
+   ```
+
+   The `*` marks the branch you are on.
    :::
 
    Currently, we only have one branch, which is called `main` by default, as mentioned above. Think of it as the master copy of your repository. If this were a code repository, the `main` would be the branch that you (try to) keep a clean, working version of your code.
@@ -489,6 +579,10 @@ Let's see how to do this in practice:
 
    ```bash
    git checkout -b title-dev
+   ```
+
+   ```txt
+   Switched to a new branch 'title-dev'
    ```
 
    `-b` creates the branch before switching to it. You are now on a new branch called `title-dev`, as shown by `git branch`:
@@ -543,6 +637,14 @@ Let's see how to do this in practice:
    git add title.txt
    git commit -m "Create title.txt"
    ```
+
+   ```txt
+   [title-dev 0517538] Create title.txt
+    1 file changed, 1 insertion(+)
+    create mode 100644 title.txt
+   ```
+
+   Note that the summary starts with `title-dev`: this is the branch on which the commit was made.
    :::
 
 ::: {.callout-note title="Graph version"}
@@ -580,6 +682,10 @@ We don't have to be stuck on a branch until its changes are integrated in the `m
    ```bash
    git checkout main
    ```
+
+   ```txt
+   Switched to branch 'main'
+   ```
    :::
 
 1. Let's see what happened to your files and history when you switched back to `main`:
@@ -591,7 +697,20 @@ We don't have to be stuck on a branch until its changes are integrated in the `m
 
    #### Command line
 
-   Run `ls`: the `title.txt` file is gone! Likewise, `git log` shows that your last commit is no longer in your history; you just have the first three commits.
+   ```bash
+   ls
+   git log --oneline
+   ```
+
+   ```txt
+   story.txt
+
+   40d5b63 Create .gitignore
+   b81e803 Change opening
+   17b2095 Create story.txt
+   ```
+
+   The `title.txt` file is gone! Likewise, your last commit is no longer in your history; you just have the first three commits.
    :::
 
    This is because your last commit (and the file it created, `title.txt`) only exists on the `title-dev` branch. To verify that it's still there, switch to the `title-dev` branch: you'll see the "Create title.txt" commit reappear in your history.
@@ -628,6 +747,11 @@ We don't have to be stuck on a branch until its changes are integrated in the `m
    ```
 
    `git add -u` stages the changes of all tracked files.
+
+   ```txt
+   [main c1d82b6] Add first paragraph
+    1 file changed, 6 insertions(+)
+   ```
    :::
 
 1. Look at the history of `main`: none of its commits include the commits to `title-dev` branch.
@@ -639,13 +763,31 @@ We don't have to be stuck on a branch until its changes are integrated in the `m
 
    #### Command line
 
-   `git log` now shows 4 commits.
+   ```bash
+   git log --oneline
+   ```
+
+   ```txt
+   c1d82b6 Add first paragraph
+   40d5b63 Create .gitignore
+   b81e803 Change opening
+   17b2095 Create story.txt
+   ```
 
    ::: {.callout-tip title="Graph view in the terminal" collapse="true"}
    Add `--graph` to `git log` to see the history as a graph, and `--all` to include all branches:
 
    ```bash
    git log --oneline --graph --all
+   ```
+
+   ```txt
+   * c1d82b6 Add first paragraph
+   | * 0517538 Create title.txt
+   |/
+   * 40d5b63 Create .gitignore
+   * b81e803 Change opening
+   * 17b2095 Create story.txt
    ```
    :::
    :::
@@ -698,6 +840,11 @@ gitGraph
    git add -u
    git commit -m "Update title.txt"
    ```
+
+   ```txt
+   [title-dev 1b45d74] Update title.txt
+    1 file changed, 5 insertions(+), 1 deletion(-)
+   ```
    :::
 
 1. The history of `title-dev` contains the commits from `main` before you branched off, and the last two on `title-dev`:
@@ -711,7 +858,15 @@ gitGraph
 
    #### Command line
 
-   `git log` shows 5 commits: the first three from `main`, and the last two on `title-dev`.
+   `git log --oneline` shows 5 commits: the first three from `main`, and the last two on `title-dev`:
+
+   ```txt
+   1b45d74 Update title.txt
+   0517538 Create title.txt
+   40d5b63 Create .gitignore
+   b81e803 Change opening
+   17b2095 Create story.txt
+   ```
    :::
 
 ::: {.callout-note title="Graph version"}
@@ -805,7 +960,14 @@ gitGraph
    git merge title-dev
    ```
 
-   This opens your text editor with the commit message `Merge branch 'title-dev'`. Don't change it, just save and exit to finish the merge.
+   This opens your text editor with the commit message `Merge branch 'title-dev'`. Don't change it, just save and exit to finish the merge:
+
+   ```txt
+   Merge made by the 'ort' strategy.
+    title.txt | 5 +++++
+    1 file changed, 5 insertions(+)
+    create mode 100644 title.txt
+   ```
    :::
 
 1. Congratulations! You've made your first merge on to main. To see what happened, let's look at the history on the main branch:
@@ -820,7 +982,19 @@ gitGraph
    #### Command line
 
    ```bash
-   git log
+   git log --oneline --graph
+   ```
+
+   ```txt
+   *   5a21f4b Merge branch 'title-dev'
+   |\
+   | * 1b45d74 Update title.txt
+   | * 0517538 Create title.txt
+   * | c1d82b6 Add first paragraph
+   |/
+   * 40d5b63 Create .gitignore
+   * b81e803 Change opening
+   * 17b2095 Create story.txt
    ```
    :::
 
@@ -878,10 +1052,26 @@ Instead of creating a merge commit, we could have done a **squash and merge**. L
 
    ```bash
    git merge --squash title-dev
+   ```
+
+   ```txt
+   Automatic merge went well; stopped before committing as requested
+   Squash commit -- not updating HEAD
+   ```
+
+   Unlike a regular merge, `--squash` stages the changes from `title-dev` but doesn't commit them. Commit them with:
+
+   ```bash
    git commit
    ```
 
-   Unlike a regular merge, `--squash` stages the changes from `title-dev` but doesn't commit them, hence the `git commit`. This opens your text editor with a message listing the squashed commits. Save and exit.
+   This opens your text editor with a message listing the squashed commits. Save and exit:
+
+   ```txt
+   [main-bkup 61857c0] Squashed commit of the following:
+    1 file changed, 5 insertions(+)
+    create mode 100644 title.txt
+   ```
    :::
 
 1. Look at the history on `main-bkup`:
@@ -896,7 +1086,15 @@ Instead of creating a merge commit, we could have done a **squash and merge**. L
    #### Command line
 
    ```bash
-   git log
+   git log --oneline
+   ```
+
+   ```txt
+   61857c0 Squashed commit of the following:
+   c1d82b6 Add first paragraph
+   40d5b63 Create .gitignore
+   b81e803 Change opening
+   17b2095 Create story.txt
    ```
    :::
 
@@ -1038,6 +1236,12 @@ You will be prompted with a warning. Click the "Delete" button. The `title-dev` 
 git checkout main
 git branch -d title-dev
 git branch -D main-bkup
+```
+
+```txt
+Switched to branch 'main'
+Deleted branch title-dev (was 1b45d74).
+Deleted branch main-bkup (was 61857c0).
 ```
 
 `-d` refuses to delete a branch whose commits aren't in the current branch, so that you don't lose them. `main-bkup` contains the squashed commit, which isn't on `main`, so it needs `-D` to force the deletion.
@@ -1270,7 +1474,20 @@ As illustrated in the Challenge Questions, if the same lines in the same file ar
    Automatic merge failed; fix conflicts and then commit the result.
    ```
 
-   `git status` also lists the conflicted files under `Unmerged paths`.
+   `git status` also lists the conflicted files under `Unmerged paths`:
+
+   ```txt
+   On branch main
+   You have unmerged paths.
+     (fix conflicts and run "git commit")
+     (use "git merge --abort" to abort the merge)
+
+   Unmerged paths:
+     (use "git add <file>..." to mark resolution)
+           both modified:   list.txt
+
+   no changes added to commit (use "git add" and/or "git commit -a")
+   ```
    :::
 
    To fix this, we need to manually resolve the conflict. There are several options to deal with this, such as using a code editor like VS Code. Here, though, we'll use our simple text editor to resolve the issue.
@@ -1323,7 +1540,11 @@ As illustrated in the Challenge Questions, if the same lines in the same file ar
    git commit
    ```
 
-   This opens your text editor with the commit message set to `Merge branch 'dev2'`. Save and exit.
+   This opens your text editor with the commit message set to `Merge branch 'dev2'`. Save and exit:
+
+   ```txt
+   [main 1c5dcc2] Merge branch 'dev2'
+   ```
    :::
 
 1. The merge conflict is resolved! If you look at the history, you will see all the commits in it, as if you had merged without any issue.
