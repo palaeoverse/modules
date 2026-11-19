@@ -8,7 +8,7 @@
 
 <meta name="author" content="Bethany J. Allen">
 <meta name="author" content="Lewis A. Jones">
-<meta name="dcterms.date" content="2026-11-17">
+<meta name="dcterms.date" content="2026-11-19">
 <meta name="description" content="How diverse were tetrapods in the Palaeozoic, and how was this diversity structured through time and across space?">
 
 <title>Tutorial 2: Tracking the diversity of early tetrapods</title>
@@ -87,9 +87,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-a773179ffd2259117786c3c9d025ea38.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-a9119fcfce3cd8b4dfcae8cbdcbc51c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-a773179ffd2259117786c3c9d025ea38.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-78331ee6c515df404099122e42a21419.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-3477dad15899ce1d57b9c6b4079a1fa6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-78331ee6c515df404099122e42a21419.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -365,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 17, 2026</p>
+      <p class="date">November 19, 2026</p>
     </div>
   </div>
   
@@ -562,7 +562,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The function gives us the option to generate a plot of our time bins – here we can see some variation in the duration of our different stages, with particularly long stages in the Early Carboniferous and shorter ones across the Carboniferous-Permian boundary. This is a form of structure inherent to our dataset, and something we should bear in mind for our downstream analyses.</p>
+<p>The function gives us the option to generate a plot of our time bins – here we can see some variation in the duration of our different stages, with particularly long stages in the Early Carboniferous and shorter ones across the Carboniferous–Permian boundary. This is a form of structure inherent to our dataset, and something we should bear in mind for our downstream analyses.</p>
 <p>We can also take a look at the structure of the outputted table which describes the time bins.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View first few rows</span></span>
@@ -709,7 +709,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>If we remember back to our initial exploration of the data, the youngest occurrences in the dataset are Early Triassic in age. This sits outside of the Carboniferous-Permian interval across which we have generated our time bins. The function is giving us an error because these Early Triassic occurrences are too young to be placed into any of the provided time bins.</p>
+<p>If we remember back to our initial exploration of the data, the youngest occurrences in the dataset are Early Triassic in age. This sits outside of the Carboniferous–Permian interval across which we have generated our time bins. The function is giving us an error because these Early Triassic occurrences are too young to be placed into any of the provided time bins.</p>
 </div>
 </div>
 </div>
@@ -771,7 +771,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Palaeorotate occurrences</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mid_tetrapods <span class="ot">&lt;-</span> <span class="fu">palaeorotate</span>(<span class="at">occdf =</span> mid_tetrapods, <span class="at">age =</span> <span class="st">"bin_midpoint"</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">method =</span> <span class="st">"grid"</span>, <span class="at">model =</span> <span class="st">"PALEOMAP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">method =</span> <span class="st">"point"</span>, <span class="at">model =</span> <span class="st">"PALEOMAP"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s now take a look at our new columns containing the palaeocoordinates.</p>
 <div class="cell" data-output-fold="true" data-output-summary="Output">
@@ -780,12 +780,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details><summary>Output</summary>
 <div class="cell-output cell-output-stdout">
 <pre><code>     p_lng    p_lat
-1 -38.8046   3.0577
-2 -33.7730 -59.7070
-4 -30.3140  -0.9008
-5 -28.3769   2.6490
-6 -27.2582   2.4864
-7 -16.3217  -4.5422</code></pre>
+1 -39.1618   2.9214
+2 -33.9023 -59.1946
+4 -30.1811  -0.9483
+5 -28.4255   2.7177
+6 -27.6584   2.2973
+7 -16.1476  -5.0776</code></pre>
 </div>
 </details>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Did any of the rotations fail?</span></span>
@@ -809,11 +809,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>          cell_ID cell_centroid_lng cell_centroid_lat
 1 8380d4fffffffff         -38.83199          3.041113
-2 83dd6efffffffff         -32.95137        -59.805529
+2 83dd68fffffffff         -34.66666        -59.098482
 4 837d4bfffffffff         -29.87896         -1.198269
 5 837c45fffffffff         -28.90252          2.777952
-6 837c46fffffffff         -26.99023          2.717426
-7 837d81fffffffff         -16.20328         -4.026211</code></pre>
+6 837c44fffffffff         -27.94209          2.183584
+7 837d85fffffffff         -16.18503         -5.090402</code></pre>
 </div>
 </details>
 </div>
@@ -1133,8 +1133,8 @@ $non_letter_group
 1        Abdalodon        1      0.00       256.62
 2        Acrodenta        2      0.00       256.62
 3      Adelosaurus        3      0.00       256.62
-4    Aelurognathus        4 187239.33       256.62
-5     Aelurosaurus        5  18881.25       256.62
+4    Aelurognathus        4 292403.96       256.62
+5     Aelurosaurus        5  11864.55       256.62
 6 Aenigmastropheus        6      0.00       256.62</code></pre>
 </div>
 </details>
@@ -1177,17 +1177,19 @@ $non_letter_group
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(space_tetrapods_mean) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mean_area"</span>, <span class="st">"bin_midpoint"</span>)</span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot of average range size through time</span></span>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint,</span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>     space_tetrapods_mean<span class="sc">$</span>mean_area, <span class="co"># add the points</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>     space_tetrapods_mean<span class="sc">$</span>mean_area,</span>
 <span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(<span class="fu">as.numeric</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint),</span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="co"># reverse the x-axis</span></span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"Average range size of tetrapod genera</span></span>
-<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="st">                                   (km"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">")"</span>), <span class="co"># axes labels</span></span>
-<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
-<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
-<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
-<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>))</span>
-<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>     <span class="co"># reverse the x-axis</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">rev</span>(<span class="fu">range</span>(<span class="fu">as.numeric</span>(space_tetrapods_mean<span class="sc">$</span>bin_midpoint),</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>     <span class="co"># axes labels</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">" "</span>, </span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">"Average range size of tetrapod genera (km"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="st">")"</span>),</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0e826f"</span>) <span class="co"># point style and colour</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>) <span class="co"># add a normal axis to the left side</span></span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a><span class="fu">axis_geo</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">intervals =</span> <span class="fu">list</span>(<span class="st">"epochs"</span>, <span class="st">"periods"</span>))</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Time (Ma)"</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1211,11 +1213,11 @@ $non_letter_group
     Spearman's rank correlation rho
 
 data:  log10(space_tetrapods_mean$mean_area) and log10(spat.cov$nrow)
-S = 197.06, p-value = 0.008974
+S = 189.34, p-value = 0.007191
 alternative hypothesis: true rho is not equal to 0
 sample estimates:
       rho 
-0.6481159 </code></pre>
+0.6618858 </code></pre>
 </div>
 </details>
 </div>
@@ -1257,7 +1259,7 @@ sample estimates:
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-17
+ date     2026-11-19
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -1289,7 +1291,7 @@ sample estimates:
    magrittr      2.0.5   2026-04-04 [1] RSPM
    mime          0.13    2025-03-17 [1] RSPM
    nlme          3.1-171 2026-09-01 [2] CRAN (R 4.6.2)
-   openssl       2.5.0   2026-11-02 [1] RSPM
+   openssl       2.6.0   2026-11-17 [1] RSPM
    palaeoverse   1.5.0   2026-06-11 [1] RSPM
    pbapply       1.7-5   2026-09-01 [1] RSPM
    pillar        1.11.1  2025-09-17 [1] RSPM
