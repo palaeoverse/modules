@@ -32,7 +32,7 @@ editor:
 ---
 
 ::: {.callout-note}
-To do this exercise you will need to install and setup GitHub Desktop. Follow the instructions [here](index.qmd#prerequisites).
+Each step can be done with GitHub Desktop or with `git` on the command line: use the tabs below to switch between the two. To use GitHub Desktop, you will need to install and setup GitHub Desktop. Follow the instructions [here](index.qmd#prerequisites). To use the command line, you will need to set up [GitHub authentication](appendix-cli/index.qmd#github-authentication).
 :::
 
 In the [first exercise](exercise1.qmd), we saw how to create a new *local* Git repository. All operations were made on our computer, and all commits are stored locally. In general, we also want to store our version-controlled project online. 
@@ -53,6 +53,9 @@ Below we illustrate both methods.
 ### 1. Publish a local repository
 
 In this subsection, we assume you have created a repository `test-git-repo` as shown in Exercise 1.
+
+::: {.panel-tabset}
+#### GitHub Desktop
 
 1. If it's not already open, open `test-git-repo` with GitHub Desktop.
 
@@ -75,6 +78,27 @@ In this subsection, we assume you have created a repository `test-git-repo` as s
 1. When you click on "View on GitHub", your web browser will open. You'll be at the website for your GitHub repository, which will live in your GitHub account.
 
    Congratulations! You've published a repository to GitHub. We'll see what we can do with GitHub below.
+
+#### Command line
+
+1. Go to <https://github.com/new> and create a repository called `test-git-repo`, with the description "My test repository" and "Private" visibility. **Leave "Add a README file" unchecked and do not choose a license**: the repository must be empty, since its content comes from your local repository.
+
+1. On the page of your new repository, copy the URL in the "HTTPS" tab of the "Quick setup" box. It should be something like `https://github.com/YOUR_USERNAME/test-git-repo.git`.
+
+1. In your terminal, go to the `test-git-repo` you created in Exercise 1, register the GitHub repository as the remote called `origin`, and push your `main` branch to it:
+
+   ```bash
+   cd ~/test-git-repo
+   git remote add origin REPO_URL
+   git push -u origin main
+   ```
+
+   where `REPO_URL` is the URL you copied. `-u origin main` makes your local `main` *track* the `main` branch on `origin`, so that later you can simply run `git push` and `git pull`.
+
+1. Refresh the page of your repository on GitHub: it now contains your files and history.
+
+   Congratulations! You've published a repository to GitHub. We'll see what we can do with GitHub below.
+:::
 
 ### 2. Create a repository on GitHub
 
@@ -102,7 +126,12 @@ We want to add things to our repository. We can do that through the web interfac
 
 Doing changes locally means that we need to get a local copy of a remote repository. This is called **cloning**. Note that the access to the remote repository can be restricted (in the example above, we ticked a box to make it private so only us can access it), but anyone that has access to the repository may clone it. 
 
-To clone the repository, click the Green `<> Code` button in the upper right. Then click "Open with GitHub Desktop":
+To clone the repository:
+
+::: {.panel-tabset}
+#### GitHub Desktop
+
+Click the Green `<> Code` button in the upper right. Then click "Open with GitHub Desktop":
 
 ![](figures/github-clone.png)
 
@@ -113,6 +142,29 @@ This will open the "Clone a Repository" window in GitHub Desktop:
 Don't change any values. Just click "Clone".
 
 You will now have a new directory in your GitHub folder on your computer that has the same name as the repo on github.com. Click the "Show in Explorer/Finder" button to see the contents of the repo. You should see the `README.md` file and the `LICENSE` file listed.
+
+#### Command line
+
+1. Click the green `<> Code` button in the upper right, select the "HTTPS" tab, and copy the URL.
+
+1. In your terminal, `cd` to the folder where you want your local copy of the repository to live, then clone it:
+
+   ```bash
+   git clone REPO_URL
+   ```
+
+   where `REPO_URL` is the URL you copied.
+
+1. This creates a folder with the same name as your repository. `cd` into it and run `ls`: you should see the `README.md` and `LICENSE` files.
+
+1. Run:
+
+   ```bash
+   git remote -v
+   ```
+
+   This shows the URL of `origin` (see below) twice: once for *fetching* (where you pull updates from) and once for *pushing* (where you push your changes to).
+:::
 
 This is your local copy of your repository. It is set up to track your repository on GitHub, which is called the **origin** repository.
 
@@ -131,9 +183,12 @@ For the rest of this exercise we will work with the repository you created on Gi
    }
    ```
 
-This is a simple R program that contains a function to add two numbers.
+   This is a simple R program that contains a function to add two numbers.
 
-1. Add and commit your file to your repo using GitHub Desktop. (Review [Exercise 1](exercise1.qmd) if your forgot how.)
+::: {.panel-tabset}
+#### GitHub Desktop
+
+2. Add and commit your file to your repo using GitHub Desktop. (Review [Exercise 1](exercise1.qmd) if your forgot how.)
 
 1. Now look at your copy of the repository on GitHub in your web browser. (You may want to open your web browser side-by-side with GitHub Desktop to make the rest of the exercise easier.) Is `mymath.R` there? No. This is because you have only committed the file to your *local* copy of the repository. The origin repository on GitHub doesn't know about these changes.
 
@@ -145,7 +200,25 @@ This is a simple R program that contains a function to add two numbers.
 
    Click the "Push origin" button to send the changes to GitHub.
 
-1. Go back to your web browser and refresh your repository page. You should now see the `mymath.R` file there. You can click on it to view it if you like. You can also see your commit history on GitHub (click the icon that looks like a clock just below the green `<> Code` button on the front page of your repository). Notice that the history on GitHub is the same as your history on your local computer. Your repos are in sync!
+#### Command line
+
+2. Stage and commit your file:
+
+   ```bash
+   git add mymath.R
+   git commit -m "add mymath file"
+   ```
+
+1. Now look at your copy of the repository on GitHub in your web browser. Is `mymath.R` there? No. This is because you have only committed the file to your *local* copy of the repository. The origin repository on GitHub doesn't know about these changes.
+
+1. *Pushing* changes is how you update your remote repository on GitHub. Send the changes to GitHub with:
+
+   ```bash
+   git push
+   ```
+:::
+
+5. Go back to your web browser and refresh your repository page. You should now see the `mymath.R` file there. You can click on it to view it if you like. You can also see your commit history on GitHub (click the icon that looks like a clock just below the green `<> Code` button on the front page of your repository). Notice that the history on GitHub is the same as your history on your local computer. Your repos are in sync!
 
 ## IV. Fetching changes on GitHub & creating pull requests
 
@@ -153,7 +226,10 @@ As in the first exercise, let's create a branch to do some development work. We 
 
 1. Click the drop down button that says "main" in the upper left corner of the website. Then click "View all branches". This will bring you to another page that shows you all your branches. Currently we only have one, `main`. Create a new branch by clicking the green `New branch` button in the upper right. In the "New branch name" field type `dev1` then click `Create new branch`. This will create the new branch.
 
-1. Now let's make some changes on the `dev1` branch on our local computer. To do that, we'll need to update our local repo to pickup the new branch. Go to GitHub Desktop and click "Fetch origin" in the upper right:
+::: {.panel-tabset}
+#### GitHub Desktop
+
+2. Now let's make some changes on the `dev1` branch on our local computer. To do that, we'll need to update our local repo to pickup the new branch. Go to GitHub Desktop and click "Fetch origin" in the upper right:
 
    ![](figures/ghd-fetch.png)
 
@@ -161,7 +237,26 @@ As in the first exercise, let's create a branch to do some development work. We 
 
 1. Now click "Current Branch". You'll see under "Other branches" `origin/dev1`. Click on it to switch to that branch. You now have a `dev1` branch on your local repository that is set to *track* the remote one on GitHub. This means that when we push from this branch it will by default push changes to the `dev1` branch on GitHub, not the `main` branch.
 
-1. Let's modify `mymath.R` on `dev1`. On your local computer, use your text editor to open `mymath.R` and add the following to it (including the leading empty line):
+#### Command line
+
+2. Now let's make some changes on the `dev1` branch on our local computer. To do that, we'll need to update our local repo to pickup the new branch:
+
+   ```bash
+   git fetch
+   ```
+
+   You'll see a message about the new branch `origin/dev1`. At this point, `git branch` still only shows `* main`: fetching only informs your local repository of what's on GitHub. `git branch -r` lists the remote branches.
+
+1. Create a local `dev1` branch that *tracks* the one on GitHub and switch to it:
+
+   ```bash
+   git checkout -b dev1 origin/dev1
+   ```
+
+   This means that when we push from this branch it will by default push changes to the `dev1` branch on GitHub, not the `main` branch. `git branch -vv` shows which remote branch each local branch tracks.
+:::
+
+4. Let's modify `mymath.R` on `dev1`. On your local computer, use your text editor to open `mymath.R` and add the following to it (including the leading empty line):
 
    ```r
 
@@ -172,7 +267,10 @@ As in the first exercise, let's create a branch to do some development work. We 
 
    Save the changes.
 
-1. Commit the changes to `mymath.R` to the dev1 branch on your local repo using GitHub Desktop.
+::: {.panel-tabset}
+#### GitHub Desktop
+
+5. Commit the changes to `mymath.R` to the dev1 branch on your local repo using GitHub Desktop.
 
 1. Again, your changes to your local `dev1` are not on GitHub yet. To do that, push the changes by clicking the "Push origin" button on GitHub Dekstop.
 
@@ -182,7 +280,29 @@ As in the first exercise, let's create a branch to do some development work. We 
 
 1. Clicking "Create Pull Request" in GitHub Desktop or clicking the green "Compare & pull request" button on github.com will open the "pull request" page on github.com in your web browser. Open the pull request by clicking either button.
 
-1. The pull request page on GitHub will automatically have a title that is the message from your last commit. You can optionally add a longer description. Then click the `Create pull request` button.
+#### Command line
+
+5. Commit the changes to `mymath.R` to the dev1 branch on your local repo:
+
+   ```bash
+   git add -u
+   git commit -m "add subtraction"
+   ```
+
+1. Again, your changes to your local `dev1` are not on GitHub yet. Push them:
+
+   ```bash
+   git push
+   ```
+
+   The output contains `dev1 -> dev1`: the changes went to `dev1` on GitHub.
+
+1. Now look at your web browser. As soon as you pushed the changes, a message popped up that said "`dev1` had recent pushes" with a green `Compare & pull request` button.
+
+1. Click the "Compare & pull request" button to open the "pull request" page.
+:::
+
+9. The pull request page on GitHub will automatically have a title that is the message from your last commit. You can optionally add a longer description. Then click the `Create pull request` button.
 
 1. This will open a *Pull request* (or PR for short). Pull requests are GitHub's way of managing new development via branches. 
    
@@ -198,7 +318,10 @@ As in the first exercise, let's create a branch to do some development work. We 
 
    Let's use Squash & Merge to merge the pull request. Click the drop down arrow next to "Merge pull request", then select "Squash and merge". The green button will change to read "Squash and merge". Click it, then "Confirm squash and merge". This will merge your changes on `dev1` on to `main`. You now have the option to delete `dev1`, feel free to do so.
 
-1. We have updated our `main` branch in the remote repository, on GitHub, but the `main` branch in our local copy doesn't have these changes. To update it, switch to your `main` branch on GitHub Desktop (click "Current Branch" -> `main`). Now click the "Fetch origin" in the upper right of GitHub Desktop.
+::: {.panel-tabset}
+#### GitHub Desktop
+
+12. We have updated our `main` branch in the remote repository, on GitHub, but the `main` branch in our local copy doesn't have these changes. To update it, switch to your `main` branch on GitHub Desktop (click "Current Branch" -> `main`). Now click the "Fetch origin" in the upper right of GitHub Desktop.
 
 1. After you fetch, a message will pop up that says "Pull 1 commit from the origin remote":
 
@@ -214,10 +337,44 @@ As in the first exercise, let's create a branch to do some development work. We 
 
    If you click on the PR number it will open the pull request page on github.com in your browser. This is way, you can easily see the entire history of the changes that were made and any discussion / review that occurred before it was merged.
 
-::: {.callout-note}
+#### Command line
+
+12. We have updated our `main` branch in the remote repository, on GitHub, but the `main` branch in our local copy doesn't have these changes. To update it, switch to your `main` branch and fetch the changes:
+
+    ```bash
+    git checkout main
+    git fetch
+    ```
+
+1. `git status` now says `Your branch is behind 'origin/main' by 1 commit`. Even though you fetched, the changes on your remote repository have not actually been merged into your local repository yet! This is because fetching only lets your local repository know what the *status* of your remote repository is, it doesn't actually change your local repository.
+
+   You can verify this with `git log`: your pull request commit is not there. In order to get the changes into your local repository you need to **pull** the changes:
+
+   ```bash
+   git pull
+   ```
+
+1. Once you pull the changes, your local repository's main branch will be up to date with your remote. `git log` now shows the Squash & Merge commit. GitHub has also added the pull request number `(#1)` in the commit message. On github.com, this number is a link to the pull request page, so you can easily see the entire history of the changes that were made and any discussion / review that occurred before it was merged.
+:::
+
+:::: {.callout-note}
 Even though you deleted the `dev1` branch on github.com, `dev1` still exists in your local repository, even though you fetched the changes to your local repository. **Git will not delete a local branch even if it's deleted remotely.** There's good reason for that: if a collaborator accidentally deleted a branch on the remote repository that you were working on locally, you'd be in for an unpleasant surprise the next time you fetched.
 
-You'll need to explicitly delete your local copy of `dev1` using GitHub Desktop. To do that, click "Current Branch", then right click `dev1`, then "Delete".
+You'll need to explicitly delete your local copy of `dev1`:
+
+::: {.panel-tabset}
+#### GitHub Desktop
+
+Click "Current Branch", then right click `dev1`, then "Delete".
+
+#### Command line
+
+```bash
+git branch -d dev1
+```
+
+If `git` refuses because `dev1` is not fully merged, use `-D` instead: the squashed commit on `main` is not the same as the commits on `dev1`, even though their content is identical.
 :::
+::::
 
 Congratulations! You've made your first pull request! Pull requests are a key part of collaborating with others on a project, and one of the most useful attributes about GitHub. In the [next exercise](exercise3.qmd) you'll see how to use PRs to collaborate with others.

@@ -31,6 +31,10 @@ editor:
     wrap: 72
 ---
 
+::: {.callout-note}
+Each step can be done with GitHub Desktop or with `git` on the command line: use the tabs below to switch between the two.
+:::
+
 In [exercise 2](exercise2.qmd), we saw how to create a GitHub repository and how to push changes to it. We created this repo and were the only ones to modify it. It is already useful to track our personal projects using Git and GitHub, but the strength of these tools is also to facilitate collaborative coding.
 
 In this exercise, we will see how to collaborate with others using GitHub. You will work with a partner to contribute to the test repository they created on GitHub in exercise 2 (and they will do the same with your repository!).
@@ -124,7 +128,10 @@ You should now be on your partner's GitHub repository.
 
 1. Now click the green `Create fork` button in the lower right. This will create a "fork" of your partner's repository under your own GitHub account. You will be redirected to your fork. Note the URL at the top of the webpage: it should be something like `https://github.com/YOUR_USERNAME/THEIR_REPO_NAME`.
 
-6. You want to contribute a new development to your partner's repository. To do so, first clone **your fork** of their repository to your local computer:
+::: {.panel-tabset}
+#### GitHub Desktop
+
+4. You want to contribute a new development to your partner's repository. To do so, first clone **your fork** of their repository to your local computer:
 
    a. If you are not already there, go to your fork's website on GitHub. The web address should be something like `https://github.com/YOUR_USERNAME/THEIR_REPO_NAME`.
 
@@ -150,7 +157,33 @@ You should now be on your partner's GitHub repository.
 
 7. Now let's create a branch called `dev2` to add a new feature to the `mymath.R` file. Create the branch on your local computer using GitHub Desktop. (Refer to [Exercise 1](exercise1.qmd) if you forgot how.)
 
-8. Use your text editor to open `mymath.R` and add the following lines to it:
+#### Command line
+
+4. You want to contribute a new development to your partner's repository. To do so, first clone **your fork** of their repository to your local computer:
+
+   a. If you are not already there, go to your fork's website on GitHub. The web address should be something like `https://github.com/YOUR_USERNAME/THEIR_REPO_NAME`.
+
+   b. On your fork's website, click the green `<> Code` button, select the "HTTPS" tab, and copy the URL. It should be something like `https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git`.
+
+   c. In your terminal, `cd` to the folder where you want to store your fork, then clone it and move into it:
+
+      ```bash
+      git clone REPO_URL
+      cd THEIR_REPO_NAME
+      ```
+
+      where `REPO_URL` is the URL you copied.
+
+   d. Run `git remote -v`: note that `origin` is *your fork* on GitHub, *not your partner's repository*. When you create a branch and push changes to GitHub, they will go to *your fork*.
+
+5. Now let's create a branch called `dev2` to add a new feature to the `mymath.R` file. Create the branch on your local computer and switch to it:
+
+   ```bash
+   git checkout -b dev2
+   ```
+:::
+
+6. Use your text editor to open `mymath.R` and add the following lines to it:
 
    ```R
 
@@ -161,13 +194,36 @@ You should now be on your partner's GitHub repository.
 
    Save the changes.
 
-9. Commit your changes using GitHub Desktop.
+::: {.panel-tabset}
+#### GitHub Desktop
+
+7. Commit your changes using GitHub Desktop.
 
 10. This commit (and the `dev2` branch) currently only exists on your local copy of your fork. To push it to *your fork* on GitHub, click the "Publish branch" button on GitHub Desktop.
 
 11. After you publish the branch, the "Create Pull Request" button will appear in GitHub Desktop. Open a PR by clicking it. (Alternatively, click the View on GitHub button to open the original repository in your web browser. You should see the "Compare & pull request" green button at the top of the website.)
 
-12. Note that in the gray box at the top of the comparing changes page the "base" repository is *your partner's* original repository and the base branch is their `main` branch. This means that you will create a Pull Request on your partner's repository, and that it will be for merging your changes onto their `main` branch. You want that!
+#### Command line
+
+7. Commit your changes:
+
+   ```bash
+   git add -u
+   git commit -m "add multiplication function to mymath file"
+   ```
+
+8. This commit (and the `dev2` branch) currently only exists on your local copy of your fork. Push it to *your fork* on GitHub:
+
+   ```bash
+   git push -u origin dev2
+   ```
+
+   Since `dev2` doesn't exist on your fork yet, `-u origin dev2` tells `git` to create it there and to make your local `dev2` track it.
+
+9. Go to your partner's repository in your web browser. You should see the "Compare & pull request" green button at the top of the website. Click it to open a PR.
+:::
+
+10. Note that in the gray box at the top of the comparing changes page the "base" repository is *your partner's* original repository and the base branch is their `main` branch. This means that you will create a Pull Request on your partner's repository, and that it will be for merging your changes onto their `main` branch. You want that!
 
 13. Fill out the description box if you like and/or change the "Add a title" box. Then click the green `Create pull request` button at the bottom.
 
@@ -177,11 +233,43 @@ You should now be on your partner's GitHub repository.
 
 Congratulations! You and your partner have now collaborated on a new feature.
 
-16. Once your partner merges the changes, their `main` branch will update with your new commit. The `main` branch of *your* fork will now be out of sync with theirs. To sync it, go to to your GitHub website for your fork (the one with URL `https://github.com/YOUR_USERNAME/THEIR_REPO_NAME`). You should see a gray dialog box at the top that starts with "This branch is 1 commit behind ...". Click the `Sync fork` button, then the green `Update branch` button. This will update your fork's main branch to be the same as your partner's.
+14. Once your partner merges the changes, their `main` branch will update with your new commit. The `main` branch of *your* fork will now be out of sync with theirs. To sync it, go to to your GitHub website for your fork (the one with URL `https://github.com/YOUR_USERNAME/THEIR_REPO_NAME`). You should see a gray dialog box at the top that starts with "This branch is 1 commit behind ...". Click the `Sync fork` button, then the green `Update branch` button. This will update your fork's main branch to be the same as your partner's.
 
-17. Update your local copy of your fork. Go to GitHub Desktop and click "Fetch origin". Now switch to your main branch and click "Pull origin" button to pull in the changes.
+::: {.panel-tabset}
+#### GitHub Desktop
 
-18. Now that your changes have been merged on to your partner's main branch and you've synced your fork both on GitHub and your computer, you're free to delete your development branch on your computer using GitHub Desktop.
+15. Update your local copy of your fork. Go to GitHub Desktop and click "Fetch origin". Now switch to your main branch and click "Pull origin" button to pull in the changes.
+
+16. Now that your changes have been merged on to your partner's main branch and you've synced your fork both on GitHub and your computer, you're free to delete your development branch on your computer using GitHub Desktop.
+
+#### Command line
+
+15. Update your local copy of your fork. Switch to your main branch and pull in the changes:
+
+    ```bash
+    git checkout main
+    git pull
+    ```
+
+    ::: {.callout-tip title="Syncing from the command line" collapse="true"}
+    Instead of using the "Sync fork" button, you can register your partner's repository as a second remote, conventionally called `upstream`, pull its changes, and push them to your fork:
+
+    ```bash
+    git remote add upstream https://github.com/THEIR_USERNAME/THEIR_REPO_NAME.git
+    git checkout main
+    git pull upstream main
+    git push
+    ```
+
+    You only need to add `upstream` once.
+    :::
+
+16. Now that your changes have been merged on to your partner's main branch and you've synced your fork both on GitHub and your computer, you're free to delete your development branch on your computer:
+
+    ```bash
+    git branch -d dev2
+    ```
+:::
 
 ```{=html}
 <!-- Must come after the <pre>: the loop only mounts elements already in the DOM -->
