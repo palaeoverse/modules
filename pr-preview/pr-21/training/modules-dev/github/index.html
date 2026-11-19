@@ -31,6 +31,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -260,7 +295,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/github/exercise1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Practice with GitHub Desktop on a local repository</span></a>
+ <span class="menu-text">1. Using Git with a local project</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -272,7 +307,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules-dev/github/exercise3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Collaborating in GitHub</span></a>
+ <span class="menu-text">3. Collaborating on GitHub</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -281,32 +316,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Conclusion</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../../../training/modules-dev/github/appendix-cli/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text" id="quarto-sidebar-section-1-label">Appendix: git and GitHub with the Command Line Interface</span></a>
-            <button type="button" class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section: Appendix: git and GitHub with the Command Line Interface">
-              <i class="bi bi-chevron-right ms-2" aria-hidden="true"></i>
-            </button> 
-      </div>
-      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules-dev/github/appendix-cli/exercise0.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">0. Basic Git workflow and vocabulary</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
- <span class="menu-text">training/modules-dev/github/appendix-cli/exercise1.qmd</span>
-  </li>
-          <li class="sidebar-item">
- <span class="menu-text">training/modules-dev/github/appendix-cli/exercise2.qmd</span>
-  </li>
-          <li class="sidebar-item">
- <span class="menu-text">training/modules-dev/github/appendix-cli/exercise3.qmd</span>
-  </li>
-      </ul>
-  </li>
     </ul>
     </div>
 </nav>
@@ -325,7 +334,6 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
@@ -375,7 +383,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="https://github.com/palaeoverse/modules/blob/github/github/index.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<p><a href="https://github.com/palaeoverse/modules/blob/github/github/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <section id="objectives" class="level2">
 <h2 data-anchor-id="objectives">Objectives</h2>
 <ul>
@@ -438,7 +446,12 @@ ul.task-list li input[type="checkbox"] {
 <section id="prerequisites" class="level2">
 <h2 data-anchor-id="prerequisites">Prerequisites</h2>
 <p>The following should be done <em>before</em> doing the exercises above.</p>
-<p>For this tutorial, we will be using <a href="https://github.com/apps/desktop">GitHub Desktop</a>.</p>
+<p>Git and GitHub can be used via GitHub Desktop (a graphical interface) or via the command-line interface (CLI). This tutorial shows how to use both.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Install <a href="https://github.com/apps/desktop">GitHub Desktop</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -482,10 +495,27 @@ ul.task-list li input[type="checkbox"] {
 <li>After you sign in, GitHub Desktop will ask you to “Configure Git”. We recommend you select the option “Use my GitHub account name and email address”. Click “Finish”.</li>
 </ol>
 <p>You will next be prompted with a “Let’s get started!” screen that will ask you to add a repository to GitHub Desktop. <strong>Stop here</strong> and go to <a href="../../../training/modules-dev/github/exercise1.html">Part 1</a>.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<section id="git-configuration" class="level4">
+<h4 data-anchor-id="git-configuration">Git configuration</h4>
+<p>Before doing the exercises in this session, you’ll need to tell <code>git</code> what your name and email are, so that it creates commits with the appropriate author information. To do that, open a terminal and run the following (it doesn’t matter which directory you run these from), but replacing <code>YOUR NAME</code> with your name and <code>YOUR_EMAIL_ADDRESS</code> with your email address:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"YOUR NAME"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"YOUR_EMAIL_ADDRESS"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="appendix" class="level2">
-<h2 data-anchor-id="appendix">Appendix</h2>
-<p>The above exercises all use GitHub Desktop. In the <a href="../../../training/modules-dev/github/appendix-cli/index.html">appendix</a>, the exercises are repeated using the command-line interface for <code>git</code>.</p>
+<section id="github-authentication" class="level4">
+<h4 data-anchor-id="github-authentication">GitHub authentication</h4>
+<p>In exercises 2 and 3 you will be using GitHub to “push” and “pull” commits between your local computer and GitHub’s servers over HTTPS. Pushing requires <code>git</code> to authenticate you, but GitHub doesn’t accept your account password for this.</p>
+<ul>
+<li><p><strong>On Windows</strong>, Git for Windows comes with the Git Credential Manager: the first time you push, a browser window opens to log in to GitHub, and your credentials are stored for next times. There is nothing to set up.</p></li>
+<li><p><strong>On Mac or Linux</strong>, the simplest way is to install the <a href="https://cli.github.com/">GitHub CLI</a> and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> auth login</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Select “GitHub.com”, then “HTTPS”, answer “Yes” when asked to authenticate Git with your GitHub credentials, and log in with your web browser.</p></li>
+</ul>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 data-anchor-id="acknowledgements">Acknowledgements</h2>
@@ -1077,8 +1107,8 @@ https://goatcounter.com/help/domains
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../training/modules-dev/github/exercise1.html" class="pagination-link" aria-label="1. Practice with GitHub Desktop on a local repository">
-        <span class="nav-page-text">1. Practice with GitHub Desktop on a local repository</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../training/modules-dev/github/exercise1.html" class="pagination-link" aria-label="1. Using Git with a local project">
+        <span class="nav-page-text">1. Using Git with a local project</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

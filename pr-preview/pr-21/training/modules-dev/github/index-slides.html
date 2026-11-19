@@ -38,6 +38,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
   <link rel="stylesheet" href="style/template.css">
@@ -133,16 +199,6 @@
     }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
-  <style>
-  .reveal .slides section div.callout.callout-style-simple,
-  .reveal .slides section div.callout.callout-style-default { font-size: inherit; }
-  .reveal .slides section div.callout.callout-style-simple h1,
-  .reveal .slides section div.callout.callout-style-default h1 { font-size: var(--r-heading1-size); }
-  .reveal .slides section div.callout.callout-style-simple h2,
-  .reveal .slides section div.callout.callout-style-default h2 { font-size: var(--r-heading2-size); }
-  .reveal .slides section div.callout.callout-style-simple h3,
-  .reveal .slides section div.callout.callout-style-default h3 { font-size: var(--r-heading3-size); }
-  </style>
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-21/training/modules-dev/github/figures/ghd-push.png">
@@ -238,7 +294,12 @@ Etienne Bacher
 <section id="prerequisites" class="slide level2">
 <h2>Prerequisites</h2>
 <p>The following should be done <em>before</em> doing the exercises above.</p>
-<p>For this tutorial, we will be using <a href="https://github.com/apps/desktop">GitHub Desktop</a>.</p>
+<p>Git and GitHub can be used via GitHub Desktop (a graphical interface) or via the command-line interface (CLI). This tutorial shows how to use both.</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">GitHub Desktop</a></li><li><a href="#tabset-1-2">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Install <a href="https://github.com/apps/desktop">GitHub Desktop</a>.</p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -248,7 +309,6 @@ Etienne Bacher
 <p><strong>See detailed installation instructions</strong></p>
 </div>
 <div class="callout-content">
-<div class="fragment">
 <p>To install:</p>
 <ol type="1">
 <li>Go to <a href="https://github.com/apps/desktop" class="external" target="_blank">https://github.com/apps/desktop</a>.</li>
@@ -273,7 +333,6 @@ Etienne Bacher
 </div>
 </div>
 </div>
-</div>
 <p>The first time you open GitHub Desktop you will need to sign into GitHub.</p>
 <ol type="1">
 <li>Click “Sign in to GitHub.com”. If you do not have an account yet, click “Create your free account”.</li>
@@ -281,10 +340,23 @@ Etienne Bacher
 <li>After you sign in, GitHub Desktop will ask you to “Configure Git”. We recommend you select the option “Use my GitHub account name and email address”. Click “Finish”.</li>
 </ol>
 <p>You will next be prompted with a “Let’s get started!” screen that will ask you to add a repository to GitHub Desktop. <strong>Stop here</strong> and go to <a href="../../../training/modules-dev/github/exercise1.html">Part 1</a>.</p>
-</section>
-<section id="appendix" class="slide level2">
-<h2>Appendix</h2>
-<p>The above exercises all use GitHub Desktop. In the <a href="../../../training/modules-dev/github/appendix-cli/index.html">appendix</a>, the exercises are repeated using the command-line interface for <code>git</code>.</p>
+</div>
+<div id="tabset-1-2">
+<h4 id="git-configuration">Git configuration</h4>
+<p>Before doing the exercises in this session, you’ll need to tell <code>git</code> what your name and email are, so that it creates commits with the appropriate author information. To do that, open a terminal and run the following (it doesn’t matter which directory you run these from), but replacing <code>YOUR NAME</code> with your name and <code>YOUR_EMAIL_ADDRESS</code> with your email address:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"YOUR NAME"</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"YOUR_EMAIL_ADDRESS"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h4 id="github-authentication">GitHub authentication</h4>
+<p>In exercises 2 and 3 you will be using GitHub to “push” and “pull” commits between your local computer and GitHub’s servers over HTTPS. Pushing requires <code>git</code> to authenticate you, but GitHub doesn’t accept your account password for this.</p>
+<ul>
+<li><p><strong>On Windows</strong>, Git for Windows comes with the Git Credential Manager: the first time you push, a browser window opens to log in to GitHub, and your credentials are stored for next times. There is nothing to set up.</p></li>
+<li><p><strong>On Mac or Linux</strong>, the simplest way is to install the <a href="https://cli.github.com/">GitHub CLI</a> and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">gh</span> auth login</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Select “GitHub.com”, then “HTTPS”, answer “Yes” when asked to authenticate Git with your GitHub credentials, and log in with your web browser.</p></li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="acknowledgements" class="slide level2">
 <h2>Acknowledgements</h2>
