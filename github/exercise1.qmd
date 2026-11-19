@@ -31,7 +31,7 @@ editor:
 ---
 
 ::: {.callout-note}
-Each step can be done with GitHub Desktop or with `git` on the command line: use the tabs below to switch between the two. To use GitHub Desktop, you will need to install and setup GitHub Desktop. Follow the instructions [here](index.qmd#prerequisites).
+Each step can be done with GitHub Desktop or with `git` on the command line. When the instructions differ, use the tabs to switch between the two. To use GitHub Desktop, you will need to install and setup GitHub Desktop. Follow the instructions [here](index.qmd#prerequisites).
 :::
 
 ## How does Git work?
@@ -62,30 +62,54 @@ In this exercise, we will initialise a Git repository on our computer and explor
 
 In this section, we will initialise a Git repository from scratch and start tracking some files.
 
-::: {.panel-tabset}
-#### GitHub Desktop
+1. Create a new repository called `test-git-repo`:
 
-1. If it's not already open, open GitHub Desktop.
+   ::: {.panel-tabset}
+   #### GitHub Desktop
 
-1. If this is your first time using GitHub Desktop you should see a screen with "Let's get started!" at the top:
+   a. If it's not already open, open GitHub Desktop.
 
-   ![](figures/ghd-start.png)
+   a. If this is your first time using GitHub Desktop you should see a screen with "Let's get started!" at the top:
 
-   Click the button titled "Create a New Repository on your Local Drive..."
+      ![](figures/ghd-start.png)
 
-1. In the Create a New Repository window, enter `test-git-repo` in the "Name" field, then click "Create Repository". You do not need to fill out any of the other fields.
+      Click the button titled "Create a New Repository on your Local Drive..."
 
-   ::: {.callout-note}
-   By default this will create a local repository in your Documents/GitHub folder. You can change where the repo is located by clicking "Choose". For this tutorial, let's stick with the default.
+   a. In the Create a New Repository window, enter `test-git-repo` in the "Name" field, then click "Create Repository". You do not need to fill out any of the other fields.
+
+      ::: {.callout-note}
+      By default this will create a local repository in your Documents/GitHub folder. You can change where the repo is located by clicking "Choose". For this tutorial, let's stick with the default.
+      :::
+
+   a. You will see a window that has "No local changes" at the top:
+
+      ![](figures/ghd-initial_commit.png)
+
+      In the upper left you will see "Current repository" with "test-git-repo" underneath it, indicating that you are currently looking at your test-git-repo. This is how you will interact with your new repository! You can see the repository folder by clicking on the button labelled "Show in Explorer" (on Windows) / "Show in Finder" (on a Mac).
+
+   #### Command line
+
+   Create a folder called `test-git-repo` (here, in your home directory), move into it, and initialise a Git repository in it:
+
+   ```bash
+   cd
+   mkdir test-git-repo
+   cd test-git-repo
+   git init
+   ```
+
+   `git status` shows:
+
+   ```txt
+   On branch main
+
+   No commits yet
+
+   nothing to commit (create/copy files and use "git add" to track)
+   ```
    :::
 
-1. You will see a window that has "No local changes" at the top:
-
-   ![](figures/ghd-initial_commit.png)
-
-   In the upper left you will see "Current repository" with "test-git-repo" underneath it, indicating that you are currently looking at your test-git-repo. This is how you will interact with your new repository!
-
-   Note that your repository is a folder on your computer, just like any others. You can see this if you click on the button labelled "Show in Explorer" (on Windows) / "Show in Finder" (on a Mac). At the moment, there are no files in your repository, although there is a *hidden* folder called `.git` and a *hidden* file called `.gitattributes`. **You never touch these files**; they are what `git` use to keep track of the contents of this folder. These are what make this folder a repository.
+   Note that your repository is a folder on your computer, just like any others. At the moment, there are no files in your repository, although there is a *hidden* folder called `.git` (and, with GitHub Desktop, a *hidden* file called `.gitattributes`). **You never touch these files**; they are what `git` use to keep track of the contents of this folder. These are what make this folder a repository.
 
 1. Let's add some files to your new repository for Git to track. In the following steps, we'll pretend that we're a writer working on a script for a new movie. We're going to use a simple text editor to create a file called `story.txt`. 
    
@@ -120,89 +144,72 @@ In this section, we will initialise a Git repository from scratch and start trac
 
 1. Save your changes by clicking File -> Save, or by using the keyboard shortcut <kbd>Ctrl</kbd>+<kbd>S</kbd> (on Windows) / <kbd>&#8984;</kbd>+<kbd>S</kbd> (on Mac).
 
-1. Now go back to GitHub Desktop. You'll notice that it has changed from "No local changes" to showing a "Changes" tab with `story.txt` listed with its contents:
+1. Let's see what Git thinks of this new file:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Go back to GitHub Desktop. You'll notice that it has changed from "No local changes" to showing a "Changes" tab with `story.txt` listed with its contents:
 
    ![](figures/ghd-first_change.png)
 
+   #### Command line
+
+   Run `git status`: it lists `story.txt` under `Untracked files`.
+   :::
+
    `git` knows you have a file in the directory called `story.txt`, but it isn't tracking it yet!
 
-1. Let's tell `git` to start tracking `story.txt` by making a *commit*. If it isn't already, click the box next to "1 changed file". When you do, you'll notice that the "Summary (required)" box automatically changes to "Create story.txt":
+1. Let's tell `git` to start tracking `story.txt` by making a *commit*. Each commit has a *commit message*: this is text that will be added to the commit describing what was done. Here, we'll use "Create story.txt".
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   If it isn't already, click the box next to "1 changed file". When you do, you'll notice that the "Summary (required)" box automatically changes to "Create story.txt":
 
    ![](figures/ghd-first_commit_stage.png)
 
-   The summary box and the optional "Description" box below constitute the *commit message*. This is text that will be added to the commit describing what was done. In this case, GitHub Desktop automatically provides a default message of "Create story.txt". That's a good description of what we've done, so let's keep it.
+   The summary box and the optional "Description" box below constitute the commit message. In this case, GitHub Desktop automatically provides a default message of "Create story.txt". That's a good description of what we've done, so let's keep it.
 
-1. Now click the "Commit 1 file to main" button. When you do, the window will automatically change back to "No local changes". Congratulations, you've made your first `git` commit!
+   Now click the "Commit 1 file to main" button. When you do, the window will automatically change back to "No local changes".
+
+   #### Command line
+
+   First, *stage* `story.txt`, i.e. add it to the next commit, then commit it:
+
+   ```bash
+   git add story.txt
+   git commit -m "Create story.txt"
+   ```
+
+   `git status` now says `nothing to commit, working tree clean`.
+   :::
+
+   Congratulations, you've made your first `git` commit!
 
    ::: {.callout-tip title="What happens when you commit changes?"}
    A commit creates a snapshot of the files you committed. Every commit has a commit message, an author, and a unique hash identifying that change. Git keeps a *history* of all commits made in a repository. 
    :::
 
-1. You can view the history of your commits by clicking on the "History" tab:
+1. You can view the history of your commits:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click on the "History" tab:
 
    ![](figures/ghd-first_commit_history.png)
 
    In this case, there are two commits: an initial commit that was created by GitHub Desktop when the repository was created, and the commit you just made to create `story.txt`.
 
-#### Command line
-
-1. Create a folder called `test-git-repo` (here, in your home directory) and move into it:
-
-   ```bash
-   cd
-   mkdir test-git-repo
-   cd test-git-repo
-   ```
-
-1. Initialise a Git repository in this folder:
-
-   ```bash
-   git init
-   ```
-
-   `git status` shows:
-
-   ```txt
-   On branch main
-
-   No commits yet
-
-   nothing to commit (create/copy files and use "git add" to track)
-   ```
-
-1. Use your text editor to create `story.txt` in `test-git-repo` with the following content (with a new line after the first "far,"):
-
-   ```txt
-   Once upon a time, in a land far,
-   far away...
-   ```
-
-   `git status` now lists `story.txt` under `Untracked files`: `git` sees the file but doesn't track it yet.
-
-1. Stage `story.txt`, i.e. add it to the next commit:
-
-   ```bash
-   git add story.txt
-   ```
-
-   `git status` now lists it under `Changes to be committed`.
-
-1. Commit it:
-
-   ```bash
-   git commit -m "Create story.txt"
-   ```
-
-   `git status` now says `nothing to commit, working tree clean`. Congratulations, you've made your first commit!
-
-1. View the history of your commits with:
+   #### Command line
 
    ```bash
    git log
    ```
 
    Unlike GitHub Desktop, `git init` doesn't create an "Initial commit", so there is only the commit you just made.
-:::
+   :::
 
 ::: {.callout-note title="Graph view"}
 ```{=html}
@@ -236,10 +243,12 @@ You're not happy with your story opening. You don't want to write fairy tales, y
    Simply saving changes to a file will not result in a new snapshot of it! To tell Git to create a snapshot for preservation **you have to create a commit.** If you make further changes to your file without committing in between, the intermediate changes will not be tracked.
    :::
 
-::: {.panel-tabset}
-#### GitHub Desktop
+1. Let's see what lines have changed in `story.txt` since the last commit. This is called a *diff*:
 
-2. Go back to GitHub Desktop. Notice that a yellow box with a dot has appeared next to `story.txt`. If you click on story, you should now see a *diff* that shows what lines have changed in `story.txt`:
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Go back to GitHub Desktop. Notice that a yellow box with a dot has appeared next to `story.txt`. If you click on story, you should now see the diff:
 
    ![](figures/ghd-story_uncommitted_change.png)
 
@@ -249,31 +258,45 @@ You're not happy with your story opening. You don't want to write fairy tales, y
    Windows users: carry on.
    :::
 
-1. The yellow box next to `story.txt` means that Git recognizes that `story.txt` has changed, *but your changes have not been committed yet.* If you go to the History tab, you'll see that there are still only two commits. If you click on the "Create story.txt" commit, it will show the previous state of the file.
+   #### Command line
 
-1. Let's commit your changes so you don't lose them! Click the check box next to `story.txt`. When you do, GitHub Desktop will automatically change the summary to "Update story.txt". That is a description of what we did, but it's not very informative. Let's give a more descriptive summary. Change the summary to "Change opening", then click "Commit 1 file to main":
+   ```bash
+   git diff
+   ```
+   :::
+
+1. Git recognizes that `story.txt` has changed, *but your changes have not been committed yet.*
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   This is what the yellow box next to `story.txt` means. If you go to the History tab, you'll see that there are still only two commits. If you click on the "Create story.txt" commit, it will show the previous state of the file.
+
+   #### Command line
+
+   `git status` lists `story.txt` under `Changes not staged for commit`, and `git log` still shows a single commit.
+   :::
+
+1. Let's commit your changes so you don't lose them! This time, let's give a more descriptive commit message: "Change opening".
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click the check box next to `story.txt`. When you do, GitHub Desktop will automatically change the summary to "Update story.txt". That is a description of what we did, but it's not very informative. Change the summary to "Change opening", then click "Commit 1 file to main":
 
    ![](figures/ghd-second_commit_staging.png)
 
    You'll now see 3 commits in your history.
 
-#### Command line
-
-2. `git status` lists `story.txt` under `Changes not staged for commit`: `git` sees that the file changed, *but your changes have not been committed yet.* `git diff` shows what changed since the last commit:
-
-   ```bash
-   git diff
-   ```
-
-1. Stage and commit the change, this time without `-m`:
+   #### Command line
 
    ```bash
    git add story.txt
    git commit
    ```
 
-   This opens a text editor to write the commit message, which is handy for multi-line messages. Type "Change opening", then save and exit to complete the commit. `git log` now shows 2 commits.
-:::
+   Without `-m`, `git commit` opens a text editor to write the commit message, which is handy for multi-line messages. Type "Change opening", then save and exit to complete the commit. `git log` now shows 2 commits.
+   :::
 
 ::: {.callout-note title="Graph view"}
 ```{=html}
@@ -293,11 +316,11 @@ It frequently happens that you can have files in your repository that you don't 
 
 We can tell Git to ignore certain files by storing their names in a special file called `.gitignore`. Here, we'll tell it to ignore the `.DS_Store` file created by MacOS.
 
+:::: {.callout-note title="Windows users" collapse="true"}
+Windows users will not have a `.DS_Store` file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called `.DS_Store`:
+
 ::: {.panel-tabset}
 #### GitHub Desktop
-
-::: {.callout-note title="Windows users" collapse="true"}
-Windows users will not have a `.DS_Store` file or any other hidden file created by the OS as on Mac. To follow along in this part, create an empty file in your repository called `.DS_Store` and save it:
 
 a. Switch back to Notepad.
 
@@ -310,43 +333,63 @@ d. In the "Save as type" field click the drop-down menu and select "All files".
 e. In the File name field type `.DS_Store.`. **Note the trailing period!** That is, enter `.DS_Store.` not `.DS_Store` -- if you don't include the period at the end of the file name, Windows will automatically add `.txt` to the end.
 
 f. Click "Save"
-:::
-
-To tell Git to ignore a file:
-
-1. Right-click the file you'd like it to ignore, in this case `.DS_Store`. On the drop-down menu, select "Ignore file (Add to .gitignore)":
-
-   ![](figures/ghd-ignore_menu.png)
-
-1. Adding the file will make the selected file disappear in the Changes menu. In it's place, you'll see a `.gitignore` file has been created. The `.gitignore` file is a simple text file that lists the names of any files in the repository that you want Git to ignore. Notice that GitHub Desktop has both created the file, and added `.DS_Store` to it:
-
-   ![](figures/ghd-ignore_staging.png)
-
-1. As with any other file, we need to commit the changes to `.gitignore` for Git to keep track of it. Commit the change by clicking the "Commit 1 file to main" (note that the commit message automatically created by GitHub Desktop is "Create .gitignore").
 
 #### Command line
 
-1. If `git status` doesn't list a `.DS_Store` file (e.g. on Windows), create an empty one to follow along:
+```bash
+touch .DS_Store
+```
+:::
+::::
 
-   ```bash
-   touch .DS_Store
-   ```
+To tell Git to ignore a file:
 
-1. Add `.DS_Store` to `.gitignore` (this creates `.gitignore` if it doesn't exist):
+1. Add the file you'd like it to ignore, in this case `.DS_Store`, to `.gitignore`:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Right-click `.DS_Store`. On the drop-down menu, select "Ignore file (Add to .gitignore)":
+
+   ![](figures/ghd-ignore_menu.png)
+
+   #### Command line
 
    ```bash
    echo ".DS_Store" >> .gitignore
    ```
 
-   `git status` no longer lists `.DS_Store`, but lists `.gitignore` instead.
+   This creates `.gitignore` if it doesn't exist.
+   :::
 
-1. As with any other file, commit `.gitignore` for Git to keep track of it:
+1. `.DS_Store` no longer appears in the changes. In its place, you'll see a `.gitignore` file has been created. The `.gitignore` file is a simple text file that lists the names of any files in the repository that you want Git to ignore.
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Notice that GitHub Desktop has both created the file, and added `.DS_Store` to it:
+
+   ![](figures/ghd-ignore_staging.png)
+
+   #### Command line
+
+   Check this with `git status`.
+   :::
+
+1. As with any other file, we need to commit the changes to `.gitignore` for Git to keep track of it, here with the message "Create .gitignore":
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Commit the change by clicking the "Commit 1 file to main" (note that the commit message automatically created by GitHub Desktop is "Create .gitignore").
+
+   #### Command line
 
    ```bash
    git add .gitignore
    git commit -m "Create .gitignore"
    ```
-:::
+   :::
 
 ::: {.callout-note title="Graph view"}
 ```{=html}
@@ -409,16 +452,32 @@ gitGraph
 
 Let's see how to do this in practice:
 
-::: {.panel-tabset}
-#### GitHub Desktop
+1. Let's look at the branches of your repository:
 
-1. In GitHub Desktop, click on the "Current Branch" tab. This will show a drop-down menu showing all of the branches on your repository:
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click on the "Current Branch" tab. This will show a drop-down menu showing all of the branches on your repository:
 
    ![](figures/ghd-branch_menu.png)
 
+   #### Command line
+
+   ```bash
+   git branch
+   ```
+
+   This returns `* main`, where `*` marks the branch you are on.
+   :::
+
    Currently, we only have one branch, which is called `main` by default, as mentioned above. Think of it as the master copy of your repository. If this were a code repository, the `main` would be the branch that you (try to) keep a clean, working version of your code.
 
-1. Let's create our new branch, named `title-dev`, on which we will develop our title. Click the "New Branch" button in the upper right. You will be prompted to create a name. Call it `title-dev`, then click "Create Branch":
+1. Let's create our new branch, named `title-dev`, on which we will develop our title, and switch to it:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click the "New Branch" button in the upper right. You will be prompted to create a name. Call it `title-dev`, then click "Create Branch":
 
    ![](figures/ghd-new_branch.png)
 
@@ -426,7 +485,21 @@ Let's see how to do this in practice:
 
    ![](figures/ghd-title_dev_branch.png)
 
-1. Let's do some development on `title-dev`. Switch to the `title-dev` branch. Now let's create a file called `title.txt` to store our title idea.
+   #### Command line
+
+   ```bash
+   git checkout -b title-dev
+   ```
+
+   `-b` creates the branch before switching to it. You are now on a new branch called `title-dev`, as shown by `git branch`:
+
+   ```txt
+     main
+   * title-dev
+   ```
+   :::
+
+1. Let's do some development on `title-dev`. Now let's create a file called `title.txt` to store our title idea.
 
    ::: {.callout-tip title="How to create a new text file?" collapse="true"}
 
@@ -453,48 +526,24 @@ Let's see how to do this in practice:
 
    Save the change by typing <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows) / <kbd>&#8984;</kbd>+<kbd>S</kbd> (Mac).
 
-1. Go back to GitHub Desktop. You should see `title.txt` in the Changes sidebar, with the new lines shown in the diff:
+1. Commit the new file with the message "Create title.txt":
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Go back to GitHub Desktop. You should see `title.txt` in the Changes sidebar, with the new lines shown in the diff:
 
    ![](figures/ghd-title_initial_stage.png)
 
-1. Commit the new changes by clicking "Commit 1 file to title-dev". Note the default commit message is "Create title.txt".
+   Commit the new changes by clicking "Commit 1 file to title-dev". Note the default commit message is "Create title.txt".
 
-#### Command line
-
-1. List the branches of your repository:
-
-   ```bash
-   git branch
-   ```
-
-   This returns `* main`: we currently have only one branch, called `main` by default, and the `*` marks the branch you are on.
-
-1. Create a new branch called `title-dev` and switch to it:
-
-   ```bash
-   git checkout -b title-dev
-   ```
-
-   `-b` creates the branch before switching to it. `git branch` now shows:
-
-   ```txt
-     main
-   * title-dev
-   ```
-
-1. Use your text editor to create `title.txt` containing:
-
-   ```txt
-   STAR FIGHT!
-   ```
-
-1. Stage and commit it:
+   #### Command line
 
    ```bash
    git add title.txt
    git commit -m "Create title.txt"
    ```
-:::
+   :::
 
 ::: {.callout-note title="Graph version"}
 ```{=html}
@@ -515,26 +564,41 @@ gitGraph
 
 We don't have to be stuck on a branch until its changes are integrated in the `main` branch, we can navigate between branches!
 
-::: {.panel-tabset}
-#### GitHub Desktop
+1. Satisfied with your title for now, go back to your main branch:
 
-1. You can switch between branches by clicking the "Current Branch" drop-down menu, then selecting the branch you want:
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   You can switch between branches by clicking the "Current Branch" drop-down menu, then selecting the branch you want. Select `main`:
 
    ![](figures/ghd-switch_branches.png)
 
-1. Satisfied with your title for now, go back to your main branch by clicking on the "Current branch" drop down and selecting `main`:
-
    ![](figures/ghd-switch_to_main.png)
 
-1. Let's see what happened to your files when you switched back to `main`. If you still have the Explorer/Finder window open, look at it. If not, click the "Show in Explorer" (Windows) / "Show in Finder" (Mac) button to view the contents of the repository.
+   #### Command line
 
-   The `title.txt` file is gone! Likewise, if you click on the "History" tab in GitHub Desktop, you'll see that your last commit is no longer in your history; you just have the first four commits.
+   ```bash
+   git checkout main
+   ```
+   :::
 
-   This is because your last commit (and the file it created, `title.txt`) only exists on the `title-dev` branch. To verify that it's still there, click the "Current Branch" drop-down menu and switch to the `title-dev` branch. You'll see the "Create title.txt" commit reappear in your History. 
-   
+1. Let's see what happened to your files and history when you switched back to `main`:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   If you still have the Explorer/Finder window open, look at it. If not, click the "Show in Explorer" (Windows) / "Show in Finder" (Mac) button to view the contents of the repository. The `title.txt` file is gone! Likewise, if you click on the "History" tab in GitHub Desktop, you'll see that your last commit is no longer in your history; you just have the first four commits.
+
+   #### Command line
+
+   Run `ls`: the `title.txt` file is gone! Likewise, `git log` shows that your last commit is no longer in your history; you just have the first three commits.
+   :::
+
+   This is because your last commit (and the file it created, `title.txt`) only exists on the `title-dev` branch. To verify that it's still there, switch to the `title-dev` branch: you'll see the "Create title.txt" commit reappear in your history.
+
    Since the commits on `title-dev` live on their own branch, changes you make on `main` won't affect `title-dev` and vice versa (at least not until we merge the branches, more on that below).
 
-1. Let's make some more changes to `story.txt`, but let's do it on the `main` branch. Switch to `main` using the "Current Branch" drop-down menu. Now use your text editor to add the following lines to `story.txt`:
+1. Let's make some more changes to `story.txt`, but let's do it on the `main` branch. Switch back to `main`. Now use your text editor to add the following lines to `story.txt`:
 
    ```
 
@@ -545,43 +609,37 @@ We don't have to be stuck on a branch until its changes are integrated in the `m
    the evil Galactic Empire.
    ```
 
-1. Stage the commit by clicking the check mark next to `story.txt` in GitHub Desktop and change the commit message to "Add first pargraph":
+1. Commit the changes with the message "Add first paragraph":
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Stage the commit by clicking the check mark next to `story.txt` in GitHub Desktop and change the commit message to "Add first paragraph":
 
    ![](figures/ghd-stage_paragraph.png)
 
    Now commit the changes by clicking "Commit 1 file to main".
 
-1. Click on the History tab. Note that you now have 5 commits on master, none of which include the commits to `title-dev` branch.
-
-#### Command line
-
-1. Satisfied with your title for now, go back to `main`:
-
-   ```bash
-   git checkout main
-   ```
-
-   `ls` shows that `title.txt` is gone, and `git log` doesn't show the "Create title.txt" commit: it only exists on `title-dev`. To verify that it's still there, run `git checkout title-dev`, then come back with `git checkout main`.
-
-1. On `main`, use your text editor to add the following lines to `story.txt`:
-
-   ```
-
-   It is period of civil war.
-   Rebel spaceships, striking
-   from a hidden base, have won
-   their first victory against
-   the evil Galactic Empire.
-   ```
-
-1. Stage and commit the change:
+   #### Command line
 
    ```bash
    git add -u
    git commit -m "Add first paragraph"
    ```
 
-   `git add -u` stages the changes of all tracked files. `git log` shows that none of the commits on `main` include the commit from `title-dev`.
+   `git add -u` stages the changes of all tracked files.
+   :::
+
+1. Look at the history of `main`: none of its commits include the commits to `title-dev` branch.
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click on the History tab. Note that you now have 5 commits on master.
+
+   #### Command line
+
+   `git log` now shows 4 commits.
 
    ::: {.callout-tip title="Graph view in the terminal" collapse="true"}
    Add `--graph` to `git log` to see the history as a graph, and `--all` to include all branches:
@@ -590,7 +648,7 @@ We don't have to be stuck on a branch until its changes are integrated in the `m
    git log --oneline --graph --all
    ```
    :::
-:::
+   :::
 
 ::: {.callout-note title="Graph version"}
 ```{=html}
@@ -609,10 +667,7 @@ gitGraph
 ```
 :::
 
-::: {.panel-tabset}
-#### GitHub Desktop
-
-1. In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your `title-dev` branch by clicking the Current Branch -> title-dev.
+1. In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your `title-dev` branch.
 
    Now use your text editor to edit `title.txt` and change `STAR FIGHT!` to:
 
@@ -626,43 +681,38 @@ gitGraph
 
    Nice work, George!
 
-1. Save your changes to `title.txt` and stage the changes in GitHub Desktop by clicking the check box next to `title.txt`. Commit the changes by clicking the "Commit 1 file to title-dev":
+1. Save your changes to `title.txt` and commit them with the message "Update title.txt":
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Stage the changes in GitHub Desktop by clicking the check box next to `title.txt`. Commit the changes by clicking the "Commit 1 file to title-dev":
 
    ![](figures/ghd-final_title_commit.png)
 
    Note that the commit message is "Update title.txt".
 
-1. Click on the History tab. Note that there are 6 commits here: the first four from `main` (before you branched off), and the last two on `title-dev`:
-
-   ![](figures/ghd-title_dev_status.png)
-
-#### Command line
-
-1. In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to `title-dev`:
-
-   ```bash
-   git checkout title-dev
-   ```
-
-   and use your text editor to change the content of `title.txt` to:
-
-   ```txt
-   Star Wars
-   A NEW HOPE
-
-   by
-   George Lucas
-   ```
-
-1. Stage and commit the change:
+   #### Command line
 
    ```bash
    git add -u
    git commit -m "Update title.txt"
    ```
+   :::
 
-   `git log` shows the commits from `main` before you branched off, and the two commits on `title-dev`.
-:::
+1. The history of `title-dev` contains the commits from `main` before you branched off, and the last two on `title-dev`:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click on the History tab. Note that there are 6 commits here: the first four from `main`, and the last two on `title-dev`:
+
+   ![](figures/ghd-title_dev_status.png)
+
+   #### Command line
+
+   `git log` shows 5 commits: the first three from `main`, and the last two on `title-dev`.
+   :::
 
 ::: {.callout-note title="Graph version"}
 ```{=html}
@@ -689,14 +739,14 @@ We have done some work on the title in parallel to the work on the story itself,
 
 First, we will create a backup of the `main` branch, just in case something goes wrong. Some mistakes in Git usage can be notoriously hard to debug, so making a clean backup before a big operation like merging can be useful.
 
-::: {.panel-tabset}
-#### GitHub Desktop
-
-1. First, let's switch to the `main` branch by clicking "Current Branch" and selecting `main`.
+1. First, let's switch to the `main` branch.
 
 1. We will call our backup `main-bkup`. This way, you have the original state of `main` preserved in the backup branch that you can always go back to.
 
    To create the copy of `main`:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
 
    a. Click Current Branch. Make sure you're on `main` (the checkmark is next to `main`), then click "New Branch":
 
@@ -706,17 +756,14 @@ First, we will create a backup of the `main` branch, just in case something goes
 
    c. Now go back to the `main` branch by clicking "Current Branch -> main".
 
-#### Command line
-
-1. Switch to `main` and create `main-bkup` from it:
+   #### Command line
 
    ```bash
-   git checkout main
    git branch main-bkup
    ```
 
    Unlike `git checkout -b`, `git branch` creates the branch without switching to it, so you stay on `main`.
-:::
+   :::
 
 ::: {.callout-note title="Graph version"}
 ```{=html}
@@ -739,39 +786,47 @@ gitGraph
 ```
 :::
 
-::: {.panel-tabset}
-#### GitHub Desktop
+1. Now let's merge `title-dev` into `main`:
 
-1. Now click the Current Branch drop-down menu again, and this time click the "Choose a branch to merge into *main*" button:
+   ::: {.panel-tabset}
+   #### GitHub Desktop
 
-   ![](figures/ghd-merge_branch_select.png)
+   a. Click the Current Branch drop-down menu again, and this time click the "Choose a branch to merge into *main*" button:
 
-1. Select the `title-dev` branch. The button at the bottom will turn to blue and say "Create a merge commit". Click that to merge the branch:
+      ![](figures/ghd-merge_branch_select.png)
 
-   ![](figures/ghd-merge_screen.png)
+   a. Select the `title-dev` branch. The button at the bottom will turn to blue and say "Create a merge commit". Click that to merge the branch:
 
-1. Congratulations! You've made your first merge on to main. To see what happened, click on the History tab to see what the history on the main branch looks like now:
+      ![](figures/ghd-merge_screen.png)
 
-   ![](figures/ghd-merge_history.png)
-
-   The commits you made on `title-dev` are now in `main`, along with a final "Merge" commit at the end. This final "merge" commit is to indicate that some of the commits in the history came from another branch (and what the name of the branch was).
-
-   If you look at Explorer/Finder, you'll see that `title.txt` is now in your directory when you're on `main`. If you switch between `main` and `title-dev`, `title.txt` remains in both. Note that the history on `title-dev` is unaffected by the merge: merging only changes the branch you merged *into*, not the branch you merged *from*.
-
-#### Command line
-
-1. Merge `title-dev` into `main`:
+   #### Command line
 
    ```bash
    git merge title-dev
    ```
 
    This opens your text editor with the commit message `Merge branch 'title-dev'`. Don't change it, just save and exit to finish the merge.
+   :::
 
-1. Congratulations! You've made your first merge on to main. `git log` shows that the commits you made on `title-dev` are now in `main`, along with a final "Merge" commit. This final commit indicates that some of the commits in the history came from another branch (and what the name of the branch was).
+1. Congratulations! You've made your first merge on to main. To see what happened, let's look at the history on the main branch:
 
-   `ls` shows that `title.txt` is now in your directory. Note that the history on `title-dev` is unaffected by the merge: merging only changes the branch you merged *into*, not the branch you merged *from*.
-:::
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click on the History tab:
+
+   ![](figures/ghd-merge_history.png)
+
+   #### Command line
+
+   ```bash
+   git log
+   ```
+   :::
+
+   The commits you made on `title-dev` are now in `main`, along with a final "Merge" commit at the end. This final "merge" commit is to indicate that some of the commits in the history came from another branch (and what the name of the branch was).
+
+   `title.txt` is now in your directory when you're on `main`. If you switch between `main` and `title-dev`, `title.txt` remains in both. Note that the history on `title-dev` is unaffected by the merge: merging only changes the branch you merged *into*, not the branch you merged *from*.
 
 ::: {.callout-note title="Graph version"}
 ```{=html}
@@ -800,46 +855,50 @@ gitGraph
 
 Instead of creating a merge commit, we could have done a **squash and merge**. Let's see what would have happened by doing a squash and merge on to `main-bkup`.
 
-::: {.panel-tabset}
-#### GitHub Desktop
+1. Switch to the `main-bkup` branch.
 
-When we were preparing to merge `title-dev`, you may have noticed there was a drop-down button next to the "Create a merge commit" button:
+1. Squash and merge `title-dev` into `main-bkup`:
 
-![](figures/ghd-merge_select_highlight.png)
+   ::: {.panel-tabset}
+   #### GitHub Desktop
 
-If you had clicked that, you are presented with three options -- merge, squash and merge, and rebase:
+   When we were preparing to merge `title-dev`, you may have noticed there was a drop-down button next to the "Create a merge commit" button:
 
-![](figures/ghd-squash_merge_select.png)
+   ![](figures/ghd-merge_select_highlight.png)
 
-1. Switch to the `main-bkup` branch by clicking "Current branch -> main-bkup".
+   If you had clicked that, you are presented with three options -- merge, squash and merge, and rebase:
 
-1. Click "Current branch" again, and select "Choose a branch to merge into main-bkup". Select "title-dev", then click the drop down arrow next to the "Create a merge commit button":
+   ![](figures/ghd-squash_merge_select.png)
 
-1. Select "Squash and merge". This will change the blue button to read "Squash and merge". Click that to do the squash and merge.
+   a. Click "Current branch" again, and select "Choose a branch to merge into main-bkup". Select "title-dev", then click the drop down arrow next to the "Create a merge commit button".
 
-1. Click the History tab to see what the history on `main-bkup` looks like:
+   a. Select "Squash and merge". This will change the blue button to read "Squash and merge". Click that to do the squash and merge.
 
-   ![](figures/ghd-squash_merge_history.png)
-
-#### Command line
-
-1. Switch to `main-bkup` and squash `title-dev` into it:
+   #### Command line
 
    ```bash
-   git checkout main-bkup
    git merge --squash title-dev
-   ```
-
-   Unlike a regular merge, `--squash` stages the changes from `title-dev` but doesn't commit them.
-
-1. Commit them:
-
-   ```bash
    git commit
    ```
 
-   This opens your text editor with a message listing the squashed commits. Save and exit, then run `git log` to see what the history on `main-bkup` looks like.
-:::
+   Unlike a regular merge, `--squash` stages the changes from `title-dev` but doesn't commit them, hence the `git commit`. This opens your text editor with a message listing the squashed commits. Save and exit.
+   :::
+
+1. Look at the history on `main-bkup`:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click the History tab:
+
+   ![](figures/ghd-squash_merge_history.png)
+
+   #### Command line
+
+   ```bash
+   git log
+   ```
+   :::
 
 The two commits that were done on `title-dev`, as well as the final merge commit, have all been "squashed" into a single large commit, which is placed at the end of the history on `main-bkup`. In graphical form, the history on `main-bkup` now looks like this:
 
@@ -962,7 +1021,7 @@ Should we choose merging or rebasing? This is another one of the few debates amo
 
 ### Deleting branches
 
-Now that you've merged your `title-dev` branch and are back on the `main` branch, you can delete it to save space.
+Now that you've merged your `title-dev` branch and are back on the `main` branch, you can delete it to save space. You can also delete `main-bkup` now if you like.
 
 ::: {.panel-tabset}
 #### GitHub Desktop
@@ -971,7 +1030,7 @@ To do that, click Current Branch, then right-click `title-dev`. This will yield 
 
 ![](figures/ghd-delete_branch.png)
 
-You will be prompted with a warning. Click the "Delete" button. The `title-dev` branch will be gone! You can also delete `main-bkup` now if you like.
+You will be prompted with a warning. Click the "Delete" button. The `title-dev` branch will be gone!
 
 #### Command line
 
@@ -1175,33 +1234,35 @@ The answer is **D**, an error is raised. Since the same line has been modified i
 
 As illustrated in the Challenge Questions, if the same lines in the same file are modified on two different branches, `git` will not know how to merge the changes. This is called a **merge conflict**. In this case, `git` will ask you to reconcile the differences. To illustrate, let's try merging `dev2` into `main` after making the changes to `list.txt` discussed in Question 3 above:
 
-::: {.panel-tabset}
-#### GitHub Desktop
-
 1. If you have not done so, try to merge `dev2` into `main` after making the changes to the second line of `list.txt` discussed in Question 3:
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
 
    a. Switch to `main`: Click Current Branch -> main.
    b. Click Current Branch -> Choose a branch to merge into "main".
    c. Select dev2, then  click "Create a merge commit" (note that a message pops up above the button that says there be 1 conflicted file).
 
-1. When you try to do the merge, you will get the Resolve conflicts box:
-
-   ![](figures/ghd-resolve_conflicts.png)
-
-   This tells you what files are conflicted (in this case `list.txt`).
-
-   To fix this, we need to manually resolve the conflict. There are several options to deal with this. If you have VS Code or some other code editor installed, you will see an option to open the file in that program. Here, though, we'll use our simple text editor to resolve the issue.
-
-#### Command line
-
-1. If you have not done so, try to merge `dev2` into `main` after making the changes to the second line of `list.txt` discussed in Question 3:
+   #### Command line
 
    ```bash
    git checkout main
    git merge dev2
    ```
+   :::
 
-1. You will get:
+1. The merge fails, and Git tells you what files are conflicted (in this case `list.txt`):
+
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   You will get the Resolve conflicts box:
+
+   ![](figures/ghd-resolve_conflicts.png)
+
+   #### Command line
+
+   You will get:
 
    ```txt
    Auto-merging list.txt
@@ -1209,10 +1270,12 @@ As illustrated in the Challenge Questions, if the same lines in the same file ar
    Automatic merge failed; fix conflicts and then commit the result.
    ```
 
-   `git status` lists the conflicted files (in this case `list.txt`) under `Unmerged paths`. To fix this, we need to manually resolve the conflict with a text editor.
-:::
+   `git status` also lists the conflicted files under `Unmerged paths`.
+   :::
 
-3. Open list.txt with your text editor. You should see the following:
+   To fix this, we need to manually resolve the conflict. There are several options to deal with this, such as using a code editor like VS Code. Here, though, we'll use our simple text editor to resolve the issue.
+
+1. Open list.txt with your text editor. You should see the following:
 
    ```txt
    delta
@@ -1240,20 +1303,20 @@ As illustrated in the Challenge Questions, if the same lines in the same file ar
 
    Then save and exit the file.
 
-::: {.panel-tabset}
-#### GitHub Desktop
+1. Complete the merge:
 
-5. As soon as you save the changes to `list.txt`, the merge conflict window in GitHub Desktop will change to show that all conflicts have been resolved:
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   As soon as you save the changes to `list.txt`, the merge conflict window in GitHub Desktop will change to show that all conflicts have been resolved:
 
    ![](figures/ghd-resolved_conflicts.png)
 
    Click "Continue Merge".
 
-1. The merge conflict is resolved! If you click on the History tab you will see the history with all the commits in it, as if you had a merged without any issue.
+   #### Command line
 
-#### Command line
-
-5. Stage the file and complete the merge *without* the `-m`:
+   Stage the file and commit *without* the `-m`:
 
    ```bash
    git add list.txt
@@ -1261,9 +1324,9 @@ As illustrated in the Challenge Questions, if the same lines in the same file ar
    ```
 
    This opens your text editor with the commit message set to `Merge branch 'dev2'`. Save and exit.
+   :::
 
-1. The merge conflict is resolved! `git log` shows the history with all the commits in it, as if you had merged without any issue.
-:::
+1. The merge conflict is resolved! If you look at the history, you will see all the commits in it, as if you had merged without any issue.
 
 Merge conflicts happen, but can be fixed fairly easy. If there were multiple areas in a file that caused a conflict, the conflicting areas would all be surrounded by the same `<<<<<<< `/`=======`/`>>>>>>>` lines that we saw above. You'll want to search through the file for those to make sure you got all the conflicts. If multiple files had conflicts, `git` will make you resolve all of them before allowing the merge to complete.
 
