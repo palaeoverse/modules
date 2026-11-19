@@ -309,7 +309,7 @@ plot(img_col)
 
 Let's see what those look like altogether:
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -466,7 +466,7 @@ That's looking better.
 
 Now, let's draft the plot that we want to make. In this case, we're interested in whether penguins' flipper length generally increases in line with bill length within each species:
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 **Tip:** ggplot2's `facet_wrap()` function splits a dataset into multiple panels based on a categorical variable and arranges them in a compact 2D grid. We can make use of this here for visualising each of our species, creating a plot panel for each.
@@ -511,7 +511,7 @@ for (sp in levels(penguins_subset$species)) {
 
 That's not a bad basic plot and we can definitely see a general trend, but we can make it nicer by adding a penguin silhouette. Sadly, we don't have a separate silhouette for each species ([although we could make one...](https://contribute.phylopic.org)), so we'll place a single silhouette in the top panel using the `geom_phylopic` (ggplot2) and `add_phylopic_base()` (base R) functions. Note that the x and y arguments specify the centre of the silhouette, and the height argument specifies how tall it is, in the units of the y-axis.
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -558,7 +558,7 @@ for (sp in levels(penguins_subset$species)) {
 
 Isn't that nifty! But we can go a step further: what if we used little penguins instead of points? We can do this with `geom_phylopic()` (ggplot2) and `add_phylopic_base()` (base R). Since we want the same image for every x-y pair, we can specify `img = penguin_rot` once more:
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -600,7 +600,7 @@ for (sp in levels(penguins_subset$species)) {
 
 Well... those silhouettes are perhaps a little... big! By default, `geom_phylopic()` and `add_phylopic_base()` makes each silhouette as tall as the plot, which is far too large here. Instead, we can specify a height or width to use (in y-axis or x-axis units, respectively):
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -655,7 +655,7 @@ So far we have set the silhouette size by hand. Instead, we could map the height
 ::: {.callout-tip collapse="true"}
 ## Exercise 6: Solution
 
-::::: {.panel-tabset}
+::::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 With `geom_phylopic()`, rphylopic automatically rescales values between 1 and 6. So, we can just pass `height = body_mass_g`.
@@ -714,7 +714,7 @@ for (sp in levels(penguins_subset$species)) {
 ::: {.callout-tip collapse="true"}
 ## Exercise 7: Solution
 
-::::: {.panel-tabset}
+::::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 **Tip:** the default for `geom_phylopic()` is to not display a legend, so we need to set `show.legend = TRUE`. However, we only want a legend for the fill colours, so we use `guide = "none"` for the size scale. We also want to show the fill color in the legend, so we need to override the shape:
@@ -821,7 +821,7 @@ diplocaulus <- diplocaulus |>
 
 Now, let's plot those occurrences on a world map. Note that we use alpha = 0.75 in case there are multiple occurrences in the same place. That way, the darker the fill colour, the more occurrences in that geographic location.
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -852,7 +852,7 @@ plot(st_geometry(diplocaulus), cex = 0.75, pch = 16,
 
 Now let's replace those points with silhouettes.
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 Note that while we use the genus name as the `name` aesthetic here, we easily could have done `name = "Diplocaulus"` outside of the `aes()` call instead. However, if we were plotting occurrences of multiple genera, we'd definitely want to plot them as different silhouettes using `name = genus` within the `aes()` call.
@@ -890,7 +890,7 @@ add_phylopic_base(name = diplocaulus$genus,
 
  When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the height argument/aesthetic accordingly when projecting maps and data.
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -1051,7 +1051,7 @@ Let's follow this advice and get image objects for our 11 species before making 
 vertebrate_data$svg <- lapply(vertebrate_data$uuid, get_phylopic)
 ```
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 Now let's go ahead and plot our phylogeny with the [ggtree](https://www.bioconductor.org/packages/ggtree) package:
@@ -1079,7 +1079,7 @@ plot(vertebrate.tree)
 
 Hmm... that's a bit boring. Let's add a geological timescale!
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 Using the [deeptime](https://williamgearty.com/deeptime/) R package, we can add the geological timescale to the background of our plot with `coord_geo_polar()`. Note that the time axis must be reversed with `revts()` for this to work, as `coord_geo_polar()` expects time to run in the opposite direction to how it's usually plotted. Geologists and palaeontologists, after all, tend to root themselves in the past!
@@ -1115,7 +1115,7 @@ axis_geo_phylo(intervals = "periods")
 
 That's looking a lot prettier! Let's go ahead and add our silhouettes now.
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 When using `ggplot2`, we first attach the `vertebrate_data` object with the `%<+%` operator from [ggtree](https://bioconductor.org/packages/release/bioc/html/ggtree.html). We can then use `geom_phylopic()` to plot our silhouettes from the `svg` column.
@@ -1160,7 +1160,7 @@ vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 
 And now the finished product:
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -1198,7 +1198,7 @@ The [ggraph](https://ggraph.data-imaginist.com) package extends ggplot2 to netwo
 
 Let's demonstrate with a simple Permian food web. First, we set up the network:
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 ```{r}
@@ -1239,7 +1239,7 @@ layout <- layout_with_fr(g)
 
 Let's now visualise that simple network:
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 Each vertex name in g corresponds to a taxonomic name we can pass to PhyloPic. Because geom_phylopic() accepts the name aesthetic, we can map vertex names directly to silhouettes. The x and y aesthetics are also inherited from the ggraph initialization, but still need to be defined explicitly.
@@ -1278,7 +1278,7 @@ plot(g, layout = layout,
 
 And add a little colour to our lives:
 
-::: {.panel-tabset}
+::: {.panel-tabset group="plot-type"}
 ### ggplot2
 
 Many customisation options for your silhouettes are also available via `geom_phylopic()`, either as aesthetics (e.g. colour, angle) or as fixed arguments. For example, here we give each silhouette a different colour and apply a small fixed angle rotation:
