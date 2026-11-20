@@ -173,12 +173,37 @@ You should now be on your partner's GitHub repository.
 
       where `REPO_URL` is the URL you copied.
 
-   d. Run `git remote -v`: note that `origin` is *your fork* on GitHub, *not your partner's repository*. When you create a branch and push changes to GitHub, they will go to *your fork*.
+      ```txt
+      Cloning into 'THEIR_REPO_NAME'...
+      remote: Enumerating objects: 10, done.
+      remote: Counting objects: 100% (10/10), done.
+      remote: Compressing objects: 100% (8/8), done.
+      remote: Total 10 (delta 1), reused 6 (delta 0), pack-reused 0 (from 0)
+      Receiving objects: 100% (10/10), 13.41 KiB | 6.70 MiB/s, done.
+      Resolving deltas: 100% (1/1), done.
+      ```
+
+   d. Check which remote repository your local copy is linked to:
+
+      ```bash
+      git remote -v
+      ```
+
+      ```txt
+      origin  https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git (fetch)
+      origin  https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git (push)
+      ```
+
+      Note that `origin` is *your fork* on GitHub, *not your partner's repository*. When you create a branch and push changes to GitHub, they will go to *your fork*.
 
 5. Now let's create a branch called `dev2` to add a new feature to the `mymath.R` file. Create the branch on your local computer and switch to it:
 
    ```bash
    git checkout -b dev2
+   ```
+
+   ```txt
+   Switched to a new branch 'dev2'
    ```
 :::
 
@@ -211,13 +236,35 @@ You should now be on your partner's GitHub repository.
    git commit -m "add multiplication function to mymath file"
    ```
 
+   ```txt
+   [dev2 a8f3c51] add multiplication function to mymath file
+    1 file changed, 4 insertions(+)
+   ```
+
 8. This commit (and the `dev2` branch) currently only exists on your local copy of your fork. Push it to *your fork* on GitHub:
 
    ```bash
    git push -u origin dev2
    ```
 
-   Since `dev2` doesn't exist on your fork yet, `-u origin dev2` tells `git` to create it there and to make your local `dev2` track it.
+   ```txt
+   Enumerating objects: 5, done.
+   Counting objects: 100% (5/5), done.
+   Delta compression using up to 8 threads
+   Compressing objects: 100% (2/2), done.
+   Writing objects: 100% (3/3), 352 bytes | 352.00 KiB/s, done.
+   Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+   remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+   remote:
+   remote: Create a pull request for 'dev2' on GitHub by visiting:
+   remote:      https://github.com/YOUR_USERNAME/THEIR_REPO_NAME/pull/new/dev2
+   remote:
+   To https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git
+    * [new branch]      dev2 -> dev2
+   branch 'dev2' set up to track 'origin/dev2'.
+   ```
+
+   Since `dev2` doesn't exist on your fork yet, `-u origin dev2` tells `git` to create it there (`[new branch]`) and to make your local `dev2` track it (last line). Lines starting with `remote:` are messages sent by GitHub: here, it gives a link to create a pull request.
 
 9. Go to your partner's repository in your web browser. You should see the "Compare & pull request" green button at the top of the website. Click it to open a PR.
 :::
@@ -247,8 +294,31 @@ Congratulations! You and your partner have now collaborated on a new feature.
 
     ```bash
     git checkout main
+    ```
+
+    ```txt
+    Switched to branch 'main'
+    Your branch is up to date with 'origin/main'.
+    ```
+
+    ```bash
     git pull
     ```
+
+    ```txt
+    remote: Enumerating objects: 1, done.
+    remote: Counting objects: 100% (1/1), done.
+    remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+    Unpacking objects: 100% (1/1), 935 bytes | 935.00 KiB/s, done.
+    From https://github.com/YOUR_USERNAME/THEIR_REPO_NAME
+       7d1e0a4..e52b9f3  main       -> origin/main
+    Updating 7d1e0a4..e52b9f3
+    Fast-forward
+     mymath.R | 4 ++++
+     1 file changed, 4 insertions(+)
+    ```
+
+    `git pull` first fetches the changes from your fork on GitHub (the lines up to `main -> origin/main`), and then merges them into your local `main` (the lines starting at `Updating`).
 
     ::: {.callout-tip title="Syncing from the command line" collapse="true"}
     Instead of using the "Sync fork" button, you can register your partner's repository as a second remote, conventionally called `upstream`, pull its changes, and push them to your fork:
@@ -268,6 +338,14 @@ Congratulations! You and your partner have now collaborated on a new feature.
     ```bash
     git branch -d dev2
     ```
+
+    ```txt
+    warning: deleting branch 'dev2' that has been merged to
+             'refs/remotes/origin/dev2', but not yet merged to HEAD
+    Deleted branch dev2 (was a8f3c51).
+    ```
+
+    As in [Exercise 2](exercise2.qmd), Git warns us that the commit of `dev2` is not on `main` because your partner squashed it, but deletes the branch anyway since it is saved in `origin/dev2`.
 :::
 
 ```{=html}
