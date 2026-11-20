@@ -128,7 +128,7 @@ Another important problem, which is harder to detect, is that `out[["min_ma"]]` 
 + ages <- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")]
 periods <- time_bins(scale = "international periods")[, c("min_ma", "max_ma", "abbr")]
 
-- out <- merge(ages, periods, by = "min_ma")
+- out <- merge(ages, periods, by = c("max_ma"))
 + out <- merge(ages, periods, by = c("min_ma", "max_ma"))
 out[["min_ma"]]
 ```
@@ -200,16 +200,16 @@ max_ages_updated <- ifelse(max_ages > 274, 274, max_ages)
 # Extract minimum ages
 min_ages <- head(tetrapods$min_ma)
 # Identify values later than the Early Triassic (ends 247 Ma)
-values_to_remove <- min_ages[min_ages < 247]
+idx_to_remove <- which(min_ages < 247)
 # Remove values from vector from Middle Triassic or later
-min_ages[-values_to_remove]
+min_ages[-idx_to_remove]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
 In this case, we want to remove values younger than 247 Ma from our vector of minimum ages.
-The problem here is that if `values_to_remove` is of length 0 because `min_ages` doesn't have values lower than 247, then `min_ages[values_to_remove]` returns an empty vector instead of returning the entire vector!
+The problem here is that if `idx_to_remove` is of length 0 because `min_ages` doesn't have values lower than 247, then `min_ages[-idx_to_remove]` returns an empty vector instead of returning the entire vector!
 
 ```r
-x[-values_to_remove]
+min_ages[-idx_to_remove]
 ```
 ```{r}
 #| eval: true
@@ -218,16 +218,16 @@ x[-values_to_remove]
 library(palaeoverse)
 
 min_ages <- head(tetrapods$min_ma)
-values_to_remove <- min_ages[min_ages < 247]
-min_ages[-values_to_remove]
+idx_to_remove <- which(min_ages < 247)
+min_ages[-idx_to_remove]
 ```
 
 A safer way to do this is to use an `if` condition:
 
 ```r
 # If any values are younger than 247 Ma, remove them
-if (length(values_to_remove) > 0) {
-  min_ages[-values_to_remove]
+if (length(idx_to_remove) > 0) {
+  min_ages[-idx_to_remove]
 }
 ```
 :::::
