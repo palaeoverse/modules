@@ -1,0 +1,208 @@
+# This workflow renders the .qmd files modified in a PR (which produces the long
+# format and, when the document declares it, the slides) and runs the Lighthouse
+# accessibility audit on each rendered page. It stores the resulting comment body
+# and the PR number as artifacts, used by "accessibility-comment.yaml" to post a
+# comment on the PR.
+#
+# As in "format-lint.yaml", this split exists because this workflow renders PR
+# code (which executes R) and therefore must not have write permissions:
+# https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/
+#
+# This is purely informative: the job doesn't fail when Lighthouse reports issues.
+
+name: Accessibility
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Rendering is expensive, so only the documents touched by this PR are rendered
+  # and audited. Listing them is a job of its own so that the job below is skipped
+  # as a whole when the PR doesn't touch any .qmd.
+  changed-docs:
+    runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.changed.outputs.files }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        with:
+          # Needed to diff against the base branch below.
+          fetch-depth: 0
+
+      # HEAD is the merge commit of the PR into the base, so a two-dot diff
+      # against the base gives exactly the PR's changes.
+      - name: List modified .qmd files
+        id: changed
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          files=$(git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD -- '*.qmd')
+          echo "Modified .qmd files:"
+          echo "${files:-(none)}"
+          {
+            echo "files<<EOF"
+            echo "$files"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+  lighthouse:
+    needs: changed-docs
+    if: needs.changed-docs.outputs.files != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # TEMPORARY (see the last step): write access is only needed to comment from
+    # this job while testing the workflow on its own PR.
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      FILES: ${{ needs.changed-docs.outputs.files }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install R dependencies
+        shell: Rscript {0}
+        run: |
+          install.packages("pak")
+          dirs <- unique(dirname(strsplit(Sys.getenv("FILES"), "\n")[[1]]))
+          deps <- unlist(lapply(dirs, function(d) pak::scan_deps(d)$package))
+          pkgs <- setdiff(unique(c("knitr", "rmarkdown", deps)), "R")
+          pak::pak(pkgs)
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Sync the Lua filter into each module
+        # Mirrors _quarto.yml's pre-render hook that runs locally.
+        run: Rscript sync_filter.r
+
+      # Each .qmd is rendered on its own so that its outputs (long format, slides)
+      # can be attributed to it: they are the HTML files written in its directory
+      # since the stamp file was created. A document that fails to render is
+      # reported in the comment instead of failing the workflow.
+      - name: Render modified documents
+        run: |
+          mkdir -p /tmp/a11y
+          : > /tmp/a11y/pages.txt
+          : > /tmp/a11y/render-failures.txt
+          while IFS= read -r qmd; do
+            [ -z "$qmd" ] && continue
+            stamp=$(mktemp)
+            if ! quarto render "$qmd"; then
+              echo "$qmd" >> /tmp/a11y/render-failures.txt
+              continue
+            fi
+            find "$(dirname "$qmd")" -maxdepth 1 -name '*.html' -newer "$stamp" |
+              sed "s|^\./||; s|$|\t$qmd|" >> /tmp/a11y/pages.txt
+          done <<< "$FILES"
+          echo "Pages to audit:"
+          cat /tmp/a11y/pages.txt
+
+      # Lighthouse needs a URL, and the pages load their assets with relative
+      # paths, so the repo is served as a static site from its root. Chrome comes
+      # preinstalled on the runner image.
+      - name: Run Lighthouse on the rendered pages
+        run: |
+          npm install --global lighthouse@13
+          npx --yes http-server . --port 8080 --silent &
+          for _ in $(seq 30); do
+            curl -sf -o /dev/null http://localhost:8080/ && break
+            sleep 1
+          done
+
+          : > /tmp/a11y/body.md
+          i=0
+          while IFS=$'\t' read -r page src; do
+            [ -z "$page" ] && continue
+            i=$((i + 1))
+            lighthouse "http://localhost:8080/$page" \
+              --only-categories=accessibility \
+              --output=json --output-path="/tmp/a11y/report-$i.json" \
+              --quiet \
+              --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage"
+            jq -r --arg page "$page" --arg src "$src" \
+              -f .github/workflows/templates/lighthouse-report.jq \
+              "/tmp/a11y/report-$i.json" >> /tmp/a11y/body.md
+          done < /tmp/a11y/pages.txt
+
+      - name: Build comment
+        id: build
+        run: |
+          if [ ! -s /tmp/a11y/body.md ] && [ ! -s /tmp/a11y/render-failures.txt ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          {
+            echo '<!-- lighthouse-a11y -->'
+            echo '## :wheelchair: Accessibility report'
+            echo
+            echo 'Results of the Lighthouse accessibility audit on the pages rendered'
+            echo 'from the `.qmd` files modified in this Pull Request. This is'
+            echo 'informative only: the CI does not fail on these issues.'
+            echo
+            cat /tmp/a11y/body.md
+            if [ -s /tmp/a11y/render-failures.txt ]; then
+              echo '### :warning: Documents that could not be rendered'
+              echo
+              sed 's|^|- `|; s|$|`|' /tmp/a11y/render-failures.txt
+              echo
+            fi
+            echo '<sub>This comment is updated on every push to this Pull Request.</sub>'
+          } > /tmp/a11y/comment.md
+
+          # GitHub rejects comments over 65536 characters.
+          if [ "$(wc -c < /tmp/a11y/comment.md)" -gt 60000 ]; then
+            head -c 60000 /tmp/a11y/comment.md > /tmp/a11y/comment-short.md
+            echo >> /tmp/a11y/comment-short.md
+            echo '_Report truncated: see the workflow logs for the full results._' \
+              >> /tmp/a11y/comment-short.md
+            mv /tmp/a11y/comment-short.md /tmp/a11y/comment.md
+          fi
+
+          echo "${{ github.event.pull_request.number }}" > /tmp/a11y/pr-number.txt
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Upload artifacts
+        if: steps.build.outputs.ready == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: lighthouse-results
+          path: |
+            /tmp/a11y/comment.md
+            /tmp/a11y/pr-number.txt
+
+      # TEMPORARY -- REMOVE BEFORE MERGING.
+      # "accessibility-comment.yaml" only runs once it is on the default branch,
+      # so the comment is posted from here instead to test this workflow on its
+      # own PR. This only works for a PR opened from a branch of this repo: a
+      # fork's token is read-only, which is the whole reason for the split.
+      - name: Comment on the PR (temporary, for testing)
+        if: steps.build.outputs.ready == 'true'
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '<!-- lighthouse-a11y -->'
+
+      - name: Create or update comment (temporary, for testing)
+        if: steps.build.outputs.ready == 'true'
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: /tmp/a11y/comment.md
+          edit-mode: replace
