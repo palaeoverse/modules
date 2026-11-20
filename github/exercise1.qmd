@@ -210,10 +210,17 @@ In this section, we will initialise a Git repository from scratch and start trac
     create mode 100644 story.txt
    ```
 
-   `git status` now says `nothing to commit, working tree clean`.
+   It also tells us how many files changed and how many lines were added or removed (here, we only added lines).
+
+   `git status` now says:
+   
+   ```
+   On branch main
+   nothing to commit, working tree clean
+   ```
    :::
 
-   Congratulations, you've made your first `git` commit!
+   Congratulations, you've made your first Git commit!
 
    ::: {.callout-tip title="What happens when you commit changes?"}
    A commit creates a snapshot of the files you committed. Every commit has a commit message, an author, and a unique hash identifying that change. Git keeps a *history* of all commits made in a repository. 
@@ -237,7 +244,7 @@ In this section, we will initialise a Git repository from scratch and start trac
    ```
 
    ```txt
-   commit 17b2095e7b6ed25600be638ed5f02749ddb94a3d
+   commit 17b2095e7b6ed25600be638ed5f02749ddb94a3d (HEAD -> main)
    Author: Your Name <you@example.com>
    Date:   Tue Oct 6 10:03:00 2026 +0200
 
@@ -311,7 +318,14 @@ You're not happy with your story opening. You don't want to write fairy tales, y
     far away...
    ```
 
-   Lines starting with `-` were removed, and lines starting with `+` were added.
+   There is a lot of info here, but the important part is:
+
+   ```
+   -Once upon a time, in a land far,
+   +A long time ago in a galaxy far,
+   ```
+
+   which tells us which line was removed (starting with `-`) and which line was added (starting with `+`).
    :::
 
 1. Git recognizes that `story.txt` has changed, *but your changes have not been committed yet.*
@@ -323,8 +337,7 @@ You're not happy with your story opening. You don't want to write fairy tales, y
 
    #### Command line
 
-   `git status` lists `story.txt` under `Changes not staged for commit`, and `git log` still shows a single commit:
-
+   `git status` tells us that a file has been modified but is not ready to be committed yet:
    ```txt
    On branch main
    Changes not staged for commit:
@@ -577,6 +590,8 @@ Let's see how to do this in practice:
 
    #### Command line
 
+   `git checkout` allows us to navigate between existing branches. In this case, we use `-b` to create the branch first, and then navigate to it:
+
    ```bash
    git checkout -b title-dev
    ```
@@ -585,7 +600,7 @@ Let's see how to do this in practice:
    Switched to a new branch 'title-dev'
    ```
 
-   `-b` creates the branch before switching to it. You are now on a new branch called `title-dev`, as shown by `git branch`:
+   You are now on a new branch called `title-dev`, as shown by `git branch`:
 
    ```txt
      main
@@ -699,12 +714,17 @@ We don't have to be stuck on a branch until its changes are integrated in the `m
 
    ```bash
    ls
-   git log --oneline
    ```
 
    ```txt
    story.txt
+   ```
 
+   ```bash 
+   git log --oneline
+   ```
+
+   ```txt
    40d5b63 Create .gitignore
    b81e803 Change opening
    17b2095 Create story.txt
@@ -811,6 +831,22 @@ gitGraph
 
 1. In a flash of brilliance, you get an idea for the title of your story. Quick! Switch to your `title-dev` branch.
 
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click the "Current Branch" drop-down menu, and select `title-dev`.
+
+   #### Command line
+
+   ```bash
+   git checkout title-dev
+   ```
+
+   ```txt
+   Switched to branch 'title-dev'
+   ```
+   :::
+
    Now use your text editor to edit `title.txt` and change `STAR FIGHT!` to:
 
    ```
@@ -896,6 +932,22 @@ First, we will create a backup of the `main` branch, just in case something goes
 
 1. First, let's switch to the `main` branch.
 
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click the "Current Branch" drop-down menu, and select `main`.
+
+   #### Command line
+
+   ```bash
+   git checkout main
+   ```
+
+   ```txt
+   Switched to branch 'main'
+   ```
+   :::
+
 1. We will call our backup `main-bkup`. This way, you have the original state of `main` preserved in the backup branch that you can always go back to.
 
    To create the copy of `main`:
@@ -968,6 +1020,8 @@ gitGraph
     1 file changed, 5 insertions(+)
     create mode 100644 title.txt
    ```
+
+   Notice how we have a summary of the changes that tells us that `title.txt` got five new lines.
    :::
 
 1. Congratulations! You've made your first merge on to main. To see what happened, let's look at the history on the main branch:
@@ -982,19 +1036,17 @@ gitGraph
    #### Command line
 
    ```bash
-   git log --oneline --graph
+   git log --oneline
    ```
 
    ```txt
-   *   5a21f4b Merge branch 'title-dev'
-   |\
-   | * 1b45d74 Update title.txt
-   | * 0517538 Create title.txt
-   * | c1d82b6 Add first paragraph
-   |/
-   * 40d5b63 Create .gitignore
-   * b81e803 Change opening
-   * 17b2095 Create story.txt
+   5a21f4b (HEAD -> main) Merge branch 'title-dev'
+   1b45d74 (title-dev) Update title.txt
+   c1d82b6 (main-bkup) Add first paragraph
+   0517538 Create title.txt
+   40d5b63 Create .gitignore
+   b81e803 Change opening
+   17b2095 Create story.txt
    ```
    :::
 
@@ -1031,6 +1083,22 @@ Instead of creating a merge commit, we could have done a **squash and merge**. L
 
 1. Switch to the `main-bkup` branch.
 
+   ::: {.panel-tabset}
+   #### GitHub Desktop
+
+   Click the "Current Branch" drop-down menu, and select `main-bkup`.
+
+   #### Command line
+
+   ```bash
+   git checkout main-bkup
+   ```
+
+   ```txt
+   Switched to branch 'main-bkup'
+   ```
+   :::
+
 1. Squash and merge `title-dev` into `main-bkup`:
 
    ::: {.panel-tabset}
@@ -1055,8 +1123,8 @@ Instead of creating a merge commit, we could have done a **squash and merge**. L
    ```
 
    ```txt
-   Automatic merge went well; stopped before committing as requested
    Squash commit -- not updating HEAD
+   Automatic merge went well; stopped before committing as requested
    ```
 
    Unlike a regular merge, `--squash` stages the changes from `title-dev` but doesn't commit them. Commit them with:
@@ -1065,7 +1133,7 @@ Instead of creating a merge commit, we could have done a **squash and merge**. L
    git commit
    ```
 
-   This opens your text editor with a message listing the squashed commits. Save and exit:
+   This opens your text editor with a message listing the squashed commits. Save and exit (no need to update the message):
 
    ```txt
    [main-bkup 61857c0] Squashed commit of the following:
