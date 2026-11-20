@@ -344,16 +344,12 @@ Lewis A. Jones
 <div class="callout-content">
 <p>What could be improved?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">head</span>(tetrapods<span class="sc">$</span>max_ma)</span>
-<span id="cb3-2"><a aria-label="2"></a>x_updated <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb3-3"><a aria-label="3"></a></span>
-<span id="cb3-4"><a aria-label="4"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) {</span>
-<span id="cb3-5"><a aria-label="5"></a>  <span class="cf">if</span> (x[i] <span class="sc">&gt;</span> <span class="dv">270</span>) {</span>
-<span id="cb3-6"><a aria-label="6"></a>    x_updated[i] <span class="ot">&lt;-</span> x[i] <span class="sc">*</span> <span class="fl">0.9</span></span>
-<span id="cb3-7"><a aria-label="7"></a>  } <span class="cf">else</span> {</span>
-<span id="cb3-8"><a aria-label="8"></a>    x_updated[i] <span class="ot">&lt;-</span> x[i]</span>
-<span id="cb3-9"><a aria-label="9"></a>  }</span>
-<span id="cb3-10"><a aria-label="10"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Only keep the first 6 observations</span></span>
+<span id="cb3-2"><a aria-label="2"></a>small_tetra <span class="ot">&lt;-</span> <span class="fu">head</span>(tetrapods, <span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb3-3"><a aria-label="3"></a><span class="co"># Remove the column "environment" from the data</span></span>
+<span id="cb3-4"><a aria-label="4"></a>small_tetra[, <span class="st">"environment"</span>] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb3-5"><a aria-label="5"></a><span class="co"># Keep only observations whose latitude is above 45</span></span>
+<span id="cb3-6"><a aria-label="6"></a>small_tetra <span class="ot">&lt;-</span> <span class="fu">subset</span>(small_tetra, lat <span class="sc">&gt;=</span> <span class="dv">45</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -368,9 +364,13 @@ Lewis A. Jones
 <p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>Prefer vectorised code to <code>for</code> loops:</p>
+<p>Comments should explain <em>why</em>, not <em>what</em>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a>x_updated <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="dv">270</span>, x <span class="sc">*</span> <span class="fl">0.9</span>, x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Test on a small dataset since the full one takes hours</span></span>
+<span id="cb4-2"><a aria-label="2"></a>small_tetra <span class="ot">&lt;-</span> <span class="fu">head</span>(tetrapods, <span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb4-3"><a aria-label="3"></a>small_tetra[, <span class="st">"environment"</span>] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb4-4"><a aria-label="4"></a><span class="co"># Our study focuses on tetrapods north of 45 degrees latitude</span></span>
+<span id="cb4-5"><a aria-label="5"></a>small_tetra <span class="ot">&lt;-</span> <span class="fu">subset</span>(small_tetra, lat <span class="sc">&gt;=</span> <span class="dv">45</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -388,11 +388,19 @@ Lewis A. Jones
 <p><strong>Exercise</strong></p>
 </div>
 <div class="callout-content">
-<p>What could go wrong?</p>
+<p>What could be improved?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">head</span>(tetrapods<span class="sc">$</span>min_ma, <span class="dv">3</span>)</span>
-<span id="cb5-2"><a aria-label="2"></a>idx_to_remove <span class="ot">&lt;-</span> x[x <span class="sc">&lt;</span> <span class="dv">0</span>]</span>
-<span id="cb5-3"><a aria-label="3"></a>x[<span class="sc">-</span>idx_to_remove]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>max_ages <span class="ot">&lt;-</span> <span class="fu">head</span>(tetrapods<span class="sc">$</span>max_ma)</span>
+<span id="cb5-2"><a aria-label="2"></a>max_ages_updated <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb5-3"><a aria-label="3"></a></span>
+<span id="cb5-4"><a aria-label="4"></a><span class="co"># Cap upper age limits at the Early-Middle Permian boundary (274 Ma)</span></span>
+<span id="cb5-5"><a aria-label="5"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(max_ages)) {</span>
+<span id="cb5-6"><a aria-label="6"></a>  <span class="cf">if</span> (max_ages[i] <span class="sc">&gt;</span> <span class="dv">274</span>) {</span>
+<span id="cb5-7"><a aria-label="7"></a>    max_ages_updated[i] <span class="ot">&lt;-</span> <span class="dv">274</span></span>
+<span id="cb5-8"><a aria-label="8"></a>  } <span class="cf">else</span> {</span>
+<span id="cb5-9"><a aria-label="9"></a>    max_ages_updated[i] <span class="ot">&lt;-</span> max_ages[i]</span>
+<span id="cb5-10"><a aria-label="10"></a>  }</span>
+<span id="cb5-11"><a aria-label="11"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -407,11 +415,51 @@ Lewis A. Jones
 <p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>No negative values: <code>idx_to_remove</code> is empty, so <code>x[-idx_to_remove]</code> returns <code>numeric(0)</code>.</p>
+<p>Prefer vectorised code to <code>for</code> loops:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="cf">if</span> (<span class="fu">length</span>(idx_to_remove) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb6-2"><a aria-label="2"></a>  x[<span class="sc">-</span>idx_to_remove]</span>
-<span id="cb6-3"><a aria-label="3"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>max_ages_updated <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(max_ages <span class="sc">&gt;</span> <span class="dv">274</span>, <span class="dv">274</span>, max_ages)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-4" class="slide level2">
+<h2>Exercise 4</h2>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Exercise</strong></p>
+</div>
+<div class="callout-content">
+<p>What could go wrong?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>min_ages <span class="ot">&lt;-</span> <span class="fu">head</span>(tetrapods<span class="sc">$</span>min_ma)</span>
+<span id="cb7-2"><a aria-label="2"></a><span class="co"># Identify values later than the Early Triassic (ends 247 Ma)</span></span>
+<span id="cb7-3"><a aria-label="3"></a>idx_to_remove <span class="ot">&lt;-</span> <span class="fu">which</span>(min_ages <span class="sc">&lt;</span> <span class="dv">247</span>)</span>
+<span id="cb7-4"><a aria-label="4"></a>min_ages[<span class="sc">-</span>idx_to_remove]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<p>No values below 247: <code>idx_to_remove</code> is empty, so <code>min_ages[-idx_to_remove]</code> returns <code>numeric(0)</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="cf">if</span> (<span class="fu">length</span>(idx_to_remove) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb8-2"><a aria-label="2"></a>  min_ages[<span class="sc">-</span>idx_to_remove]</span>
+<span id="cb8-3"><a aria-label="3"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
