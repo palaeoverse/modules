@@ -1,0 +1,298 @@
+---
+title: "Code review"
+description: "Why reviewing code matters and how to do it effectively, constructively, and collaboratively."
+author:
+  - Etienne Bacher
+  - Bethany Allen
+  - Lewis A. Jones
+date: last-modified
+date-format: long
+brand: _brand/_brand.yml
+format:
+  revealjs:
+    output-file: index-slides.html
+    toc: false
+    css: style/template.css
+    slide-number: c/t
+    include-in-header: style/header.html
+    include-after-body: style/footer.html
+execute:
+  echo: true
+  eval: false
+  warning: false
+  message: false
+  freeze: auto
+editor:
+  markdown:
+    wrap: 72
+---
+
+## Learning objectives
+
+<br>
+
+- Understand what code review is
+- Self-review your code
+- Review others' code and give clear feedback
+- Use GitHub's review features
+
+## Why review code?
+
+<br>
+
+- A second pair of eyes catches bugs and fragile code
+- Thinking about how code could fail makes it more robust
+- AI-generated code needs checking
+- Reviewing teaches new methods and functions
+
+# How to review code
+
+## Objectives of a review
+
+<br>
+
+1. Does the code do what we expect?
+1. Can we find mistakes?
+1. Is it maintainable?
+
+## Questions to ask
+
+<br>
+
+- What does this code do?
+- What are the inputs and outputs?
+- What could go wrong?
+- What if an assumption breaks?
+  - e.g. a "Date" column becomes "numeric"
+
+## Who is responsible for what?
+
+<br>
+
+- **Author**: clear names, docs, and comments; applies the changes
+- **Reviewer**: a fresh point of view
+- It is fine to say "I can't review this"
+
+## Exercise 1
+
+::: {.callout-caution title="Exercise"}
+What is likely wrong?
+
+```{r}
+library(palaeoverse)
+
+ages <- time_bins(scale = "international ages")[, c("min_ma", "max_ma", "interval_name")
+periods <- time_bins(scale = "international periods")[, c("min_ma", "max_ma", "abbr")]
+
+out <- merge(ages, periods, by = c("max_ma"))
+out[["min_ma"]]
+```
+:::
+
+. . .
+
+::: {.callout-tip title="Solution"}
+Missing `]`, and `out[["min_ma"]]` is `NULL`: the columns are `min_ma.x` and `.y`.
+
+```diff
+- out <- merge(ages, periods, by = c("max_ma"))
++ out <- merge(ages, periods, by = c("min_ma", "max_ma"))
+```
+:::
+
+## Exercise 2
+
+::: {.callout-caution title="Exercise"}
+What could be improved?
+
+```{r}
+# Only keep the first 6 observations
+small_tetra <- head(tetrapods, n = 6)
+# Remove the column "environment" from the data
+small_tetra[, "environment"] <- NULL
+# Keep only observations whose latitude is above 45
+small_tetra <- subset(small_tetra, lat >= 45)
+```
+:::
+
+. . .
+
+::: {.callout-tip title="Solution"}
+Comments should explain *why*, not *what*:
+
+```{r}
+# Test on a small dataset since the full one takes hours
+small_tetra <- head(tetrapods, n = 6)
+small_tetra[, "environment"] <- NULL
+# Our study focuses on tetrapods north of 45 degrees latitude
+small_tetra <- subset(small_tetra, lat >= 45)
+```
+:::
+
+## Exercise 3
+
+::: {.callout-caution title="Exercise"}
+What could be improved?
+
+```{r}
+max_ages <- head(tetrapods$max_ma)
+max_ages_updated <- c()
+
+# Cap upper age limits at the Early-Middle Permian boundary (274 Ma)
+for (i in seq_along(max_ages)) {
+  if (max_ages[i] > 274) {
+    max_ages_updated[i] <- 274
+  } else {
+    max_ages_updated[i] <- max_ages[i]
+  }
+}
+```
+:::
+
+. . .
+
+::: {.callout-tip title="Solution"}
+Prefer vectorised code to `for` loops:
+
+```{r}
+max_ages_updated <- ifelse(max_ages > 274, 274, max_ages)
+```
+:::
+
+## Exercise 4
+
+::: {.callout-caution title="Exercise"}
+What could go wrong?
+
+```{r}
+min_ages <- head(tetrapods$min_ma)
+# Identify values later than the Early Triassic (ends 247 Ma)
+idx_to_remove <- which(min_ages < 247)
+min_ages[-idx_to_remove]
+```
+:::
+
+. . .
+
+::: {.callout-tip title="Solution"}
+No values below 247: `idx_to_remove` is empty, so `min_ages[-idx_to_remove]` returns `numeric(0)`.
+
+```{r}
+if (length(idx_to_remove) > 0) {
+  min_ages[-idx_to_remove]
+}
+```
+:::
+
+# Where to review code
+
+## Use Git and GitHub
+
+<br>
+
+- Email and chat lose information
+- Pull requests keep feedback with the code
+- See our Git and GitHub module
+
+. . .
+
+**Demo time!**
+
+## Reviewing a PR on GitHub
+
+<br>
+
+1. Open the tab "Files changed"
+1. Click the blue cross to comment on a line
+1. Use "Add a suggestion" for code changes
+1. "Submit review": approve, comment, or request changes
+
+# Self-reviewing your code
+
+## Before asking for a review
+
+<br>
+
+- Read your code as a newcomer would
+- Make sure tests or data checks pass
+- One PR per analysis, feature, or fix
+
+# Review process
+
+## Before requesting a review
+
+<br>
+
+- Make sure automated checks pass
+- Describe the goal of the PR briefly
+- Link the issue ("Closes #1234")
+- Pre-comment tricky lines or ask for specific feedback
+
+## Reviewer side
+
+<br>
+
+- Keep the goal of the PR in mind
+- Critique the code, not the author
+- Explain why you suggest a change
+- Add positive comments too
+
+## Phrasing comments
+
+<br>
+
+- Bad: "You shouldn't use a for loop, this is obviously slow."
+- Better: "Can we use a vectorised function instead? It is often faster."
+
+## Author side
+
+<br>
+
+- Address every comment, politely and with justification
+- No need to reply instantly
+- Persistent disagreement? Discuss in person
+
+## Discuss upfront
+
+<br>
+
+- Who resolves comments?
+- Who pushes to the branch?
+- What AI usage is acceptable?
+
+# Checklist
+
+## For authors
+
+<br>
+
+- One type of change per PR?
+- Reviewed, tested, and documented?
+- Automated checks pass?
+- Clear PR description with linked issues?
+
+## For reviewers
+
+<br>
+
+- Do the changes match the PR description?
+- Documented and tested?
+- Anything to move to a separate PR?
+- Changelog updated if relevant?
+
+# Conclusion
+
+## Summary
+
+<br>
+
+- Review critically, communicate kindly
+- Self-review before requesting a review
+- Use GitHub's review tools
+
+## Further reading
+
+<br>
+
+- [Tidyverse code review principles](https://code-review.tidyverse.org)
+- [Google code review principles](https://google.github.io/eng-practices/review/reviewer/comments.html)
