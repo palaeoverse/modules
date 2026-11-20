@@ -360,21 +360,33 @@ Etienne Bacher
 <li><p>In your terminal, <code>cd</code> to the folder where you want to store your fork, then clone it and move into it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="fu">git</span> clone REPO_URL</span>
 <span id="cb1-2"><a aria-label="2"></a><span class="bu">cd</span> THEIR_REPO_NAME</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>where <code>REPO_URL</code> is the URL you copied.</p></li>
-<li><p>Run <code>git remote -v</code>: note that <code>origin</code> is <em>your fork</em> on GitHub, <em>not your partner’s repository</em>. When you create a branch and push changes to GitHub, they will go to <em>your fork</em>.</p></li>
+<p>where <code>REPO_URL</code> is the URL you copied.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a aria-label="1"></a>Cloning into 'THEIR_REPO_NAME'...</span>
+<span id="cb2-2"><a aria-label="2"></a>remote: Enumerating objects: 10, done.</span>
+<span id="cb2-3"><a aria-label="3"></a>remote: Counting objects: 100% (10/10), done.</span>
+<span id="cb2-4"><a aria-label="4"></a>remote: Compressing objects: 100% (8/8), done.</span>
+<span id="cb2-5"><a aria-label="5"></a>remote: Total 10 (delta 1), reused 6 (delta 0), pack-reused 0 (from 0)</span>
+<span id="cb2-6"><a aria-label="6"></a>Receiving objects: 100% (10/10), 13.41 KiB | 6.70 MiB/s, done.</span>
+<span id="cb2-7"><a aria-label="7"></a>Resolving deltas: 100% (1/1), done.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Check which remote repository your local copy is linked to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a aria-label="1"></a>origin  https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git (fetch)</span>
+<span id="cb4-2"><a aria-label="2"></a>origin  https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git (push)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note that <code>origin</code> is <em>your fork</em> on GitHub, <em>not your partner’s repository</em>. When you create a branch and push changes to GitHub, they will go to <em>your fork</em>.</p></li>
 </ol></li>
 <li><p>Now let’s create a branch called <code>dev2</code> to add a new feature to the <code>mymath.R</code> file. Create the branch on your local computer and switch to it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="fu">git</span> checkout <span class="at">-b</span> dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a aria-label="1"></a><span class="fu">git</span> checkout <span class="at">-b</span> dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a aria-label="1"></a>Switched to a new branch 'dev2'</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 </div>
 </div>
 </div>
 <ol start="6" type="1">
 <li><p>Use your text editor to open <code>mymath.R</code> and add the following lines to it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a></span>
-<span id="cb3-2"><a aria-label="2"></a>multiply <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
-<span id="cb3-3"><a aria-label="3"></a>   <span class="fu">return</span> (a<span class="sc">*</span>b)</span>
-<span id="cb3-4"><a aria-label="4"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a></span>
+<span id="cb7-2"><a aria-label="2"></a>multiply <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb7-3"><a aria-label="3"></a>   <span class="fu">return</span> (a<span class="sc">*</span>b)</span>
+<span id="cb7-4"><a aria-label="4"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save the changes.</p></li>
 </ol>
 <div class="panel-tabset">
@@ -390,11 +402,27 @@ Etienne Bacher
 <div id="tabset-2-2">
 <ol start="7" type="1">
 <li><p>Commit your changes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a aria-label="1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
-<span id="cb4-2"><a aria-label="2"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"add multiplication function to mymath file"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a aria-label="1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
+<span id="cb8-2"><a aria-label="2"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"add multiplication function to mymath file"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a aria-label="1"></a>[dev2 a8f3c51] add multiplication function to mymath file</span>
+<span id="cb9-2"><a aria-label="2"></a> 1 file changed, 4 insertions(+)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>This commit (and the <code>dev2</code> branch) currently only exists on your local copy of your fork. Push it to <em>your fork</em> on GitHub:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a aria-label="1"></a><span class="fu">git</span> push <span class="at">-u</span> origin dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Since <code>dev2</code> doesn’t exist on your fork yet, <code>-u origin dev2</code> tells <code>git</code> to create it there and to make your local <code>dev2</code> track it.</p></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a aria-label="1"></a><span class="fu">git</span> push <span class="at">-u</span> origin dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a aria-label="1"></a>Enumerating objects: 5, done.</span>
+<span id="cb11-2"><a aria-label="2"></a>Counting objects: 100% (5/5), done.</span>
+<span id="cb11-3"><a aria-label="3"></a>Delta compression using up to 8 threads</span>
+<span id="cb11-4"><a aria-label="4"></a>Compressing objects: 100% (2/2), done.</span>
+<span id="cb11-5"><a aria-label="5"></a>Writing objects: 100% (3/3), 352 bytes | 352.00 KiB/s, done.</span>
+<span id="cb11-6"><a aria-label="6"></a>Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)</span>
+<span id="cb11-7"><a aria-label="7"></a>remote: Resolving deltas: 100% (1/1), completed with 1 local object.</span>
+<span id="cb11-8"><a aria-label="8"></a>remote:</span>
+<span id="cb11-9"><a aria-label="9"></a>remote: Create a pull request for 'dev2' on GitHub by visiting:</span>
+<span id="cb11-10"><a aria-label="10"></a>remote:      https://github.com/YOUR_USERNAME/THEIR_REPO_NAME/pull/new/dev2</span>
+<span id="cb11-11"><a aria-label="11"></a>remote:</span>
+<span id="cb11-12"><a aria-label="12"></a>To https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git</span>
+<span id="cb11-13"><a aria-label="13"></a> * [new branch]      dev2 -&gt; dev2</span>
+<span id="cb11-14"><a aria-label="14"></a>branch 'dev2' set up to track 'origin/dev2'.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Since <code>dev2</code> doesn’t exist on your fork yet, <code>-u origin dev2</code> tells <code>git</code> to create it there (<code>[new branch]</code>) and to make your local <code>dev2</code> track it (last line). Lines starting with <code>remote:</code> are messages sent by GitHub: here, it gives a link to create a pull request.</p></li>
 <li><p>Go to your partner’s repository in your web browser. You should see the “Compare &amp; pull request” green button at the top of the website. Click it to open a PR.</p></li>
 </ol>
 </div>
@@ -422,8 +450,21 @@ Etienne Bacher
 <div id="tabset-3-2">
 <ol start="15" type="1">
 <li><p>Update your local copy of your fork. Switch to your main branch and pull in the changes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a aria-label="1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb6-2"><a aria-label="2"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a aria-label="1"></a><span class="fu">git</span> checkout main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a aria-label="1"></a>Switched to branch 'main'</span>
+<span id="cb13-2"><a aria-label="2"></a>Your branch is up to date with 'origin/main'.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a aria-label="1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a aria-label="1"></a>remote: Enumerating objects: 1, done.</span>
+<span id="cb15-2"><a aria-label="2"></a>remote: Counting objects: 100% (1/1), done.</span>
+<span id="cb15-3"><a aria-label="3"></a>remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)</span>
+<span id="cb15-4"><a aria-label="4"></a>Unpacking objects: 100% (1/1), 935 bytes | 935.00 KiB/s, done.</span>
+<span id="cb15-5"><a aria-label="5"></a>From https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</span>
+<span id="cb15-6"><a aria-label="6"></a>   7d1e0a4..e52b9f3  main       -&gt; origin/main</span>
+<span id="cb15-7"><a aria-label="7"></a>Updating 7d1e0a4..e52b9f3</span>
+<span id="cb15-8"><a aria-label="8"></a>Fast-forward</span>
+<span id="cb15-9"><a aria-label="9"></a> mymath.R | 4 ++++</span>
+<span id="cb15-10"><a aria-label="10"></a> 1 file changed, 4 insertions(+)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git pull</code> first fetches the changes from your fork on GitHub (the lines up to <code>main -&gt; origin/main</code>), and then merges them into your local <code>main</code> (the lines starting at <code>Updating</code>).</p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -434,16 +475,20 @@ Etienne Bacher
 </div>
 <div class="callout-content">
 <p>Instead of using the “Sync fork” button, you can register your partner’s repository as a second remote, conventionally called <code>upstream</code>, pull its changes, and push them to your fork:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a aria-label="1"></a><span class="fu">git</span> remote add upstream https://github.com/THEIR_USERNAME/THEIR_REPO_NAME.git</span>
-<span id="cb7-2"><a aria-label="2"></a><span class="fu">git</span> checkout main</span>
-<span id="cb7-3"><a aria-label="3"></a><span class="fu">git</span> pull upstream main</span>
-<span id="cb7-4"><a aria-label="4"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a aria-label="1"></a><span class="fu">git</span> remote add upstream https://github.com/THEIR_USERNAME/THEIR_REPO_NAME.git</span>
+<span id="cb16-2"><a aria-label="2"></a><span class="fu">git</span> checkout main</span>
+<span id="cb16-3"><a aria-label="3"></a><span class="fu">git</span> pull upstream main</span>
+<span id="cb16-4"><a aria-label="4"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You only need to add <code>upstream</code> once.</p>
 </div>
 </div>
 </div></li>
 <li><p>Now that your changes have been merged on to your partner’s main branch and you’ve synced your fork both on GitHub and your computer, you’re free to delete your development branch on your computer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a aria-label="1"></a><span class="fu">git</span> branch <span class="at">-d</span> dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a aria-label="1"></a><span class="fu">git</span> branch <span class="at">-d</span> dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource txt number-lines code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a aria-label="1"></a>warning: deleting branch 'dev2' that has been merged to</span>
+<span id="cb18-2"><a aria-label="2"></a>         'refs/remotes/origin/dev2', but not yet merged to HEAD</span>
+<span id="cb18-3"><a aria-label="3"></a>Deleted branch dev2 (was a8f3c51).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>As in <a href="../../../training/modules/github/exercise2.html">Exercise 2</a>, Git warns us that the commit of <code>dev2</code> is not on <code>main</code> because your partner squashed it, but deletes the branch anyway since it is saved in <code>origin/dev2</code>.</p></li>
 </ol>
 </div>
 </div>
