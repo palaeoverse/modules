@@ -2,15 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.11.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="William Gearty">
 <meta name="author" content="Niklas Hohmann">
+<meta name="author" content="Etienne Bacher">
 <meta name="dcterms.date" content="2026-10-06">
+<meta name="description" content="How multiple people can contribute to the same Git repository.">
 
-<title>3. Collaborating in GitHub using the Fork and Pull Model</title>
+<title>3. Collaborating on GitHub</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -73,22 +75,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../training/modules/github/appendix-cli/index.html" rel="next">
+<link href="../../../training/modules/github/conclusion.html" rel="next">
 <link href="../../../training/modules/github/exercise2.html" rel="prev">
 <link href="../../../_brand/logos/favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8574e35074353e5de839972ed73d34f7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-5fac77ab3837e9795c0cf6253b90d7fb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-910b0c9c99883b2e35c5c024ee8da49f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-26724bd9012cdd1e61ec3a0bed9d10e1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-a437a4a245be6b913ac52a5e7ab2d145.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-26724bd9012cdd1e61ec3a0bed9d10e1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-9e866e08bb455834ddb709b85ac18623.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-211d42d6a93984098abca9e4ac300801.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-9e866e08bb455834ddb709b85ac18623.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -120,15 +123,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
-<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-21/training/modules/github/_brand/logos/logo-opengraph.png">
+<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-21/_brand/logos/logo-opengraph.png">
 <meta property="og:locale" content="en_GB">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
@@ -136,8 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -263,15 +267,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
+            <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules/github/exercise3.html">3. Collaborating in GitHub using the Fork and Pull Model</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../training/modules/github/exercise3.html">3. Collaborating on GitHub</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
@@ -279,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Section">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -291,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules/github/exercise1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Practice with GitHub Desktop on a local repository</span></a>
+ <span class="menu-text">1. Using Git with a local project</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -303,65 +308,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../training/modules/github/exercise3.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">3. Collaborating in GitHub using the Fork and Pull Model</span></a>
+ <span class="menu-text">3. Collaborating on GitHub</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../../../training/modules/github/appendix-cli/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Appendix: git and GitHub with the Command Line Interface</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../training/modules/github/appendix-cli/exercise1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 1: Practice with <code>git</code> on a local repository</span></a>
+  <a href="../../../training/modules/github/conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conclusion</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules/github/appendix-cli/exercise2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 2: Using <code>git pull</code> and <code>push</code> with GitHub</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules/github/appendix-cli/exercise3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exercise 3: Collaborating in GitHub using the Fork and Pull Model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../training/modules/github/appendix-cli/ssh_setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Create and add an ssh key to GitHub</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="exercise3-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about-forks" id="toc-about-forks" class="nav-link active" data-scroll-target="#about-forks">About forks</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-fork" id="toc-what-is-a-fork" class="nav-link" data-scroll-target="#what-is-a-fork">What is a fork?</a></li>
+  <li><a href="#why-a-fork-and-not-a-simple-clone" id="toc-why-a-fork-and-not-a-simple-clone" class="nav-link" data-scroll-target="#why-a-fork-and-not-a-simple-clone">Why a fork and not a simple clone?</a></li>
+  <li><a href="#the-fork-and-pull-model" id="toc-the-fork-and-pull-model" class="nav-link" data-scroll-target="#the-fork-and-pull-model">The Fork and Pull model</a></li>
+  </ul></li>
+  <li><a href="#forking-in-practice" id="toc-forking-in-practice" class="nav-link" data-scroll-target="#forking-in-practice">Forking in practice</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="exercise3-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">3. Collaborating in GitHub using the Fork and Pull Model</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">r</div>
-    <div class="quarto-category">tidyverse</div>
-    <div class="quarto-category">dataviz</div>
-  </div>
-  </div>
+<h1 class="title">3. Collaborating on GitHub</h1>
+</div>
 
+<div>
+  <div class="description">
+    How multiple people can contribute to the same Git repository.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -371,6 +359,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="quarto-title-meta-contents">
              <p>William Gearty </p>
              <p>Niklas Hohmann </p>
+             <p>Etienne Bacher </p>
           </div>
   </div>
     
@@ -389,9 +378,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this exercise you will learn how to collaborate with others using GitHub. You will work with a partner to contribute to the test repository they created on GitHub in <a href="../../../training/modules/github/exercise2.html">Exercise 2</a> (and they will do the same with your repository!).</p>
+<p><a href="https://github.com/palaeoverse/modules/blob/github/github/exercise3.qmd" style="color: #90989f;" target="_blank"><i class="bi bi-github"></i> View source file</a></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each step can be done with GitHub Desktop or with <code>git</code> on the command line: use the tabs below to switch between the two.</p>
+</div>
+</div>
+<p>In <a href="../../../training/modules/github/exercise2.html">exercise 2</a>, we saw how to create a GitHub repository and how to push changes to it. We created this repo and were the only ones to modify it. It is already useful to track our personal projects using Git and GitHub, but the strength of these tools is also to facilitate collaborative coding.</p>
+<p>In this exercise, we will see how to collaborate with others using GitHub. You will work with a partner to contribute to the test repository they created on GitHub in exercise 2 (and they will do the same with your repository!).</p>
+<p>First, find a partner to work with. Get the URL of the test repository they created in Exercise 2. The URL should be something like <code>https://github.com/THEIR_USERNAME/THEIR_REPO_NAME</code> where <code>THEIR_USERNAME</code> is your partner’s GitHub username and <code>THEIR_REPO_NAME</code> is the name of the repository they created in Exercise 2. <strong>Again, you are going to your <em>partner’s</em> repository, not your own.</strong></p>
+<p>Usually, in order to modify another person’s repository, we will need to <strong>fork</strong> their repository first.</p>
+<section id="about-forks" class="level2">
+<h2 data-anchor-id="about-forks">About forks</h2>
+<section id="what-is-a-fork" class="level3">
+<h3 data-anchor-id="what-is-a-fork">What is a fork?</h3>
+<p>A fork is a copy of another user’s GitHub repository that is stored in your account. The copy of the repository is, for all intents and purposes, an exact replica of the original repository up until this point.</p>
+<p>From this point on, your fork is independent of the original. Changes to the original repository also won’t affect your fork unless you actively sync it by fetching. You can create a fork of any public repository on GitHub!</p>
+</section>
+<section id="why-a-fork-and-not-a-simple-clone" class="level3">
+<h3 data-anchor-id="why-a-fork-and-not-a-simple-clone">Why a fork and not a simple clone?</h3>
+<p>You might wonder: why would I fork instead of directly cloning someone else’s repository? The main reason is related to permissions. A public repository is visible to and can be cloned by everyone, but only the author and chosen collaborators can modify it! By contrast, a fork is stored under your account, meaning that you are free to make any changes that you like to, e.g.&nbsp;add commits or branches, without affecting the original repository.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repositories that you have the right to modify
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you have the right to directly modify the repository, either because you created it or because its creator gave you the rights to do so, then you don’t need to fork it before applying changes.</p>
+</div>
+</div>
+<p>Forking a repository allows you to develop things without breaking the original repository while you do. This is incredibly useful if you want to contribute to another project that is widely used.</p>
+<p>In summary, for a repository that you cannot directly modify:</p>
+<ul>
+<li><p>if you just want a local copy that you know you won’t modify, for instance because you just want to explore it offline without changing anything, then cloning without forking first is enough.</p></li>
+<li><p>if there is a chance that you will modify the clone at some point, then fork it first.</p></li>
+</ul>
+</section>
+<section id="the-fork-and-pull-model" class="level3">
+<h3 data-anchor-id="the-fork-and-pull-model">The Fork and Pull model</h3>
+<p>The workflow to follow if you want to suggest changes to a repository that you cannot modify directly is:</p>
 <ol type="1">
-<li><p>Find a partner to work with. Get the web address of the test repository they created in Exercise 2. This is the URL of their repository website. The URL should be something like <code>https://github.com/THEIR_USERNAME/THEIR_REPO_NAME</code> where <code>THEIR_USERNAME</code> is your partner’s GitHub username and <code>THEIR_REPO_NAME</code> is the name of the repository they created in Exercise 2. <strong>Again, you are going to the website for your <em>partner’s</em> repository, not your own.</strong></p></li>
+<li>create a fork of that project under your own GitHub account</li>
+<li>clone your fork to your local computer (we did this in exercise 2)</li>
+<li>develop your fork by pushing/pulling between your local computer and GitHub (we did this in exercise 2)</li>
+<li>when you are content that your new addition is ready, you fill out a pull request to merge the changes in your fork into the original repository</li>
+</ol>
+<p>In general, you should create a new branch on your fork to store changes that you want to submit to the original repository. Making one branch per type of change you want to suggest allows you to submit multiple pull requests to the same repository.</p>
+<p>The original repo’s owner(s) can then review your changes, and, if they accept them, merge it into their repository for widespread adoption. This is known as the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model">fork and pull model</a>.</p>
+<p>The diagram below illustrates the relationship between a fork (on GitHub) and a clone:</p>
+<pre class="mermaid fork-diagram" aria-label="Fork diagram: userB creates a fork of userA's repository on GitHub. userA and userB each have a clone of the repository on their local computers. Within each user's fork of the repository they have different branches (in userA's repos they are main and dev1; in userB, main and br1).">flowchart TB
+  subgraph GitHub
+    subgraph A["userA/repo"]
+      direction LR
+      A1[main] ~~~ A2[dev1] ~~~ A3[...]
+    end
+    gap[" "]:::spacer
+    subgraph B["userB/repo"]
+      direction LR
+      B1[main] ~~~ B2[br1] ~~~ B3[...]
+    end
+  end
+  subgraph CA["userA's computer"]
+    LA["userA/repo"]
+  end
+  subgraph CB["userB's computer"]
+    subgraph LB["userB/repo"]
+      direction LR
+      LB1[main] ~~~ LB2[br1] ~~~ LB3[...]
+    end
+  end
+  A -- clone --&gt; LA
+  B -- clone --&gt; LB
+  classDef userA stroke:#8a00c2,stroke-width:2px
+  classDef userB stroke:#7ab648,stroke-width:2px
+  class A,LA userA
+  class B,LB userB
+  classDef spacer fill:none,stroke:none
+</pre>
+</section>
+</section>
+<section id="forking-in-practice" class="level2">
+<h2 data-anchor-id="forking-in-practice">Forking in practice</h2>
+<p>You should now be on your partner’s GitHub repository.</p>
+<ol type="1">
 <li><p>Click the <code>Fork</code> button in the upper right of their website. This will open the “Create a new fork” page.</p></li>
 <li><p>On the “Create a new fork” page:</p>
 <ul>
@@ -400,24 +481,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li><p>Now click the green <code>Create fork</code> button in the lower right. This will create a “fork” of your partner’s repository under your own GitHub account. You will be redirected to your fork. Note the URL at the top of the webpage: it should be something like <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</code>.</p></li>
 </ol>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>About forks
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A <em>fork</em> is a copy of another user’s GitHub repository. When you create the fork, you create copy of the repository under your GitHub account. The copy of the repository has the entire commit history of the repository up until that point. It is, for all intents and purposes, an exact replica of the original repository, except that the copy is now under your account.</p>
-<p>From this point on, your fork is independent of the original. Since it is under your account, you are free to make any changes that you like to — add commits or branches, delete things, etc. — without affecting the original repository. Changes to the original repository also won’t affect your fork unless you actively sync it by fetching.</p>
-<p>You can create a fork of any public repository on GitHub!</p>
-<p>The advantage of using forks is it allows you to develop things without breaking the original repository while you do. This is incredibly useful if you want to contribute to another project that is widely used: you create a fork of that project under your own GitHub account; clone your fork to your local computer; develop your fork by pushing/pulling between your local computer and GitHub. Then, when you are content that your new addition is ready, you fill out a pull request to merge the changes in your fork into the original repository (usually on its <code>main</code> branch). The original repo’s owner(s) can then review your changes, and, if they accept them, merge it into their repository for widespread adoption. This is known as the <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model">fork and pull model</a>.</p>
-<p>The diagram below illustrates the relationship between a fork (on GitHub) and a clone: <img src="figures/fork_diagram.png" class="img-fluid" width="600" alt="Fork digram: userB creates a fork of userA’s repository on GitHub. userA and userB each have a clone of the repository on their local computers. Within each user’s fork of the repository they have different branches (in userA’s repos they are main and dev1; in userB, main and br1)."></p>
-</div>
-</div>
-<ol start="6" type="1">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ol start="4" type="1">
 <li><p>You want to contribute a new development to your partner’s repository. To do so, first clone <strong>your fork</strong> of their repository to your local computer:</p>
 <ol type="a">
 <li><p>If you are not already there, go to your fork’s website on GitHub. The web address should be something like <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</code>.</p></li>
@@ -448,47 +516,155 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div></li>
 <li><p>Now let’s create a branch called <code>dev2</code> to add a new feature to the <code>mymath.R</code> file. Create the branch on your local computer using GitHub Desktop. (Refer to <a href="../../../training/modules/github/exercise1.html">Exercise 1</a> if you forgot how.)</p></li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<ol start="4" type="1">
+<li><p>You want to contribute a new development to your partner’s repository. To do so, first clone <strong>your fork</strong> of their repository to your local computer:</p>
+<ol type="a">
+<li><p>If you are not already there, go to your fork’s website on GitHub. The web address should be something like <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</code>.</p></li>
+<li><p>On your fork’s website, click the green <code>&lt;&gt; Code</code> button, select the “HTTPS” tab, and copy the URL. It should be something like <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME.git</code>.</p></li>
+<li><p>In your terminal, <code>cd</code> to the folder where you want to store your fork, then clone it and move into it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone REPO_URL</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> THEIR_REPO_NAME</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>where <code>REPO_URL</code> is the URL you copied.</p></li>
+<li><p>Run <code>git remote -v</code>: note that <code>origin</code> is <em>your fork</em> on GitHub, <em>not your partner’s repository</em>. When you create a branch and push changes to GitHub, they will go to <em>your fork</em>.</p></li>
+</ol></li>
+<li><p>Now let’s create a branch called <code>dev2</code> to add a new feature to the <code>mymath.R</code> file. Create the branch on your local computer and switch to it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</div>
+</div>
+</div>
+<ol start="6" type="1">
 <li><p>Use your text editor to open <code>mymath.R</code> and add the following lines to it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>multiply <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span> (a<span class="sc">*</span>b)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>multiply <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span> (a<span class="sc">*</span>b)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save the changes.</p></li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<ol start="7" type="1">
 <li><p>Commit your changes using GitHub Desktop.</p></li>
 <li><p>This commit (and the <code>dev2</code> branch) currently only exists on your local copy of your fork. To push it to <em>your fork</em> on GitHub, click the “Publish branch” button on GitHub Desktop.</p></li>
 <li><p>After you publish the branch, the “Create Pull Request” button will appear in GitHub Desktop. Open a PR by clicking it. (Alternatively, click the View on GitHub button to open the original repository in your web browser. You should see the “Compare &amp; pull request” green button at the top of the website.)</p></li>
+</ol>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<ol start="7" type="1">
+<li><p>Commit your changes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-u</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"add multiplication function to mymath file"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>This commit (and the <code>dev2</code> branch) currently only exists on your local copy of your fork. Push it to <em>your fork</em> on GitHub:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Since <code>dev2</code> doesn’t exist on your fork yet, <code>-u origin dev2</code> tells <code>git</code> to create it there and to make your local <code>dev2</code> track it.</p></li>
+<li><p>Go to your partner’s repository in your web browser. You should see the “Compare &amp; pull request” green button at the top of the website. Click it to open a PR.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<ol start="10" type="1">
 <li><p>Note that in the gray box at the top of the comparing changes page the “base” repository is <em>your partner’s</em> original repository and the base branch is their <code>main</code> branch. This means that you will create a Pull Request on your partner’s repository, and that it will be for merging your changes onto their <code>main</code> branch. You want that!</p></li>
 <li><p>Fill out the description box if you like and/or change the “Add a title” box. Then click the green <code>Create pull request</code> button at the bottom.</p></li>
 <li><p>After you click <code>Create pull request</code>, your partner will see a Pull Request pop up on the GitHub website for <em>their</em> repository. Have them click on the “Pull Requests” tab at the very top of their website, then click on the pull request.</p></li>
 <li><p>Your partner can review your pull request on their GitHub website. If they are satisfied with it, have them click the green button at the bottom of the page, then <code>Confirm</code> (do a Squash and Merge!), to merge the pull request.</p></li>
 </ol>
 <p>Congratulations! You and your partner have now collaborated on a new feature.</p>
-<ol start="16" type="1">
-<li><p>Once your partner merges the changes, their <code>main</code> branch will update with your new commit. The <code>main</code> branch of <em>your</em> fork will now be out of sync with theirs. To sync it, go to to your GitHub website for your fork (the one with URL <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</code>). You should see a gray dialog box at the top that starts with “This branch is 1 commit behind …”. Click the <code>Sync fork</code> button, then the green <code>Update branch</code> button. This will update your fork’s main branch to be the same as your partner’s.</p></li>
+<ol start="14" type="1">
+<li>Once your partner merges the changes, their <code>main</code> branch will update with your new commit. The <code>main</code> branch of <em>your</em> fork will now be out of sync with theirs. To sync it, go to to your GitHub website for your fork (the one with URL <code>https://github.com/YOUR_USERNAME/THEIR_REPO_NAME</code>). You should see a gray dialog box at the top that starts with “This branch is 1 commit behind …”. Click the <code>Sync fork</code> button, then the green <code>Update branch</code> button. This will update your fork’s main branch to be the same as your partner’s.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">GitHub Desktop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<ol start="15" type="1">
 <li><p>Update your local copy of your fork. Go to GitHub Desktop and click “Fetch origin”. Now switch to your main branch and click “Pull origin” button to pull in the changes.</p></li>
 <li><p>Now that your changes have been merged on to your partner’s main branch and you’ve synced your fork both on GitHub and your computer, you’re free to delete your development branch on your computer using GitHub Desktop.</p></li>
 </ol>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<ol start="15" type="1">
+<li><p>Update your local copy of your fork. Switch to your main branch and pull in the changes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Syncing from the command line
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Instead of using the “Sync fork” button, you can register your partner’s repository as a second remote, conventionally called <code>upstream</code>, pull its changes, and push them to your fork:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://github.com/THEIR_USERNAME/THEIR_REPO_NAME.git</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull upstream main</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You only need to add <code>upstream</code> once.</p>
+</div>
+</div>
+</div></li>
+<li><p>Now that your changes have been merged on to your partner’s main branch and you’ve synced your fork both on GitHub and your computer, you’re free to delete your development branch on your computer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> dev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</div>
+</div>
+</div>
+<!-- Must come after the <pre>: the loop only mounts elements already in the DOM -->
+<script src="https://cdn.jsdelivr.net/npm/pele@1/dist/pele.global.js"></script>
+<script>
+  // A fork edge would stack the two GitHub repos vertically (pele ignores `direction` in
+  // subgraphs with outside edges), so draw it by hand once they sit side by side
+  const drawFork = (el) => {
+    const box = (id) => el.querySelector(`.pele-cluster[data-id="${id}"] rect`).getBBox();
+    const [a, b] = [box('A'), box('B')];
+    const [x1, x2, y] = [a.x + a.width, b.x, a.y + a.height / 2];
+    const edge = el.querySelector('.pele-edge').cloneNode(true);
+    const [line, marker] = edge.querySelectorAll('path');
+    line.setAttribute('d', `M${x1},${y}H${x2 - 7}`);
+    marker.setAttribute('d', `M${x2},${y}L${x2 - 8},${y - 3.36}L${x2 - 8},${y + 3.36}Z`);
+    el.querySelector('.pele-edges').append(edge);
+    const label = el.querySelector('.pele-edge-label').cloneNode(true);
+    const text = label.querySelector('text');
+    label.querySelector('rect').remove();
+    text.textContent = 'fork';
+    text.setAttribute('x', (x1 + x2) / 2);
+    text.setAttribute('y', y - 8);
+    el.querySelector('.pele-edge-labels').append(label);
+  };
+  // onRender because pele redraws the SVG on resize
+  for (const el of document.querySelectorAll('pre.fork-diagram')) pele.mount(el, el.textContent, { onRender: () => drawFork(el) });
+</script>
 
 
 <hr><br><details>
 <summary>Session info</summary>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
- version  R version 4.6.1 (2026-06-24)
- os       Ubuntu 24.04.5 LTS
+ version  R version 4.6.2 (2026-10-29)
+ os       Ubuntu 26.04.1 LTS
  system   x86_64, linux-gnu
  ui       X11
  language (EN)
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-10-15
- pandoc   3.1.3 @ /usr/bin/pandoc
- quarto   1.10.19 @ /usr/local/bin/quarto
+ date     2026-11-20
+ pandoc   3.7.0.2 @ /usr/bin/pandoc
+ quarto   1.11.9 @ /usr/local/bin/quarto
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </details>
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -544,42 +720,42 @@ https://goatcounter.com/help/domains
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and
   //  2) turning each category badge into a link that opens the list filtered by
-  //     that tag. Modules live at training/modules/<name>/index.html, so the
+  //     that tag. Modules live at training/modules-dev/<name>/index.html, so the
   //     listing page is always one level up.
   
-  // (function () {
-  //   function ready(fn) {
-  //     if (document.readyState !== "loading") {
-  //       fn();
-  //     } else {
-  //       document.addEventListener("DOMContentLoaded", fn);
-  //     }
-  //   }
+  (function () {
+    function ready(fn) {
+      if (document.readyState !== "loading") {
+        fn();
+      } else {
+        document.addEventListener("DOMContentLoaded", fn);
+      }
+    }
 
-  //   ready(function () {
-  //     // The metadata also applies to the listing page itself; skip it there.
-  //     if (document.querySelector(".modules-grid")) return;
+    ready(function () {
+      // The metadata also applies to the listing page itself; skip it there.
+      if (document.querySelector(".modules-grid")) return;
 
-  //     var header = document.getElementById("title-block-header");
-  //     if (header) {
-  //       var back = document.createElement("a");
-  //       back.className = "back-to-modules";
-  //       back.href = "../index.html";
-  //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
-  //       header.parentNode.insertBefore(back, header);
-  //     }
+      var header = document.getElementById("title-block-header");
+      if (header) {
+        var back = document.createElement("a");
+        back.className = "back-to-modules";
+        back.href = "../index.html";
+        back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+        header.parentNode.insertBefore(back, header);
+      }
 
-  //     document.querySelectorAll(".quarto-category").forEach(function (el) {
-  //       var cat = el.textContent.trim();
-  //       var link = document.createElement("a");
-  //       link.className = "quarto-category module-category-link";
-  //       link.href =
-  //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
-  //       link.textContent = cat;
-  //       el.replaceWith(link);
-  //     });
-  //   });
-  // })();
+      document.querySelectorAll(".quarto-category").forEach(function (el) {
+        var cat = el.textContent.trim();
+        var link = document.createElement("a");
+        link.className = "quarto-category module-category-link";
+        link.href =
+          "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+        link.textContent = cat;
+        el.replaceWith(link);
+      });
+    });
+  })();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -652,7 +828,8 @@ https://goatcounter.com/help/domains
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -661,8 +838,69 @@ https://goatcounter.com/help/domains
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -676,6 +914,7 @@ https://goatcounter.com/help/domains
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -838,44 +1077,54 @@ https://goatcounter.com/help/domains
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -974,15 +1223,18 @@ https://goatcounter.com/help/domains
     }
   });
   </script>
-<nav class="page-navigation">
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
   <div class="nav-page nav-page-previous">
       <a href="../../../training/modules/github/exercise2.html" class="pagination-link" aria-label="2. Interacting with remote repositories on GitHub">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">2. Interacting with remote repositories on GitHub</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../training/modules/github/appendix-cli/index.html" class="pagination-link" aria-label="Appendix: git and GitHub with the Command Line Interface">
-        <span class="nav-page-text">Appendix: git and GitHub with the Command Line Interface</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../training/modules/github/conclusion.html" class="pagination-link" aria-label="Conclusion">
+        <span class="nav-page-text">Conclusion</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -994,7 +1246,8 @@ https://goatcounter.com/help/domains
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2026, Palaeoverse &nbsp; ·&nbsp; <a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i></a>&nbsp;&nbsp; <a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i></a>&nbsp;&nbsp; <a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i></a>&nbsp;&nbsp; <a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i></a>&nbsp;&nbsp; <a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i></a>&nbsp;&nbsp; ·&nbsp; <a href="mailto:info@palaeoverse.org">Contact us</a></p>
-<div class="toc-actions"><ul><li><a href="https://github.com/palaeoverse/palaeoverse.github.io/edit/main/training/modules/github/exercise3.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+<p>Supported by the <a class="footer-sponsor" href="https://www.software.ac.uk/" target="_blank">Institute for Research Software</a> (2026–2028)</p>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

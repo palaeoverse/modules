@@ -7,16 +7,17 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.19">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
 
   <meta name="author" content="William Gearty">
   <meta name="author" content="Niklas Hohmann">
+  <meta name="author" content="Etienne Bacher">
   <meta name="dcterms.date" content="2026-10-06">
   <title>Git and GitHub</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
   <style>
@@ -37,8 +38,74 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-e145cfcbf0ca25dcb75ad642aac8a0ea.css">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
   <link rel="stylesheet" href="style/template.css">
   <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -131,10 +198,13 @@
       margin-right: 0; 
     }
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
-<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-21/training/modules/github/img/2d_density.png">
+<meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-21/training/modules/github/figures/ghd-push.png">
 <meta property="og:locale" content="en_GB">
+<meta property="og:image:height" content="772">
+<meta property="og:image:width" content="1072">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -154,13 +224,14 @@ William Gearty
 Niklas Hohmann
 </div>
 </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Etienne Bacher
+</div>
+</div>
 </div>
 
   <p class="date">2026-10-06</p>
-</section>
-<section id="acknowledgements" class="slide level2">
-<h2>Acknowledgements</h2>
-<p>This module is heavily based on a <a href="https://su-ospo.github.io/workshop-computing-intro-2025/03_github/" class="external" target="_blank">workshop</a> developed by the <a href="https://opensource.syracuse.edu/" class="external" target="_blank">Syracuse University Open Source Program Office</a>.</p>
 </section>
 <section id="objectives" class="slide level2">
 <h2>Objectives</h2>
@@ -171,13 +242,74 @@ Niklas Hohmann
 <li>Use GitHub to collaborate with others on a project</li>
 </ul>
 </section>
+<section id="motivation" class="slide level2">
+<h2>Motivation</h2>
+</section>
+<section id="keep-track-of-changes" class="slide level2">
+<h2>Keep track of changes</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Imagine that you are working on a project. This project could be an academic paper, a Master’s thesis, a small blog post, an R package, any kind of project where you write text over several working sessions.</p>
+<p>You start making progress, you are pretty happy with the way it’s going. Suddenly you notice that your introduction (or your code to analyse data, or anything else) could be improved, although you don’t know exactly how.</p>
+<p>You make changes but you are not really sure if this is going anywhere, so you’d like to keep a version of your past work, <em>just in case</em>. You can do that either by creating a copy of your file or by commenting out parts of the original file.</p>
+<p>In the end, you keep your new changes but also the previous version, <em>just in case</em>.</p>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:40%;">
+<p><img data-src="figures/version_control_comics.png"></p>
+</div></div>
+<p>Later, you send your report to your supervisor or project manager, who tells you to explore various parts of your project more in depth. You start making changes, but you also had some experience where this person told you to do the opposite a few weeks later, so you create new copies and comment out more text, <em>just in case</em>.</p>
+<p>As time goes, the folder containing your project starts looking like: <code>analysis_1.R</code>, <code>analysis_1bis.R</code>, <code>analysis_final.R</code>, <code>report_v1.docx</code>, <code>report_v2.docx</code>, <code>report_final.docx</code>, <code>report_final_final.docx</code>, etc.</p>
+<p>Ideally, we would like to have only two files (<code>analysis.R</code> and <code>report.docx</code>), while keeping access to previous versions of these files. And we would also like to see precisely what changed between these versions. In other words, we want some kind of <strong>version control</strong>, and this is exactly what Git and GitHub were built to do. They are essential tools to be familiar with, and while they were originally created for software projects, they can be used with any kind of text files.</p>
+<p>On top of keeping a history of all changes happening across all tracked files, they greatly facilitate collaboration.</p>
+</section>
+<section id="collaborate-more-efficiently" class="slide level2">
+<h2>Collaborate more efficiently</h2>
+<p>You might think: “all of this is very nice, but my collaborators and I already use Google Docs and/or Dropbox, so why bother?”.</p>
+<p>This is a legitimate question! Google Docs and other tools to do collaborative work seem to address a similar need as Git and GitHub do, and their ubiquity means that these tools are sometimes more appropriate, depending on the context.</p>
+<p>Nevertheless, besides the fact that these tools are not integrated in code editors (such as RStudio, Positron), meaning that we would need to copy and paste code across files, they also come with their own pain points:</p>
+<ul>
+<li>Someone edits or deletes the paragraph you were working on at the same time.</li>
+<li>You can see <em>what</em> changed, but not <em>why</em> this change happened.</li>
+<li>Restoring an older version of a document also undoes everyone else’s more recent work.</li>
+<li>Trying to do massive changes requires making file copies so that you don’t affect everyone else’s work, so you still end up with files like <code>manuscript_v2_final_FINAL.docx</code> or <code>analysis_old_DO_NOT_USE.R</code>.</li>
+</ul>
+
+<img data-src="figures/version_control_google_docs_top.png" class="r-stretch"><p>These pain points allow us to distinguish <strong>version history</strong> (what Google Docs does) and <strong>version control</strong> (what Git does):</p>
+<ul>
+<li><p>version history: everyone works on the same copy of the document at the same time, and <em>the software</em> decides when to save. If two people edit the same sentence at once, one of them wins. We can only go back to whatever moment the software happened to save, and everything that changed after that moment is rolled back with it.</p></li>
+<li><p>version control: <em>we</em> decide when to save a snapshot of our work, and each snapshot records who made it and a message describing what was changed. Every piece of work can be done in parallel, and no matter whether it is eventually integrated in the project or abandoned, it will always be easy to recover. If two people modify the same thing, <em>people</em> get to decide which one should be preferred.</p></li>
+</ul>
+<p>Git and GitHub give much more control to users, meaning that they also take more effort to learn than Google Docs. In this module, we will gradually see how to use Git and GitHub on our own projects, and then we will see how to efficiently collaborate.</p>
+</section>
+<section id="exercises" class="slide level2">
+<h2>Exercises</h2>
+<p>This module is divided in three parts:</p>
+<ul>
+<li><a href="../../../training/modules/github/exercise1.html">Part 1</a>: Practice with GitHub Desktop on a local repository</li>
+<li><a href="../../../training/modules/github/exercise2.html">Part 2</a>: Interacting with remote repositories on GitHub</li>
+<li><a href="../../../training/modules/github/exercise3.html">Part 3</a>: Collaborating in GitHub using the Fork and Pull Model</li>
+</ul>
+</section>
 <section id="prerequisites" class="slide level2">
 <h2>Prerequisites</h2>
-<p>The following should be done <em>before</em> doing the exercises below.</p>
-</section>
-<section id="install-github-desktop" class="slide level2">
-<h2>1. Install GitHub Desktop</h2>
-<p>For this tutorial we will be using GitHub Desktop. To install:</p>
+<p>The following should be done <em>before</em> doing the exercises above.</p>
+<p>Git and GitHub can be used via GitHub Desktop (a graphical interface) or via the command-line interface (CLI). This tutorial shows how to use both.</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">GitHub Desktop</a></li><li><a href="#tabset-1-2">Command line</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Install <a href="https://github.com/apps/desktop">GitHub Desktop</a>.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>See detailed installation instructions</strong></p>
+</div>
+<div class="callout-content">
+<p>To install:</p>
 <ol type="1">
 <li>Go to <a href="https://github.com/apps/desktop" class="external" target="_blank">https://github.com/apps/desktop</a>.</li>
 <li>Click the “Download now” button.</li>
@@ -198,9 +330,9 @@ Niklas Hohmann
 <li>Once the file downloads, it will automatically install and open GitHub Desktop.</li>
 </ol></li>
 </ul>
-</section>
-<section id="setup-github-desktop" class="slide level2">
-<h2>2. Setup GitHub Desktop</h2>
+</div>
+</div>
+</div>
 <p>The first time you open GitHub Desktop you will need to sign into GitHub.</p>
 <ol type="1">
 <li>Click “Sign in to GitHub.com”. If you do not have an account yet, click “Create your free account”.</li>
@@ -208,18 +340,27 @@ Niklas Hohmann
 <li>After you sign in, GitHub Desktop will ask you to “Configure Git”. We recommend you select the option “Use my GitHub account name and email address”. Click “Finish”.</li>
 </ol>
 <p>You will next be prompted with a “Let’s get started!” screen that will ask you to add a repository to GitHub Desktop. <strong>Stop here</strong> and go to <a href="../../../training/modules/github/exercise1.html">Part 1</a>.</p>
-</section>
-<section id="exercises" class="slide level2">
-<h2>Exercises</h2>
+</div>
+<div id="tabset-1-2">
+<h4 id="git-configuration">Git configuration</h4>
+<p>Before doing the exercises in this session, you’ll need to tell <code>git</code> what your name and email are, so that it creates commits with the appropriate author information. To do that, open a terminal and run the following (it doesn’t matter which directory you run these from), but replacing <code>YOUR NAME</code> with your name and <code>YOUR_EMAIL_ADDRESS</code> with your email address:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"YOUR NAME"</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"YOUR_EMAIL_ADDRESS"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h4 id="github-authentication">GitHub authentication</h4>
+<p>In exercises 2 and 3 you will be using GitHub to “push” and “pull” commits between your local computer and GitHub’s servers over HTTPS. Pushing requires <code>git</code> to authenticate you, but GitHub doesn’t accept your account password for this.</p>
 <ul>
-<li><a href="../../../training/modules/github/exercise1.html">Part 1</a>: Practice with GitHub Desktop on a local repository</li>
-<li><a href="../../../training/modules/github/exercise2.html">Part 2</a>: Interacting with remote repositories on GitHub</li>
-<li><a href="../../../training/modules/github/exercise3.html">Part 3</a>: Collaborating in GitHub using the Fork and Pull Model</li>
+<li><p><strong>On Windows</strong>, Git for Windows comes with the Git Credential Manager: the first time you push, a browser window opens to log in to GitHub, and your credentials are stored for next times. There is nothing to set up.</p></li>
+<li><p><strong>On Mac or Linux</strong>, the simplest way is to install the <a href="https://cli.github.com/">GitHub CLI</a> and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">gh</span> auth login</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Select “GitHub.com”, then “HTTPS”, answer “Yes” when asked to authenticate Git with your GitHub credentials, and log in with your web browser.</p></li>
 </ul>
+</div>
+</div>
+</div>
 </section>
-<section id="appendix" class="slide level2">
-<h2>Appendix</h2>
-<p>The above exercises all use GitHub Desktop. In the <a href="../../../training/modules/github/appendix-cli/index.html">appendix</a>, the exercises are repeated using the command-line interface for <code>git</code>.</p>
+<section id="acknowledgements" class="slide level2">
+<h2>Acknowledgements</h2>
+<p>This module is heavily based on a <a href="https://su-ospo.github.io/workshop-computing-intro-2025/03_github/" class="external" target="_blank">workshop</a> developed by the <a href="https://opensource.syracuse.edu/" class="external" target="_blank">Syracuse University Open Source Program Office</a>.</p>
 
 
 </section>
@@ -258,7 +399,7 @@ Niklas Hohmann
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu"},
 'smaller': true,
  
         // Display controls in the bottom right corner
@@ -442,43 +583,50 @@ Niklas Hohmann
       // Shared behaviour for every module (included via _metadata.yml):
       //  1) a "back to the modules list" button at the top, and
       //  2) turning each category badge into a link that opens the list filtered by
-      //     that tag. Modules live at training/modules/<name>/index.html, so the
+      //     that tag. Modules live at training/modules-dev/<name>/index.html, so the
       //     listing page is always one level up.
       
-      // (function () {
-      //   function ready(fn) {
-      //     if (document.readyState !== "loading") {
-      //       fn();
-      //     } else {
-      //       document.addEventListener("DOMContentLoaded", fn);
-      //     }
-      //   }
+      (function () {
+        function ready(fn) {
+          if (document.readyState !== "loading") {
+            fn();
+          } else {
+            document.addEventListener("DOMContentLoaded", fn);
+          }
+        }
 
-      //   ready(function () {
-      //     // The metadata also applies to the listing page itself; skip it there.
-      //     if (document.querySelector(".modules-grid")) return;
+        ready(function () {
+          // The metadata also applies to the listing page itself; skip it there.
+          if (document.querySelector(".modules-grid")) return;
 
-      //     var header = document.getElementById("title-block-header");
-      //     if (header) {
-      //       var back = document.createElement("a");
-      //       back.className = "back-to-modules";
-      //       back.href = "../index.html";
-      //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
-      //       header.parentNode.insertBefore(back, header);
-      //     }
+          var header = document.getElementById("title-block-header");
+          if (header) {
+            var back = document.createElement("a");
+            back.className = "back-to-modules";
+            back.href = "../index.html";
+            back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+            header.parentNode.insertBefore(back, header);
+          }
 
-      //     document.querySelectorAll(".quarto-category").forEach(function (el) {
-      //       var cat = el.textContent.trim();
-      //       var link = document.createElement("a");
-      //       link.className = "quarto-category module-category-link";
-      //       link.href =
-      //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
-      //       link.textContent = cat;
-      //       el.replaceWith(link);
-      //     });
-      //   });
-      // })();
+          document.querySelectorAll(".quarto-category").forEach(function (el) {
+            var cat = el.textContent.trim();
+            var link = document.createElement("a");
+            link.className = "quarto-category module-category-link";
+            link.href =
+              "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+            link.textContent = cat;
+            el.replaceWith(link);
+          });
+        });
+      })();
     </script>
+    <div class="title-footer">
+      <span><a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i>&nbsp;&nbsp;palaeoverse</a></span>
+      <span><a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i>&nbsp;&nbsp;palaeoverse.bsky.social</a></span>
+      <span><a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i>&nbsp;&nbsp;Palaeoverse</a></span>
+      <span><a href="https://www.instagram.com/palaeoverse/" target="_blank"><i class="bi bi-instagram"></i>&nbsp;&nbsp;palaeoverse</a></span>
+      <span><a href="https://www.youtube.com/@ThePalaeoverse" target="_blank"><i class="bi bi-youtube"></i>&nbsp;&nbsp;ThePalaeoverse</a></span>
+    </div>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -554,7 +702,8 @@ Niklas Hohmann
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
           // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
           for (var i=0; i<links.length; i++) {
             const link = links[i];
             if (!isInternal(link.href)) {
@@ -563,8 +712,69 @@ Niklas Hohmann
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+              if (!link.classList.contains('no-external-icon')) {
+              }
             }
           }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
           const config = {
             allowHTML: true,
@@ -578,6 +788,7 @@ Niklas Hohmann
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
           };
           if (contentFn) {
             config.content = contentFn;

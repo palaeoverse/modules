@@ -85,9 +85,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-2c9d96db24c38c24a52ca798e0d3df39.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-676206735df243bb4476c465b11545ee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-36953878c1c511a8b0c2cba00e06e38a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-676206735df243bb4476c465b11545ee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-9e866e08bb455834ddb709b85ac18623.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-211d42d6a93984098abca9e4ac300801.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-9e866e08bb455834ddb709b85ac18623.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -299,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
     <div class="quarto-category">tidyverse</div>
-    <div class="quarto-category">dataviz</div>
+    <div class="quarto-category">data-visualisation</div>
   </div>
   </div>
 
@@ -959,7 +959,7 @@ Note
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2026-11-19
+ date     2026-11-20
  pandoc   3.7.0.2 @ /usr/bin/pandoc
  quarto   1.11.9 @ /usr/local/bin/quarto
 
@@ -983,7 +983,7 @@ Note
    R6             2.6.1   2025-02-15 [1] RSPM
    RColorBrewer   1.1-3   2022-04-03 [1] RSPM
    rlang          1.3.0   2026-07-05 [1] RSPM
-   S7             0.2.2   2026-04-22 [1] RSPM
+   S7             1.0.0   2026-11-19 [1] RSPM
    scales         1.4.0   2025-04-24 [1] RSPM
    tibble         3.3.1   2026-01-11 [1] RSPM
    tidyselect     1.2.1   2024-03-11 [1] RSPM
@@ -1056,42 +1056,42 @@ https://goatcounter.com/help/domains
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and
   //  2) turning each category badge into a link that opens the list filtered by
-  //     that tag. Modules live at training/modules/<name>/index.html, so the
+  //     that tag. Modules live at training/modules-dev/<name>/index.html, so the
   //     listing page is always one level up.
   
-  // (function () {
-  //   function ready(fn) {
-  //     if (document.readyState !== "loading") {
-  //       fn();
-  //     } else {
-  //       document.addEventListener("DOMContentLoaded", fn);
-  //     }
-  //   }
+  (function () {
+    function ready(fn) {
+      if (document.readyState !== "loading") {
+        fn();
+      } else {
+        document.addEventListener("DOMContentLoaded", fn);
+      }
+    }
 
-  //   ready(function () {
-  //     // The metadata also applies to the listing page itself; skip it there.
-  //     if (document.querySelector(".modules-grid")) return;
+    ready(function () {
+      // The metadata also applies to the listing page itself; skip it there.
+      if (document.querySelector(".modules-grid")) return;
 
-  //     var header = document.getElementById("title-block-header");
-  //     if (header) {
-  //       var back = document.createElement("a");
-  //       back.className = "back-to-modules";
-  //       back.href = "../index.html";
-  //       back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
-  //       header.parentNode.insertBefore(back, header);
-  //     }
+      var header = document.getElementById("title-block-header");
+      if (header) {
+        var back = document.createElement("a");
+        back.className = "back-to-modules";
+        back.href = "../index.html";
+        back.innerHTML = '<i class="bi bi-arrow-left"></i> All modules';
+        header.parentNode.insertBefore(back, header);
+      }
 
-  //     document.querySelectorAll(".quarto-category").forEach(function (el) {
-  //       var cat = el.textContent.trim();
-  //       var link = document.createElement("a");
-  //       link.className = "quarto-category module-category-link";
-  //       link.href =
-  //         "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
-  //       link.textContent = cat;
-  //       el.replaceWith(link);
-  //     });
-  //   });
-  // })();
+      document.querySelectorAll(".quarto-category").forEach(function (el) {
+        var cat = el.textContent.trim();
+        var link = document.createElement("a");
+        link.className = "quarto-category module-category-link";
+        link.href =
+          "../index.html#category=" + encodeURIComponent(cat.toLowerCase());
+        link.textContent = cat;
+        el.replaceWith(link);
+      });
+    });
+  })();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
