@@ -183,7 +183,7 @@ title: "Plotting in R with ggplot2"
 description: "Visualizing your data with the grammar of graphics"
 author: "Will Gearty"
 date: "2026-06-12"
-categories: [r, tidyverse, dataviz]   # various tags
+categories: [r, tidyverse, data-visualisation]   # various tags
 difficulty: Beginner                  # Beginner/Intermediate/Advanced
 image: images/2d_density.png          # thumbnail for module
 format:
