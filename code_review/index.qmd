@@ -169,6 +169,8 @@ small_tetra <- subset(small_tetra, lat >= 45)
 
 ```{r}
 #| eval: false
+library(palaeoverse)
+
 # Extract maximum ages
 max_ages <- head(tetrapods$max_ma)
 # Create holding object
@@ -199,14 +201,14 @@ min_ages <- head(tetrapods$min_ma)
 # Identify values later than the Early Triassic (ends 247 Ma)
 values_to_remove <- min_ages[min_ages < 247]
 # Remove values from vector from Middle Triassic or later
-min_ages[values_to_remove]
+min_ages[-values_to_remove]
 ```
 ::::: {.callout-tip title="Solution" collapse="true"}
 In this case, we want to remove values younger than 247 Ma from our vector of minimum ages.
 The problem here is that if `values_to_remove` is of length 0 because `min_ages` doesn't have values lower than 247, then `min_ages[values_to_remove]` returns an empty vector instead of returning the entire vector!
 
 ```r
-x[-idx_to_remove]
+x[-values_to_remove]
 ```
 ```{r}
 #| eval: true
@@ -216,7 +218,7 @@ library(palaeoverse)
 
 min_ages <- head(tetrapods$min_ma)
 values_to_remove <- min_ages[min_ages < 247]
-min_ages[values_to_remove]
+min_ages[-values_to_remove]
 ```
 
 A safer way to do this is to use an `if` condition:
@@ -224,7 +226,7 @@ A safer way to do this is to use an `if` condition:
 ```r
 # If any values are younger than 247 Ma, remove them
 if (length(values_to_remove) > 0) {
-  min_ages[values_to_remove]
+  min_ages[-values_to_remove]
 }
 ```
 :::::
