@@ -106,14 +106,44 @@ Missing `]`, and `out[["min_ma"]]` is `NULL`: the columns are `min_ma.x` and `.y
 What could be improved?
 
 ```{r}
-x <- head(tetrapods$max_ma)
-x_updated <- c()
+# Only keep the first 6 observations
+small_tetra <- head(tetrapods, n = 6)
+# Remove the column "environment" from the data
+small_tetra[, "environment"] <- NULL
+# Keep only observations whose latitude is above 45
+small_tetra <- subset(small_tetra, lat >= 45)
+```
+:::
 
-for (i in seq_along(x)) {
-  if (x[i] > 270) {
-    x_updated[i] <- x[i] * 0.9
+. . .
+
+::: {.callout-tip title="Solution"}
+Comments should explain *why*, not *what*:
+
+```{r}
+# Test on a small dataset since the full one takes hours
+small_tetra <- head(tetrapods, n = 6)
+small_tetra[, "environment"] <- NULL
+# Our study focuses on tetrapods north of 45 degrees latitude
+small_tetra <- subset(small_tetra, lat >= 45)
+```
+:::
+
+## Exercise 3
+
+::: {.callout-caution title="Exercise"}
+What could be improved?
+
+```{r}
+max_ages <- head(tetrapods$max_ma)
+max_ages_updated <- c()
+
+# Cap upper age limits at the Early-Middle Permian boundary (274 Ma)
+for (i in seq_along(max_ages)) {
+  if (max_ages[i] > 274) {
+    max_ages_updated[i] <- 274
   } else {
-    x_updated[i] <- x[i]
+    max_ages_updated[i] <- max_ages[i]
   }
 }
 ```
@@ -125,30 +155,31 @@ for (i in seq_along(x)) {
 Prefer vectorised code to `for` loops:
 
 ```{r}
-x_updated <- ifelse(x > 270, x * 0.9, x)
+max_ages_updated <- ifelse(max_ages > 274, 274, max_ages)
 ```
 :::
 
-## Exercise 3
+## Exercise 4
 
 ::: {.callout-caution title="Exercise"}
 What could go wrong?
 
 ```{r}
-x <- head(tetrapods$min_ma, 3)
-idx_to_remove <- x[x < 0]
-x[-idx_to_remove]
+min_ages <- head(tetrapods$min_ma)
+# Identify values later than the Early Triassic (ends 247 Ma)
+idx_to_remove <- which(min_ages < 247)
+min_ages[-idx_to_remove]
 ```
 :::
 
 . . .
 
 ::: {.callout-tip title="Solution"}
-No negative values: `idx_to_remove` is empty, so `x[-idx_to_remove]` returns `numeric(0)`.
+No values below 247: `idx_to_remove` is empty, so `min_ages[-idx_to_remove]` returns `numeric(0)`.
 
 ```{r}
 if (length(idx_to_remove) > 0) {
-  x[-idx_to_remove]
+  min_ages[-idx_to_remove]
 }
 ```
 :::
