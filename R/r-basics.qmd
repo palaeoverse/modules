@@ -354,7 +354,7 @@ Add a new element called `observer` to `coral_specimens`, holding your name. The
 :::
 
 ::: {.callout-note collapse="true"}
-## Answer
+## Solution
 
 ```{r}
 #| label: list-answer
@@ -581,11 +581,11 @@ And you may want to tabulate the data. Let's look at how much data there are acr
 table(reefs$system)
 ```
 
-All of these operations can be done in base R as well as using tidyverse syntax. For additional practice manipulating data frames using `dplyr`, see the tidyverse module. For additional practice cleaning and preparing data for analysis, see the *data cleaning* and *data exploration* modules.
+All of these operations can be done in base R as well as using tidyverse syntax. For additional practice manipulating data frames using `dplyr`, see the tidyverse module. For additional practice cleaning and preparing data for analysis, see the *Data cleaning* and *Data exploration* modules.
 
 ### Plot variables
 
-Finally, you may want to plot your data. We'll cover a basic example here in base R. For a more in-depth treatment of plotting, see the *ggplot2* and *data visualisation* modules.
+Finally, you may want to plot your data. We'll cover a basic example here in base R. For a more in-depth treatment of plotting, see the *ggplot2* and *Data visualisation* modules.
 
 Let's first make a histogram of the latitudes present in the dataset.
 
@@ -693,14 +693,167 @@ points(1:2, mean_ratio, pch = 18, cex = 2, col = "black")
 We see clear separation between the two species in terms of their petal dimensions. *versicolor* has larger petals than *setosa*. The petal shape also differs between species: *versicolor* petals have a lower aspect ratio than *setosa*, meaning that they are rounder.
 :::
 
+## More advanced operations
+
+### If/else statements
+
+If/else statements allow you to make conditional statements: R will do something only under certain conditions.
+
+```{r}
+#| label: if-else
+
+#run with one value
+x <- 4
+if(x>3) print ("x is greater than 3") else print ("oh no!")
+
+#run with another value to show how the outcome changes
+x <- 2
+if(x>3) print ("x is greater than 3") else print ("oh no!")
+
+#ifelse() for simple logical tests
+y <- c(0,1,10,12,50,0)
+z <- ifelse(y>0,1,0)
+z
+```
+
 ### Loops
 
-### Functions
+Loops are useful for repeated operations.
 
-### Libraries
+```{r}
+#| label: loops
 
-### Debugging
+for (i in iris$Sepal.Length[1:5]){ #Just pulling the first 5 sepal length values as an example
+  Sepal.Length.mm <- i * 10 #converts from cm to mm
+  print(Sepal.Length.mm) #prints output
+}
+```
 
-### Resources
+### Apply
 
-https://swirlstats.com/students.html
+There's another way to do this using apply functions. 
+
+```{r}
+#| label: sapply
+
+sapply(iris$Sepal.Length[1:5], function(x) x * 10) #using sapply() since we're dealing with a vector
+```
+
+Here's another example using `apply()` to find the minimum sepal length and width in the `iris` dataset.
+
+```{r}
+#| label: apply
+
+apply(iris[,1:2], 2, min)
+```
+
+## Writing functions
+
+Today, we'll just dip our toes into the world of writing your own functions. To dive in deeper, check out the *Writing functions* module.
+
+Let's write a basic function together to understand its structure.
+
+Example: Palaeoverse team members Lewis and Erin are both avid runners but are having trouble comparing how far they ran. Let's help them convert between miles and kilometers.
+```{r}
+#| label: function-writing
+
+# Simple version that converts from miles to kilometers
+mi_to_km <- function(mi){ # specify name and arguments
+  km <- mi*1.609344 # body, which performs the operation
+  return(km) # what gets returned
+}
+
+# Test it out
+mi_to_km(6)
+
+
+# Let's make this even more interchangeable using an if/else statement
+convert_distance <- function(distance, units = c("mi", "km")) {
+  units <- match.arg(units) #controls the input
+
+  if (units == "mi") {
+    distance * 1.609344   # miles to km
+  } else {
+    distance / 1.609344   # km to miles
+  }
+}
+
+# Test it out
+convert_distance(18,"km")
+```
+
+::: {.callout-caution}
+## Exercise 5: Practise writing a function
+
+Practise writing a function of your own! You can either be creative or attempt the following example:
+
+1. Write a function that can place values (e.g., size measurements) into three groups (small, medium, large) based on user-specified threshold values. *Hint: ifelse() may come in handy*
+:::
+
+::: {.callout-note collapse="true"}
+## Exercise 5: Solution
+
+**1. Write a function that can place values (e.g., size measurements) into three groups (small, medium, large) based on user-specified threshold values.**
+
+```{r}
+#| label: function-solution
+ 
+classify_size <- function(size, small = 10, large = 30) { #providing some defaults
+  ifelse(size < small, "small",
+         ifelse(size < large, "medium", "large")) 
+}
+
+# Test it out
+classify_size(10)
+classify_size(25)
+classify_size(32)
+```
+:::
+
+## Libraries
+
+Everything we've done so far in this tutorial has relied on functions that are built into base R. However, there's a big world of functions out there that can do everything from tidying up data to making beautiful plots to running statistical and other discipline-specific analyses. The possibilities are nearly endless (and if you do hit a hall, you can even make your own package!).
+
+To tap into this world, you install packages. You can either do this in the Output panel under the Packages tab (click "Install" and then type and select the package name). You can also script the installation, which can be helpful if you need to install several packages. Note that you only need to install a package once; after that, it lives in your library. 
+
+```{r}
+#| label: install-packages
+#| eval: false
+
+install.packages("palaeoverse")
+```
+
+This gives you access to the tens of thousands of packages available on CRAN. But wait...there's more. To download a package directly from GitHub (i.e., development versions or packages that are not available on CRAN), you can use the `devtools` package.
+
+```{r}
+#| label: install-devtools
+#| eval: false
+
+install.packages("devtools")
+devtools::install_github("palaeoverse/palaeoverse")
+```
+
+Prior to using any of the functions in a package, you'll need to load it. Then you're good to go!
+```{r}
+#| label: load-packages
+
+library(palaeoverse)
+```
+
+To access the documentation, type `?` and the package name.
+```{r}
+#| label: documentation
+
+?palaeoverse
+```
+
+Are you feeling powerful yet?
+
+## Debugging
+
+TO DO 
+
+## Resources
+
+- Basic R syntax: https://swirlstats.com/students.html
+- An introduction to R: https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf 
