@@ -7,19 +7,18 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.11.9">
-
-  <meta name="author" content="Lewis A. Jones">
-  <meta name="author" content="Bethany J. Allen">
-  <meta name="dcterms.date" content="2026-11-26">
-  <title>Introduction to the palaeoverse R package</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
-  <style>
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="UTF-8">
+<meta name="generator" content="quarto-1.11.9">
+<meta name="author" content="Lewis A. Jones">
+<meta name="author" content="Bethany J. Allen">
+<meta name="dcterms.date" content="2026-11-26">
+<title>Introduction to the palaeoverse R package</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
+<style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
@@ -104,13 +103,13 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
-  <link rel="stylesheet" href="style/template.css">
-  <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
+<link rel="stylesheet" href="style/template.css">
+<link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -197,7 +196,7 @@
       margin-right: 0; 
     }
   </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/training/modules/palaeoverse/img/palaeoverse-logo.png">
@@ -209,8 +208,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Introduction to the palaeoverse R package</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">Introduction to the palaeoverse R package</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -226,17 +224,14 @@ Bethany J. Allen
 </div>
 
   <p class="date">2026-11-26</p>
-</section>
-<section id="why-palaeoverse" class="slide level2">
-<h2>Why palaeoverse?</h2>
+</section><section id="why-palaeoverse" class="slide level2"><h2>Why palaeoverse?</h2>
 <ul>
 <li>Analyses rarely go straight from raw data to results</li>
 <li>Routine but essential tasks come first: checking taxonomic names, binning occurrences, reconstructing palaeogeography</li>
 <li>This code is often rewritten from scratch for every project</li>
 <li>This leads to duplicated effort, lost time, and ad hoc workflows that can be hard to reproduce, share, or reuse (not <a href="https://doi.org/10.1038/sdata.2016.18">FAIR</a>)</li>
 </ul>
-<aside class="notes">
-<p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.</p>
+<aside class="notes"><p>Palaeobiological analyses rarely go straight from raw data to results. Most begin with routine but essential tasks, such as checking taxonomic names, binning occurrences in time or space, and reconstructing palaeogeographic distributions. The code to achieve such tasks is often rewritten from scratch for every project.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -247,23 +242,21 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="what-does-palaeoverse-offer" class="slide level2">
-<h2>What does palaeoverse offer?</h2>
+      }</style></aside></section><section id="what-does-palaeoverse-offer" class="slide level2"><h2>What does palaeoverse offer?</h2>
 <ul>
-<li><strong>Reusable:</strong> a few clear lines replace long, bespoke scripts</li>
-<li><strong>Reproducible:</strong> consistent function names, arguments, and outputs</li>
-<li><strong>Readable:</strong> well-documented, tested, and peer-reviewed functions</li>
+<li>
+<strong>Reusable:</strong> a few clear lines replace long, bespoke scripts</li>
+<li>
+<strong>Reproducible:</strong> consistent function names, arguments, and outputs</li>
+<li>
+<strong>Readable:</strong> well-documented, tested, and peer-reviewed functions</li>
 </ul>
-<aside class="notes">
-<p>The <strong>palaeoverse</strong> R package aims to make such efforts more reusable, reproducible, and readable by:</p>
+<aside class="notes"><p>The <strong>palaeoverse</strong> R package aims to make such efforts more reusable, reproducible, and readable by:</p>
 <ul>
 <li>replacing long, bespoke scripts with a few clear lines of code</li>
 <li>using consistent function names, arguments, and outputs so that scripts are easy to follow and share</li>
 <li>providing well-documented, tested, and peer-reviewed functions that are transparent and robust</li>
-</ul>
-<style type="text/css">
+</ul><style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
           clip: rect(1px, 1px, 1px, 1px);
@@ -273,28 +266,20 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section>
-<section id="design" class="title-slide slide level1 center">
-<h1>Design</h1>
+      }</style></aside></section><section><section id="design" class="title-slide slide level1 center"><h1>Design</h1>
 <p>Three design choices shape how <strong>palaeoverse</strong> functions look and behave:</p>
 <ul>
 <li>Built around occurrence data</li>
 <li>Modular</li>
 <li>Flexible</li>
-</ul>
-</section>
-<section id="built-around-occurrence-data" class="slide level2">
-<h2>Built around occurrence data</h2>
+</ul></section><section id="built-around-occurrence-data" class="slide level2"><h2>Built around occurrence data</h2>
 <ul>
 <li>Most <strong>palaeoverse</strong> functions take an occurrence <code>data.frame</code> as input</li>
 <li>Each column is a different variable (e.g.&nbsp;identity, age, location, formation, reference)</li>
 <li>Each row is a single record of something present at a particular place and time</li>
 <li>That “something” is usually a taxon, but not always (in the <code>reefs</code> dataset, each row is a fossil reef)</li>
 </ul>
-<aside class="notes">
-<p>Most functions in <strong>palaeoverse</strong> take an occurrence <code>data.frame</code> as input, so they slot straight into the way many palaeobiologists already store their data.</p>
+<aside class="notes"><p>Most functions in <strong>palaeoverse</strong> take an occurrence <code>data.frame</code> as input, so they slot straight into the way many palaeobiologists already store their data.</p>
 <p>What is an occurrence dataset?</p>
 <p>In an occurrence dataset, each row is a single record of something present at a particular place and time. That “something” is usually a taxon, but it does not have to be. For example, in <strong>palaeoverse</strong>’s in-built <code>reefs</code> dataset, each row is a fossil reef rather than a species.</p>
 <p>Occurrence data typically include columns describing:</p>
@@ -303,8 +288,7 @@ Bethany J. Allen
 <li>Age (e.g.&nbsp;maximum and minimum ages or named intervals)</li>
 <li>Location (e.g.&nbsp;longitude and latitude)</li>
 <li>Additional context (e.g.&nbsp;formation, collection, or reference)</li>
-</ul>
-<style type="text/css">
+</ul><style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
           clip: rect(1px, 1px, 1px, 1px);
@@ -314,10 +298,8 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="occurrence-data.frame" class="slide level2">
-<h2>Occurrence <code>data.frame</code></h2>
+      }</style></aside></section><section id="occurrence-data.frame" class="slide level2"><h2>Occurrence <code>data.frame</code>
+</h2>
 <div style="font-size: 0.5em">
 <div class="cell">
 <div class="cell-output-display">
@@ -338,8 +320,7 @@ Bethany J. Allen
 <col style="width: 36%">
 <col style="width: 1%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">r_number</th>
 <th style="text-align: left;">name</th>
 <th style="text-align: left;">formation</th>
@@ -354,8 +335,7 @@ Bethany J. Allen
 <th style="text-align: left;">authors</th>
 <th style="text-align: left;">title</th>
 <th style="text-align: right;">year</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
@@ -410,8 +390,7 @@ Bethany J. Allen
 </div>
 </div>
 </div>
-<aside class="notes">
-<p>Example: built-in dataset reefs. You can see a number of different columns here such as reef number, name, formation, longitude and latitudes, and so on. However, each row represents a unique reef in space and time.</p>
+<aside class="notes"><p>Example: built-in dataset reefs. You can see a number of different columns here such as reef number, name, formation, longitude and latitudes, and so on. However, each row represents a unique reef in space and time.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -422,10 +401,7 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="modular" class="slide level2">
-<h2>Modular</h2>
+      }</style></aside></section><section id="modular" class="slide level2"><h2>Modular</h2>
 <p>Each function in <strong>palaeoverse</strong> does one job well. You can use one on its own, or chain several together into a full workflow:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
@@ -442,8 +418,7 @@ Bethany J. Allen
 <span id="cb1-12"><a aria-label="12"></a>                            <span class="at">rank =</span> <span class="st">"stage"</span>), </span>
 <span id="cb1-13"><a aria-label="13"></a>           <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<aside class="notes">
-<p>Each function in <strong>palaeoverse</strong> does one job well. You can use one on its own, or chain several together into a full workflow. For example, you could grab your Phanerozoic stage-level time bins and then bin, or put it all in one pipe.</p>
+<aside class="notes"><p>Each function in <strong>palaeoverse</strong> does one job well. You can use one on its own, or chain several together into a full workflow. For example, you could grab your Phanerozoic stage-level time bins and then bin, or put it all in one pipe.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -454,10 +429,7 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="flexible" class="slide level2">
-<h2>Flexible</h2>
+      }</style></aside></section><section id="flexible" class="slide level2"><h2>Flexible</h2>
 <p><strong>palaeoverse</strong> functions are not tied to a specific source (e.g.&nbsp;<a href="https://paleobiodb.org/#/">Paleobiology Database</a>). Column names are provided as arguments, not fixed requirements:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
@@ -471,8 +443,7 @@ Bethany J. Allen
 <span id="cb2-9"><a aria-label="9"></a>             <span class="at">class =</span> <span class="st">"class"</span>, </span>
 <span id="cb2-10"><a aria-label="10"></a>             <span class="at">name =</span> <span class="st">"accepted_name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<aside class="notes">
-<p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.</p>
+<aside class="notes"><p>Functions in <strong>palaeoverse</strong> are not tied to a single source such as the <a href="https://paleobiodb.org/#/">Paleobiology Database</a>. Column names are arguments rather than fixed requirements. Therefore, data from any source can be used with ease providing you have the right data available.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -483,18 +454,13 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="applications" class="title-slide slide level1 center">
-<h1>Applications</h1>
+      }</style></aside></section></section><section><section id="applications" class="title-slide slide level1 center"><h1>Applications</h1>
 <ul>
 <li>Exploring and summarising data</li>
 <li>Cleaning and harmonising data</li>
 <li>Preparing data for analyses</li>
 </ul>
-<aside class="notes">
-<p><strong>palaeoverse</strong> can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.</p>
+<aside class="notes"><p><strong>palaeoverse</strong> can be used for a wide range of applications which feed into downstream analyses, including diversity dynamics, macroevolution, macroecology and biogeography.</p>
 <p>We’ll be running through two tutorials today but here are just a few possible use cases.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -506,10 +472,7 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="exploring-and-summarising-data" class="slide level2">
-<h2>Exploring and summarising data</h2>
+      }</style></aside></section><section id="exploring-and-summarising-data" class="slide level2"><h2>Exploring and summarising data</h2>
 <p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
@@ -522,8 +485,7 @@ Bethany J. Allen
 <span id="cb3-8"><a aria-label="8"></a>  <span class="co"># Plot temporal range</span></span>
 <span id="cb3-9"><a aria-label="9"></a>  <span class="fu">tax_range_time</span>(<span class="at">name =</span> <span class="st">"order"</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<aside class="notes">
-<p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
+<aside class="notes"><p><strong>palaeoverse</strong> includes functions to help users explore and understand their data better, such as calculating temporal and geographic ranges:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -534,14 +496,9 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="temporal-range" class="slide level2">
-<h2>Temporal range</h2>
+      }</style></aside></section><section id="temporal-range" class="slide level2"><h2>Temporal range</h2>
 
-<img data-src="introduction-slides_files/figure-revealjs/temporal-range-plot-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Temporal range of Carboniferous to Early Triassic tetrapods.</p></section>
-<section id="cleaning-and-harmonising-data" class="slide level2">
-<h2>Cleaning and harmonising data</h2>
+<img data-src="introduction-slides_files/figure-revealjs/temporal-range-plot-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Temporal range of Carboniferous to Early Triassic tetrapods.</p></section><section id="cleaning-and-harmonising-data" class="slide level2"><h2>Cleaning and harmonising data</h2>
 <p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates and checking taxonomic names:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
@@ -555,8 +512,7 @@ Bethany J. Allen
 2     V   Varanopus   Varanops             5            3</code></pre>
 </div>
 </div>
-<aside class="notes">
-<p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates and checking taxonomic names:</p>
+<aside class="notes"><p><strong>palaeoverse</strong> includes functions to support the cleaning and harmonising of data such as removing duplicates and checking taxonomic names:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -567,10 +523,7 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="preparing-data-for-analyses" class="slide level2">
-<h2>Preparing data for analyses</h2>
+      }</style></aside></section><section id="preparing-data-for-analyses" class="slide level2"><h2>Preparing data for analyses</h2>
 <p><strong>palaeoverse</strong> includes functions to prepare data for analyses, such as estimating palaeocoordinates and binning data:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># Load library and data</span></span>
@@ -588,8 +541,7 @@ Bethany J. Allen
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># Bin data</span></span>
 <span id="cb8-2"><a aria-label="2"></a>binned_reefs <span class="ot">&lt;-</span> <span class="fu">bin_lat</span>(reefs, <span class="at">bins =</span> bins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<aside class="notes">
-<p><strong>palaeoverse</strong> includes functions to prepare data for analyses, such as estimating palaeocoordinates and binning data:</p>
+<aside class="notes"><p><strong>palaeoverse</strong> includes functions to prepare data for analyses, such as estimating palaeocoordinates and binning data:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -600,16 +552,12 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="so-what-is-palaeoverse" class="slide level2">
-<h2>So, what is <strong>palaeoverse</strong>?</h2>
+      }</style></aside></section><section id="so-what-is-palaeoverse" class="slide level2"><h2>So, what is <strong>palaeoverse</strong>?</h2>
 
 <img data-src="img/palaeoverse-logo.png" class="quarto-figure quarto-figure-center r-stretch"><blockquote>
 <p><em>Think of <strong>palaeoverse</strong> as the bridge between raw occurrence data and the analytical methods you want to apply.</em></p>
 </blockquote>
-<aside class="notes">
-<p>Think of <strong>palaeoverse</strong> as the bridge between raw occurrence data and the analytical methods you want to apply.</p>
+<aside class="notes"><p>Think of <strong>palaeoverse</strong> as the bridge between raw occurrence data and the analytical methods you want to apply.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -620,17 +568,13 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="getting-help" class="title-slide slide level1 center">
-<h1>Getting help</h1>
+      }</style></aside></section></section><section><section id="getting-help" class="title-slide slide level1 center"><h1>Getting help</h1>
 <ul>
 <li>Everyone gets stuck with new tools, and knowing where to look for help is a key skill</li>
-<li><strong>palaeoverse</strong> has several layers of support, from built-in documentation to community help</li>
+<li>
+<strong>palaeoverse</strong> has several layers of support, from built-in documentation to community help</li>
 </ul>
-<aside class="notes">
-<p>Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, <strong>palaeoverse</strong> has several layers of support, from built-in documentation to wider community support.</p>
+<aside class="notes"><p>Everyone gets stuck with using new tools from time-to-time, and knowing where to look for help is one of the most useful skills to develop. As with most R packages, <strong>palaeoverse</strong> has several layers of support, from built-in documentation to wider community support.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -641,10 +585,7 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="package-website" class="slide level2">
-<h2>Package website</h2>
+      }</style></aside></section><section id="package-website" class="slide level2"><h2>Package website</h2>
 <p><a href="https://palaeoverse.palaeoverse.org">palaeoverse.palaeoverse.org</a> hosts:</p>
 <ul>
 <li>documentation for every function</li>
@@ -652,8 +593,7 @@ Bethany J. Allen
 <li>updates on new releases</li>
 <li>Searchable, and often easier to navigate than R help pages</li>
 </ul>
-<aside class="notes">
-<p>The <strong>palaeoverse</strong> website (<a href="https://palaeoverse.palaeoverse.org">https://palaeoverse.palaeoverse.org</a>) hosts documentation for every function available, as well as vignettes (tutorials) demonstrating possible applications, and updates on new releases. It is a searchable resource and can be easier to navigate than the help pages in R.</p>
+<aside class="notes"><p>The <strong>palaeoverse</strong> website (<a href="https://palaeoverse.palaeoverse.org">https://palaeoverse.palaeoverse.org</a>) hosts documentation for every function available, as well as vignettes (tutorials) demonstrating possible applications, and updates on new releases. It is a searchable resource and can be easier to navigate than the help pages in R.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -664,21 +604,17 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="section" class="slide level2">
-<h2></h2>
+      }</style></aside></section><section id="section" class="slide level2"><h2></h2>
 
-<img data-src="img/palaeoverse-reference.png" class="r-stretch quarto-figure-center"><p class="caption">Browse all functions in our <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide.</a></p></section>
-<section id="still-stuck" class="slide level2">
-<h2>Still stuck?</h2>
+<img data-src="img/palaeoverse-reference.png" class="r-stretch quarto-figure-center"><p class="caption">Browse all functions in our <a href="https://palaeoverse.palaeoverse.org/reference/index.html">reference guide.</a></p></section><section id="still-stuck" class="slide level2"><h2>Still stuck?</h2>
 <ul>
-<li><strong>GitHub:</strong> search existing <a href="https://github.com/palaeoverse/palaeoverse/issues">issues</a> to see if your problem has been addressed</li>
+<li>
+<strong>GitHub:</strong> search existing <a href="https://github.com/palaeoverse/palaeoverse/issues">issues</a> to see if your problem has been addressed</li>
 <li>Can’t find an answer? <a href="https://github.com/palaeoverse/palaeoverse/issues">Open an issue</a> with a minimal reproducible example (see <a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html">reprex guidance</a>)</li>
-<li><strong>Zulip:</strong> new to GitHub? <a href="https://palaeoverse.org/zulip/join-zulip/">Join our Zulip</a> and create a topic under “Help”</li>
+<li>
+<strong>Zulip:</strong> new to GitHub? <a href="https://palaeoverse.org/zulip/join-zulip/">Join our Zulip</a> and create a topic under “Help”</li>
 </ul>
-<aside class="notes">
-<p>If you are familiar with GitHub, you can search existing issues in the <strong>palaeoverse</strong> repository to see whether someone has previously encountered the issue you are facing and whether it has already been addressed. If you cannot find an answer, you are welcome to open an issue and include a minimal reproducible example.</p>
+<aside class="notes"><p>If you are familiar with GitHub, you can search existing issues in the <strong>palaeoverse</strong> repository to see whether someone has previously encountered the issue you are facing and whether it has already been addressed. If you cannot find an answer, you are welcome to open an issue and include a minimal reproducible example.</p>
 <p>GitHub can be a daunting place if you have not used it before. You are welcome to join our <a href="https://palaeoverse.org/zulip/join-zulip/">Zulip</a> and create a topic under “Help”.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -690,49 +626,30 @@ Bethany J. Allen
           width: 1px!important;
           overflow: hidden!important;
           display:block!important;
-      }</style></aside>
-</section>
-<section id="section-1" class="slide level2">
-<h2></h2>
+      }</style></aside></section><section id="section-1" class="slide level2"><h2></h2>
 
-<img data-src="img/zulip.png" class="r-stretch quarto-figure-center"><p class="caption">You can <a href="https://palaeoverse.org/zulip/join-zulip/">join</a> <strong>palaeoverse</strong>’s Zulip and ask for help if you are still stuck after reading the package documentation.</p></section></section>
-<section id="now-lets-get-coding" class="title-slide slide level1 center">
-<h1>Now, let’s get coding!</h1>
+<img data-src="img/zulip.png" class="r-stretch quarto-figure-center"><p class="caption">You can <a href="https://palaeoverse.org/zulip/join-zulip/">join</a> <strong>palaeoverse</strong>’s Zulip and ask for help if you are still stuck after reading the package documentation.</p></section></section><section id="now-lets-get-coding" class="title-slide slide level1 center"><h1>Now, let’s get coding!</h1>
 <p>…starting with installing <strong>palaeoverse</strong>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"palaeoverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
-<li><a href="../../../training/modules/palaeoverse/phanerozoic-reefs.html"><strong>Tutorial 1: Phanerozoic reefs</strong></a>: Investigate latitudinal trends in Phanerozoic reefs.</li>
-<li><a href="../../../training/modules/palaeoverse/tetrapod-biodiversity.html"><strong>Tutorial 2: Tetrapod biodiversity</strong></a>: Explore alpha diversity and geographic range size in Carboniferous and Permian tetrapods.</li>
+<li>
+<a href="../../../training/modules/palaeoverse/phanerozoic-reefs.html"><strong>Tutorial 1: Phanerozoic reefs</strong></a>: Investigate latitudinal trends in Phanerozoic reefs.</li>
+<li>
+<a href="../../../training/modules/palaeoverse/tetrapod-biodiversity.html"><strong>Tutorial 2: Tetrapod biodiversity</strong></a>: Explore alpha diversity and geographic range size in Carboniferous and Permian tetrapods.</li>
 </ul>
 
 
 </section>
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -923,8 +840,7 @@ Bethany J. Allen
           RevealZoom
         ]
       });
-    </script>
-    <script>
+    </script><script>
       // Shared behaviour for every module (included via _metadata.yml):
       //  1) a "back to the modules list" button at the top, and
       //  2) turning each category badge into a link that opens the list filtered by
@@ -964,8 +880,7 @@ Bethany J. Allen
           });
         });
       })();
-    </script>
-    <div class="title-footer">
+    </script><div class="title-footer">
       <span><a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i>&nbsp;&nbsp;palaeoverse</a></span>
       <span><a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i>&nbsp;&nbsp;palaeoverse.bsky.social</a></span>
       <span><a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i>&nbsp;&nbsp;Palaeoverse</a></span>
@@ -1008,9 +923,7 @@ Bethany J. Allen
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -1241,6 +1154,6 @@ Bethany J. Allen
         }
       });
       </script>
-    
+
 
 </body></html>

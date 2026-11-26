@@ -7,19 +7,18 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.11.9">
-
-  <meta name="author" content="Etienne Bacher">
-  <meta name="author" content="Niklas Hohmann">
-  <meta name="dcterms.date" content="2026-11-20">
-  <title>Debugging with reprex() and browser()</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
-  <style>
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="UTF-8">
+<meta name="generator" content="quarto-1.11.9">
+<meta name="author" content="Etienne Bacher">
+<meta name="author" content="Niklas Hohmann">
+<meta name="dcterms.date" content="2026-11-20">
+<title>Debugging with reprex() and browser()</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
+<style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
@@ -104,13 +103,13 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
-  <link rel="stylesheet" href="style/template.css">
-  <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
+<link rel="stylesheet" href="style/template.css">
+<link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -197,7 +196,7 @@
       margin-right: 0; 
     }
   </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/_brand/logos/logo-opengraph.png">
@@ -209,8 +208,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Debugging with reprex() and browser()</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">Debugging with reprex() and browser()</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -226,26 +224,23 @@ Niklas Hohmann
 </div>
 
   <p class="date">2026-11-20</p>
-</section>
-<section id="objectives" class="slide level2">
-<h2>Objectives</h2>
+</section><section id="objectives" class="slide level2"><h2>Objectives</h2>
 <p><br></p>
 <ul>
 <li>Learn the essential steps to debug R code</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Create a small reproducible example with <code>reprex</code></li>
+<li>Create a small reproducible example with <code>reprex</code>
+</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>Use <code>browser()</code> and breakpoints</li>
+<li>Use <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> and breakpoints</li>
 </ul>
 </div>
-</section>
-<section id="a-failing-script" class="slide level2">
-<h2>A failing script</h2>
+</section><section id="a-failing-script" class="slide level2"><h2>A failing script</h2>
 <p>From the <a href="https://palaeoverse.palaeoverse.org/articles/phanerozoic-reefs.html">“Latitudinal trends in Phanerozoic reefs”</a> vignette:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(palaeoverse)</span>
@@ -263,11 +258,9 @@ Niklas Hohmann
 </div>
 <pre><code>#&gt; Error in `[.data.frame`:
 #&gt; ! undefined columns selected</code></pre>
-</section>
-<section id="a-failing-script-1" class="slide level2">
-<h2>A failing script</h2>
+</section><section id="a-failing-script-1" class="slide level2"><h2>A failing script</h2>
 <p><br></p>
-<p>Using <code>traceback()</code> to see the chain of errors:</p>
+<p>Using <code><a href="https://rdrr.io/r/base/traceback.html">traceback()</a></code> to see the chain of errors:</p>
 <pre><code>&gt; traceback()
 4: stop("undefined columns selected")
 3: `[.data.frame`(occdf, , max_ma, drop = TRUE)
@@ -277,35 +270,31 @@ Niklas Hohmann
 <p><br></p>
 <p>The root cause is not very clear.</p>
 </div>
-</section>
-<section>
-<section id="reducing-the-problem" class="title-slide slide level1 center">
-<h1>Reducing the problem</h1>
+</section><section><section id="reducing-the-problem" class="title-slide slide level1 center"><h1>Reducing the problem</h1>
 
-</section>
-<section id="minimal-reproducible-example" class="slide level2">
-<h2>Minimal reproducible example</h2>
+</section><section id="minimal-reproducible-example" class="slide level2"><h2>Minimal reproducible example</h2>
 <p><br></p>
 <ul>
 <li>Longer code = more potential causes</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>First: build a <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em></li>
+<li>First: build a <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em>
+</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li><p>Two steps:</p>
+<li>
+<p>Two steps:</p>
 <ol type="1">
 <li>reduce the data</li>
 <li>reduce the code</li>
-</ol></li>
+</ol>
+</li>
 </ul>
 </div>
-</section>
-<section id="reduce-the-data" class="slide level2">
-<h2>Reduce the data</h2>
+</section><section id="reduce-the-data" class="slide level2"><h2>Reduce the data</h2>
 <p><br></p>
 <p>Smaller data:</p>
 <ul>
@@ -322,9 +311,7 @@ Niklas Hohmann
 </div>
 </div>
 </div>
-</section>
-<section id="reduce-the-data-1" class="slide level2">
-<h2>Reduce the data</h2>
+</section><section id="reduce-the-data-1" class="slide level2"><h2>Reduce the data</h2>
 <p>Keep only the first 6 rows:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs)</span>
@@ -341,9 +328,7 @@ Niklas Hohmann
 </div>
 <pre><code>#&gt; Error in `[.data.frame`:
 #&gt; ! undefined columns selected</code></pre>
-</section>
-<section id="reduce-the-data-2" class="slide level2">
-<h2>Reduce the data</h2>
+</section><section id="reduce-the-data-2" class="slide level2"><h2>Reduce the data</h2>
 <p><br></p>
 <p>Keep 1 row and 5 columns:</p>
 <div class="cell">
@@ -354,9 +339,7 @@ Niklas Hohmann
 </div>
 <pre><code>Error in `group_apply()`:
 ! Supplied `group` is not a named column in `occdf`</code></pre>
-</section>
-<section id="reduce-the-data-3" class="slide level2">
-<h2>Reduce the data</h2>
+</section><section id="reduce-the-data-3" class="slide level2"><h2>Reduce the data</h2>
 <p>Keep 1 row and 6 columns:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-code-line-numbers="1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
@@ -374,9 +357,7 @@ Niklas Hohmann
 </div>
 <pre><code>#&gt; Error in `[.data.frame`:
 #&gt; ! undefined columns selected</code></pre>
-</section>
-<section id="reduce-the-code" class="slide level2">
-<h2>Reduce the code</h2>
+</section><section id="reduce-the-code" class="slide level2"><h2>Reduce the code</h2>
 <p>Remove as much code as possible to limit potential causes.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-code-line-numbers="|4|9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
@@ -392,16 +373,15 @@ Niklas Hohmann
 <span id="cb12-11"><a aria-label="11"></a></span>
 <span id="cb12-12"><a aria-label="12"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="reduce-the-code-1" class="slide level2">
-<h2>Reduce the code</h2>
+</section><section id="reduce-the-code-1" class="slide level2"><h2>Reduce the code</h2>
 <p><br></p>
 <ul>
-<li><code>reef_counts</code> is never used: remove it</li>
+<li>
+<code>reef_counts</code> is never used: remove it</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Does <code>subset()</code> do anything with one row?</li>
+<li>Does <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> do anything with one row?</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">identical</span>(reefs2, <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>))</span>
@@ -413,9 +393,7 @@ Niklas Hohmann
 <li>No: remove it too</li>
 </ul>
 </div>
-</section>
-<section id="reduce-the-code-2" class="slide level2">
-<h2>Reduce the code</h2>
+</section><section id="reduce-the-code-2" class="slide level2"><h2>Reduce the code</h2>
 <p><br></p>
 <p>What we have now:</p>
 <div class="cell">
@@ -433,23 +411,16 @@ Niklas Hohmann
 <div class="fragment">
 <p>Two function calls removed, but still no clear cause.</p>
 </div>
-</section>
-<section id="next-step" class="slide level2">
-<h2>Next step</h2>
-<p><br> <br></p>
+</section><section id="next-step" class="slide level2"><h2>Next step</h2>
+<p><br><br></p>
 <p>Stuck? Ask for help (GitHub, StackOverflow, colleagues).</p>
 <p><br></p>
 <div class="fragment">
 <p>But before that…</p>
 </div>
-</section></section>
-<section>
-<section id="is-your-reprex-really-a-reprex" class="title-slide slide level1 center">
-<h1>Is your reprex really a reprex?</h1>
+</section></section><section><section id="is-your-reprex-really-a-reprex" class="title-slide slide level1 center"><h1>Is your reprex really a reprex?</h1>
 
-</section>
-<section id="clean-the-environment" class="slide level2">
-<h2>Clean the environment</h2>
+</section><section id="clean-the-environment" class="slide level2"><h2>Clean the environment</h2>
 <p><br></p>
 <p>Our session may contain objects and options unrelated to the problem.</p>
 <div class="fragment">
@@ -460,9 +431,7 @@ Niklas Hohmann
 <p><br></p>
 <p>Restarting R works, but is easy to forget.</p>
 </div>
-</section>
-<section id="reprex" class="slide level2">
-<h2><code>reprex()</code></h2>
+</section><section id="reprex" class="slide level2"><h2><code>reprex()</code></h2>
 <p><br></p>
 <p><a href="https://reprex.tidyverse.org/"><code>reprex::reprex()</code></a> runs code in a separate, clean R session.</p>
 <div class="fragment">
@@ -476,9 +445,7 @@ Niklas Hohmann
 <li>If it runs in <code>reprex()</code>, others can reproduce it</li>
 </ul>
 </div>
-</section>
-<section id="reprex-1" class="slide level2">
-<h2><code>reprex()</code></h2>
+</section><section id="reprex-1" class="slide level2"><h2><code>reprex()</code></h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
 <span id="cb15-2"><a aria-label="2"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
@@ -498,9 +465,7 @@ Niklas Hohmann
 #&gt; Error:
 #&gt; ! object 'reefs' not found</code></pre>
 </div>
-</section>
-<section id="reprex-2" class="slide level2">
-<h2><code>reprex()</code></h2>
+</section><section id="reprex-2" class="slide level2"><h2><code>reprex()</code></h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-code-line-numbers="2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
 <span id="cb17-2"><a aria-label="2"></a>  <span class="fu">library</span>(palaeoverse)</span>
@@ -522,9 +487,7 @@ Niklas Hohmann
 #&gt; Error in `[.data.frame`:
 #&gt; ! undefined columns selected</code></pre>
 </div>
-</section>
-<section id="reprex-3" class="slide level2">
-<h2><code>reprex()</code></h2>
+</section><section id="reprex-3" class="slide level2"><h2><code>reprex()</code></h2>
 <p><br></p>
 <p>Good practice: add session info with <code>session_info = TRUE</code>.</p>
 <div class="cell">
@@ -537,27 +500,20 @@ Niklas Hohmann
 <p><br></p>
 <p>Reducing the problem is key, and often reveals the bug by itself.</p>
 </div>
-</section></section>
-<section>
-<section id="debugging-a-function" class="title-slide slide level1 center">
-<h1>Debugging a function</h1>
+</section></section><section><section id="debugging-a-function" class="title-slide slide level1 center"><h1>Debugging a function</h1>
 
-</section>
-<section id="debugging-a-function-1" class="slide level2">
-<h2>Debugging a function</h2>
+</section><section id="debugging-a-function-1" class="slide level2"><h2>Debugging a function</h2>
 <p><br></p>
 <p>A function runs a whole block of code and only shows the final error.</p>
 <div class="fragment">
 <p><br></p>
-<p>One solution: add <code>print()</code> statements.</p>
+<p>One solution: add <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> statements.</p>
 </div>
 <div class="fragment">
 <p><br></p>
-<p>Better: <code>browser()</code> pauses execution <em>inside</em> the function.</p>
+<p>Better: <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> pauses execution <em>inside</em> the function.</p>
 </div>
-</section>
-<section id="example" class="slide level2">
-<h2>Example</h2>
+</section><section id="example" class="slide level2"><h2>Example</h2>
 <p><br></p>
 <p>Based on <a href="https://github.com/palaeoverse/palaeoverse/issues/280">issue #280</a> in <code>palaeoverse</code> (now fixed):</p>
 <div class="cell">
@@ -572,11 +528,9 @@ Niklas Hohmann
 <p><br></p>
 <p><code>bin_space()</code> is a long function: where does it fail?</p>
 </div>
-</section>
-<section id="browser" class="slide level2">
-<h2><code>browser()</code></h2>
+</section><section id="browser" class="slide level2"><h2><code>browser()</code></h2>
 <p><br></p>
-<p>Add <code>browser()</code> at the top, reload the function, and rerun the code:</p>
+<p>Add <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> at the top, reload the function, and rerun the code:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="cf">function</span> (occdf, <span class="at">lng =</span> <span class="st">"lng"</span>, <span class="at">lat =</span> <span class="st">"lat"</span>, <span class="at">spacing =</span> <span class="dv">100</span>, <span class="at">sub_grid =</span> <span class="cn">NULL</span>,</span>
 <span id="cb22-2"><a aria-label="2"></a>    <span class="at">return =</span> <span class="cn">FALSE</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
@@ -590,11 +544,9 @@ Niklas Hohmann
 <span id="cb22-10"><a aria-label="10"></a></span>
 <span id="cb22-11"><a aria-label="11"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="browser-1" class="slide level2">
-<h2><code>browser()</code></h2>
+</section><section id="browser-1" class="slide level2"><h2><code>browser()</code></h2>
 <p><br></p>
-<p>Execution stops at <code>browser()</code>:</p>
+<p>Execution stops at <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code>:</p>
 <ul>
 <li>We have access to the function environment.</li>
 </ul>
@@ -613,9 +565,7 @@ Niklas Hohmann
 <li>Press “Esc” or run <code>Q</code> to exit.</li>
 </ul>
 </div>
-</section>
-<section id="browser-2" class="slide level2">
-<h2><code>browser()</code></h2>
+</section><section id="browser-2" class="slide level2"><h2><code>browser()</code></h2>
 <p><br></p>
 <p>Step through until the code fails:</p>
 <div class="cell">
@@ -623,11 +573,9 @@ Niklas Hohmann
 </div>
 <div class="fragment">
 <p><br></p>
-<p>Tip: move <code>browser()</code> past lines that are irrelevant.</p>
+<p>Tip: move <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> past lines that are irrelevant.</p>
 </div>
-</section>
-<section id="breakpoints" class="slide level2">
-<h2>Breakpoints</h2>
+</section><section id="breakpoints" class="slide level2"><h2>Breakpoints</h2>
 <p><br></p>
 <p>Built into IDEs like RStudio or Positron.</p>
 <div class="fragment">
@@ -636,33 +584,27 @@ Niklas Hohmann
 </div>
 <div class="fragment">
 <p><br></p>
-<p>Same as <code>browser()</code>, without modifying the code.</p>
+<p>Same as <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code>, without modifying the code.</p>
 </div>
-</section>
-<section id="breakpoints-1" class="slide level2">
-<h2>Breakpoints</h2>
+</section><section id="breakpoints-1" class="slide level2"><h2>Breakpoints</h2>
 <p><br></p>
 
-<img data-src="breakpoint_screenshot.png" alt="A screenshot of RStudio. The left hand side shows the editor with the source code of `bin_space()`. On the left of the line number, a circle filled in red indicates the location of the breakpoint." class="r-stretch"></section></section>
-<section>
-<section id="conclusion" class="title-slide slide level1 center">
-<h1>Conclusion</h1>
+<img data-src="breakpoint_screenshot.png" alt="A screenshot of RStudio. The left hand side shows the editor with the source code of `bin_space()`. On the left of the line number, a circle filled in red indicates the location of the breakpoint." class="r-stretch"></section></section><section><section id="conclusion" class="title-slide slide level1 center"><h1>Conclusion</h1>
 
-</section>
-<section id="conclusion-1" class="slide level2">
-<h2>Conclusion</h2>
+</section><section id="conclusion-1" class="slide level2"><h2>Conclusion</h2>
 <p><br></p>
 <ul>
 <li>Reduce the data and the code</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Check your reprex with <code>reprex()</code></li>
+<li>Check your reprex with <code>reprex()</code>
+</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>Inspect functions with <code>browser()</code> and breakpoints</li>
+<li>Inspect functions with <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> and breakpoints</li>
 </ul>
 </div>
 <div class="fragment">
@@ -672,30 +614,14 @@ Niklas Hohmann
 
 </div>
 </section></section>
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -886,8 +812,7 @@ Niklas Hohmann
           RevealZoom
         ]
       });
-    </script>
-    <script>
+    </script><script>
       // Shared behaviour for every module (included via _metadata.yml):
       //  1) a "back to the modules list" button at the top, and
       //  2) turning each category badge into a link that opens the list filtered by
@@ -927,8 +852,7 @@ Niklas Hohmann
           });
         });
       })();
-    </script>
-    <div class="title-footer">
+    </script><div class="title-footer">
       <span><a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i>&nbsp;&nbsp;palaeoverse</a></span>
       <span><a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i>&nbsp;&nbsp;palaeoverse.bsky.social</a></span>
       <span><a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i>&nbsp;&nbsp;Palaeoverse</a></span>
@@ -971,9 +895,7 @@ Niklas Hohmann
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -1204,6 +1126,6 @@ Niklas Hohmann
         }
       });
       </script>
-    
+
 
 </body></html>

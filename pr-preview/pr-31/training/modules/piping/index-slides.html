@@ -7,19 +7,18 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.11.9">
-
-  <meta name="author" content="Etienne Bacher">
-  <meta name="author" content="Will Gearty">
-  <meta name="dcterms.date" content="2026-11-20">
-  <title>Piping</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
-  <style>
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="UTF-8">
+<meta name="generator" content="quarto-1.11.9">
+<meta name="author" content="Etienne Bacher">
+<meta name="author" content="Will Gearty">
+<meta name="dcterms.date" content="2026-11-20">
+<title>Piping</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
+<style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
@@ -104,13 +103,13 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
-  <link rel="stylesheet" href="style/template.css">
-  <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-a5807fa1c52da60a601b064df6a0c859.css">
+<link rel="stylesheet" href="style/template.css">
+<link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -197,7 +196,7 @@
       margin-right: 0; 
     }
   </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/_brand/logos/logo-opengraph.png">
@@ -209,8 +208,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Piping</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">Piping</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -226,33 +224,26 @@ Will Gearty
 </div>
 
   <p class="date">2026-11-20</p>
-</section>
-<section id="objectives" class="slide level2">
-<h2>Objectives</h2>
+</section><section id="objectives" class="slide level2"><h2>Objectives</h2>
 <p><br></p>
 <p>Learn how to use the pipe operator (<code>|&gt;</code>) to write more readable code.</p>
-</section>
-<section>
-<section id="without-the-pipe" class="title-slide slide level1 center">
-<h1>Without the pipe</h1>
+</section><section><section id="without-the-pipe" class="title-slide slide level1 center"><h1>Without the pipe</h1>
 
-</section>
-<section id="example" class="slide level2">
-<h2>Example</h2>
+</section><section id="example" class="slide level2"><h2>Example</h2>
 <p><br></p>
 <p>We want to process <code>mtcars</code>:</p>
 <ul>
 <li>keep the first 10 rows</li>
-<li>keep observations where <code>cyl &gt;= 6</code></li>
-<li>sort the data by <code>am</code></li>
+<li>keep observations where <code>cyl &gt;= 6</code>
+</li>
+<li>sort the data by <code>am</code>
+</li>
 </ul>
 <div class="fragment">
 <p><br></p>
 <p>Two common approaches: intermediate objects or nested calls.</p>
 </div>
-</section>
-<section id="intermediate-objects" class="slide level2">
-<h2>Intermediate objects</h2>
+</section><section id="intermediate-objects" class="slide level2"><h2>Intermediate objects</h2>
 <p><br></p>
 <p>Overwrite the same object at each step:</p>
 <div class="cell">
@@ -267,9 +258,7 @@ Will Gearty
 <li>If one step fails, we must rerun the whole block.</li>
 </ul>
 </div>
-</section>
-<section id="intermediate-objects-1" class="slide level2">
-<h2>Intermediate objects</h2>
+</section><section id="intermediate-objects-1" class="slide level2"><h2>Intermediate objects</h2>
 <p><br></p>
 <p>Use temporary names:</p>
 <div class="cell">
@@ -284,9 +273,7 @@ Will Gearty
 <li>Adding a step means renaming many objects.</li>
 </ul>
 </div>
-</section>
-<section id="nested-calls" class="slide level2">
-<h2>Nested calls</h2>
+</section><section id="nested-calls" class="slide level2"><h2>Nested calls</h2>
 <p><br></p>
 <p>Run all calls at once:</p>
 <div class="cell">
@@ -302,14 +289,10 @@ Will Gearty
 <p><br></p>
 <p>No intermediate objects, but we must read from the inside out.</p>
 </div>
-</section></section>
-<section>
-<section id="introducing-the-pipe" class="title-slide slide level1 center">
-<h1>Introducing the pipe</h1>
+</section></section><section><section id="introducing-the-pipe" class="title-slide slide level1 center"><h1>Introducing the pipe</h1>
 
-</section>
-<section id="using" class="slide level2">
-<h2>Using <code>|&gt;</code></h2>
+</section><section id="using" class="slide level2"><h2>Using <code>|&gt;</code>
+</h2>
 <p><br></p>
 <p>The pipe passes the output of the left-hand side to the next call:</p>
 <div class="cell">
@@ -320,14 +303,15 @@ Will Gearty
 <div class="fragment">
 <p>Read it as “<strong>and then</strong>”:</p>
 <ul>
-<li>keep the first 10 rows, <em>and then</em></li>
-<li>filter, <em>and then</em></li>
+<li>keep the first 10 rows, <em>and then</em>
+</li>
+<li>filter, <em>and then</em>
+</li>
 <li>sort.</li>
 </ul>
 </div>
-</section>
-<section id="using-1" class="slide level2">
-<h2>Using <code>|&gt;</code></h2>
+</section><section id="using-1" class="slide level2"><h2>Using <code>|&gt;</code>
+</h2>
 <p><br></p>
 <ul>
 <li>No intermediate objects.</li>
@@ -337,9 +321,7 @@ Will Gearty
 <p><br></p>
 <p><code>|&gt;</code> is available since R 4.1 (2021).</p>
 </div>
-</section>
-<section id="assigning-the-output" class="slide level2">
-<h2>Assigning the output</h2>
+</section><section id="assigning-the-output" class="slide level2"><h2>Assigning the output</h2>
 <p><br></p>
 <p>We can also assign at the end of the chain with <code>-&gt;</code>:</p>
 <div class="cell">
@@ -347,16 +329,12 @@ Will Gearty
 <span id="cb5-2"><a aria-label="2"></a>  <span class="fu">subset</span>(cyl <span class="sc">&gt;=</span> <span class="dv">6</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a aria-label="3"></a>  <span class="fu">sort_by</span>(<span class="sc">~</span> am) <span class="ot">-&gt;</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section></section>
-<section>
-<section id="using-_" class="title-slide slide level1 center">
-<h1>Using <code>_</code></h1>
+</section></section><section><section id="using-_" class="title-slide slide level1 center"><h1>Using <code>_</code>
+</h1>
 
-</section>
-<section id="piping-to-non-first-arguments" class="slide level2">
-<h2>Piping to non-first arguments</h2>
+</section><section id="piping-to-non-first-arguments" class="slide level2"><h2>Piping to non-first arguments</h2>
 <p><br></p>
-<p><code>grepl()</code> takes the vector to check in <strong>second</strong> position:</p>
+<p><code><a href="https://rdrr.io/r/base/grep.html">grepl()</a></code> takes the vector to check in <strong>second</strong> position:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>let <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
 <span id="cb6-2"><a aria-label="2"></a><span class="fu">grepl</span>(<span class="st">"a|e"</span>, let)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -377,9 +355,8 @@ first element will be used</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="the-placeholder-_" class="slide level2">
-<h2>The placeholder <code>_</code></h2>
+</section><section id="the-placeholder-_" class="slide level2"><h2>The placeholder <code>_</code>
+</h2>
 <p><br></p>
 <p><code>_</code> tells the piped data where to go:</p>
 <div class="cell">
@@ -398,9 +375,8 @@ first element will be used</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="restrictions-of-_" class="slide level2">
-<h2>Restrictions of <code>_</code></h2>
+</section><section id="restrictions-of-_" class="slide level2"><h2>Restrictions of <code>_</code>
+</h2>
 <p>Available since R 4.2 (2022).</p>
 <div class="fragment">
 <p><br></p>
@@ -422,14 +398,9 @@ first element will be used</code></pre>
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="anonymous-functions" class="title-slide slide level1 center">
-<h1>Anonymous functions</h1>
+</section></section><section><section id="anonymous-functions" class="title-slide slide level1 center"><h1>Anonymous functions</h1>
 
-</section>
-<section id="named-functions" class="slide level2">
-<h2>Named functions</h2>
+</section><section id="named-functions" class="slide level2"><h2>Named functions</h2>
 <p><br></p>
 <p>Named functions are defined first and can be used multiple times:</p>
 <p><br></p>
@@ -442,9 +413,7 @@ first element will be used</code></pre>
 <span id="cb19-6"><a aria-label="6"></a></span>
 <span id="cb19-7"><a aria-label="7"></a><span class="fu">my_function</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="anonymous-functions-1" class="slide level2">
-<h2>Anonymous functions</h2>
+</section><section id="anonymous-functions-1" class="slide level2"><h2>Anonymous functions</h2>
 <p><br></p>
 <p>Anonymous functions are created on the fly and can only be used once:</p>
 <div class="cell">
@@ -461,17 +430,15 @@ first element will be used</code></pre>
 <span id="cb21-3"><a aria-label="3"></a>  (<span class="cf">function</span>(d) <span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> d))()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="what-about" class="title-slide slide level1 center">
-<h1>What about <code>%&gt;%</code>?</h1>
+</section></section><section><section id="what-about" class="title-slide slide level1 center"><h1>What about <code>%&gt;%</code>?</h1>
 
-</section>
-<section id="vs" class="slide level2">
-<h2><code>%&gt;%</code> vs <code>|&gt;</code></h2>
+</section><section id="vs" class="slide level2"><h2>
+<code>%&gt;%</code> vs <code>|&gt;</code>
+</h2>
 <p><br></p>
 <ul>
-<li><code>%&gt;%</code> comes from the <code>magrittr</code> package.</li>
+<li>
+<code>%&gt;%</code> comes from the <code>magrittr</code> package.</li>
 <li>It was widely used in the <code>tidyverse</code>.</li>
 <li>It inspired <code>|&gt;</code> in base R.</li>
 </ul>
@@ -486,30 +453,14 @@ first element will be used</code></pre>
 
 </div>
 </section></section>
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -700,8 +651,7 @@ first element will be used</code></pre>
           RevealZoom
         ]
       });
-    </script>
-    <script>
+    </script><script>
       // Shared behaviour for every module (included via _metadata.yml):
       //  1) a "back to the modules list" button at the top, and
       //  2) turning each category badge into a link that opens the list filtered by
@@ -741,8 +691,7 @@ first element will be used</code></pre>
           });
         });
       })();
-    </script>
-    <div class="title-footer">
+    </script><div class="title-footer">
       <span><a href="https://github.com/palaeoverse" target="_blank"><i class="bi bi-github"></i>&nbsp;&nbsp;palaeoverse</a></span>
       <span><a href="https://bsky.app/profile/palaeoverse.bsky.social" target="_blank"><i class="bi bi-bluesky"></i>&nbsp;&nbsp;palaeoverse.bsky.social</a></span>
       <span><a href="https://www.linkedin.com/company/palaeoverse" target="_blank"><i class="bi bi-linkedin"></i>&nbsp;&nbsp;Palaeoverse</a></span>
@@ -785,9 +734,7 @@ first element will be used</code></pre>
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -1018,6 +965,6 @@ first element will be used</code></pre>
         }
       });
       </script>
-    
+
 
 </body></html>

@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="generator" content="quarto-1.11.9">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Etienne Bacher">
 <meta name="author" content="Niklas Hohmann">
 <meta name="dcterms.date" content="2026-11-20">
 <meta name="description" content="Some good practices and useful tools to debug R code.">
-
 <title>Debugging with reprex() and browser()</title>
 <style>
 /* Default styles provided by pandoc.
@@ -67,7 +63,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -88,8 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap-9e866e08bb455834ddb709b85ac18623.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../../site_libs/bootstrap/bootstrap-dark-211d42d6a93984098abca9e4ac300801.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-9e866e08bb455834ddb709b85ac18623.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/bootstrap/bootstrap-9e866e08bb455834ddb709b85ac18623.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -116,8 +110,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-
-
 <meta property="og:title" content="Palaeoverse">
 <meta property="og:description" content="A community-driven initiative advancing open science in palaeontology through shared tools, training, and resources.">
 <meta property="og:image" content="https://palaeoverse.github.io/modules/pr-preview/pr-31/_brand/logos/logo-opengraph.png">
@@ -125,30 +117,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
 </head>
-
 <body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content">
-    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content">
-    </a>
+    <img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo light-content"><img src="../../../_brand/logos/logo-text.png" alt="" class="navbar-logo dark-content"></a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item dropdown ">
+<li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about">
+<li>
     <a class="dropdown-item" href="../../../about/about-us">
  <span class="dropdown-text">About us</span></a>
   </li>  
@@ -169,13 +156,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Sponsors</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-zulip" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Zulip</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-zulip">
+<li>
     <a class="dropdown-item" href="../../../zulip/join-zulip">
  <span class="dropdown-text">Join Zulip</span></a>
   </li>  
@@ -184,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">User guide</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../../our-packages"> 
 <span class="menu-text">Software</span></a>
@@ -193,8 +180,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-training" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Training</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-training">
+<li>
     <a class="dropdown-item" href="../../../training/workshops">
  <span class="dropdown-text">Workshops</span></a>
   </li>  
@@ -211,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Mentorship Scheme</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../../resources"> 
 <span class="menu-text">Resources</span></a>
@@ -224,8 +211,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Contribute</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">
+<li>
     <a class="dropdown-item" href="../../../contribute/general-guide">
  <span class="dropdown-text">Contribute to Palaeoverse</span></a>
   </li>  
@@ -234,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Contribute to our packages</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/palaeoverse" target="_blank"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
@@ -261,44 +248,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
             <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
+<li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#reducing-the-problem" id="toc-reducing-the-problem" class="nav-link" data-scroll-target="#reducing-the-problem">Reducing the problem</a>
+  <li>
+<a href="#reducing-the-problem" id="toc-reducing-the-problem" class="nav-link" data-scroll-target="#reducing-the-problem">Reducing the problem</a>
   <ul class="collapse">
-  <li><a href="#reduce-the-size-of-the-data" id="toc-reduce-the-size-of-the-data" class="nav-link" data-scroll-target="#reduce-the-size-of-the-data">Reduce the size of the data</a></li>
+<li><a href="#reduce-the-size-of-the-data" id="toc-reduce-the-size-of-the-data" class="nav-link" data-scroll-target="#reduce-the-size-of-the-data">Reduce the size of the data</a></li>
   <li><a href="#reduce-the-size-of-the-code" id="toc-reduce-the-size-of-the-code" class="nav-link" data-scroll-target="#reduce-the-size-of-the-code">Reduce the size of the code</a></li>
-  </ul></li>
-  <li><a href="#how-to-ensure-that-your-reprex-actually-is-a-reprex" id="toc-how-to-ensure-that-your-reprex-actually-is-a-reprex" class="nav-link" data-scroll-target="#how-to-ensure-that-your-reprex-actually-is-a-reprex">How to ensure that your reprex actually is a reprex</a></li>
-  <li><a href="#debugging-a-function" id="toc-debugging-a-function" class="nav-link" data-scroll-target="#debugging-a-function">Debugging a function</a>
-  <ul class="collapse">
-  <li><a href="#browser" id="toc-browser" class="nav-link" data-scroll-target="#browser"><code>browser()</code></a></li>
-  <li><a href="#breakpoints" id="toc-breakpoints" class="nav-link" data-scroll-target="#breakpoints">Breakpoints</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="index-slides.html"><i class="bi bi-easel"></i>Slides</a></li></ul></div></nav>
+</li>
+  <li><a href="#how-to-ensure-that-your-reprex-actually-is-a-reprex" id="toc-how-to-ensure-that-your-reprex-actually-is-a-reprex" class="nav-link" data-scroll-target="#how-to-ensure-that-your-reprex-actually-is-a-reprex">How to ensure that your reprex actually is a reprex</a></li>
+  <li>
+<a href="#debugging-a-function" id="toc-debugging-a-function" class="nav-link" data-scroll-target="#debugging-a-function">Debugging a function</a>
+  <ul class="collapse">
+<li><a href="#browser" id="toc-browser" class="nav-link" data-scroll-target="#browser"><code>browser()</code></a></li>
+  <li><a href="#breakpoints" id="toc-breakpoints" class="nav-link" data-scroll-target="#breakpoints">Breakpoints</a></li>
+  </ul>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul><div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="index-slides.html"><i class="bi bi-easel"></i>Slides</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content" tabindex="-1">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content" tabindex="-1"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Debugging with reprex() and browser()</h1>
   <div class="quarto-categories">
     <div class="quarto-category">r</div>
@@ -334,10 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header>
-
-
-<p><a href="https://github.com/palaeoverse/modules/blob/intro-to-r/browser_reprex/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
+</header><p><a href="https://github.com/palaeoverse/modules/blob/intro-to-r/browser_reprex/index.qmd" target="_blank" style="color: #90989f;"><i class="bi bi-github"></i> View source file</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -350,116 +330,109 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"palaeoverse"</span>, <span class="st">"reprex"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"palaeoverse"</span>, <span class="st">"reprex"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<section id="objectives" class="level2">
-<h2 data-anchor-id="objectives">Objectives</h2>
+<section id="objectives" class="level2"><h2 data-anchor-id="objectives">Objectives</h2>
 <ul>
 <li>Learn the essential steps to debug R code</li>
 <li>Learn how to use the package <code>reprex</code> to create a small reproducible example</li>
-<li>Learn how to use specific debugging tools such as <code>browser()</code> and breakpoints</li>
-</ul>
-</section>
-<section id="introduction" class="level2">
-<h2 data-anchor-id="introduction">Introduction</h2>
+<li>Learn how to use specific debugging tools such as <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> and breakpoints</li>
+</ul></section><section id="introduction" class="level2"><h2 data-anchor-id="introduction">Introduction</h2>
 <p>Knowing how to debug code is an essential skill, whether one writes an analysis for a paper or develops an R package. This module covers several tools that aim to make the debugging process easier.</p>
 <p>The following code is taken from the <a href="https://palaeoverse.palaeoverse.org/articles/phanerozoic-reefs.html">“Latitudinal trends in Phanerozoic reefs” vignette</a>, but let’s pretend we have written this code from scratch:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>reefs <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://palaeoverse.palaeoverse.org">palaeoverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">reefs</span><span class="op">)</span></span>
+<span><span class="va">reef_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/group_apply.html">group_apply</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs</span>, group <span class="op">=</span> <span class="st">"interval"</span>, fun <span class="op">=</span> <span class="va">nrow</span><span class="op">)</span></span>
+<span><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span><span class="va">reefs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs</span>,</span>
+<span>                 early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span><span class="va">reefs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">reefs</span>, <span class="va">interval_max_ma</span> <span class="op">&lt;=</span> <span class="fl">541</span><span class="op">)</span></span>
+<span><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[.data.frame`:
 ! undefined columns selected</code></pre>
 </div>
 </div>
-<p>We now have an error caused by <code>bin_time()</code>. The first thing we can do is run <code>traceback()</code> to see which call inside <code>bin_time()</code> caused the error:</p>
+<p>We now have an error caused by <code><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time()</a></code>. The first thing we can do is run <code><a href="https://rdrr.io/r/base/traceback.html">traceback()</a></code> to see which call inside <code><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time()</a></code> caused the error:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">traceback</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span><span class="sc">:</span> <span class="fu">stop</span>(<span class="st">"undefined columns selected"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">:</span> <span class="st">`</span><span class="at">[.data.frame</span><span class="st">`</span>(occdf, , max_ma, <span class="at">drop =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">:</span> occdf[, max_ma, drop <span class="ot">=</span> <span class="cn">TRUE</span>]</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span> <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>) at <span class="co">#1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The trace can be read bottom-up: <code>bin_time()</code> failed because of the line <code>occdf[, max_ma, drop = TRUE]</code>, which itself failed because of a wrong use of <code>[</code>.</p>
+<p>The trace can be read bottom-up: <code><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time()</a></code> failed because of the line <code>occdf[, max_ma, drop = TRUE]</code>, which itself failed because of a wrong use of <code>[</code>.</p>
 <p>This helps, but the root cause still isn’t very clear. Therefore, we’ll have to do some debugging.</p>
-</section>
-<section id="reducing-the-problem" class="level1">
-<h1>Reducing the problem</h1>
+</section><section id="reducing-the-problem" class="level1"><h1>Reducing the problem</h1>
 <p>The longer the code you try to debug, the more potential causes you have to explore. The first thing to do when you can’t find the bug in your code right away is to build a minimal <strong>repr</strong>oducible <strong>ex</strong>ample, aka a <em>reprex</em> (this is also known as a MRE, for “Minimal Reproducible Example”). This helps isolate the problem and makes it easier to communicate it to other users and maintainers.</p>
 <p>In our example above, we can reduce the problem in two ways: we can reduce the data first, and then reduce the code.</p>
-<section id="reduce-the-size-of-the-data" class="level2">
-<h2 data-anchor-id="reduce-the-size-of-the-data">Reduce the size of the data</h2>
+<section id="reduce-the-size-of-the-data" class="level2"><h2 data-anchor-id="reduce-the-size-of-the-data">Reduce the size of the data</h2>
 <p>In the debugging process, we will likely run the code at least a handful of times. Therefore, we want to make sure that it runs as fast as possible so that we don’t lose our focus. The easiest way to do this is to reduce the size of our input data.</p>
 <p>In addition to making the error appear faster, it is also easier to compare the actual and expected outputs when the data is as small and simple as possible.</p>
 <p>In this example, the dataset we are using has thousands of rows and 14 columns:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(reefs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">reefs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">reefs</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4363   14</code></pre>
 </div>
 </div>
 <p>Let’s try to reduce the size of our data:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the first rows of the data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select the first rows of the data</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">reef_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/group_apply.html">group_apply</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, group <span class="op">=</span> <span class="st">"interval"</span>, fun <span class="op">=</span> <span class="va">nrow</span><span class="op">)</span></span>
+<span><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                 early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">reefs2</span>, <span class="va">interval_max_ma</span> <span class="op">&lt;=</span> <span class="fl">541</span><span class="op">)</span></span>
+<span><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[.data.frame`:
 ! undefined columns selected</code></pre>
 </div>
 </div>
-<p>We still see the same error but now we only have 6 rows left (the default provided by <code>head()</code>), much better! Let’s try to reduce that to one row and to remove some columns.</p>
+<p>We still see the same error but now we only have 6 rows left (the default provided by <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>), much better! Let’s try to reduce that to one row and to remove some columns.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">reef_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/group_apply.html">group_apply</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, group <span class="op">=</span> <span class="st">"interval"</span>, fun <span class="op">=</span> <span class="va">nrow</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `group_apply()`:
 ! Supplied `group` is not a named column in `occdf`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                 early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `look_up()`:
 ! `early_interval` needs to match a column name of `occdf`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">reefs2</span>, <span class="va">interval_max_ma</span> <span class="op">&lt;=</span> <span class="fl">541</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error:
 ! object 'interval_max_ma' not found</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[.data.frame`:
 ! undefined columns selected</code></pre>
@@ -467,20 +440,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Hmm, we don’t have the same error anymore, so we removed too many columns. Let’s try to keep 6 instead of 5:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">reef_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/group_apply.html">group_apply</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, group <span class="op">=</span> <span class="st">"interval"</span>, fun <span class="op">=</span> <span class="va">nrow</span><span class="op">)</span></span>
+<span><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                 early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">reefs2</span>, <span class="va">interval_max_ma</span> <span class="op">&lt;=</span> <span class="fl">541</span><span class="op">)</span></span>
+<span><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[.data.frame`:
 ! undefined columns selected</code></pre>
@@ -502,43 +475,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Let’s now try to reduce the size of the code.</p>
-</section>
-<section id="reduce-the-size-of-the-code" class="level2">
-<h2 data-anchor-id="reduce-the-size-of-the-code">Reduce the size of the code</h2>
+</section><section id="reduce-the-size-of-the-code" class="level2"><h2 data-anchor-id="reduce-the-size-of-the-code">Reduce the size of the code</h2>
 <p>This is an important process: we want to remove as much code as possible to lower the number of potential causes leading to the error.</p>
 <p>Starting from this:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>reef_counts <span class="ot">&lt;-</span> <span class="fu">group_apply</span>(<span class="at">occdf =</span> reefs2, <span class="at">group =</span> <span class="st">"interval"</span>, <span class="at">fun =</span> nrow)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a common time scale based on an interval key</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">reef_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/group_apply.html">group_apply</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, group <span class="op">=</span> <span class="st">"interval"</span>, fun <span class="op">=</span> <span class="va">nrow</span><span class="op">)</span></span>
+<span><span class="co"># Assign a common time scale based on an interval key</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                 early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">reefs2</span>, <span class="va">interval_max_ma</span> <span class="op">&lt;=</span> <span class="fl">541</span><span class="op">)</span></span>
+<span><span class="co"># Extract Phanerozoic stage-level stages for time bins</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[.data.frame`:
 ! undefined columns selected</code></pre>
 </div>
 </div>
 <p>We see that <code>reef_counts</code> is defined but never actually used, so this cannot be the root cause. Let’s remove it.</p>
-<p>The <code>subset()</code> call is also suspicious: now that he have only one row left in our test data, does this <code>subset()</code> actually do anything?</p>
+<p>The <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> call is also suspicious: now that he have only one row left in our test data, does this <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> actually do anything?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(reefs2, <span class="fu">subset</span>(reefs2, interval_max_ma <span class="sc">&lt;=</span> <span class="dv">541</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                 early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">reefs2</span>, <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">reefs2</span>, <span class="va">interval_max_ma</span> <span class="op">&lt;=</span> <span class="fl">541</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -546,16 +517,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It doesn’t affect <code>reefs2</code>, so let’s remove it as well.</p>
 <p>We now have this:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">int_key =</span> interval_key)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                 early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                 int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[.data.frame`:
 ! undefined columns selected</code></pre>
@@ -564,132 +535,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We have removed two out of five function calls, not bad. We still don’t really understand the cause though.</p>
 <p>Let’s assume that the documentation also doesn’t give any hint about this error message. If we are completely stuck, then we may want to ask other people, such as package maintainers on GitHub or people on StackOverflow. We have done our best to reduce the size of the problem, making it easier for other people to help us.</p>
 <p>Still, we need to ensure that our reprex is correctly made and we must find a nice way to share it, e.g., as an issue on GitHub or with other users.</p>
-</section>
-</section>
-<section id="how-to-ensure-that-your-reprex-actually-is-a-reprex" class="level1">
-<h1>How to ensure that your reprex actually is a reprex</h1>
+</section></section><section id="how-to-ensure-that-your-reprex-actually-is-a-reprex" class="level1"><h1>How to ensure that your reprex actually is a reprex</h1>
 <p>It seems like we have done everything we can to make the problem easier to reproduce, even for other people (e.g.&nbsp;package developers). However, there is one thing that still needs to be cleaned: our <strong>environment</strong>.</p>
 <p>Our environment may have tons of variables, datasets, and options that were defined before but are not relevant to our problem. Some of those objects may interact in some way with our problematic code, meaning that we need to clean our environment to ensure that we can correctly reproduce the issue.</p>
 <p>One way to do this is to restart the R session, but this can easily be forgotten. A more robust solution is to use the package <a href="https://reprex.tidyverse.org/"><code>reprex</code></a>. This package provides a function called <code>reprex()</code> in which we can put all of the code related to our problem. <code>reprex()</code> will start a separate R session in the background to run this code and then report its results. Since this is a completely separate R session, it will error if our code isn’t completely self-contained, and this would indicate that our reproducible example isn’t actually… reproducible.</p>
 <p>This is extremely useful to solve the problem yourself, but it is even more useful when reporting a bug to colleagues and package developers: if your example runs in <code>reprex()</code>, then it is almost guaranteed that it can be easily reproduced by other people with different environments.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">int_key =</span> interval_key)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">reprex</span><span class="fu">::</span><span class="fu"><a href="https://reprex.tidyverse.org/reference/reprex.html">reprex</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                  early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                  late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                  int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span>  <span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! object 'reefs' not found</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! object 'reefs2' not found</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">int_key =</span> interval_key)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `look_up()`:</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! could not find function "look_up"</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `time_bins()`:</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! could not find function "time_bins"</span></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `bin_time()`:</span></span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! could not find function "bin_time"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Our reprex fails, but not with the error we experienced so far! We forgot to add the calls to <code>library()</code> and <code>data()</code>, which is the reason R could not find the functions and data provided by the <code>palaeoverse</code> package.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'reefs' not found</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'reefs2' not found</span></span>
+<span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `look_up()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "look_up"</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `time_bins()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "time_bins"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `bin_time()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "bin_time"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Our reprex fails, but not with the error we experienced so far! We forgot to add the calls to <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> and <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code>, which is the reason R could not find the functions and data provided by the <code>palaeoverse</code> package.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(palaeoverse)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(reefs)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">int_key =</span> interval_key)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">reprex</span><span class="fu">::</span><span class="fu"><a href="https://reprex.tidyverse.org/reference/reprex.html">reprex</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://palaeoverse.palaeoverse.org">palaeoverse</a></span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">reefs</span><span class="op">)</span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                  early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                  late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                  int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span>  <span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(reefs)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">int_key =</span> interval_key)</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `[.data.frame`:</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! undefined columns selected</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://palaeoverse.palaeoverse.org">palaeoverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">reefs</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span><span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `[.data.frame`:</span></span>
+<span><span class="co">#&gt; ! undefined columns selected</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is the situation we have so far, so we can now share this output with other people and they should be able to reproduce the issue.</p>
 <p>Note that it is good practice to show more information on our session, including the version of packages used. This can be done with the argument <code>session_info</code> in <code>reprex()</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>reprex<span class="sc">::</span><span class="fu">reprex</span>({</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(palaeoverse)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(reefs)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">head</span>(reefs, <span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> reefs2[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  reefs2 <span class="ot">&lt;-</span> <span class="fu">look_up</span>(<span class="at">occdf =</span> reefs2,</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">early_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">late_interval =</span> <span class="st">"interval"</span>,</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">int_key =</span> interval_key)</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">time_bins</span>(<span class="at">interval =</span> <span class="st">"Phanerozoic"</span>, <span class="at">rank =</span> <span class="st">"stage"</span>)</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bin_time</span>(<span class="at">occdf =</span> reefs2, <span class="at">bins =</span> bins, <span class="at">method =</span> <span class="st">"mid"</span>)</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>}, <span class="at">session_info =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">reprex</span><span class="fu">::</span><span class="fu"><a href="https://reprex.tidyverse.org/reference/reprex.html">reprex</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://palaeoverse.palaeoverse.org">palaeoverse</a></span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">reefs</span><span class="op">)</span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">reefs</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="va">reefs2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
+<span></span>
+<span>  <span class="va">reefs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/look_up.html">look_up</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>,</span>
+<span>                  early_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                  late_interval <span class="op">=</span> <span class="st">"interval"</span>,</span>
+<span>                  int_key <span class="op">=</span> <span class="va">interval_key</span><span class="op">)</span></span>
+<span>  <span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/time_bins.html">time_bins</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="st">"Phanerozoic"</span>, rank <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_time.html">bin_time</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">reefs2</span>, bins <span class="op">=</span> <span class="va">bins</span>, method <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span>
+<span><span class="op">}</span>, session_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You now know how to use <code>reprex()</code>! Note that the steps before actually using it are key: very often, other people will ask you to minimize your issue as much as possible before reporting it. In many cases, you can also find the issue on your own just by reducing it.</p>
-</section>
-<section id="debugging-a-function" class="level1">
-<h1>Debugging a function</h1>
+</section><section id="debugging-a-function" class="level1"><h1>Debugging a function</h1>
 <p>Debugging a function that you wrote (either in a package or as part of a project) can be annoying because an entire (internal) block of code gets executed and you only see the final error.</p>
-<p>One solution is to put various <code>print()</code> statements in the function body to see which ones get evaluated (meaning that the code has run fine so far) and which ones don’t because the function errored before.</p>
-<p>However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: <code>browser()</code>. This allows us to run line by line <em>in the function body</em>, and it is therefore a key tool when you start writing your own functions.</p>
+<p>One solution is to put various <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> statements in the function body to see which ones get evaluated (meaning that the code has run fine so far) and which ones don’t because the function errored before.</p>
+<p>However, a more robust and convenient approach is to use a function that will stop the evaluation and put us in the evaluating environment: <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code>. This allows us to run line by line <em>in the function body</em>, and it is therefore a key tool when you start writing your own functions.</p>
 <p>We will use <a href="https://github.com/palaeoverse/palaeoverse/issues/280">issue #280</a> in <code>palaeoverse</code> as an example throughout this section.</p>
-<section id="browser" class="level2">
-<h2 data-anchor-id="browser"><code>browser()</code></h2>
+<section id="browser" class="level2"><h2 data-anchor-id="browser"><code>browser()</code></h2>
 <p>The bug report above gives a reprex to reproduce the error (note that at the time you are reading this, this bug has already been fixed):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palaeoverse)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>occdf <span class="ot">&lt;-</span> reefs[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ]</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bin_space</span>(<span class="at">occdf =</span> occdf, <span class="at">spacing =</span> <span class="dv">1000</span>, <span class="at">sub_grid =</span> <span class="dv">250</span>, <span class="at">return =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://palaeoverse.palaeoverse.org">palaeoverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">occdf</span> <span class="op">&lt;-</span> <span class="va">reefs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/bin_space.html">bin_space</a></span><span class="op">(</span>occdf <span class="op">=</span> <span class="va">occdf</span>, spacing <span class="op">=</span> <span class="fl">1000</span>, sub_grid <span class="op">=</span> <span class="fl">250</span>, return <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `bin_space()`:
 ! object 'secondary' not found</code></pre>
 </div>
 </div>
-<p>The error happens in <code>bin_space()</code>, which is a long function:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>palaeoverse<span class="sc">::</span>bin_space</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL, </span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     return = FALSE, plot = FALSE) </span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (!is.data.frame(occdf)) {</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         stop("occdf should be of class dataframe")</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    </span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    [ MANUALLY TRUNCATED ]</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   </span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>One approach to narrow down the cause of the error would be to add multiple <code>print()</code> statements, so that we can check which messages are printed (indicating that the code ran without error) and which are not because the error occurred before reaching them.</p>
-<p>However, it would be way more convenient to be able to execute the internal code line by line so that we can see precisely which line errors. This is the objective of <code>browser()</code>. We can start by putting a <code>browser()</code> at the top, re-loading the function, and executing it again:</p>
+<p>The error happens in <code><a href="https://palaeoverse.palaeoverse.org/reference/bin_space.html">bin_space()</a></code>, which is a long function:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">palaeoverse</span><span class="fu">::</span><span class="va"><a href="https://palaeoverse.palaeoverse.org/reference/bin_space.html">bin_space</a></span></span>
+<span><span class="co">#&gt; function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL, </span></span>
+<span><span class="co">#&gt;     return = FALSE, plot = FALSE) </span></span>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;     if (!is.data.frame(occdf)) {</span></span>
+<span><span class="co">#&gt;         stop("occdf should be of class dataframe")</span></span>
+<span><span class="co">#&gt;     }</span></span>
+<span><span class="co">#&gt;    </span></span>
+<span><span class="co">#&gt;    [ MANUALLY TRUNCATED ]</span></span>
+<span><span class="co">#&gt;   </span></span>
+<span><span class="co">#&gt; }</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>One approach to narrow down the cause of the error would be to add multiple <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> statements, so that we can check which messages are printed (indicating that the code ran without error) and which are not because the error occurred before reaching them.</p>
+<p>However, it would be way more convenient to be able to execute the internal code line by line so that we can see precisely which line errors. This is the objective of <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code>. We can start by putting a <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> at the top, re-loading the function, and executing it again:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>function (occdf, lng = "lng", lat = "lat", spacing = 100, sub_grid = NULL, </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    return = FALSE, plot = FALSE) </span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>{</span>
@@ -711,41 +676,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The example above is from an R package, where we can use <code>devtools::load_all()</code> to reload all functions.</p>
-<p>If you insert <code>browser()</code> in a standalone function, you need to re-execute this function definition before calling it.</p>
+<p>The example above is from an R package, where we can use <code><a href="https://devtools.r-lib.org/reference/load_all.html">devtools::load_all()</a></code> to reload all functions.</p>
+<p>If you insert <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> in a standalone function, you need to re-execute this function definition before calling it.</p>
 </div>
 </div>
-<p>In the video below, running the code with the function that now includes <code>browser()</code> doesn’t error. Instead, it stops the execution at the <code>browser()</code> call:</p>
+<p>In the video below, running the code with the function that now includes <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> doesn’t error. Instead, it stops the execution at the <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> call:</p>
 <p><video src="browser_1.webm" class="img-fluid" alt="A screen capture of the debugging process in RStudio. The left hand side of the window shows the source code of `bin_space()`, and the right hand side shows the R console. We start by inserting `browser()` at the top of the function definition and running `devtools::load_all()` in the R console. After this, running the code that fails (cf previous code chunk) doesn't error but instead brings us at the location of `browser()`. The environment corresponds to the one that the function uses. Pressing 'Enter' in the console evaluates the statements one by one." controls=""><a href="browser_1.webm">Video</a></video></p>
 <p>There are two interesting things in this video:</p>
 <ol type="1">
 <li><p>we have access to the function environment, including the user-provided inputs. Note for instance that <code>sub_grid</code> is <code>NULL</code> by default in the function definition, but printing <code>sub_grid</code> in the console gives <code>250</code> because the call that is being inspected contains <code>sub_grid = 250</code>.</p></li>
-<li><p>We can execute the remaining function body statement by statement by pressing “Enter” in the console. Note that this doesn’t necessarily execute <em>all</em> the code: an <code>if()</code> statement whose condition is <code>FALSE</code> will not be executed. <code>browser()</code> follows exactly the path taken by our code.</p></li>
+<li><p>We can execute the remaining function body statement by statement by pressing “Enter” in the console. Note that this doesn’t necessarily execute <em>all</em> the code: an <code>if()</code> statement whose condition is <code>FALSE</code> will not be executed. <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> follows exactly the path taken by our code.</p></li>
 </ol>
 <p>Pressing “Esc” or executing <code>Q</code> allows us to exit this “browsing” mode.</p>
 <p>Using this approach, we can find the exact source of the error:</p>
 <p><video src="browser_2.webm" class="img-fluid" alt="This is the same setup as in the previous video. We keep pressing 'Enter' until the code fails." controls=""><a href="browser_2.webm">Video</a></video></p>
 <p>In our case, the error comes from the line:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>occdf <span class="ot">&lt;-</span> <span class="fu">list</span>(occdf, grid, base_grid, primary, secondary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">occdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">occdf</span>, <span class="va">grid</span>, <span class="va">base_grid</span>, <span class="va">primary</span>, <span class="va">secondary</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Fixing this requires reading all the code prior to this line, but this is beyond the scope of this module.</p>
-<p>If you are confident that some lines are irrelevant to the bug, you can move the <code>browser()</code> call past them so that you don’t need to execute them all every time you enter “browsing” mode.</p>
-</section>
-<section id="breakpoints" class="level2">
-<h2 data-anchor-id="breakpoints">Breakpoints</h2>
+<p>If you are confident that some lines are irrelevant to the bug, you can move the <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> call past them so that you don’t need to execute them all every time you enter “browsing” mode.</p>
+</section><section id="breakpoints" class="level2"><h2 data-anchor-id="breakpoints">Breakpoints</h2>
 <p>Breakpoints are a feature directly integrated in the software used to run R (e.g.&nbsp;RStudio or Positron. This is also known as IDE for “Integrated Development Environment”).</p>
-<p>They are a way to mimic <code>browser()</code> calls without actually modifying the function. You can add one by clicking on the left of line numbers:</p>
+<p>They are a way to mimic <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> calls without actually modifying the function. You can add one by clicking on the left of line numbers:</p>
 <p><video src="breakpoints.webm" class="img-fluid" alt="This is almost the same setup as in the previous video. In this case, we don't have an explicit `browser()` call any more, but instead we click on the left hand side of the row number. This adds a red circle, indicating a breakpoint. After running `devtools::load_all()` and then the code that is supposed to fail, we end up in almost the same situation as with `browser()`, except that we haven't modified the source code at all." controls=""><a href="breakpoints.webm">Video</a></video></p>
-<p>After reloading the package and running the code that is supposed to fail, we end up in almost the same situation as with <code>browser()</code>, except that we haven’t modified the source code at all. We can then follow the same steps to continue our debugging process.</p>
-</section>
-</section>
-<section id="conclusion" class="level1">
-<h1>Conclusion</h1>
-<p>Debugging is an important aspect of programming. This module focused on two essential debugging methods: producing a reproducible example, and using debugging tools such as <code>browser()</code> and breakpoints. Following good debugging practices helps us fix our own code, and it is the essential first step to produce good bug reports. It is also a way to gain experience to recognise potential bugs when reviewing code in the future.</p>
+<p>After reloading the package and running the code that is supposed to fail, we end up in almost the same situation as with <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code>, except that we haven’t modified the source code at all. We can then follow the same steps to continue our debugging process.</p>
+</section></section><section id="conclusion" class="level1"><h1>Conclusion</h1>
+<p>Debugging is an important aspect of programming. This module focused on two essential debugging methods: producing a reproducible example, and using debugging tools such as <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> and breakpoints. Following good debugging practices helps us fix our own code, and it is the essential first step to produce good bug reports. It is also a way to gain experience to recognise potential bugs when reviewing code in the future.</p>
 
 
-<hr><br><details>
-<summary>Session info</summary>
-<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+<hr>
+<br><details><summary>Session info</summary><pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
  version  R version 4.6.2 (2026-10-29)
  os       Ubuntu 26.04.1 LTS
@@ -847,11 +806,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 ──────────────────────────────────────────────────────────────────────────────
 </code></pre>
-</details>
-</section>
-
-</main> <!-- /main -->
-<script>
+</details></section></main><!-- /main --><script>
 // Quarto doesn't add an `active` class to the current page's navbar link in
 // this setup, so do it ourselves: match each top-level navbar link's path
 // against the current page and mark it.
@@ -883,24 +838,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-</script>
-<!-- This is for site analytics. -->
-
-<!-- 
+</script><!-- This is for site analytics. --><!-- 
 Include the domain in the URL reported in goatcounter's dashboard.
 This is needed to separate subdomains that would point to the same page name, e.g.
 "palaeoverse.palaeoverse.org/getting-started" and "rphylopic.palaeoverse.org/getting-started"
 
 https://goatcounter.com/help/domains
-  -->
-<script>
+  --><script>
     window.goatcounter = {
         path: function (p) { return location.host + p }
     }
-</script>
-
-<script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
-<script>
+</script><script data-goatcounter="https://palaeoverse.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><script>
   // Shared behaviour for every module (included via _metadata.yml):
   //  1) a "back to the modules list" button at the top, and
   //  2) turning each category badge into a link that opens the list filtered by
@@ -940,8 +888,7 @@ https://goatcounter.com/help/domains
       });
     });
   })();
-</script>
-<script id="quarto-html-after-body" type="application/javascript">
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
@@ -1406,13 +1353,11 @@ https://goatcounter.com/help/domains
       }
     }
   });
-  </script>
-  <script type="application/javascript">
+  </script><script type="application/javascript">
   window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
@@ -1425,8 +1370,6 @@ https://goatcounter.com/help/domains
     </div>
   </div>
 </footer>
-
-
 
 
 </body></html>
