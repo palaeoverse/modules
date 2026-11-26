@@ -108,6 +108,7 @@ At its simplest, R is a very powerful calculator. Type an expression into the co
 
 2 + 3
 10 / 4
+2^3
 ```
 
 ### Objects and assignment
@@ -138,6 +139,18 @@ ages <- c(5.3, 11.6, 23.0, 33.9)
 ages
 ```
 
+Vectors can store more than numbers.
+
+```{r}
+
+#For instance, epochs within the Neogene
+Neogene <- c("Pliocene","Miocene")
+Neogene
+
+#They can even hold logical (true/false) values
+ages>20
+```
+
 ::: {.callout-tip}
 ### Comments
 
@@ -163,7 +176,31 @@ To use (or "call") a function, type its name followed by parentheses. The values
 sqrt(x = 16)
 ```
 
-Here, `sqrt` is the function and `16` is the argument. A function can take several arguments, separated by commas. You can supply them by position or by name.
+`sqrt` is the function and `16` is the argument. As you can probably guess, `sqrt()` computes the square root of its argument. A function can take several arguments, separated by commas. You can supply them by position or by name.
+
+Here are a couple more examples:
+
+```{r}
+#| label: function-examples
+
+# log() computes the natural log
+log(100)
+
+# seq() generates sequences of numbers
+a <- seq(1,10)
+a <- seq(from=1, to=10) #another way to specify the arguments, see ?seq
+a <- 1:10 #you can also generate a sequence using a colon
+a
+
+# other useful mathematical and statistical operations
+mean(a)
+median(a)
+sd(a)
+min(a)
+max(a)
+sum(a)
+quantile(a)
+```
 
 ### Object classes
 
@@ -473,3 +510,197 @@ colSums(is.na(iris))
 
 No. `anyNA()` returns `FALSE` and the total number of `NA` values is 0.
 :::
+
+### Wrangle data
+
+When working with datasets, you'll often need to wrangle the data to prepare them for analysis. For instance, you might want to add a column.
+
+```{r}
+#| label: reef-column
+
+reefs$is_coral <- reefs$biota_main=="Corals"
+```
+
+Or you might want to subset your data. One option is to use the `subset()` function. For example, let's look at the Neogene and Quaternary reefs.
+
+```{r}
+#| label: reef-subset-age
+
+reefs_neogene <- subset(reefs,system=="Neogene")
+reefs_quaternary <- subset(reefs,system=="Quaternary")
+reefs_neo_quat <- subset(reefs,system=="Neogene" | system=="Quaternary")
+```
+
+You can also use brackets for indexing as introduced above. Let's look at just the coral reefs.
+
+```{r}
+#| label: reef-subset-coral
+
+reefs_coral <- reefs[reefs$biota_main=="Corals",]
+```
+
+Maybe you're interested in a certain modern-day latitudinal range. *Consider: why might this approach be problematic when analyzing fossil reefs?*
+
+```{r}
+#| label: reef-subset-lat
+
+reefs_lat <- reefs[reefs$lat < 23.5 & reefs$lat > -23.5,] #tropics
+```
+
+We could also subset this data frame further to just pull out the Holocene occurrences.
+
+```{r}
+#| label: reef-subset-lat-age
+
+reefs_lat[which(reefs_lat$series=="Holocene"),]
+```
+
+You might want to sort your data. Note that you can also do this when directly viewing the dataset in RStudio, i.e. with `View()`.
+
+```{r}
+#| label: reef-sort
+#| output: false
+
+#Putting them into descending order by citation year
+reefs[order(reefs$year, decreasing = TRUE), ]
+```
+
+You might want to combine datasets. `rbind()` combines rows. `cbind()` combines columns. `merge()` will join dataframes. Let's recombine two of our subsets from above using rbind() as an example.
+
+```{r}
+#| label: reef-combine
+
+reefs_combined <- rbind(reefs_neogene,reefs_quaternary)
+```
+
+And you may want to tabulate the data. Let's look at how much data there are across the different intervals in the full reef dataset.
+
+```{r}
+#| label: reef-tabulate
+
+table(reefs$system)
+```
+
+All of these operations can be done in base R as well as using tidyverse syntax. For additional practice manipulating data frames using `dplyr`, see the tidyverse module. For additional practice cleaning and preparing data for analysis, see the *data cleaning* and *data exploration* modules.
+
+### Plot variables
+
+Finally, you may want to plot your data. We'll cover a basic example here in base R. For a more in-depth treatment of plotting, see the *ggplot2* and *data visualisation* modules.
+
+Let's first make a histogram of the latitudes present in the dataset.
+
+```{r}
+#| label: plotting-hist
+
+hist(reefs$lat,breaks=10)
+
+# Layering the reef occurrences on top of the full dataset...Does anything look odd to you?
+hist(reefs$lat,breaks=10)
+hist(reefs_coral$lat,col="coral",add=T)
+```
+
+Let's also practice making a scatterplot. Here, I'm going to generate a toy dataset using `rnorm()`so you can see how to do that.
+
+```{r}
+#| label: plotting-scatter
+
+#rnorm() randomly generates data following a normal distribution
+x <- rnorm(20,mean=2,sd=1)
+y <- rnorm(20,mean=5,sd=2)
+
+#plot
+plot(y~x,type="p",cex=1.5,pch=21,col="black",bg="cornflowerblue",xlab="x",ylab="y")
+```
+
+::: {.callout-caution}
+## Exercise 4: Practise wrangling and plotting data
+
+Now it's your turn. Use the `iris` dataset that you've already loaded to do the following:
+
+1. Subset the data to look at just the *setosa* and *versicolor* species.
+2. Plot the relationship between petal length and width. Color the points by species.
+3. Add a column that calculates the ratio of petal length to width.
+4. Make a boxplot comparing the petal ratios between the two species. Plot the mean ratio values as points on top of the boxplot. How do the petal dimensions differ between the two species?
+:::
+
+::: {.callout-note collapse="true"}
+## Exercise 4: Solution
+
+**1. Subset the data to look at just the *setosa* and *versicolor* species.**
+
+```{r}
+#| label: iris-subset
+
+iris_subset <- subset(iris, Species=="setosa" | Species=="versicolor")
+```
+
+**2. Plot the relationship between petal length and width. Color the points by species.**
+
+```{r}
+#| label: iris-scatterplot
+
+# Hint: Drop levels prior to plotting; otherwise, you'll find a phantom species in your legend! 
+iris_subset$Species <- droplevels(iris_subset$Species)
+levels(iris_subset$Species)
+
+# Custom colors
+cols <- c("setosa" = "steelblue", "versicolor" = "orange")
+
+# Plot width~length
+plot(iris_subset$Petal.Width~iris_subset$Petal.Length,
+     col = cols[iris$Species],
+     pch = 19,
+     xlab = "Petal length (cm)",
+     ylab = "Petal width (cm)",
+     main = "Iris petal dimensions")
+
+legend("topleft",
+       legend = levels(iris_subset$Species),
+       col = cols[levels(iris_subset$Species)],
+       pch = 19)
+```
+
+**3. Add a column that calculates the ratio of petal length to width.**
+
+```{r}
+#| label: iris-new-col
+
+# Add a column for the ratio of Petal.Length/Petal.Width
+iris_subset$Petal.Ratio <- iris_subset$Petal.Length/iris_subset$Petal.Width
+```
+
+**4. Make a boxplot comparing the petal ratios between the two species. Plot the mean ratio values as points on top of the boxplot. How do the petal dimensions differ between the two species?**
+
+```{r}
+#| label: iris-boxplot
+
+# Plot
+boxplot(Petal.Ratio ~ Species, data = iris_subset,
+        col = cols[levels(iris_subset$Species)],
+        xlab = "Species",
+        ylab = "Petal length / width ratio",
+        main = "Petal ratio by species")
+
+# Calculate mean ratio for each species
+setosa_mean <- mean(iris_subset$Petal.Ratio[iris_subset$Species=="setosa"])
+versicolor_mean <- mean(iris_subset$Petal.Ratio[iris_subset$Species=="versicolor"])
+
+# Add means to the plot
+mean_ratio <- c(setosa_mean,versicolor_mean)
+points(1:2, mean_ratio, pch = 18, cex = 2, col = "black")
+```
+
+We see clear separation between the two species in terms of their petal dimensions. *versicolor* has larger petals than *setosa*. The petal shape also differs between species: *versicolor* petals have a lower aspect ratio than *setosa*, meaning that they are rounder.
+:::
+
+### Loops
+
+### Functions
+
+### Libraries
+
+### Debugging
+
+### Resources
+
+https://swirlstats.com/students.html
