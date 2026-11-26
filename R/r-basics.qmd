@@ -39,7 +39,7 @@ editor:
 
 ## What is R?
 
-[R](https://www.r-project.org) is a programming language designed for working with data. You can use it to import, clean, analyse, and visualise data, and to report your results, all by writing code.
+[R](https://www.r-project.org){target="_blank"} is a programming language designed for working with data. You can use it to import, clean, analyse, and visualise data, and to report your results, all by writing code.
 
 A few things worth knowing:
 
@@ -50,7 +50,7 @@ A few things worth knowing:
 
 ## R and RStudio
 
-R and RStudio are two separate things, and it helps to know the differences. [R](https://www.r-project.org) is the language and engine that runs your code while [RStudio](https://posit.co/products/open-source/rstudio) is a workspace that makes R easier to use.
+R and RStudio are two separate things, and it helps to know the differences. [R](https://www.r-project.org){target="_blank"} is the language and engine that runs your code while [RStudio](https://posit.co/products/open-source/rstudio){target="_blank"} is a workspace that makes R easier to use.
 
 > *R is like as a car's engine while RStudio is the car's dashboard and controls.*
 
@@ -78,7 +78,7 @@ R can handle almost any analysis or plot you can imagine. You are not limited to
 
 ### A huge community
 
-- There are >25,000 packages available on [CRAN](https://cran.r-project.org), the main package repository
+- There are >25,000 packages available on [CRAN](https://cran.r-project.org){target="_blank"}, the main package repository
 - Most methods in palaeontology, ecology, and evolution have an R implementation
 - Help is easy to find, from documentation and tutorials to forums and colleagues
 
@@ -697,20 +697,20 @@ We see clear separation between the two species in terms of their petal dimensio
 
 ### If/else statements
 
-If/else statements allow you to make conditional statements: R will do something only under certain conditions.
+If/else statements allow you to make conditional statements. In other words, R will do something only under certain conditions.
 
 ```{r}
 #| label: if-else
 
-#run with one value
+# Run with one value
 x <- 4
 if(x>3) print ("x is greater than 3") else print ("oh no!")
 
-#run with another value to show how the outcome changes
+# Run with another value to show how the outcome changes
 x <- 2
 if(x>3) print ("x is greater than 3") else print ("oh no!")
 
-#ifelse() for simple logical tests
+# ifelse() for simple logical tests
 y <- c(0,1,10,12,50,0)
 z <- ifelse(y>0,1,0)
 z
@@ -723,20 +723,20 @@ Loops are useful for repeated operations.
 ```{r}
 #| label: loops
 
-for (i in iris$Sepal.Length[1:5]){ #Just pulling the first 5 sepal length values as an example
-  Sepal.Length.mm <- i * 10 #converts from cm to mm
-  print(Sepal.Length.mm) #prints output
+for (i in iris$Sepal.Length[1:5]){ # Uses the first 5 sepal length values as an example
+  Sepal.Length.mm <- i * 10 # Converts from cm to mm
+  print(Sepal.Length.mm) # Prints output
 }
 ```
 
 ### Apply
 
-There's another way to do this using apply functions. 
+This same task can be accomplished with the apply function. Here, we use `sapply()` since we're dealing with a vector.
 
 ```{r}
 #| label: sapply
 
-sapply(iris$Sepal.Length[1:5], function(x) x * 10) #using sapply() since we're dealing with a vector
+sapply(iris$Sepal.Length[1:5], function(x) x * 10)
 ```
 
 Here's another example using `apply()` to find the minimum sepal length and width in the `iris` dataset.
@@ -751,25 +751,24 @@ apply(iris[,1:2], 2, min)
 
 Today, we'll just dip our toes into the world of writing your own functions. To dive in deeper, check out the *Writing functions* module.
 
-Let's write a basic function together to understand its structure.
+Let's write a basic function together to understand its structure. Palaeoverse team members Lewis and Erin are both avid runners but are having trouble comparing how far they ran. Let's help them convert between miles and kilometers.
 
-Example: Palaeoverse team members Lewis and Erin are both avid runners but are having trouble comparing how far they ran. Let's help them convert between miles and kilometers.
 ```{r}
 #| label: function-writing
 
 # Simple version that converts from miles to kilometers
-mi_to_km <- function(mi){ # specify name and arguments
-  km <- mi*1.609344 # body, which performs the operation
-  return(km) # what gets returned
+mi_to_km <- function(mi){ # Specify function name and arguments
+  km <- mi*1.609344 # Body, which performs the operation
+  return(km) # What gets returned
 }
 
 # Test it out
 mi_to_km(6)
 
 
-# Let's make this even more interchangeable using an if/else statement
+# Let's make this function more interchangeable using an if/else statement
 convert_distance <- function(distance, units = c("mi", "km")) {
-  units <- match.arg(units) #controls the input
+  units <- match.arg(units) # Controls the input
 
   if (units == "mi") {
     distance * 1.609344   # miles to km
@@ -787,7 +786,7 @@ convert_distance(18,"km")
 
 Practise writing a function of your own! You can either be creative or attempt the following example:
 
-1. Write a function that can place values (e.g., size measurements) into three groups (small, medium, large) based on user-specified threshold values. *Hint: ifelse() may come in handy*
+1. Write a function that can place values (e.g., size measurements) into three groups (small, medium, large) based on user-specified threshold values. *Hint: `ifelse()` may come in handy*
 :::
 
 ::: {.callout-note collapse="true"}
@@ -796,25 +795,25 @@ Practise writing a function of your own! You can either be creative or attempt t
 **1. Write a function that can place values (e.g., size measurements) into three groups (small, medium, large) based on user-specified threshold values.**
 
 ```{r}
-#| label: function-solution
- 
-classify_size <- function(size, small = 10, large = 30) { #providing some defaults
+#| label: function-solution-classify
+
+classify_size <- function(size, small = 10, large = 30) { # Providing some defaults
   ifelse(size < small, "small",
          ifelse(size < large, "medium", "large")) 
 }
 
 # Test it out
-classify_size(10)
+classify_size(8)
 classify_size(25)
 classify_size(32)
 ```
 :::
 
-## Libraries
+## R Packages
 
-Everything we've done so far in this tutorial has relied on functions that are built into base R. However, there's a big world of functions out there that can do everything from tidying up data to making beautiful plots to running statistical and other discipline-specific analyses. The possibilities are nearly endless (and if you do hit a hall, you can even make your own package!).
+Everything we've done so far in this tutorial has relied on functions that are available in base R. However, there's a big world of functions out there that can do everything from tidying up data to making beautiful plots to running statistical and other discipline-specific analyses.
 
-To tap into this world, you install packages. You can either do this in the Output panel under the Packages tab (click "Install" and then type and select the package name). You can also script the installation, which can be helpful if you need to install several packages. Note that you only need to install a package once; after that, it lives in your library. 
+You can tap into this world through packages. An R package bundles together code, data, documentation, and tests to extend the R programming language. You can install packages in the Output panel under the Packages tab (click "Install" and then type and select the package name). You can also script the installation, which can be helpful if you need to install several packages at at time. Note that you only need to install a package once; after that, it lives in your library.
 
 ```{r}
 #| label: install-packages
@@ -823,7 +822,7 @@ To tap into this world, you install packages. You can either do this in the Outp
 install.packages("palaeoverse")
 ```
 
-This gives you access to the tens of thousands of packages available on CRAN. But wait...there's more. To download a package directly from GitHub (i.e., development versions or packages that are not available on CRAN), you can use the `devtools` package.
+You have access to the tens of thousands of packages available on CRAN. Additionally, you can download packages directly from GitHub (i.e., development versions or packages that are not available on CRAN) using the `devtools` package.
 
 ```{r}
 #| label: install-devtools
@@ -834,6 +833,7 @@ devtools::install_github("palaeoverse/palaeoverse")
 ```
 
 Prior to using any of the functions in a package, you'll need to load it. Then you're good to go!
+
 ```{r}
 #| label: load-packages
 
@@ -841,8 +841,10 @@ library(palaeoverse)
 ```
 
 To access the documentation, type `?` and the package name.
+
 ```{r}
 #| label: documentation
+#| eval: false
 
 ?palaeoverse
 ```
@@ -851,9 +853,9 @@ Are you feeling powerful yet?
 
 ## Debugging
 
-TO DO 
+TO DO
 
 ## Resources
 
-- Basic R syntax: https://swirlstats.com/students.html
-- An introduction to R: https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf 
+- [Basic R syntax](https://swirlstats.com/students.html){target="_blank"}
+- [An introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf){target="_blank"}
